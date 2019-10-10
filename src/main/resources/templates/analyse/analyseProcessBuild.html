@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>业务问题</title>
+    <link rel="stylesheet" href="css/upFile.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+</head>
+<body>
+<input type="hidden" th:value="${modelid}" id="modelid"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span> 分析流程 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div  th:id="${analyseFlowprocessList.flowprocessid}"  class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%;" th:each="analyseFlowprocessList:${analyseFlowprocessList}">
+        <div class="panel-header"  th:if="${analyseFlowprocessList.flowprocessname} eq null"  style="text-align: center">未命名</div>
+        <div class="panel-header" th:if="${analyseFlowprocessList.flowprocessname != null}" th:text="${analyseFlowprocessList.flowprocessname}"  style="text-align: center"></div>
+        <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
+
+            <a id="review"   th:href="@{'/analyse/revise/'+${analyseFlowprocessList.flowprocessid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
+            <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${analyseFlowprocessList.flowprocessid}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+        </div>
+
+    </div>
+    <div class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" >
+        <div class="panel-header" style="text-align: center">新建</div>
+        <div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" ><a id="new" th:href="@{'/analyse/analyseProcessFirst/'+ ${modelid}}"><image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image></a></div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+
+<script type="text/javascript">
+    window.onload=function(){
+        var oLis=document.getElementsByTagName("a");
+        for(var index=0;index<oLis.length;index++){
+            oLis[index].onclick=function(){
+                var id = this.id;
+                if(id=="new" || id=="review"){
+                }
+                else {
+                    if(confirm("确定要删除此流程？")){
+                        var datacollecid = id;
+                        var id= {
+                            "datacollecid" : datacollecid
+                        };
+                        $.ajax({
+                            url : "/analyse/deletDataCollec",
+                            type : "POST",
+                            async : true,
+                            contentType: "application/json; charset=utf-8",
+                            data : JSON.stringify(id),
+                            dataType : 'json',
+                            success : function(data) {
+
+                            }
+                        });
+                        $.Huimodalalert('删除成功',2000);
+                        window.setTimeout(window.location.reload(true),2000);
+                    }
+                    else {
+                    }
+                }
+            }
+        }
+
+    }
+</script>
+</body>
+</html>

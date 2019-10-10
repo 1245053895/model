@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" charset="UTF-8">
+    <title>new</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <script type="text/javascript" src="/newjsplumb/js/jquery.js"></script>
+    <script type="text/javascript" src="/newjsplumb/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/newjsplumb/css/jquery-ui.min.css" type="text/css">
+    <script type="text/javascript" src="/newjsplumb/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/newjsplumb/js/jquery.jsPlumb.js"></script>
+    <script type="text/javascript" src="/newjsplumb/js/newindex.js"></script>
+
+    <link rel="stylesheet" href="/newjsplumb/css/newf.css" type="text/css">
+    <!--<link rel="stylesheet" href="/newjsplumb/css/bootstrap.min.css" type="text/css">-->
+
+    <script type="text/javascript">
+        function save1() {
+            var unitid = $("#unitid").val();
+            alert(unitid);
+            var nameOfFlow = prompt("请输入一段文字", "");
+            var connects = [];
+            $.each(jsPlumb.getAllConnections(), function (idx, connection) {
+                connects.push({
+                    ConnectionId: connection.id,
+                    PageSourceId: connection.sourceId,
+                    PageTargetId: connection.targetId,
+                });
+            });
+
+            alert(connects);
+            var blocks = [];
+            $("#right .node").each(function (idx, elem) {
+                var $elem = $(elem);
+                blocks.push({
+                    BlockId: $elem.attr('id'),
+                    BlockContent: $elem.html(),
+                    BlockX: parseInt($elem.css("left"), 10),
+                    BlockY: parseInt($elem.css("top"), 10),
+                });
+            });
+
+
+            $.ajax({
+                type: "post",
+                url: "/analyse/unitflowPage",
+                data: JSON.stringify({
+                    unitid: unitid,
+                    name: nameOfFlow,
+                    blocks: blocks,
+                    connects: connects,
+                }),
+                //dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
+    </script>
+    <!--<script type="text/javascript" src="/newjsplumb/js/reviewModel.js"></script>-->
+</head>
+<body>
+<input type="hidden" th:value="${flowprocessid}" id="flowprocessid"/>
+<nav class="breadcrumb" style="text-align: left" th:text="'分析模型：  '+${analyseModel.getName()}"><i class="Hui-iconfont">&#xe67f;</i>  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><span class="c-gray en"><i class="Hui-iconfont">&#xe68f;</i></span></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 33vh">
+        <div class="panel-header" >分析流程：
+        </div>
+        <div class="panel-body">
+            <div  th:id="${analyseFlowprocessList.flowprocessid}"  class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%;" th:each="analyseFlowprocessList:${analyseFlowprocessList}">
+                <div class="panel-header"  th:if="${analyseFlowprocessList.flowprocessname} eq null"  style="text-align: center">未命名</div>
+                <div class="panel-header" th:if="${analyseFlowprocessList.flowprocessname != null}" th:text="${analyseFlowprocessList.flowprocessname}"  style="text-align: center"></div>
+                <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
+
+                    <a id="review"   th:href="@{'/analyse/revise/'+${analyseFlowprocessList.flowprocessid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
+                    <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${analyseFlowprocessList.flowprocessid}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+                </div>
+
+            </div>
+            <div class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" >
+                <div class="panel-header" style="text-align: center">新建</div>
+                <div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" ><a id="new" th:href="@{'/analyse/analyseProcessFirst/'+ ${modelid}}"><image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image></a></div>
+            </div>
+        </div>
+        </div>
+
+
+    <div class="panel panel-default" style="height: 33vh; margin-top: 1%;">
+    <div class="panel-header">分析模型
+    </div>
+    <div class="panel-body">
+        <div th:id="${analyseModelList.modelid}" class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" th:each="analyseModelList:${analyseModelList}">
+            <div class="panel-header" th:text="${analyseModelList.modelname}" style="text-align: center"></div>
+            <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
+                <a  id="review" th:href="@{'/analyse/analyzModelView/'+ ${analyseModelList.modelid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
+                <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${analyseModelList.modelid}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+            </div>
+        </div>
+        <div class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" >
+            <div class="panel-header" style="text-align: center">新建</div>
+            <div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" ><a id="new" th:href="@{'/analyse/analyzModelCreate/'+ ${modelid}}"><image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image></a></div>
+        </div>
+    </div>
+    </div>
+
+<div class="panel panel-default" style="height: 33vh;margin-top: 1%;">
+    <div class="panel-header">分析模型实例
+    </div>
+    <div class="panel-body">
+        <div th:id="${analyseModelList.modelid}" class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" th:each="analyseModelList:${analyseModelList}">
+            <div class="panel-header" th:text="${analyseModelList.modelname}" style="text-align: center"></div>
+            <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
+                <a  id="review" th:href="@{'/analyse/exampleList/'+ ${analyseModelList.modelid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
+                <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${analyseModelList.modelid}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+    function getResult() {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            dataType:"json",
+            url: "/analyse/blocklinkinform",
+            data: {
+                parameter1: $("#parameter1").val(),
+                parameter2: $("#parameter2").val(),
+                uuid: $("#testval1").val()
+            },
+            success : function(data) {
+                alert("保存成功")
+            }
+        });
+        alert("保存成功")
+    }
+</script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        jsPlumb.detachEveryConnection();
+        jsPlumb.deleteEveryEndpoint();
+        var myblocks = [[${myblocks}]];
+        var myconnects = [[${myconnects}]];
+
+
+
+        for (var i=0; i<myblocks.length; i++){
+            var BlockId = myblocks[i].blockId;
+            var BlockContent = myblocks[i].blockContent;
+            var BlockX = myblocks[i].blockX;
+            var BlockY = myblocks[i].blockY;
+            var htmlText = '<div class="node '+ ' node2css"'+'style="position:absolute;left:' + BlockX + 'px;top:' + BlockY + 'px;" id="' + BlockId + '">' + BlockContent + '</div>';
+            $("#main").append(htmlText);
+        }
+
+        var common = {
+            isSource: true,
+            isTarget: true,
+            fillStyle: "transparent",
+            radius: 2,
+            lineWidth: 2,
+            connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
+
+            paintStyle :{
+                strokeStyle: "#1e8151",
+                fillStyle: "transparent",
+                radius: 3,
+                lineWidth:6 ,
+            },
+
+
+            connectorStyle:{ lineWidth: 4,
+                strokeStyle: "#61B7CF",
+                joinStyle: "round",
+                outlineColor: "white",
+                outlineWidth: 2,
+            },
+
+            // aaa
+            connectorHoverStyle:{
+                lineWidth: 4,
+                strokeStyle: "green",
+                outlineWidth: 2,
+                outlineColor: "white"
+            },
+
+            connectorOverlays:[ "Arrow"]
+        }
+
+        for (i =0; i<myconnects.length;i++){
+            var PageSourceId = myconnects[i].pageSourceId;
+            var PageTargetId = myconnects[i].pageTargetId;
+
+            //用jsPlumb添加锚点
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "TopCenter"}, common);
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "RightMiddle"}, common);
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "BottomCenter"}, common);
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "LeftMiddle"}, common);
+
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "TopCenter"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "RightMiddle"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "BottomCenter"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "LeftMiddle"}, common);
+
+            jsPlumb.draggable(PageSourceId);
+            jsPlumb.draggable(PageTargetId);
+
+
+            $("#" + PageSourceId).draggable({containment: "parent"});//保证拖动不跨界
+            $("#" + PageTargetId).draggable({containment: "parent"});//保证拖动不跨界
+
+
+            jsPlumb.makeSource(PageSourceId, {
+                endpoint: ["Dot", { radius: 8 }],
+                anchor: "Continuous",
+                paintStyle: {
+                    strokeStyle: "#1e8151",
+                    fillStyle: "transparent",
+                    radius: 2,
+                    lineWidth: 2
+                }
+            });
+
+            jsPlumb.makeTarget(PageTargetId, {
+                endpoint: ["Dot", { radius: 8 }],
+                anchor: "Continuous",
+                paintStyle: {
+                    strokeStyle: "#1e8151",
+                    fillStyle: "transparent",
+                    radius: 2,
+                    lineWidth: 2,
+                    // arrow:{  width: 10, length: 10,location:0.7}
+                }
+            });
+
+
+            jsPlumb.connect({source:PageSourceId,target:PageTargetId,connector:["Flowchart"],
+                paintStyle:{
+                    lineWidth: 4,
+                    strokeStyle: "#61B7CF",
+                    joinstyle: "round",
+                    outlineColor: "white",
+                    outlineWidth: 2,
+                },
+
+                overlays:[
+                    ["Arrow"],
+                    // ["Label", { label:"", location:0.25, id:"myLabel" }]
+
+                ]
+            });
+        }
+
+    });
+</script>
+</body>
+</html>

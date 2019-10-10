@@ -1,0 +1,18 @@
+.dataInforArea{
+    width: 100%;
+    height: 80%;
+}
+.rowAreaHeight{
+    height: 30vh;
+}
+
+.uuidarea{
+    /*visibility: hidden;*/
+}
+#pageSize{
+    border: 1px solid red;
+    height: 85vh;
+}
+
+
+

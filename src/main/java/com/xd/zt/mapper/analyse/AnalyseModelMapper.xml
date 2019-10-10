@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.analyse.AnalyseModelMapper">
+    <!--<select id="selectquestion" resultType="businessQuestion">
+        SELECT * FROM business_question;
+    </select>-->
+    <select id="selectquestion" resultType="businessQuestion" parameterType="Integer">
+        SELECT * FROM business_question where businessid = #{businessid};
+    </select>
+   <select id="selectquesInfo" resultType="businessQuestion" parameterType="Integer">
+        SELECT * FROM business_question where questionid = #{questionid};
+    </select>
+    <select id="selectBusiness" resultType="businessModel" >
+        SELECT * FROM business_model;
+    </select>
+
+
+    <select id="selectAnalyseProcess" resultType="AnalyseProcess" parameterType="Integer">
+         select * from analyseprocess WHERE Id in (SELECT processid FROM analyse_flowprocess WHERE analyse_flowprocess.modelid =#{modelid})
+    </select>
+
+
+   <insert id="insertAnalyseModel" parameterType="analyseModel">
+        insert into analyse_model(questionid,questioname,name) VALUES (#{questionid},#{questioname},#{name})
+    </insert>
+
+    <select id="selectQuestionName" resultType="String" parameterType="Integer">
+        SELECT questioname FROM business_question WHERE questionid = #{questionid}
+
+    </select>
+    <select id="selectqueslist" resultType="AnalyseModel" >
+        SELECT * FROM analyse_model;
+    </select>
+
+    <select id="selectquestionid" parameterType="java.lang.Integer" resultType="AnalyseModel">
+     select * FROM analyse_model WHERE modelid = #{modelid}
+    </select>
+
+
+    <insert id="insertModelid" parameterType="AnalyseFlowprocess" useGeneratedKeys="true" keyProperty="id">
+       insert into analyse_flowprocess values (null,#{modelid},null);
+    </insert>
+
+
+    <!--<select id="selectAnalyseUnit" resultType="AnalyseUnit" >-->
+        <!--select * FROM analyse_unit;-->
+    <!--</select>-->
+    <select id="selectProcessName" parameterType="Integer" resultType="String">
+        SELECT analyseprocess.`name` FROM analyseprocess,analyse_flowprocess WHERE analyse_flowprocess.modelid=#{modelid} AND analyse_flowprocess.processid = analyseprocess.Id
+    </select>
+
+    <select id="selectAnalyseFlow" parameterType="Integer" resultType="analyseProcess">
+        SELECT * FROM analyseprocess WHERE analyseprocess.Id in (SELECT analyse_flowprocess.processid FROM analyse_flowprocess WHERE modelid=#{modelid})
+    </select>
+
+    <!--<select id="selectUnitid" parameterType="String" resultType="analyseUnit">-->
+        <!--SELECT * FROM analyse_unit where unitname = #{unitname}-->
+    <!--</select>-->
+
+    <update id="savedataPacket" parameterType="String">
+  update analyse_flowprocess SET databag=#{databag},resultdefine=#{resultdefine},flowprocessname=#{flowprocessname} where flowprocessid=#{flowprocessid}
+    </update>
+
+    <select id="selectAll" resultType="AnalyseInstance" parameterType="String">
+     SELECT * FROM analyse_instance WHERE modelinstancename like CONCAT('%',#{name},'%') AND  modelid = #{modelid};
+    </select>
+
+    <select id="selectS" resultType="AnalyticsTask" parameterType="String">
+     SELECT * FROM analytics_task WHERE modelInstanceId like CONCAT('%',#{name},'%');
+    </select>
+
+    <delete id="deleteAnalyse" parameterType="Integer" >
+        delete from analyse_model where modelid = #{modelid}
+    </delete>
+
+    <select id="selectLastflowprocessid" parameterType="Integer" resultType="Integer">
+        select max(flowprocessid) from analyse_flowprocess where modelid=#{modelid}
+    </select>
+
+    <select id="selectAllFlowProcess" parameterType="Integer" resultType="AnalyseFlowprocess">
+        SELECT * FROM analyse_flowprocess WHERE modelid =#{modelid}
+    </select>
+
+    <select id="selectProcessId" parameterType="Integer" resultType="AnalyseFlowprocess">
+        SELECT * FROM analyse_flowprocess WHERE flowprocessid =#{flowprocessid}
+    </select>
+</mapper>

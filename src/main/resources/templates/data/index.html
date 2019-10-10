@@ -1,0 +1,133 @@
+<!--<!DOCTYPE HTML>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">-->
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="Bookmark" th:href="@{/favicon.ico}"/>
+		<link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
+		<!--[if lt IE 9]>
+<script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+<script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+<![endif]-->
+		<link type="text/css" rel="stylesheet" th:href="@{/h-ui/css/H-ui.min.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+		<!--[if IE 6]>
+<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+		<title>城市地下空间工程大数据分析平台</title>
+		<meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+		<meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+	</head>
+	<body style="background-image: url(/image/bacground.jpg);background-size: 220%">
+<header class="navbar-wrapper"style="height: 60px;background-color: rgba(0,0,0,0)">
+			<div class="navbar navbar-fixed-top " style="height: 60px;background-color: rgba(0,0,0,0)">
+				<div class="container-fluid cl" style="height: 60px;background-color: #3E3939;background-color: rgba(0,0,0,0)">
+					<a th:href="@{/home}">
+				<img th:src="@{/temp/logo.png}" style="width: 4%;height: 100%;margin-top: 0.1%"/>
+				<span style="color: white;font-weight: bold;font-size: 1rem;margin-left:1%;margin-top: 1%;position: absolute;">城市地下空间工程大数据分析平台-数据建模</span>
+					</a></div>
+			</div>
+		</header>
+		<aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
+			<div class="menu_dropdown bk_2">
+				<dl id="menu-tongji">
+					<dt><a data-href="welcome" data-title="首页" href="javascript:void(0)" ><center><font color="white" >数据建模</font></center></a></dt>
+				</dl>
+	<dl id="menu" th:each="dataModelList:${dataModelList}" >
+        <dt th:id="${dataModelList.modelid}"   ><i class="Hui-iconfont" >&#xe620;</i><font color="white" th:text="${dataModelList.modelname}"  > </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dd>
+			<ul>
+				<li><a  th:id="'/data/datalinkshow/'+ ${dataModelList.modelid}" data-href="xxx" data-title="数据链" href="javascript:void(0)" >数据链</a></li>   <!--datalareashow-->
+				<li><a  th:id="'/data/datalareashow/'+ ${dataModelList.modelid}" data-href="xxx" data-title="数据区" href="javascript:void(0)" >数据区</a></li>
+                <li><a th:id="'/data/datablockbuild/'+ ${dataModelList.modelid}" data-href="datablockbuild" data-title="数据块" href="javascript:void(0)">数据块</a></li>
+				<li><a th:id="'/data/databaobuild/'+ ${dataModelList.modelid}" data-href="databaobuild" data-title="数据包" href="javascript:void(0)" >数据包</a></li>
+				<li><a th:id="'/data/dataAggrebuild/'+ ${dataModelList.modelid}" data-href="dataAggrebuild" data-title="数据集" href="javascript:void(0)">数据集</a></li>
+			</ul>
+		</dd>
+	</dl>
+				<!--data-href="questionbuild" href="javascript:void(0)"-->
+			</div>
+		</aside>
+		<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+		<section class="Hui-article-box" style="border-radius:10px;">
+			<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+				<div class="Hui-tabNav-wp">
+					<ul id="min_title_list" class="acrossTab cl">
+						<li class="active">
+							<span title="我的桌面" data-href="welcome">首页</span>
+							<em></em></li>
+					</ul>
+				</div>
+				<div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i
+						 class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i
+						 class="Hui-iconfont">&#xe6d7;</i></a></div>
+			</div>
+			<div id="iframe_box" class="Hui-article">
+				<div class="show_iframe">
+					<div style="display:none" class="loading"></div>
+					<iframe scrolling="yes" frameborder="0" th:src="@{/data/welcome}"></iframe>
+				</div>
+			</div>
+		</section>
+
+		<div class="contextMenu" id="Huiadminmenu">
+
+		</div>
+		<!--_footer 作为公共模版分离出去-->
+		<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+		<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+		<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+		<!--/_footer 作为公共模版分离出去-->
+
+		<!--请在下方写此页面业务相关的脚本-->
+		<script type="text/javascript" >
+
+                window.onload=function(){
+                    var businessid=document.getElementsByTagName("dt");
+                    for(var index=0;index<businessid.length;index++){
+                        businessid[index].onclick=function(){
+                            var id =  this.id;
+                            var datalinkshow="/data/datalinkshow/"+ id.toString();
+                            var datamodel = document.getElementById(datalinkshow);
+                            datamodel.setAttribute('data-href',datalinkshow);
+
+
+                            var id =  this.id;
+                            var datalareashow="/data/datalareashow/"+ id.toString();
+                            var dataareamodel = document.getElementById(datalareashow);
+                            dataareamodel.setAttribute('data-href',datalareashow);
+
+                            var questionhref="/data/datablockbuild/"+ id.toString();
+                            var question = document.getElementById(questionhref);
+                            question.setAttribute('data-href',questionhref);
+
+							var questionhref="/data/databaobuild/"+ id.toString();
+							var question = document.getElementById(questionhref);
+							question.setAttribute('data-href',questionhref);
+
+
+							var questionhref="/data/dataAggrebuild/"+ id.toString();
+							var question = document.getElementById(questionhref);
+							question.setAttribute('data-href',questionhref);
+
+
+                        }
+                    }
+                }
+
+		</script>
+
+
+	</body>
+</html>

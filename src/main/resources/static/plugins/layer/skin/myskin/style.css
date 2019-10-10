@@ -1,0 +1,18 @@
+@charset "utf-8";
+html #layui_layer_skinmyskinstylecss { display: none; position: absolute; width: 1989px; }
+body .layer-ext-myskin .layui-layer-title { background: #4183e1; color: #fff; }
+body .layer-ext-myskin .layui-layer-btn, body .layer-ext-myskin2 .layui-layer-btn { text-align: center; }
+body .layer-ext-myskin .layui-layer-btn a { background: #4183e1; }
+body .layer-ext-myskin .layui-layer-setwin .layui-layer-close1 { background: url(../../../../images/bomb/ico_close_w.png) no-repeat; }
+body .layer-ext-myskin .layui-layer-btn .layui-layer-btn1 { background: #bfbfbf; }
+body .layer-ext-myskin .layui-layer-btn .layui-layer-btn1:hover { opacity: 0.9; }
+body .layui-layer.layui-layer-dialog.layui-layer-border.layui-layer-msg.layer-ext-myskin.layer-anim { border: 1px solid #4183e1; box-shadow: 0 0 10px #4183e1; }
+body .layer-ext-myskin2 .msgbox { background-color: #fff; }
+body .layer-ext-myskin2 .msgbox img { margin: 0 auto; display: block; }
+body .layer-ext-myskin2 .msgbox h2 { color: #575757; display: block; font-size: 22px; font-weight: 600; line-height: 40px; margin: 15px 0; padding: 0; text-align: center; }
+body .layer-ext-myskin2 .msgbox p { color: #797979; font-size: 16px; font-weight: 300; line-height: normal; margin: 0; padding: 0; text-align: center; }
+body .layui-layer.layui-layer-msg.layer-ext-myskin2 { border-radius: 4px; box-shadow: 0 0 10px #fff; border: 0 none; }
+body .layer-ext-myskin2 .btns { text-align: center; }
+body .layer-ext-myskin2 .btns .btn { display: inline-block; margin: 20px 5px 10px; }
+body .layer-ext-myskin2 .btn-cancel { background: #d0d0d0; border-color: #d0d0d0; }
+body .layer-ext-myskin2 .btn-cancel:hover { background: #c8c8c8; border-color: #c8c8c8; }

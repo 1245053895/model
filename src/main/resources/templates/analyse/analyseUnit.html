@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <!--[if IE 6]>
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>图片列表</title>
+</head>
+<body>
+<script>
+    function jumpDialog() {
+
+    $("#modal-demo").modal("show");
+}
+</script>
+<input type="hidden" th:value="${modelid}" id="modelid"/>
+<input type="hidden" value="" id="unitid"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span>输入单元信息 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
+<!-- <select id="dataFuseSelect2" class="select" size="1"  name="dataBagSelect" style="color: #277de2;">
+
+ <option value="选择" >请选择所属流程</option>
+ <option value="融合算法1" th:text="${processname}" ></option>
+ <option value="融合算法2">流程2</option>
+</select>-->
+</div>
+
+<!--<div style="float: left;font-size:20px; font-weight:700;margin-left:1%;margin-top: 3%;">所属流程</div>-->
+<!--<div class="select-box" style="width: 15%;margin-left: 6%;margin-top: 3%;float: left;">-->
+    <!--&lt;!&ndash;<text  th:text="${processname}">   </text>&ndash;&gt;-->
+     <!--<select id="dataFuseSelect2" class="select" size="1"  name="dataBagSelect" style="color: #277de2;">-->
+         <!--<option  value="选择" selected>请选择所属流程...</option>-->
+         <!--<option  th:each="analyseFlowList:${analyseFlowList}" th:value="${analyseFlowList.id}"  th:text="${analyseFlowList.name}"  ></option>-->
+    <!--&lt;!&ndash; <option value="选择" >请选择所属流程</option>-->
+     <!--<option value="融合算法1" th:text="${processname}" ></option>-->
+     <!--<option value="融合算法2">流程2</option>&ndash;&gt;-->
+ <!--</select>-->
+<!--</div>-->
+<!--<div style="float: left;font-size:20px; font-weight:700;margin-left:20%;margin-top: 3%;">分析类型</div>-->
+<!--<div class="select-box" style="width: 15%;margin-left: 6%;margin-top: 3%;float: left;">-->
+    <!--<select id="dataFuseSelect" class="select" size="1"  name="dataBagSelect" style="color: #277de2;">-->
+        <!--<option value="选择" >请选择分析类型</option>-->
+        <!--<option value="融合算法1" >类型1</option>-->
+        <!--<option value="融合算法2">类型2</option>-->
+    <!--</select>-->
+<!--</div>-->
+
+<div class="panel panel-default" style=" width: 47%;height: 50vh;overflow-x: hidden;  overflow-y: auto; margin-top: 15vh;margin-left: 1%;">
+    <div class="panel-header">数据包要求：</div>
+    <textarea   id="savedataPacket"   style=" width: 98%;height: 40vh;overflow-x: hidden;  overflow-y: auto; margin-top: 1vh;margin-left: 1%;"></textarea>
+    <div class="panel-body" id="mathdecribe" ></div>
+</div>
+<div class="panel panel-default" style=" width: 47%;height: 50vh;overflow-x: hidden;  overflow-y: auto; margin-top: -50.3vh; margin-left: 49%;">
+    <div class="panel-header">结果定义：</div>
+    <textarea   id="resultDefine"   style=" width: 98%;height: 40vh;overflow-x: hidden;  overflow-y: auto; margin-top: 1vh;margin-left: 1%;"></textarea>
+    <div class="panel-body" id="viewdescribe" ></div>
+</div>
+<!--<a id="nextstep1" value="" onclick="save()" ><input class="btn btn-success radius" type="button" style="position: absolute;right: 10%;margin-top:  5%;" value="保存" /></a>-->
+<button onclick="jumpDialog()"   class="btn btn-success radius" style="position: absolute;right: 10%;margin-top:  5%;" >保存
+</button><!--th:href="@{'/unitflowPage/'+ ${unitid}}"-->
+<!--<a id="nextstep">-->
+    <!--<input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  5%;" value="下一步" onclick="selectUnitid()"/>-->
+<!--</a>-->
+</div>
+
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">分析单元保存</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                <strong>单元名称：</strong><input type="text" placeholder="请输入单元名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="saveSceneName();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript"></script>
+
+
+<script type="text/javascript">
+    function saveSceneName() {
+        /*window.alert("已保存成功！请按“确定”继续下一步。",1000);*/
+
+        if(document.getElementById('saveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        }
+
+        if(document.getElementById('savedataPacket').value == ""){
+            $.Huimodalalert('请输入数据包要求',2000);
+        }
+        if  (document.getElementById('resultDefine').value == ""){
+            $.Huimodalalert('请输入结果定义',2000);
+        }
+        else {
+            var data = {};//定义一个数组
+            data["modelid"] = [[${modelid}]];
+            data["dataPacket"] = document.getElementById('savedataPacket').value;
+            data["unitname"]=document.getElementById('saveName').value;
+            data["resultdefine"] = document.getElementById('resultDefine').value;
+            var dataToJson = JSON.stringify(data);
+            console.log(dataToJson);
+            $.ajax({
+                async: false,
+                type : "post",
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                data:dataToJson,
+                url : '/analyse/business',
+                success : function() {
+                 /*   alert(data);
+                   $("#unitid").val(data);*/
+                    /* alert(unitid);*/
+
+
+                }
+            });
+            $.Huimodalalert('保存成功',1000);
+        }
+
+    }
+
+
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    // function selectUnitid(){
+    //     var unitname = document.getElementById('saveName').value;
+    //     // alert(unitname);
+    //     var href = "/analyse/unitflowPage/"+ unitname;
+    //     document.getElementById("nextstep").setAttribute("href",href);
+    // }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.zt.mapper.data.DataBlockMapper">
+    <select id="selectBlockById" resultType="DatamodelBlock" parameterType="Integer">
+    SELECT * FROM datamodel_block WHERE modelid = #{modelid}
+    </select>
+    <select id="selectDataAreaResultById" resultType="DatamodelInfo" parameterType="Integer">
+    SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.dataarea is not null and datamodel_info.datablock is Null
+    </select>
+
+    <insert id="saveDataBlockResult" parameterType="String" >
+    INSERT INTO datamodel_block (modelid,blockname,createprocess,areaid) VALUES (#{modelid},#{blockname},#{flowchart},#{dataarea})
+    </insert>
+
+    <select id="selectAreaId" resultType="String" parameterType="String">
+    SELECT dataarea from datamodel_info where dataresultid = #{dataresultid}
+    </select>
+
+    <delete id="deleteblock" parameterType="String">
+        DELETE FROM datamodel_block WHERE datamodel_block.blockid = #{blockid}
+    </delete>
+
+    <select id="selectDataAreaResultByDatablock" resultType="DatamodelInfo" parameterType="String">
+    SELECT * FROM datamodel_info WHERE datamodel_info.datablock = #{datablock} AND datamodel_info.dataaddr is not null
+    </select>
+
+    <select id="selectBaoById" resultType="DatamodelBao" parameterType="Integer">
+    SELECT * FROM datamodel_bao WHERE modelid = #{modelid}
+    </select>
+
+    <select id="selectDataBlockResultById" resultType="DatamodelInfo" parameterType="Integer">
+    SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.datablock is not null
+    </select>
+
+
+    <select id="selectAreaName" resultType="String" parameterType="Integer">
+    SELECT areaname FROM datamodel_area WHERE areaid = (select areaid from datamodel_block where blockid=#{blockid})
+    </select>
+
+    <select id="selectCreateProcess" resultType="datamodelBlock" parameterType="Integer">
+    SELECT * FROM datamodel_block WHERE blockid=#{blockid}
+    </select>
+
+    <insert id="saveDataBaoResult" parameterType="String" >
+    INSERT INTO datamodel_bao (modelid,baoname,blockid) VALUES (#{modelid},#{baoname},#{blockid})
+    </insert>
+
+    <delete id="deletebao" parameterType="Integer">
+        DELETE FROM datamodel_bao WHERE datamodel_bao.baoid = #{baoid}
+    </delete>
+
+    <delete id="deletebaoFromInfo" parameterType="Integer">
+        DELETE FROM datamodel_info WHERE datamodel_info.databao = #{baoid}
+    </delete>
+
+    <select id="selectDataBaoByBaoName" resultType="String" parameterType="String">
+    SELECT baoid FROM datamodel_bao WHERE baoname = #{baoname}
+    </select>
+
+    <insert id="saveDataBaoCsvResult" parameterType="String" >
+       INSERT INTO datamodel_info (dataresultname,databao,datablock,modelid,dataaddr) VALUES (#{dataresultname},#{databao},#{blockid},#{modelid},#{dataaddr})
+    </insert>
+</mapper>

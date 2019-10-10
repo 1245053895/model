@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <!--[if IE 6]>
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title></title>
+</head>
+<body>
+<input type="hidden" th:value="${blockid}" id="blockid"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 业务问题 <span class="c-gray en">&gt;</span> 业务问题定位</span></a><span class="c-gray en">&gt;</span>业务问题定义 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><span class="c-gray en"><i class="Hui-iconfont">&#xe68f;</i></span></a></nav>
+<div class="page-container" style="position: absolute;width: 97%;height: 90%;">
+    <div class="left" style=" width: 45%;height: 100%;float: left;margin-top: 2%;margin-left: 2%;">
+    <div style=" height: 10%;width: 100%;">
+    <div style="font-size:14px; font-weight:700;line-height: normal;">问题名称</div>
+    <input type="text" placeholder="请输入.." class="input-text ac_input" name="name" value="" id="name" autocomplete="off" style="width: 70%;margin-top: -4.5vh;margin-left: 11%;"></div>
+    <div class="panel panel-default" style=" height: 31%;width: 89%; float: left;">
+            <div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">问题描述</div>
+        <textarea id="quesDescribe" style="height: 84%;width: 99.6%;"></textarea>
+
+    </div>
+        <div class="panel panel-default" style=" height: 42%; width: 89%;margin-top: 42%;">
+            <div class="panel-header">数学描述</div>
+            <textarea id="formulaDescribe" style="height: 88%;width: 99.6%;"></textarea>
+        </div>
+    </div>
+    <div class="right"style="width: 45%;height:100%;float: left;margin-top: 2%;margin-left: 2%;">
+    <div class="panel panel-default" style="height: 88%;width: 110%;float: left;margin-left: 3%;"><!---->
+        <div class="panel-header">可视化描述</div>
+        <button onclick="selectFile()" class="btn btn-success" type="button" style="margin-top: -7.5vh;margin-left: 82vh;">上传图片</button>
+      <!--  <input type="submit" class="btn btn-primary radius r" value="上传图片" style="margin-top: -4vh;margin-right: 4vh;">
+        <div style="float: left;font-size: 14px;font-weight: 700;margin-left: 7%;margin-top: 4vh;"></div>
+ -->
+
+   <!--     <form action="#" th:action="@{/upLoad}" th:object="${businessQuestion}" method="post" enctype="multipart/form-data">&lt;!&ndash;th:action="@{'/upLoad/'+${blockid}}"&ndash;&gt;
+           -->
+        <form id="myForm" method="post" enctype="multipart/form-data"><!--th:action="@{'/upLoad/'+${blockid}}"-->
+
+                <div id="headimg">
+                <!--<img src="${adminRole.adminpic}" style="width: 190px;height: 210px;">-->
+                <img src="#" style="width: 100%;height: 100%;margin-top: 0vh;display: none"><!--style="width: 190px;height: 210px;"-->
+            </div>
+  <!--          <div style="margin-top: 10px">-->
+    <!--        <input type="hidden" th:field="*{blockid}">-->
+                <input type="file" id="adminpic" multiple name="file" onchange="fileChange(this)" style="display: none">
+     <!--       <input type="text" th:name="${blockid}">-->
+               <!-- <button onclick="selectFile()" class="btn btn-success" type="button">上传图片</button>-->
+              <!--  <button id="btn_upload" class="btn btn-success" type="submit"  style="margin-left: 85vh;margin-top: 1vh;display: none">提交</button>&lt;!&ndash;style="display: none"&ndash;&gt;
+                -->
+            <script>
+                    function selectFile() {
+                        $('#adminpic').click();
+                    }
+                    function fileChange(fl) {
+                        $('#btn_upload').show();
+                        reads(fl.files[0]);
+                    }
+                    function reads(fil){
+                        var reader = new FileReader();
+                        reader.readAsDataURL(fil);
+                        reader.onload = function()
+                        {
+                            $("#headimg").html('<img src="'+reader.result+'" style="width: 100%;height: 100%;margin-top: 0vh;">');
+                        };
+                    }
+                </script>
+        <!--    </div>-->
+
+
+<!--            <div class="button_position" onclick="savequestion()" >-->
+               <!-- <input type="submit" class="btn btn-primary radius"  style="float: left;width: 9vh;height: 4vh;margin-top: 4vh; margin-left: 84vh;background-color: #5A98DE;color: white;border-color: #5A98DE;"value="保存">
+                -->
+               <!-- <input id="btn_upload" type="button" class="btn btn-primary radius"
+                       style="float: left;width: 9vh;height: 4vh;margin-top: 74vh; margin-left: 84vh;background-color: #5A98DE;
+                       color: white;border-color: #5A98DE;"
+                       value="保存" onclick="baocun2()" >&lt;!&ndash;onclick="baocun2()"&ndash;&gt;
+-->
+     <!--       </div>-->
+
+        </form>
+
+    </div>
+
+        <div style="float: right;margin-top: 2vh;margin-right:-11vh;">
+            <input id="btn_upload" type="button" class="btn btn-primary radius"
+                   style=" width: 9vh;height: 4vh;background-color: #5A98DE;color: white;border-color: #5A98DE"
+                   value="保存" onclick="baocun2()" ><!--onclick="baocun2()"-->
+
+        </div>
+
+
+
+    </div>
+</div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+    function baocun2() {
+        var questionname = $("#name").val();
+        if (document.getElementById('name').value == "") {
+            $.Huimodalalert('请输入问题名称', 2000);
+        } else {
+            /*var formData=new FormData($('#myForm')[0]);*/
+            var formData = new FormData();
+            var file = $('#adminpic')[0].files[0];
+            var blockid = [[${blockid}]];
+            var questiondes = $("#quesDescribe").val();
+            var formulatdes = $("#formulaDescribe").val();
+            formData.set("questionname", questionname);
+            formData.set("blockid", blockid);
+            formData.set("file", file);
+            formData.set("questiondes", questiondes);
+            formData.set("formulatdes", formulatdes);
+            /*     var formData=new FormData($('#myForm')[0]);*/
+            //alert(formData)
+            $.ajax({
+                type: "POST",
+                url: "/business/upLoad",
+              /*  url: "/uploadImg",*/
+                data: formData,
+                dataType: "json",
+                async: false,
+                cache: false,
+                processData: false, // 告诉jQuery不要去处理发送的数据 必须设置，否则无法传值
+                contentType: false, // 告诉jQuery不要去设置Content-Type请求头必须设置，否则无法传值
+                error: function (request) {
+
+                },
+                success: function (ret) {
+                    if (ret.code==1) {
+                        //$.Huimodalalert('保存成功,',1000);
+                       // window.location.href = ""
+                    }else {
+                        alert("error")
+                    }
+
+
+                }
+            });
+            $.Huimodalalert('保存成功，请返回业务问题',2000);
+        }
+    }
+</script>
+
+
+
+
+
+
+<script type="text/javascript" th:inline="javascript">
+
+
+/*    $("#btn_upload").click(function () {
+        var formData = new FormData(document.getElementById("fileForm"));
+    alert(formData);
+      /!*  var picture=$('#myForm');
+       alert(picture)
+        var formData=new FormData(picture);
+       alert(formData)*!/
+      /!*  var formData=new FormData($("#myForm")[0]);*!/
+        $.ajax({
+           type:"POST",
+            url:"/upLoad",
+      /!*      data:$('#myForm').serialize(),//序列化表单值*!/
+            data: formData,
+            dataType: "json",
+            async:false,
+            cache:false,
+            error:function (request) {
+
+            },
+            success:function (data) {
+               window.location.href=""
+
+            }
+        })
+    });*/
+
+   /* function savequestion(){
+        var questionname=$("#name").val() ;
+        if(document.getElementById('name').value == ""){
+            $.Huimodalalert('请输入问题名称',2000);
+        }else{
+            /!*var formData=new FormData($('#myForm')[0]);*!/
+            var blockid = [[${blockid}]];
+            var questiondes = $("#quesDescribe").val() ;
+            var formulatdes = $("#formulaDescribe").val() ;
+            var id= {
+                "questionname":questionname,
+                "blockid" : blockid,
+                "questiondes" : questiondes,
+                "formulatdes":formulatdes,
+               /!* "formData":formData*!/
+            };
+            $.ajax({
+                url : "/savedescribe",
+                type : "POST",
+                data : JSON.stringify(id),
+                dataType : 'json',
+                async:false,
+                cache:false,
+                processData: false,
+                contentType : false,
+                success : function(data) {
+
+                }
+            });
+            $.Huimodalalert('保存成功，请返回业务问题',2000);
+        }
+
+    }*/
+
+
+</script>
+    <!--/_footer 作为公共模版分离出去-->
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.data.DataAggregationMapper">
+    <insert id="saveDataPack" parameterType="String" >
+      insert into datamodel_ji (jiname,jitype,jitime,baoid,modelid) values (#{jiname},#{jitype},#{jitime},#{baoid},#{modelid});
+    </insert>
+    <insert id="saveModelName" parameterType="String">
+        insert into datamodel_name (modelname) values (#{modelname})
+    </insert>
+
+    <select id="selectDataCollect" resultType="DatamodelJi" parameterType="Integer" >
+        SELECT * FROM datamodel_ji WHERE jiid = #{jiid};
+    </select>
+
+    <select id="selectDataCollec" resultType="DatamodelJi" parameterType="Integer" >
+        SELECT * FROM datamodel_ji WHERE modelid = #{modelid};
+    </select>
+    <select id="selectDataPack" resultType="DatamodelBao" parameterType="Integer" >
+        SELECT * FROM datamodel_bao WHERE modelid = #{modelid};
+    </select>
+    <select id="selectDataBaoByBaoId" resultType="DatamodelBao" parameterType="Integer" >
+        SELECT * FROM datamodel_bao WHERE baoid = #{baoid};
+    </select>
+    <select id="findByPacknameLike" resultType="DatamodelBao" parameterType="String">
+        SELECT * FROM datamodel_bao WHERE baoname like (#{ name }) AND modelid =#{modelid};
+    </select>
+    <delete id="deletDataCollect" parameterType="Integer">
+        DELETE FROM datamodel_ji WHERE jiid=#{datacollecid}
+    </delete>
+
+    <insert id="addDatamoddelName" parameterType="DatamodelName" useGeneratedKeys="true" keyProperty="modelid">
+        insert into datamodel_name values (null,#{modelname},#{modeltime},#{questionid});
+    </insert>
+</mapper>

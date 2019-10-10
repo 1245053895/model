@@ -1,0 +1,166 @@
+body{
+    text-align: center;
+}
+#root{
+    width:100%;
+    height:92vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+#left{
+    width:205px;
+    height:80vh;
+    padding:0px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: flex ;
+    flex-wrap:wrap;
+    flex-flow: column;
+    justify-content: space-between;
+    margin-left: 0.2%;
+}
+.xxiasna{
+    border: 2px solid darkgray;
+    width: 204px;
+    height: 15.5vh;
+    position: absolute;
+    margin-top: 41.5%;
+    margin-left: 0.2%;
+
+}
+.btnposition{
+    margin-top: 7%;
+    width: 150px;
+    margin-left: -11%;
+}
+.btnposition2{
+    margin-top: 15%;
+    width: 150px;
+    margin-left: -11%;
+}
+
+
+
+.node {
+    /*box-shadow: 2px 2px 19px #aaa;*/
+    border-radius:6px;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    border: 0px solid #346789;
+    width: 70px;
+    text-align: center;
+    z-index: 20;
+    /*background-color: #eeeeef;*/
+    color: black;
+    padding: 10px;
+    font-size: 9pt;
+    cursor: pointer;
+    height: 50px;
+    /*line-height: 50px;*/
+    /*background: lightskyblue;*/
+}
+.node:hover {
+    box-shadow: 2px 2px 19px #444;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+.node2css{
+    /*background:orange;*/
+}
+.node3css{
+    /*background: indianred;*/
+}
+.node4css{
+    /*background: greenyellow;*/
+}
+#right{
+    width:calc(100% - 260px);
+    height:92vh;
+    /*border:2px solid olivedrab;*/
+    box-sizing: border-box;
+}
+.content{
+    border-top: 1px solid #ddd;
+}
+
+/*#myDropDown{*/
+    /*width:80px;*/
+    /*height:30px;*/
+    /*border:2px solid blue;*/
+/*}*/
+.righttop1{
+    width: 100%;
+    height: 80vh;
+    border: 1px solid #ddd;
+}
+.righttop1_topText{
+    width: 100%;
+    height: 5vh;
+    text-align: center;
+    line-height: 5vh;
+    background-color:#f5f5f5;
+    color: #444;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#main{
+    width: 100%;
+    height: 77vh;
+     /*border: 1px solid red;*/
+    margin-top: 0%;
+}
+.imgsize{
+    width: 10%;
+    height: 7vh;
+}
+.rightButton1{
+    border: 1px solid #555;
+    width: 100%;
+    height: 16vh;
+    margin-top: 1%;
+}
+
+.rightButton1_topText{
+    width: 100%;
+    height: 3vh;
+    color: white;
+    background-color:#5B96D7;
+}
+.rightButton1_lowerText{
+    width: 100%;
+    height: 13vh;
+    /*border: 1px solid red;*/
+}
+
+
+.dataInforArea{
+    width: 100%;
+    height: 80%;
+}
+.rowAreaHeight1{
+    height: 13vh;
+    width: 100%;
+    /*border: 1px solid black;*/
+}
+
+.rowAreaHeight1_1{
+    height: 13vh;
+    width: 100%;
+    /*border: 1px solid black;*/
+}
+
+.rowAreaHeight1_2{
+    height: 4vh;
+    width: 100%;
+    border: 1px solid blue;
+}
+
+.uuidarea{
+    /*visibility: hidden;*/
+}
+
+.inputarea1{
+    height: 11vh;
+}

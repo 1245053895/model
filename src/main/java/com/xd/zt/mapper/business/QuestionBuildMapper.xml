@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.business.QuestionBuildMapper">
+    <select id="selectbusinessquestion" parameterType="String" resultType="businessQuestion">
+        SELECT * FROM business_question WHERE businessid = #{businessid};
+    </select>
+<!--    <select id="selectAllSceneNode" resultType="businessScene" parameterType="Integer">
+        SELECT business_scene.scenename,jsplumbblock.blockContent FROM business_scene,jsplumbblock where businessid = #{businessid} AND business_scene.blockid=jsplumbblock.id
+    </select>-->
+    <select id="selectAllSceneNode" resultType="businessScene" parameterType="Integer">
+        SELECT * FROM business_scene where businessid = #{businessid}
+    </select>
+
+    <select id="selectObjectNode" resultType="String" parameterType="Integer">
+        SELECT blockName FROM jsplumbblock where id = #{blockid}
+    </select>
+    <select id="selectChildNodes" resultType="jsPlumbBlock" parameterType="Integer">
+     select jsplumbblock.id,jsplumbblock.blockName from jsplumbblock where id in (select block_id from pro_block where pro_block.project_id in (select blockprocessid from business_scene where sceneid = #{sceneid}))
+    </select>
+
+    <select id="selectsceneid" parameterType="String" resultType="String">
+        SELECT sceneid FROM business_scene WHERE blockid = #{blockid}
+    </select>
+
+    <insert id="insertquestion" parameterType="String">
+        INSERT  INTO business_question (businessid,blockid,sceneid) VALUES (#{businessid},#{blockid},#{sceneid})
+    </insert>
+
+    <insert id="savedescribe" parameterType="String" >
+UPDATE business_question SET questioname=#{questioname}, questiondes=#{questiondes},formulatdes=#{formulatdes} WHERE business_question.blockid = #{blockid}
+    </insert>
+
+    <delete id="deletequestion" parameterType="String">
+        DELETE FROM business_question WHERE questionid=#{questionid}
+    </delete>
+
+    <select id="selectquestionbyblockid" parameterType="String" resultType="BusinessQuestion">
+        SELECT * FROM business_question WHERE blockid=#{blockid}
+    </select>
+
+    <update id="updatePicture" parameterType="businessQuestion">
+        UPDATE business_question SET picture=#{picture} WHERE blockid=#{blockid}
+    </update>
+</mapper>

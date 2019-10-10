@@ -1,0 +1,170 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+    margin:0;
+    padding:0;
+}
+.node {
+            box-shadow: 2px 2px 19px #aaa;
+            -o-box-shadow: 2px 2px 19px #aaa;
+            -webkit-box-shadow: 2px 2px 19px #aaa;
+            -moz-box-shadow: 2px 2px 19px #aaa;
+            -moz-border-radius: 0.5em;
+            border-radius: 0.5em;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+            border: 1px solid #346789;
+            width: 150px;
+            /*line-height: 40px;*/
+            text-align: center;
+            z-index: 20;
+            position: absolute;
+            background-color: #eeeeef;
+            color: black;
+            padding: 10px;
+            font-size: 120%;
+            cursor: pointer;
+            height: 50px;
+            line-height: 50px;
+        }
+        .radius {
+            border-radius: 25em;
+        }
+        .node:hover {
+            box-shadow: 2px 2px 19px #444;
+            -o-box-shadow: 2px 2px 19px #444;
+            -webkit-box-shadow: 2px 2px 19px #444;
+            -moz-box-shadow: 2px 2px 19px #444;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+        }
+
+.flowAllArea{
+    width: 100%;
+    height: 100vh;
+}
+
+#left {
+	width: 15%;
+	height: 99vh;
+    border: gray 1px solid ;
+	float: left;
+	margin: 0 auto;
+}
+
+#right {
+	width: 70%;
+	height: 99vh;
+	background-color: white;
+	float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#properties {
+    width: 14.5%;
+    height: 99vh;
+    border: gray 1px solid;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn_saveF{
+    width: 80px;
+    height: 5vh;
+    color: white;
+    margin-top: 10%;
+    border-radius: 10px;
+    background-color: #004684;
+}
+.btn_deleteF{
+    width: 80px;
+    height: 5vh;
+    color: white;
+    margin-top: 10%;
+    border-radius: 10px;
+    background-color: #004684;
+}
+.nodeInfo{
+    width: 100%;
+    height: 83vh;
+    color: white;
+    margin-top: 10%;
+    border-top: 1px solid #777;
+}
+#node1{
+    float: left;
+    width: 150px;
+    height: 49px;
+    position: relative;
+    margin-left: 30px;
+    margin-top: 20px;
+    font-size: 120%;
+}
+
+
+#node2{
+    float: left;
+    width: 150px;
+    height: 49px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 120%;
+}
+
+#node3{
+    float: left;
+    width: 150px;
+    height: 49px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 120%;
+}
+
+
+/*#node3{
+    width: 60px; 
+    height: 60px; 
+    margin: 10px 0 0 10px; 
+    position: relative;
+    float: left;
+    margin-top: 40px;
+    margin-left: 110px;
+    transform-origin: 0 100%; 
+    transform:rotate(-45deg); 
+    background: #eeeeef;
+}*/
+
+.n3-text{
+    width:60px;
+    height:60px;
+    line-height:60px;
+    text-align:center;
+    display: block;
+    position: absolute;
+    font-size:120%;
+    transform:rotate(45deg);
+}
+
+#node4{
+    float: left;
+    width: 150px;
+    height: 49px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 120%;
+}
+
+
+
+/*#node3{
+    float: left;
+    width: 150px;
+    height: 49px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 120%;
+}*/

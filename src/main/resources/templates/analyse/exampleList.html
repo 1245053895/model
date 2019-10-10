@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<input type="hidden" th:value="${modelid}" id="modelid"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>  <span class="c-gray en"></span> 分析模型实例 <span class="c-gray en">&gt;</span> 实例列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">模型实例列表
+            <a th:href="@{'/analyse/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>
+        </div>
+        <div class="panel-body">
+            <div >
+                <!--实现模糊搜索-->
+                <form method="get" action="#" th:action="@{/analyse/exampleList}" id="searchForm">
+                <input type="text" placeholder="请输入关键词" class="input-text ac_input"   name="name" th:value="${name}"
+                id="search_text" autocomplete="off" style="width:30%">
+                <input type="hidden"  name="modelid" th:value="${modelid}"
+                autocomplete="off" style="width:30%">
+                <button type="submit" class="btn btn-default" id="search_button" onclick="$('#searchForm').submit()">
+                搜索
+                </button>
+                &nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${analyseInstanceList.size()}"></a>&nbsp;&nbsp;个分析模型实例】
+                </form>
+            </div>
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >分析模型实例id</th>
+                        <th >分析模型实例名</th>
+                        <!--<th >任务状态</th>-->
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="text-c" th:if="${analyseInstanceList.size()} eq 0">
+                            <td colspan="3">当前未上传数据</td>
+                        </tr>
+                     <!--     <tr class="text-c">
+                         <td colspan="4">当前未上传数据</td>
+                     </tr>-->
+
+                        <tr class="text-c"  th:each="analyseInstanceList:${analyseInstanceList}">
+                            <td ><a th:text="${analyseInstanceList.modelinstanceid}" th:href="@{'/analyse/ExampleView/'+${analyseInstanceList.modelinstanceid}}"></a></td>
+                            <td ><a th:text="${analyseInstanceList.modelinstancename}" th:href="@{'/analyse/ExampleView/'+${analyseInstanceList.modelinstanceid}}"></a></td>
+                            <!--<td><a style="cursor:pointer" class="text-primary" th:text="${analyseInstanceList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>-->
+                            <!--<td th:text="${analyseInstanceList.examplestatus}"></td>-->
+                            <td>
+                                <a  >
+                                    <input th:id="${analyseInstanceList.modelinstanceid}" class="btn btn-primary size-MINI radius" type="button" value="运行" >
+                                </a>
+                                <a   >
+                                    <input th:id="${analyseInstanceList.modelinstanceid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >
+                                </a>
+
+                            </td>
+                        </tr>
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    window.onload=function() {
+        var oLis = document.getElementsByTagName("input");
+        for (var index = 0; index < oLis.length; index++) {
+            oLis[index].onclick = function () {
+                var id = this.id;
+                var value = this.value;
+                if (value == "删除") {
+                    if (confirm("确定要删除此问题？")) {
+                        var exampleid = {
+                            "exampleid": id
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(exampleid),
+                            url: '/analyse/exampleDelete',
+                            success: function () {
+                                $.Huimodalalert('删除成功', 1000);
+                                location.reload(true);
+                            }
+                        });
+                        location.reload(true);
+                    }
+                    else {
+                    }
+                }
+                if (value == "运行") {
+                    if (confirm("确定要运行？")) {
+                        var exampleid = {
+                            "exampleid": id
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(exampleid),
+                            url: '/analyse/exampleRun',
+                            success: function () {
+                                    $.Huimodalalert('已添加运行任务', 1000);
+                            },
+                            error:function () {
+                                $.Huimodalalert('已添加运行任务', 1000);
+                            }
+                        });
+                            }
+                    }
+                else{
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
+

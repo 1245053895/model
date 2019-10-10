@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.zt.mapper.analyse.AnalyseMapper">
+    <select id="selectAnalyseModel" resultType="AnalyseModelProcess">
+      SELECT * FROM analyse_model_process where analysemodelid=#{analysemodelid}
+    </select>
+    <insert id="insertAnalyseModel" parameterType="String">
+      INSERT analyse_model_process (modelname,modelprocess,analysemodelid) VALUES (#{modelname},#{modelprocess},#{analysemodelid})
+    </insert>
+    <delete id="deleteModel" parameterType="String">
+        DELETE FROM analyse_model_process WHERE modelid=#{modelid}
+    </delete>
+    <delete id="deleteanalyseprocess" parameterType="Integer">
+        DELETE FROM analyse_flowprocess WHERE  processid=#{processid}
+    </delete>
+    <select id="selectAnalyseProcess" parameterType="Integer" resultType="String">
+        SELECT analyse_model_process.modelprocess FROM analyse_model_process WHERE modelid =#{modelid}
+    </select>
+    <update id="updateAnalyse" parameterType="String" >
+        UPDATE analyse_model_process SET modelname=#{modelname} ,modelprocess=#{modelprocess} WHERE modelid=#{modelid}
+    </update>
+
+    <select id="selectAnalyseExample" parameterType="Integer" resultType="AnalyseInstance">
+        SELECT * FROM analyse_instance WHERE modelid=#{modelid}
+    </select>
+
+    <insert id="insertExample" parameterType="String" >
+        INSERT INTO analyse_instance (modelid,modelinstancename,parameters) VALUES (#{modelid},#{modelinstancename},#{parameters})
+    </insert>
+
+    <delete id="deleteExample" parameterType="String">
+        DELETE FROM analyse_instance WHERE modelinstanceid=#{modelinstanceid}
+    </delete>
+
+    <select id="selectParams" parameterType="String" resultType="String">
+        SELECT parameters FROM analyse_instance WHERE modelinstanceid=#{modelinstanceid}
+    </select>
+
+    <select id="selectModelid" parameterType="Integer" resultType="Integer">
+        SELECT modelid FROM analyse_instance WHERE modelinstanceid=#{modelinstanceid}
+    </select>
+    
+    <select id="selectInstanceName" parameterType="String" resultType="String">
+        SELECT modelinstanceid FROM analyse_instance WHERE modelinstancename = #{modelinstancename}
+    </select>
+
+    <select id="selectTask" resultType="AnalyticsTask">
+     SELECT analytics_task.id,analytics_task.`timestamp`,analytics_task.`status`,analytics_task.modelInstanceId,analytics_task.result,analytics_task.complete_time FROM analytics_task
+    </select>
+
+
+    <select id="selectAlgorithm" resultType="Algorithm">
+        SELECT * FROM `algorithm`
+    </select>
+
+    <select id="selectAlgorithmParams" parameterType="String" resultType="Algorithm">
+        SELECT * FROM `algorithm` WHERE `algorithm`.algorithmname=#{algorithmname}
+    </select>
+
+    <select id="selectProcessid" parameterType="String" resultType="Integer">
+        select processid FROM analyse_flowprocess WHERE  flowprocessid=#{flowprocessid}
+    </select>
+</mapper>

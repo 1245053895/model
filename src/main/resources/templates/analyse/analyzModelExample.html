@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+	<!--[if IE 6]>
+	<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title></title>
+</head>
+<body>
+<input type="hidden" th:value="${modelprocess}" id="proc_Elements"/><input type="hidden" th:value="${modelid}" id="modelid"/><input th:each="params:${params}" type="hidden" th:value="${params.algorithmparams}" th:id="${params.algorithmname}"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析模型实例 <span class="c-gray en">&gt;</span> 新建分析模型实例  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" style="position: absolute;width: 97%;height: 90%;">
+
+	<div class="panel panel-default" style="width: 97%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
+		<div class="panel-header">建立分析模型实例
+			<!--模型预览&nbsp;&nbsp;&nbsp;&nbsp;-->
+			<!--模型名称：<a th:text="${analyzAndParam.procName}"></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+			<!--修改时间：<a th:text="${analyzAndParam.time}"></a>-->
+			<!--<p id="proc_Elements" th:text="${analyzAndParam.proc_Elements}" style="display: none"></p>-->
+			<!--<p id="param1" th:text="${analyzAndParam.param1_form}" style="display: none"></p>-->
+			<!--<p id="param2" th:text="${analyzAndParam.param2_form}" style="display: none"></p>-->
+			<!--<p id="param3" th:text="${analyzAndParam.param3_form}" style="display: none"></p>-->
+			<!--<p id="param4" th:text="${analyzAndParam.param4_form}" style="display: none"></p>-->
+			<a href="#"><input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;" value="保存" onclick="jumpDialog()" /></a>
+			<a th:href="@{'/analyse/exampleList/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>
+		</div>
+		<div class="panel-body" id="model_content">
+
+		</div>
+	</div>
+
+	<div class="panel panel-default" style="width: 43%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header">参数设置</div>
+		<!--<form method="post" class="loginForm" >-->
+			<div class="panel-body" id="params_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+
+		</div>
+
+	</div>
+
+	<div class="panel panel-default" style="width: 52%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header">运行日志</div>
+	</div>
+	<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- 弹出对话框 -->
+		<div class="modal-dialog">
+			<div class="modal-content radius">
+				<div class="modal-header">
+					<h3 class="modal-title">分析模型实例保存</h3>
+					<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+				</div>
+				<div class="modal-body">
+					<strong>名称：</strong><input type="text" placeholder="请输入分析模型实例名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+    //获取
+    $(document).ready(function(){
+        get_Proc_Elements();
+    });
+
+
+    $(document).ready(function(){
+        $('#choose').click(function(){
+            $('#fileField').click();
+        });
+
+    });
+
+    $(document).ready(function(){
+        $('#choose1').click(function(){
+            $('#fileField1').click();
+        });
+
+    });
+
+	function get_Proc_Elements() {
+        var proc_Elements = document.getElementById('proc_Elements').getAttribute("value");
+        var proc_Elements_Arr = proc_Elements.split(';');
+        for (var i = 0; i < proc_Elements_Arr.length; i++) {
+            var proc_element = proc_Elements_Arr[i];
+            add(proc_element);//实现按钮回显
+            if (proc_element != '开始' && proc_element != '结束') {
+                switchParam_form(proc_element);
+            }
+            else {
+            }
+        }
+    }
+
+
+
+    function jumpDialog() {
+        $("#modal-demo").modal("show");
+    }
+
+    function save() {
+        if(document.getElementById('saveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        }
+        else {
+            var modelid = document.getElementById('modelid').getAttribute('value');
+            var algorithmname = document.getElementById('proc_Elements').getAttribute("value");
+            var algorithmnameArr = algorithmname.split(';');
+            var analyzmodelArr = "[]";
+            var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
+            for (var i = 1; i < algorithmnameArr.length-1; i++) {
+                var name = algorithmnameArr[i];
+                jsonObj = $('.'+name).serializeObject();
+
+               var instance = {
+              		"name" : name,
+                	"params": jsonObj
+               };
+              analyzmodelJsonArr.push(instance);
+			   }
+			   var analyzmodel = JSON.stringify(analyzmodelJsonArr);
+                }
+            var examplename =  document.getElementById('saveName').value;
+            var example ={
+                "modelid": modelid,
+                "examplename": examplename,
+                "analyzmodel" : analyzmodel
+            };
+            $.ajax({
+                async: false,
+                type : "post",
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                data: JSON.stringify(example),
+                url : '/analyse/saveExample',
+                success : function(data) {
+                    if(data.code ==1){
+                    $.Huimodalalert('保存成功',1000);}
+                    else {
+                        $.Huimodalalert('已存在实例名，请重新保存',1000);
+					}
+
+                    //传输成功后延时500ms跳转到模型列表
+                    // window.setTimeout("window.location = '/'",1500);
+                    //这两种写法都可以
+                    /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+                }
+            });
+
+
+    }
+//form表单生成jSON对象
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [ o[this.name] ];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+
+    //初始化删除按钮
+    function init() {
+        $(".algorithm_elements").mouseenter(function () {
+            $(this).find(".delete").show();
+
+        });
+
+        $(".algorithm_elements").mouseleave(function () {
+            $(this).find(".delete").hide();
+        });
+
+        //执行删除操作
+        $('.delete').click(function(){
+            $(this).parent().parent().remove();
+        })
+    }
+
+
+    //统计开始和结束个数
+    function countStart(){
+        var inputs_start = $("#model_content input[value='开始']");
+        return inputs_start.length;
+    }
+    function countStop(){
+        var inputs_stop = $("#model_content input[value='结束']");
+        return inputs_stop.length;
+    }
+
+
+    //添加算法图标及信息,逻辑判断信息.此处由于用于回显，故注掉init(),屏蔽删除按钮
+    function add(value){
+        var num_start = countStart();
+        var num_stop = countStop();
+        if(num_start == 0 && value != '开始'){
+            $.Huimodalalert('请先添加【开始】',2000);
+        }
+        else if(num_start >0 && value == '开始'){
+            $.Huimodalalert('单个模型只能添一个【开始】',2000);
+        }
+        else if(num_stop >0){
+            $.Huimodalalert('【结束】后不能再添加元素',2000);
+        }
+        else{
+            // relation_detail(value);
+            // switchParam_form(value);
+
+            if(value != '结束'){
+                $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                    + value
+                    +"' onclick='switchParam(value);'/>"+"<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>"+"<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+                // init();
+
+            }
+            else{
+                $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                    + value
+                    +"' onclick='switchParam(value);'/>"+"<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>"+"</div>");
+                // init();
+            }
+        }
+    }
+
+
+function switchParam_form(value) {
+
+var paramsArr = new Array();
+       paramsArr.push("<div id='a"+ value +"' style='display: none' class='paramsdiv'><form method='post' class='"+ value +"' >");
+        var algorithmParams = document.getElementById(value).getAttribute("value");
+        var algorithmParams_Arr = algorithmParams.split(';');
+        for (var i=0; i<algorithmParams_Arr.length;i++) {
+            var param = algorithmParams_Arr[i];
+           paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>"+param+"</div>"+ "<input type='text' placeholder='请输入..' class='input-text ac_input' name='"+param+"' value='' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+        }
+       paramsArr.push("</form></div>");
+    $("#params_text").append(paramsArr.join("\n"));
+}
+function switchParam(value) {
+    $(".paramsdiv").hide(300);
+    $("#a"+value).show(300);
+}
+
+    //切换算法对应信息
+    // function relation_detail(value){
+    //     // 代替switch语句
+    //     const getPosition = position => {
+    //         const positions = {
+    //             '马尔可夫': '马尔可夫：马尔可夫分析法（markov analysis）又称为马尔可夫转移矩阵法，是指在马尔可夫过程的假设前提下，通过分析随机变量的现时变化情况来预测这些变量未来变化情况的一种预测方法。',
+    //            /* '随机摄动': '随机摄动：该算法通过对每一次进化计算后记忆中的最优粒子进行随机摄动操作来提高解的精度和算法的搜索效率，同时通过对种群中的最差粒子重新进行初始化来保持种群的多样性以避免陷入局部最优解。通过典型复杂函数测试表明，随机摄动粒子群优化算法的优化性能和效率远远超过基本粒子群优化算法。',
+    //            */ '蒙特卡洛': '蒙特卡洛：蒙特卡罗法也称统计模拟法、统计试验法。是把概率现象作为研究对象的数值模拟方法。是按抽样调查法求取统计值来推定未知特性量的计算方法。蒙特卡罗是摩纳哥的著名赌城，该法为表明其随机抽样的本质而命名。故适用于对离散系统进行计算仿真试验。在计算仿真中，通过构造一个和系统性能相近似的概率模型，并在数字计算机上进行随机试验，可以模拟系统的随机特性。',
+    //             '重要抽样': '重要抽样：重要抽样法是最有效的蒙特卡罗技巧之一，其主要思想是，它不从给定的概率分布函数中进行抽样，而是对所给定的概率分布进行修改，使得对模拟结果有重要贡献的部分多出现，从而达到提高效率，减少模拟的时间，以及缩减方差的目的',
+    //             '开始':'建模开始',
+    //             '结束':'建模结束',
+    //             default:'创建模型'
+    //         };
+    //         return positions[position] || positions.default;
+    //     }
+    //     const res = getPosition(value) ;
+    //     $('#detail_text').empty();
+    //     document.getElementById('detail_text').innerHTML="<p>"+res+"</p>";
+    // }
+
+    //切换算法配置信息,回显参数表格
+//     function switchParam_form(value){
+//         $(".param_form_group").hide(300);
+//         const getPosition = position => {
+//             const positions = {
+//                 '马尔可夫': 'param1',
+//             /*    '随机摄动': 'param2',*/
+//                 '蒙特卡洛': 'param3',
+//                 '重要抽样': 'param4',
+//                 '开始':'start_information',
+//                 '结束':'stop_information',
+//                 default:'start_information'
+//             };
+//             return positions[position] || positions.default;
+//         }
+//         const res = getPosition(value) ;
+//
+//         //将参数名称与参数组合拼接形成表格，此处代码重复较多，待优化
+//         var param_name1_Arr= ["性能退化参数个数","参数最大失效阈值"];
+//         var param_name2_Arr= ["参数1","参数2","参数3","参数4","参数5","参数6"];
+//         var param_name3_Arr= ["参数1"];
+//         var param_name4_Arr= ["参数1","参数2","参数3","参数4","参数5"];
+//
+//         var pre_str = "<table class='table table-border table-bordered table-hover table-bg table-sort'> <thead> <tr class='text-c'> <th>参数名称</th> <th>参数值</th> </tr> </thead> <tbody> "
+//         var suf_str = "</tbody></table>";
+//
+//
+//         if (res == 'param1'){
+//             var proc_Elements =	document.getElementById(res).innerHTML;
+//             var proc_Elements_Arr = proc_Elements.split(';');
+//             var body_str = "";
+// 			for (var i= 0;i<param_name1_Arr.length;i++) {
+//                 body_str =  body_str+ " <tr class='text-c'> <td >"+param_name1_Arr[i]+"</td> <td >"+proc_Elements_Arr[i]+"</td> </tr>";
+//             }
+//     		document.getElementById("param_text").innerHTML = pre_str+body_str+suf_str;
+// 		}
+// /*		else if (res == 'param2') {
+//             var proc_Elements =	document.getElementById(res).innerHTML;
+//             var proc_Elements_Arr = proc_Elements.split(';');
+//             var body_str = "";
+//             for (var i= 0;i<param_name2_Arr.length;i++) {
+//                 body_str =  body_str+ " <tr class='text-c'> <td >"+param_name2_Arr[i]+"</td> <td >"+proc_Elements_Arr[i]+"</td> </tr>";
+//             }
+//             document.getElementById("param_text").innerHTML = pre_str+body_str+suf_str;
+// 		}*/
+//         else if (res == 'param3') {
+//             /*var proc_Elements =	document.getElementById(res).innerHTML;
+//             var proc_Elements_Arr = proc_Elements.split(';');
+//             var body_str = "";
+//             for (var i= 0;i<param_name3_Arr.length;i++) {
+//                 body_str =  body_str+ " <tr class='text-c'> <td >"+param_name3_Arr[i]+"</td> <td >"+proc_Elements_Arr[i]+"</td> </tr>";
+//             }
+//             document.getElementById("param_text").innerHTML = pre_str+body_str+suf_str;*/
+//             document.getElementById("param_text").innerHTML = "<p>暂无历史参数</p>" +
+//                 "<p>暂无历史参数</p>";
+//         }
+//         else if (res == 'param4') {
+//           /*  var proc_Elements =	document.getElementById(res).innerHTML;
+//             var proc_Elements_Arr = proc_Elements.split(';');
+//             var body_str = "";
+//             for (var i= 0;i<param_name4_Arr.length;i++) {
+//                 body_str =  body_str+ " <tr class='text-c'> <td >"+param_name4_Arr[i]+"</td> <td >"+proc_Elements_Arr[i]+"</td> </tr>";
+//             }
+//             document.getElementById("param_text").innerHTML = pre_str+body_str+suf_str;*/
+//             document.getElementById("param_text").innerHTML = "<p>暂无历史参数</p>" +
+//                 "<p>暂无历史参数</p>";
+//         }
+//         else if(res == 'start_information'){
+//             document.getElementById("param_text").innerHTML = "<p>建模工具的步骤：</p>" +
+//                 "<p>建模工具的注意事项：</p>";
+// 		}
+//         else if(res == 'stop_information'){
+//             document.getElementById("param_text").innerHTML = "<p>模型的保存：</p>" +
+//                 "<p>建模的调用注意事项：</p>";
+//         }
+//     }
+	
+	/*]]>*/
+</script>
+</body>
+</html>

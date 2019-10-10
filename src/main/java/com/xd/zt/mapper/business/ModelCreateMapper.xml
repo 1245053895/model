@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.business.ModelCreateMapper">
+    <select id="selectmodelcreate" parameterType="Integer" resultType="jsPlumbBlock">
+SELECT jsplumbblock.blockName,jsplumbblock.id
+FROM business_model,analyseprocess,pro_block,jsplumbblock
+WHERE business_model.processid=analyseprocess.Id
+AND analyseprocess.Id=pro_block.project_id
+AND pro_block.block_id=jsplumbblock.id
+AND business_model.businessid=#{businessid}
+    </select>
+    <insert id="insertblockid" parameterType="String" >
+INSERT INTO business_scene (businessid,blockid)
+values (#{businessid},#{blockid})
+    </insert>
+
+    <select id="selectMaxSceneId" parameterType="String" resultType="String">
+        SELECT MAX(sceneid) FROM business_scene WHERE businessid = #{businessid}
+    </select>
+
+    <select id="selectlastprocessid"  resultType="Integer">
+        SELECT analyseprocess.id FROM analyseprocess WHERE id=(SELECT MAX(id) FROM analyseprocess)
+    </select>
+
+    <update id="insertsceneprocessid" parameterType="String"  >
+UPDATE business_scene SET blockprocessid=#{blockprocessid} WHERE sceneid=#{sceneid}
+    </update>
+
+    <select id="selectbusinessprocess" parameterType="String" resultType="String">
+        SELECT processid FROM business_model WHERE businessid=#{businessid}
+    </select>
+
+    <update id="insertbusinessprocessid" parameterType="String"  >
+UPDATE business_model SET processid=#{processid} WHERE businessid=#{businessid}
+    </update>
+
+    <select id="reviewsceneprocess" parameterType="Integer" resultType="Integer">
+        SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}
+    </select>
+
+    <select id="selectsceneblockid" parameterType="Integer" resultType="String">
+SELECT jsplumbblock.blockName FROM business_scene,jsplumbblock
+WHERE business_scene.blockid=jsplumbblock.id AND business_scene.sceneid=#{sceneid}
+    </select>
+
+    <select id="selectbusinessblock" parameterType="Integer" resultType="String">
+        SELECT analyseprocess.name FROM analyseprocess
+WHERE analyseprocess.id =#{processid}
+    </select>
+
+    <select id="selectbusinessid" parameterType="Integer" resultType="String">
+        SELECT businessid FROM business_model WHERE processid=#{processid}
+    </select>
+
+<select id="selectblockidbyname" parameterType="String" resultType="String">
+  SELECT business_scene.blockid FROM business_scene WHERE blockprocessid=#{sceneprocessid}
+</select>
+
+    <!--业务问题-->
+    <select id="selectquestion" parameterType="Integer" resultType="businessQuestion">
+         SELECT * FROM business_question WHERE questionid=#{questionid}
+    </select>
+
+    <select id="selectnamebysceneid" parameterType="Integer" resultType="String">
+        SELECT business_scene.scenename FROM business_question,business_scene
+        WHERE business_question.sceneid=business_scene.sceneid AND business_question.questionid=#{questionid}
+    </select>
+
+    <select id="selectsceneblockbysceneid" parameterType="Integer" resultType="String">
+        SELECT jsplumbblock.blockName FROM business_question,business_scene,jsplumbblock
+WHERE business_question.sceneid=business_scene.sceneid
+AND business_scene.blockid=jsplumbblock.id
+AND business_question.questionid=#{questionid}
+    </select>
+
+    <select id="selectquestionblock" parameterType="Integer" resultType="String">
+        SELECT jsplumbblock.blockName FROM business_question,jsplumbblock
+WHERE business_question.blockid=jsplumbblock.id
+AND business_question.questionid=#{questionid}
+    </select>
+
+    <!--根据blockid查询节点是否已经细化-->
+  <select id="isXiHuaByBlockId" resultType="businessScene" parameterType="String">
+      SELECT * FROM business_scene WHERE blockid=#{blockid}
+  </select>
+
+    <delete id="deletescene" parameterType="String">
+        DELETE FROM business_scene WHERE sceneid=#{sceneid}
+    </delete>
+</mapper>

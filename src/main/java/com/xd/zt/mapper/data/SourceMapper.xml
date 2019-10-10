@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.data.SourceMapper">
+    <!--模糊查询-->
+    <select id="moHuDataSource" parameterType="String" resultType="datamodelSource">
+     SELECT * FROM datamodel_source WHERE sourcename LIKE '%${_parameter}%'
+    </select>
+
+
+    <select id="dataModelLink" resultType="datamodelLink" parameterType="Integer">
+        SELECT * FROM datamodel_link,dlanalyseprocess WHERE modeid=#{modeid} AND datamodel_link.processid=dlanalyseprocess.Id
+    </select>
+
+
+    <delete id="deleteLink" parameterType="Integer">
+        DELETE FROM datamodel_link WHERE linkid=#{linkid}
+    </delete>
+
+
+    <!--数据区-->
+    <select id="selectModelArea" resultType="datamodelArea" parameterType="Integer">
+        SELECT * FROM datamodel_area,daranalyseprocess WHERE modeid=#{modeid} AND processid=daranalyseprocess.Id
+    </select>
+
+    <delete id="deleteArea" parameterType="Integer">
+        DELETE FROM datamodel_area WHERE areaid=#{areaid}
+    </delete>
+
+
+    <!--数据块-->
+    <select id="selectBlockName" resultType="datamodelInfo" parameterType="Integer">
+        SELECT datamodel_info.* FROM datamodel_info,datamodel_block WHERE datamodel_block.blockid=datamodel_info.datablock
+        AND blockid=#{blockid} and datamodel_info.databao is Null and datamodel_info.dataji is Null
+    </select>
+
+    <!--数据块-->
+    <select id="selectBlockById" resultType="datamodelBlock" parameterType="Integer">
+        SELECT * FROM datamodel_block WHERE blockid=#{blockid}
+    </select>
+
+    <select id="selectBaoById" resultType="datamodelBao" parameterType="Integer">
+        SELECT * FROM datamodel_bao WHERE baoid=#{baoid}
+    </select>
+
+<!--数据块根据处理文件的id获得处理文件的名字-->
+    <select id="selectResultName" parameterType="Integer" resultType="datamodelInfo">
+        SELECT * FROM datamodel_info WHERE dataresultid=#{dataresultid}
+    </select>
+
+    <!--数据块-->
+    <select id="selectBaoName" resultType="datamodelInfo" parameterType="Integer">
+          SELECT datamodel_info.* FROM datamodel_info,datamodel_bao WHERE datamodel_bao.baoid=datamodel_info.databao AND baoid=#{baoid}
+    </select>
+
+    <select id="selectlastprocessid"  resultType="Integer">
+        SELECT analyseprocess.id FROM analyseprocess WHERE id=(SELECT MAX(id) FROM analyseprocess)
+    </select>
+
+<!--数据区-->
+    <select id="areaAllExcel" resultType="datamodelInfo" parameterType="Integer">
+         SELECT datamodel_info.* FROM datamodel_area,datamodel_info WHERE datamodel_area.areaid=datamodel_info.dataarea AND areaid=#{areaid}
+    </select>
+
+
+    <insert id="insertlinkModeid" parameterType="Integer">
+        INSERT INTO datamodel_link(modeid,processid) VALUES (#{modeid},#{processid})
+    </insert>
+    <insert id="insertAreaModeid" parameterType="Integer">
+        INSERT INTO datamodel_area(modeid,processid) VALUES (#{modeid},#{processid})
+    </insert>
+
+    <select id="allLinkByModeid" resultType="datamodelLink" parameterType="Integer">
+        SELECT * FROM datamodel_link WHERE modeid=#{modeid}
+    </select>
+
+
+
+<!--
+    <select id="selectlastprocessid"  resultType="Integer">
+        SELECT analyseprocess.id FROM analyseprocess WHERE id=(SELECT MAX(id) FROM analyseprocess)
+    </select>-->
+
+    <update id="updateLinkprocessid" parameterType="String"  >
+      UPDATE datamodel_link SET modeid=#{modeid} WHERE processid=#{processid}
+    </update>
+
+
+    <select id="getLinkId" parameterType="Integer" resultType="datamodelLink">
+        SELECT * FROM datamodel_link WHERE linkid=#{linkid}
+    </select>
+
+
+    <select id="getAreaId" parameterType="Integer" resultType="datamodelArea">
+        SELECT * FROM datamodel_area WHERE areaid=#{areaid}
+    </select>
+
+
+
+    <select id="modelIdByAreaid" resultType="datamodelArea" parameterType="Integer">
+        SELECT * FROM datamodel_area WHERE areaid=#{areaid}
+    </select>
+
+    <select id="datamodelSourceByModeId" resultType="datamodelSource" parameterType="String">
+        SELECT * FROM datamodel_source WHERE modeid=#{modeid} AND status=#{status}
+    </select>
+
+    <select id="selectquesInfo" resultType="businessQuestion" >
+        SELECT * FROM business_question
+    </select>
+    <select id="selectquesList" resultType="businessQuestion" parameterType="String">
+        SELECT * FROM business_question WHERE questionid = #{questionid}
+    </select>
+
+    <select id="selectAlgorithm" resultType="algorithm">
+        SELECT * FROM algorithm
+    </select>
+
+
+
+    <!--//-->
+    <insert id="insertlinkModeidx" parameterType="DatamodelLink" useGeneratedKeys="true" keyProperty="id">
+        insert into datamodel_link  (linkname,modeid,processid)values (#{linkname},#{modeid},#{processid});
+    </insert>
+    <insert id="insertdataLinkx" parameterType="DatamodelArea" useGeneratedKeys="true" keyProperty="id">
+        insert into datamodel_area values (null,#{areaname},null ,null,null,#{linkid},#{processid},#{modeid});
+    </insert>
+    <select id="selectlastprocessidx"  resultType="DlAnalyseProcess">
+        SELECT * FROM dlanalyseprocess WHERE Id=(SELECT MAX(id) FROM dlanalyseprocess)
+    </select>
+    <select id="selectlastprocessidxx"  resultType="DarAnalyseProcess">
+        SELECT * FROM daranalyseprocess WHERE Id=(SELECT MAX(id) FROM daranalyseprocess)
+    </select>
+    <select id="modelidToscenceid" resultType="BusinessQuestion" parameterType="java.lang.Integer">
+        SELECT * FROM business_question WHERE questionid =(SELECT questionid FROM datamodel_name WHERE modelid= #{modelid})
+    </select>
+    <select id="processidTomodeid" parameterType="java.lang.Integer" resultType="DatamodelLink">
+        SELECT * FROM  datamodel_link WHERE processid =#{processid}
+    </select>
+    <select id="darprocessidTomodeid" parameterType="java.lang.Integer" resultType="DatamodelArea">
+        SELECT * FROM  datamodel_area WHERE processid =#{processid}
+    </select>
+
+</mapper>

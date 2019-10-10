@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.business.BusinessObjectMapper">
+    <select id="selectbusinessobject" resultType="businessObject">
+        SELECT * FROM business_object ;
+    </select>
+
+    <select id="selectBlockContent" resultType="jsPlumbBlock" parameterType="Integer">
+        SELECT * FROM jsplumbblock WHERE id=#{id}
+    </select>
+
+<!--根据sceneid拿到blockid-->
+    <select id="secenIdByBlockId" resultType="String" parameterType="Integer">
+        SELECT business_scene.blockid FROM business_scene WHERE sceneid=#{sceneid}
+    </select>
+
+    <!--sceneobject表的插入-->
+    <insert id="insertSceneObject" parameterType="Integer">
+        INSERT INTO sceneobject(sceneid,objectid) VALUES(#{sceneid},#{objectid})
+    </insert>
+
+<!--插入后在查询一次数据。根据sceneid来查-->
+    <select id="isExistInsertData" resultType="sceneObject" parameterType="Integer">
+        SELECT * FROM sceneobject WHERE sceneid=#{sceneid}
+    </select>
+
+    <!--读取业务数据类型列表-->
+    <select id="allBusinessDataType" resultType="businessType">
+        SELECT * FROM business_type
+    </select>
+
+    <!--scenedata表的插入-->
+    <insert id="insertSceneData" parameterType="Integer">
+        INSERT INTO scenedata(sceneid,dataid) VALUES(#{sceneid},#{dataid})
+    </insert>
+
+
+    <!--插入后在查询一次数据。根据sceneid来查-->
+    <select id="isExistSceneData" resultType="sceneData" parameterType="Integer">
+        SELECT * FROM scenedata WHERE sceneid=#{sceneid}
+    </select>
+
+
+
+    <!--读取业务知识列表-->
+    <select id="AllBusinessKnowledge" resultType="businessKnowledge">
+        SELECT * FROM business_knowledge
+    </select>
+
+
+    <!--sceneknowledge表的插入-->
+    <insert id="insertSceneKnowledge" parameterType="Integer">
+        INSERT INTO sceneknowledge(sceneid,knowledgeid) VALUES(#{sceneid},#{knowledgeid})
+    </insert>
+
+
+    <!--插入后在查询一次数据。根据sceneid来查-->
+    <select id="isExistSceneKowledge" resultType="sceneKnowledge" parameterType="Integer">
+        SELECT * FROM sceneknowledge WHERE sceneid=#{sceneid}
+    </select>
+
+
+<!--点击完成后，根据sceneid得到businessid，将scenename插入场景表 -->
+<!--
+    <select id="">
+        SELECT businessid FROM business_scene WHERE sceneid=188
+    </select>
+-->
+
+    <!--插入场景名-->
+    <update id="setScenenameBySceneId" parameterType="businessScene">
+        UPDATE business_scene SET scenename=#{scenename} WHERE sceneid=#{sceneid}
+    </update>
+
+
+    <!--业务场景的场景回显-->
+    <select id="getSceneBySceneId" parameterType="Integer" resultType="SceneShow">
+        SELECT scenename,objectname,datatypename,knowledgename
+        FROM business_scene,business_object,business_type,business_knowledge,sceneobject,sceneknowledge,scenedata
+         WHERE business_scene.sceneid=#{sceneid}
+         AND business_scene.sceneid=sceneobject.sceneid
+         AND sceneobject.objectid=business_object.objectid
+         AND business_scene.sceneid=scenedata.sceneid
+         AND scenedata.dataid=business_type.dataid
+         AND business_scene.sceneid=sceneknowledge.sceneid
+         AND sceneknowledge.knowledgeid=business_knowledge.knowledgeid
+    </select>
+
+
+<select id="getSceneName" resultType="String" parameterType="Integer">
+       SELECT scenename FROM business_scene WHERE sceneid=#{sceneid}
+</select>
+
+    <select id="getObjectName" parameterType="Integer" resultType="sceneShow">
+        SELECT business_object.objectname FROM business_scene,sceneobject,business_object
+        WHERE business_scene.sceneid=sceneobject.sceneid
+        and sceneobject.objectid=business_object.objectid
+         AND business_scene.sceneid=#{sceneid}
+    </select>
+
+
+    <select id="getDataTypeName" resultType="sceneShow" parameterType="Integer">
+        SELECT business_type.datatypename FROM business_scene,scenedata,business_type
+         WHERE business_scene.sceneid=scenedata.sceneid
+         and scenedata.dataid=business_type.dataid
+          AND business_scene.sceneid=#{sceneid}
+
+    </select>
+
+    <select id="getKnowledgeName" resultType="sceneShow" parameterType="Integer">
+        SELECT business_knowledge.knowledgename FROM business_scene,sceneknowledge,business_knowledge
+        WHERE business_scene.sceneid=sceneknowledge.sceneid
+         AND sceneknowledge.knowledgeid=business_knowledge.knowledgeid
+         AND business_scene.sceneid=#{sceneid}
+
+
+    </select>
+
+
+    <!--业务删除-->
+    <delete id="deleteBusinessModel" parameterType="Integer">
+        DELETE FROM business_model WHERE businessid=#{businessid}
+    </delete>
+
+    <!--查询是否有该条记录-->
+    <select id="isExitBusinessModel" parameterType="Integer" resultType="businessModel">
+        SELECT * FROM business_model WHERE businessid=#{businessid}
+    </select>
+
+
+
+</mapper>

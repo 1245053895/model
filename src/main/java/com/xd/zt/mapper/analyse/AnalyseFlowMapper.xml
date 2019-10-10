@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xd.zt.mapper.analyse.AnalyseFlowMapper">
+
+
+    <insert id="saveBlocks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+     insert into JsPlumbBlock()values
+        <foreach collection="list" item="block" index="index" separator=",">
+            (
+            null,#{block.blockId},#{block.blockContent},#{block.blockX},#{block.blockY},#{block.blockName}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delSaveBlock" parameterType="java.util.List">
+        delete from  JsPlumbConnect where pageSourceId in
+        <foreach collection="list" item="connect" separator="," index="index"  open="(" close=")">
+            #{connect.pageSourceId}
+        </foreach>
+    </delete>
+
+
+    <insert id="saveConnects" parameterType="java.util.List">
+      insert into JsPlumbConnect()values
+        <foreach collection="list" item="connect" index="index" separator=",">
+            (
+            null,#{connect.connectionId},#{connect.pageSourceId},#{connect.pageTargetId}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="selectLinkBlockInform" parameterType="java.lang.String" resultType="LinkBlockInform">
+     select * FROM LinkBlockInform WHERE uuid = #{uuid}
+    </select>
+
+
+    <select id="slectProcessidToModelid" parameterType="java.lang.Integer" resultType="analyseFlowprocess">
+     select * FROM analyse_flowprocess WHERE processid = #{Id}
+    </select>
+
+    <insert id="insertLinkBlockInforms" parameterType="LinkBlockInform" useGeneratedKeys="true" keyProperty="id">
+       insert into LinkBlockInform values (null,#{parameter1},#{parameter2},#{uuid});
+    </insert>
+
+
+    <update id="updateLinkBlockInforms" parameterType="LinkBlockInform">
+       UPDATE LinkBlockInform SET parameter1=#{parameter1},parameter2=#{parameter2} WHERE uuid = #{uuid}
+    </update>
+
+    <update id="updateAnalyseFlowprocess" parameterType="AnalyseFlowprocess">
+       UPDATE AnalyseFlowprocess SET processid=#{processid} WHERE modelid = #{modelid}
+    </update>
+
+
+    <insert id="saveProcess" parameterType="AnalyseProcess" useGeneratedKeys="true" keyProperty="Id">
+       insert into analyseProcess values (null,#{name},null,null,null,#{edittime});
+    </insert>
+
+
+    <insert id="saveAnalyseModelController" parameterType="AnalyseFlowprocess" useGeneratedKeys="true" keyProperty="Id">
+       insert into analyse_flowprocess values (null,null,#{modelid},#{processid},null,null);
+    </insert>
+
+
+
+
+    <insert id="saveProBlocks">
+      insert into pro_block() values
+        <foreach collection="blocks" item="block" index="index" separator="," >
+            ( null,#{processId},#{block})
+        </foreach>
+    </insert>
+
+
+    <select id="flowsList" resultType="analyseProcess" >
+        select * FROM analyseProcess;
+    </select>
+
+
+    <select id="getBlocks" parameterType="java.lang.Integer" resultType="JsPlumbBlock">
+       select id,blockId,blockContent,blockX,blockY from JsPlumbBlock where id in (SELECT block_id from pro_block where pro_block.project_id=#{Id});
+
+    </select>
+
+
+    <select id="getConnects" parameterType="java.lang.Integer" resultType="JsPlumbConnect">
+            select id,connectionId,pageSourceId,pageTargetId from JsPlumbConnect where
+          pageTargetId in (SELECT blockId FROM JsPlumbBlock WHERE id in (select block_id from pro_block where pro_block.project_id =#{Id})) OR
+          pageSourceId in (SELECT blockId FROM JsPlumbBlock WHERE id in (select block_id from pro_block where pro_block.project_id =#{Id}));
+    </select>
+
+    <delete id="deleteProcessName" parameterType="java.lang.Integer">
+        delete from analyseProcess where Id = #{Id};
+    </delete>
+
+    <delete id="deleteBlocksAndConnects" parameterType="java.lang.Integer">
+        <![CDATA[ DELETE FROM JsPlumbBlock WHERE JsPlumbBlock.id<=(SELECT MAX(block_id) FROM pro_block WHERE project_id=#{Id}) AND JsPlumbBlock.id>=(SELECT MIN(block_id) FROM pro_block WHERE project_id=#{Id}) ]]>
+    </delete>
+
+    <select id="getAllList" parameterType="java.lang.String" resultType="analyseProcess">
+     select * FROM analyseProcess WHERE name LIKE '%${name}%'
+    </select>
+    <!--<select id="selectAnalyseUnit" parameterType="java.lang.Integer" resultType="analyseUnit">-->
+     <!--select * FROM analyse_unit WHERE unitid = #{unitid}-->
+    <!--</select>-->
+
+    <!--<update id="insertProcessid" parameterType="java.lang.Integer">-->
+        <!--UPDATE analyse_unit SET processid = #{processid} where unitid = #{unitid}-->
+    <!--</update>-->
+
+    <!--<select id="selectUnitid" parameterType="java.lang.Integer" resultType="analyseUnit">-->
+     <!--select * FROM analyse_unit WHERE processid = #{Id}-->
+    <!--</select>-->
+
+</mapper>

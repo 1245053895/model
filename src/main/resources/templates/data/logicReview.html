@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 未知 <span class="c-gray en">&gt;</span> 数据链 </nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">数据链
+            <a th:href="@{'/data/modelReview/'+${modeid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>
+        </div>
+        <div class="panel-body">
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >数据逻辑关系图名称</th>
+                        <th >关联数据链</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="text-c" th:if="${dataLogicList.size()} eq 0">
+                            <td colspan="4">当前没有数据逻辑关系图信息</td>
+                        </tr>
+
+                        <tr class="text-c" th:each="dataLogicList:${dataLogicList}">
+                            <td ><a  style="cursor:pointer" class="text-primary" th:text="${dataLogicList.areaname}"></a></td>
+                            <td ><a  style="cursor:pointer" class="text-primary" th:text="${dataLogicList.linkname}"></a></td>
+
+                            <td>
+                                <a>
+                                    <input class="btn btn-primary size-MINI radius" type="button" value="打开">
+                                </a>
+                                <a>
+                                    <input class="btn btn-primary size-MINI radius" type="button" value="删除">
+                                </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+

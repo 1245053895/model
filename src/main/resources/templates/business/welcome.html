@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>新建业务</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/upFile.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+</head>
+<script>
+    function showData(){
+        if (document.getElementById("business").style.display=="none")
+            document.getElementById("business").style.display="block";
+        else{
+            document.getElementById("business").style.display="none";
+    }
+
+    }</script>
+<body>
+
+<div class="page-container">
+    <div class="panel panel-default" style="height: 90vh;">
+        <div class="panel-header">业务模型新建/打开</div>
+
+        <div class="panel-body">
+
+           
+            <div class="logo1" >
+               <H3 STYLE="margin-left: 45%;margin-top: -2%;">业务建模</H3>
+            </div>
+
+            <!--上传按钮区域-->
+            <div class="logo_area">
+                <div class="logo_content" style="margin-left: 20%;" >
+                    <a onclick="jumpDialog() ">
+                    <img   class="logo_image" src="/image/Newbusiness.png"/>
+                    <p class="logo_text" ><strong>新建业务模型</strong></p>
+                    </a>
+                </div>
+
+
+                <div class="logo_content" style="margin-left: 20%;">
+                    <a th:href="@{/business/businessManage}">
+                    <img th:href="@{/business/businessManage}" class="logo_image" src="/image/Openbusiness.png"/>
+                    <p class="logo_text" ><strong>打开业务模型</strong></p>
+                    </a>
+                </div>
+               
+                <!--<div class="logo_content" style="margin-left: 20%;">-->
+                    <!--<a th:href="@{/businessManage}">-->
+                    <!--<img th:href="@{/businessManage}" class="logo_image" src="image/Showbusiness.png"/>-->
+                    <!--<p class="logo_text" ><strong>业务列表</strong></p>-->
+                    <!--</a>-->
+                <!--</div>-->
+            </div>
+            <div class="logo2"></div>
+            <!--上传表单区域-->
+
+
+
+
+                <!--</form><br/>-->
+            </div>
+
+        </div>
+    </div>
+<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">新建业务</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+               <strong style="margin-left: 5%">业务名称：</strong><input type="text" placeholder="请输入业务名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+</body>
+
+<script>
+
+    function jumpDialog() {
+        $("#dataAggreDivide").modal("show");
+    }
+
+    function save() {
+        if(document.getElementById('saveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        }
+        else {
+            var data = {};//定义一个数组
+            data["businessname"] = document.getElementById('saveName').value;
+
+
+         var dataToJson = JSON.stringify(data);
+            console.log(dataToJson);
+            $.ajax({
+                async: false,
+                type : "post",
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                data:dataToJson,
+                url : '/business/business',
+                success : function() {
+                    $.Huimodalalert('保存成功',1000);
+                    //传输成功后延时500ms跳转到模型列表
+                    parent.location.reload()
+
+                    //这两种写法都可以
+                    /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+                }
+            });
+
+        }
+    }
+
+    //    //获取文件名，显示在上传文本框
+    //    function getFilename(){
+    //        var filename=document.getElementById("file").value;
+    //        if(filename==undefined||filename==""){
+    //            document.getElementById("filename").innerHTML="点击此处上传文件";
+    //        } else{
+    //            var fn=filename.substring(filename.lastIndexOf("\\")+1);
+    //            document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
+    //        }
+    //    }
+    //
+    //    //跳出模型保存框
+    //    function jumpDialog() {
+    //        $("#modal-demo").modal("show");
+    //    }
+    //
+    //    //关闭模型保存框
+    //    function hideDialog() {
+    //        setTimeout($("#modal-demo").modal("hide"),"3000");
+    //    }
+    //
+    //    //form表单提交前进行判断，return false意味着不再跳转
+    //    function verify() {
+    //        var file_str = $("#file").val();
+    //
+    //        var file_arr = file_str.split('.');
+    //        var file = "."+file_arr[file_arr.length-1];
+    //        var fileKind = $("#fileKind").val();
+    //        if (file =="."|| file==null) {
+    //            $.Huimodalalert('请选择要上传的数据文件',1000);
+    //            return false;
+    //        }
+    //        if(file != ".csv"&&file != ".xls" &&file != ".txt"){
+    //            $.Huimodalalert('该文件类型不支持上传',1000);
+    //            return false;
+    //        }
+    //        if(file != fileKind){
+    //            $.Huimodalalert('文件上传类型与目标格式不一致，即将进行数据转换并上传',1000);
+    //            jumpDialog();
+    //            processerbar(3000);
+    //            setTimeout(" saveReport()","3500");
+    //        }
+    //        if(file == fileKind){
+    //            $.Huimodalalert('正在上传',1000);
+    //            //执行提交
+    //            setTimeout(" saveReport()","3500");
+    //        }
+    //        return false;
+    //    }
+    //
+    //
+    //    function saveReport() {
+    //// jquery .ajaxSubmit表单提交，页面不刷新
+    //        $("#upfileForm").ajaxSubmit(function(message) {
+    //// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+    //            $.Huimodalalert('上传成功',2000);
+    //            //关闭弹框
+    //            hideDialog();
+    //            //延时后页面跳转
+    //            window.setTimeout("window.location = '/dataManage'",1000);
+    //        });
+    //        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    //    }
+    //
+    //    //进度条，animate函数，进度条动画
+    //    function processerbar(time){
+    //        $("#probar").animate({width:"100%"},time,"swing");
+    //
+    //    };
+
+</script>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/jquery-ui.min.css}" />
+</head>
+<body>
+<input type="hidden" th:value="${businessid}" id="businessid"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 文档资料管理  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">文档资料
+            <a ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增" onclick="jumpDialog()"/></a>
+        </div>
+        <div class="panel-body">
+            <div >
+                <!--实现模糊搜索-->
+                <form method="get" action="#" th:action="@{dataSearch}">
+                    <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="search_text" value="" id="search_text" autocomplete="off" style="width:30%"><button type="submit" class="btn btn-default" id="search_button">搜索</button>&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${businessFileList.size()}"></a>&nbsp;&nbsp;个文件】
+                </form>
+            </div>
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >文件名称</th>
+                        <th >文件大小</th>
+                        <th >创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="text-c" th:if="${businessFileList.size()} eq 0">
+                            <td colspan="4">当前未上传数据</td>
+                        </tr>
+
+                        <tr class="text-c" th:each="businessFile:${businessFileList}">
+                            <td><a style="cursor:pointer" class="text-primary" th:text="${businessFile.filename}" ></a></td>
+                            <td th:text="${businessFile.filesize}"></td>
+                            <td th:text="${businessFile.filetime}"></td>
+
+
+                            <td>
+                                <!--&lt;!&ndash;跳转modelView  实现模型打开&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a th:href="@{'/dataReview/'+ ${fileAndUpload.id}}"><input class="btn btn-primary size-MINI radius" type="button" value="打开"></a>&ndash;&gt;-->
+                                <!--&lt;!&ndash;跳转modelModify 实现模型修改&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>&ndash;&gt;-->
+                                <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;-->
+                                <a th:id="${businessFile.dataid}" onclick="deletefile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="删除"></a>
+                                <!--&lt;!&ndash;跳转modelModify 实现模型下载&ndash;&gt;-->
+                                <a th:id="${businessFile.dataid}"  onclick="downloadfile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="下载"></a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="upfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 弹出对话框 -->
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">文档资料上传</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="upfile-group">
+                        <!--通过onsubmit 去进行提交前其他操作-->
+                        <form id="upfileForm" action="#" th:action="@{'/business/saveFile/'+${businessid}}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
+                            <div class="fileupload">
+                                <span id="filename" style="margin-left: 33%">点击此处选择文件</span>
+                                <input type="file"  id="file" onchange="getFilename();" name="filename" style="opacity: 0;margin-left: -31%"/>
+                            </div>
+
+                            <div class="button_position">
+                                <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 38%; margin-top: 3%;">
+                            </div>
+                        </form><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    //获取文件名，显示在上传文本框
+    function getFilename(){
+        var filename=document.getElementById("file").value;
+        if(filename==undefined||filename==""){
+            document.getElementById("filename").innerHTML="点击此处上传文件";
+        } else{
+            var fn=filename.substring(filename.lastIndexOf("\\")+1);
+            document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
+        }
+    }
+
+    //跳出模型保存框
+    function jumpDialog() {
+        $("#upfile").modal("show");
+    }
+
+    //关闭模型保存框
+    function hideDialog() {
+        setTimeout($("#upfile").modal("hide"),"3000");
+    }
+    function verify() {
+
+// jquery .ajaxSubmit表单提交，页面不刷新
+        $("#upfileForm").ajaxSubmit(function(message) {
+// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+            $.Huimodalalert('上传成功',2000);
+            //关闭弹框
+            hideDialog();
+            //延时后页面跳转
+            // var  businessid = document.getElementById('businessid').getAttribute('value');
+            window.setTimeout("window.location.reload(true)",1000);
+            // window.setTimeout("window.location.href=",1000);
+        });
+        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+
+    function deletefile(id) {
+        var id={
+            "dataid":id
+        };
+        $.ajax({
+            url : "/business/fileDelete",
+            type : "POST",
+            async : true,
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(id),
+            dataType : 'json',
+            success : function() {
+                $.Huimodalalert('删除成功',2000);
+            },
+            error : function() {
+                $.Huimodalalert('删除失败',2000);
+            }
+        });
+        window.setTimeout("window.location.reload(true)",1000);
+    }
+
+    function downloadfile(id) {
+        var id={
+            "dataid":id
+        };
+        $.ajax({
+            url : "/business/fileDown",
+            type : "POST",
+            async : true,
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(id),
+            dataType : 'json',
+            success : function() {
+                $.Huimodalalert('正在下载',2000);
+            },
+            error : function() {
+                $.Huimodalalert('下载失败',2000);
+
+            }
+        });
+    }
+</script>
+</body>
+</html>
+

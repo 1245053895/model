@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>数据格式转换与数据分组模块</title>
+    <link rel="stylesheet" th:href="@{/css/upFile.css}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hucss.css}" />
+
+</head>
+<script>
+    function showData(){
+        if (document.getElementById("business").style.display=="none")
+            document.getElementById("business").style.display="block";
+        else{
+            document.getElementById("business").style.display="none";
+        }
+
+    }</script>
+<body>
+<input type="hidden" th:value="${allbusinessmodle}" id="allbusinessmodle"/>
+
+<div class="page-container">
+    <div class="panel panel-default" style="height: 90vh;">
+        <div class="panel-header">数据新建</div>
+
+        <div class="panel-body">
+
+
+            <div class="logo1" >
+                <H3 STYLE="margin-left: 45%;margin-top: -2%;">数据建模</H3>
+            </div>
+            <!--   <div  id="business" style="height:200px;width:400px;margin-left: 35%;margin-top: 16%;position:absolute;z-index:99999;background-color: #5E87A2;display: none;">
+                   <p   style="background-color:#C4C4C4" ><strong>新建数据模型</strong></p>
+                   <div  style="margin-top: 10%;background-color: #5E87A2;margin-left: 10%">  <label for="saveName" >模型名称</label>   <input  type="text" style="height:20px;width:100px;margin-left: 5%;" /> </div>
+                   <div  style="margin-top: 10%;background-color: #5E87A2;margin-left: 10%">  <label for="test2" >模型描述</label>   <input id="test2" type="textarea" style="height:20px;width:150px;margin-left: 5%;" /> </div>
+                   <button   onclick="save();" style="    float: left;
+       font-size: 15px;
+       font-weight: 100;
+       margin-left: 80%;
+       margin-top: -5%;
+       width: 15%;
+       background-color: orangered;
+       color: white;">
+                      保存
+                   </button>
+                 </div>-->
+            <!--上传按钮区域-->
+            <div class="logo_area">
+                <div class="logo_content" >
+
+                    <p class="logo_text" ><strong></strong></p>
+                </div>
+
+                <div class="logo_content"  style="margin-left: 1.5%;" >
+                    <img  onclick="jumpDialog()" class="logo_image"  src="/image/NewDataModel.png"/>
+                    <p class="logo_text" ><strong>新建数据模型</strong></p>
+                </div>
+                <div class="logo_content" style="margin-left: 20%;">
+                    <a th:href="@{/data/dataModelManage}">
+                        <img class="logo_image" src="/image/Openbusiness.png"/>
+                        <p class="logo_text" ><strong>打开数据模型</strong></p>
+                    </a>
+                </div>
+                <!--<tr th:each="allbusinessmodle:${allbusinessmodle}">-->
+                <!--<td th:text="${allbusinessmodle.businessname}"></td>-->
+                <!--</tr>-->
+
+            </div>
+            <div class="logo2"></div>
+            <!--上传表单区域-->
+
+
+
+
+            <!--</form><br/>-->
+        </div>
+
+    </div>
+</div>
+
+
+
+</div>
+
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" ></h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+
+            <div class="modal-body">
+                <strong>选择业务:</strong>
+
+                <select id="selectbusinessModel" class="select huselect1" size="1"  name="dataBagSelect1" style="color: black;" onchange="selectQues1()">
+                    <option value="选择" >请选择合适的业务</option>
+                    <option th:each="allbusinessmodle:${allbusinessmodle}" th:value="${allbusinessmodle.businessid}" th:text="${allbusinessmodle.businessname}" ></option>
+                </select>
+
+                <strong>业务问题:</strong>
+                <select id="dataFuseSelect2" class="select huselect2" size="1"  name="dataBagSelect2" style="color: black;" onchange="selectQues2()">
+                    <option value="选择" >请选择业务业务问题</option>
+                    <option th:each="businessQuestionList:${businessQuestionList}" th:value="${businessQuestionList.questionid}" th:text="${businessQuestionList.questioname}"></option>
+                </select>
+
+
+                <strong>模型名：</strong><input type="text" placeholder="请输入数据模型名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="saveSceneName();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+</body>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+
+<script>
+    function jumpDialog() {
+        $("#modal-demo").modal("show");
+    }
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    function saveSceneName() {
+        var  questionid = document.getElementById("dataFuseSelect2").value;
+        var modelname= document.getElementById("saveName").value;
+        if(document.getElementById('saveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        } else {
+            var qutiondata ={
+                "questionid":questionid,
+                "modelname" : modelname,
+            }
+            $.ajax({
+                url : '/data/saveModelName',
+                async: false,
+                type : "post",
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                data:JSON.stringify(qutiondata),
+                success : function(data) {
+                    alert(data);
+                    // $.Huimodalalert('保存成功',1000);
+                    /*                window.setTimeout("window.location.href = '/index'",1000);*/
+                    //传输成功后延时500ms跳转到模型列表
+                    /* window.setTimeout("window.location = '/over?sceneid="[[${sceneid}]],1500);*/
+                    //这两种写法都可以
+
+                    /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+                },
+            });
+            parent.location.reload()
+        }
+    }
+
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    function selectQues1() {
+        var businessid = $("#selectbusinessModel").val();
+        $.ajax({
+            async : false,
+            url:"/data/selectQuestion",
+            type:"post",
+            data: {
+                "businessid" : encodeURI(businessid),
+            },
+            success:function(data){
+                var t2 = $(dataFuseSelect2).empty();
+                var data = data;
+                for(var key in data){
+                    t2.append("<option value='"+key+"'>"+data[key]+"</option>");
+                }
+            }
+
+
+        })
+    }
+</script>
+
+
+
+
+
+<!--<script>
+    function save() {
+        if(document.getElementById('saveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        }
+        else {
+            var data = document.getElementById('saveName').value;
+            /*
+                     var dataToJson = JSON.stringify(data);
+                        console.log(dataToJson);*/
+            $.ajax({
+                async: false,
+                type : "post",
+                contentType : 'application/json;charset=UTF-8',
+                data:data,
+                url : '/savedatamodel',
+                success : function() {
+                    $.Huimodalalert('保存成功',1000);
+                    //传输成功后延时500ms跳转到模型列表
+                    parent.location.reload()
+                }
+            });
+
+        }
+    }
+
+
+</script>-->
+</html>

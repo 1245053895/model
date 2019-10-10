@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xd.zt.mapper.data.flow.FlowMapper">
+    <insert id="saveBlocks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into JsPlumbBlock()values
+        <foreach collection="list" item="block" index="index" separator=",">
+            (
+            null,#{block.blockId},#{block.blockContent},#{block.blockX},#{block.blockY},#{block.blockName}
+            )
+        </foreach>
+    </insert>
+
+    <!--往dl表保存块-->
+    <insert id="dlsaveBlocks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into dljsplumbblock()values
+        <foreach collection="list" item="block" index="index" separator=",">
+            (
+            null,#{block.blockId},#{block.blockContent},#{block.blockX},#{block.blockY},#{block.blockName}
+            )
+        </foreach>
+    </insert>
+
+    <!--往dar表保存块-->
+    <insert id="darsaveBlocks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into darjsplumbblock()values
+        <foreach collection="list" item="block" index="index" separator=",">
+            (
+            null,#{block.blockId},#{block.blockContent},#{block.blockX},#{block.blockY},#{block.blockName}
+            )
+        </foreach>
+    </insert>
+
+
+
+    <delete id="delSaveBlock" parameterType="java.util.List">
+        delete from  JsPlumbConnect where pageSourceId in
+        <foreach collection="list" item="connect" separator="," index="index"  open="(" close=")">
+            #{connect.pageSourceId}
+        </foreach>
+    </delete>
+
+
+    <insert id="saveConnects" parameterType="java.util.List">
+        insert into JsPlumbConnect()values
+        <foreach collection="list" item="connect" index="index" separator=",">
+            (
+            null,#{connect.connectionId},#{connect.pageSourceId},#{connect.pageTargetId}
+            )
+        </foreach>
+    </insert>
+
+    <!--往dl表保存数据-->
+    <insert id="dlsaveConnects" parameterType="java.util.List">
+        insert into dljsplumbconnect()values
+        <foreach collection="list" item="connect" index="index" separator=",">
+            (
+            null,#{connect.connectionId},#{connect.pageSourceId},#{connect.pageTargetId}
+            )
+        </foreach>
+    </insert>
+
+    <!--往dar表保存数据-->
+
+    <insert id="darsaveConnects" parameterType="java.util.List">
+        insert into darjsplumbconnect (connectionId,pageSourceId,pageTargetId)values
+        <foreach collection="list" item="connect" index="index" separator=",">
+            (
+            #{connect.connectionId},#{connect.pageSourceId},#{connect.pageTargetId}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="selectLinkBlockInform" parameterType="java.lang.String" resultType="LinkBlockInform">
+     select * FROM LinkBlockInform WHERE uuid = #{uuid}
+    </select>
+
+
+
+    <insert id="insertLinkBlockInforms" parameterType="LinkBlockInform" useGeneratedKeys="true" keyProperty="id">
+       insert into LinkBlockInform values (null,#{parameter1},#{parameter2},#{uuid});
+    </insert>
+
+
+
+    <update id="updateLinkBlockInforms" parameterType="LinkBlockInform">
+       UPDATE LinkBlockInform SET parameter1=#{parameter1},parameter2=#{parameter2} WHERE uuid = #{uuid}
+    </update>
+
+
+    <insert id="saveProcess" parameterType="AnalyseProcess" useGeneratedKeys="true" keyProperty="Id">
+       insert into analyseProcess values (null,#{name},null,null,null,#{edittime});
+    </insert>
+
+    <insert id="dlsaveProcess" parameterType="DlAnalyseProcess" useGeneratedKeys="true" keyProperty="Id">
+       insert into dlanalyseprocess values (null,#{name},null,null,null,#{edittime});
+    </insert>
+
+    <insert id="darsaveProcess" parameterType="DarAnalyseProcess" useGeneratedKeys="true" keyProperty="Id">
+       insert into daranalyseprocess values (null,#{name},null,null,null,#{edittime});
+    </insert>
+
+    <insert id="saveProBlocks">
+        insert into pro_block() values
+        <foreach collection="blocks" item="block" index="index" separator="," >
+            ( null,#{processId},#{block})
+        </foreach>
+    </insert>
+
+
+    <!--往dlPro表保存-->
+    <insert id="dlsaveProBlocks">
+        insert into dlpro_block(project_id,block_id) values
+        <foreach collection="blocks" item="block" index="index" separator=",">
+            (${dlprocessId},${block})
+        </foreach>
+    </insert>
+
+    <!--往draPro表保存-->
+
+    <insert id="barsaveProBlocks">
+        insert into darpro_block(project_id,block_id) values
+        <foreach collection="blocks" item="block" index="index" separator=",">
+            (${processId},${block})
+        </foreach>
+    </insert>
+
+
+    <select id="flowsList" resultType="analyseProcess" >
+        select * FROM analyseProcess;
+    </select>
+
+
+    <!--这里的getBlocks得到dlblocks-->
+    <select id="getBlocks" parameterType="java.lang.Integer" resultType="DlJsPlumbBlock">
+      select id,blockId,blockContent,blockX,blockY from JsPlumbBlock where id in (SELECT block_id from pro_block where project_id=#{id});
+    </select>
+    <!--这里的darGetBlocks得到darblocks-->
+    <select id="darGetBlocks" parameterType="java.lang.Integer" resultType="DarJsPlumbBlock">
+        select id,blockId,blockContent,blockX,blockY from dljsplumbblock where id in (SELECT block_id from dlpro_block where project_id=#{id});
+    </select>
+
+    <select id="dlgetBlocks" parameterType="java.lang.Integer" resultType="DlJsPlumbBlock">
+      select id,blockId,blockContent,blockX,blockY from dljsplumbblock where id in (SELECT block_id from dlpro_block where project_id=#{processid});
+    </select>
+
+
+    <select id="dargetBlocks" parameterType="java.lang.Integer" resultType="DarJsPlumbBlock">
+      select id,blockId,blockContent,blockX,blockY from darjsplumbblock where id in (SELECT block_id from darpro_block where project_id=#{processid});
+    </select>
+
+
+
+
+    <!--这里的getConnects得到dlconnects-->
+    <select id="getConnects" parameterType="java.lang.Integer" resultType="dlJsPlumbConnect">
+          select id,connectionId,pageSourceId,pageTargetId from JsPlumbConnect where
+          pageTargetId in (SELECT blockId FROM JsPlumbBlock WHERE id in (select block_id from pro_block where project_id = #{id})) OR
+          pageSourceId in (SELECT blockId FROM JsPlumbBlock WHERE id in (select block_id from pro_block where project_id = #{id})) ;
+    </select>
+    <!--这里的darGetConnects得到darConnects-->
+    <select id="darGetConnects" parameterType="java.lang.Integer" resultType="darJsPlumbConnect">
+          select id,connectionId,pageSourceId,pageTargetId from dljsplumbconnect where
+          pageTargetId in (SELECT blockId FROM dljsplumbblock WHERE id in (select block_id from dlpro_block where project_id = #{id})) AND
+          pageSourceId in (SELECT blockId FROM dljsplumbblock WHERE id in (select block_id from dlpro_block where project_id = #{id})) ;
+    </select>
+
+
+
+
+    <select id="dlgetConnects" parameterType="java.lang.Integer" resultType="DlJsplumbConnect">
+         select id,connectionId,pageSourceId,pageTargetId from dljsplumbconnect where
+          pageTargetId in (SELECT blockId FROM dljsplumbblock WHERE id in (select block_id from dlpro_block where project_id = #{processid})) OR
+          pageSourceId in (SELECT blockId FROM dljsplumbblock WHERE id in (select block_id from dlpro_block where project_id = #{processid})) ;
+    </select>
+
+    <select id="dargetConnects" parameterType="java.lang.Integer" resultType="DarJsplumbConnect">
+         select id,connectionId,pageSourceId,pageTargetId from darjsplumbconnect where
+          pageTargetId in (SELECT blockId FROM darjsplumbblock WHERE id in (select block_id from darpro_block where project_id = #{processid})) OR
+          pageSourceId in (SELECT blockId FROM darjsplumbblock WHERE id in (select block_id from darpro_block where project_id = #{processid})) ;
+    </select>
+
+
+    <!--yy-->
+    <delete id="deleteProcessName" parameterType="java.lang.Integer">
+        delete from analyseProcess where Id = #{Id};
+    </delete>
+
+
+    <delete id="dLdeleteProcessName" parameterType="java.lang.Integer">
+        delete from dlanalyseProcess where Id = #{processid};
+    </delete>
+
+
+
+
+    <delete id="dardeleteProcessName" parameterType="java.lang.Integer">
+        delete from daranalyseprocess where Id = #{processid};
+    </delete>
+
+    <!--yy-->
+    <delete id="deleteBlocksAndConnects" parameterType="java.lang.Integer">
+        <![CDATA[ DELETE FROM JsPlumbBlock WHERE JsPlumbBlock.id<=(SELECT MAX(block_id) FROM pro_block WHERE project_id=#{Id}) AND JsPlumbBlock.id>=(SELECT MIN(block_id) FROM pro_block WHERE project_id=#{Id}) ]]>
+    </delete>
+
+    <delete id="dLdeleteBlocks" parameterType="java.lang.Integer">
+         <![CDATA[DELETE FROM dlJsPlumbBlock WHERE dlJsPlumbBlock.id <= (SELECT MAX(block_id) FROM dlpro_block WHERE project_id=#{processid}) AND dlJsPlumbBlock.id >=(SELECT MIN(block_id) FROM dlpro_block WHERE project_id=#{processid}) ]]>
+    </delete>
+
+    <delete id="dardeleteBlocks" parameterType="java.lang.Integer">
+         <![CDATA[DELETE FROM darjsplumbblock WHERE darjsplumbblock.id <= (SELECT MAX(block_id) FROM darpro_block WHERE project_id=#{processid}) AND darjsplumbblock.id >=(SELECT MIN(block_id) FROM darpro_block WHERE project_id=#{processid}) ]]>
+    </delete>
+
+
+    <select id="getAllList" parameterType="java.lang.String" resultType="analyseProcess">
+     select * FROM analyseProcess WHERE name LIKE '%${name}%'
+    </select>
+
+
+
+
+
+
+
+    <select id="sceneidTOBlock" parameterType="java.lang.Integer" resultType="JsPlumbBlock">
+    select * from dlJsPlumbBlock where id in (SELECT block_id from pro_block where project_id=(SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}));
+    </select>
+
+    <select id="sceneidTOConnects" parameterType="java.lang.Integer" resultType="JsPlumbConnect">
+      select * from dlJsPlumbConnect where
+          pageTargetId in (SELECT blockId FROM dlJsPlumbBlock WHERE id in (select block_id from pro_block where project_id = (SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}))) OR
+          pageSourceId in (SELECT blockId FROM dlJsPlumbBlock WHERE id in (select block_id from pro_block where project_id = (SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}))) ;
+    </select>
+
+    <delete id="deletesceneidTOBlock" parameterType="java.lang.Integer">
+       DELETE FROM dlJsPlumbBlock WHERE dlJsPlumbBlock.id in (SELECT block_id from pro_block where project_id=(SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}));
+    </delete>
+
+    <delete id="deletdlanalyse" parameterType="java.lang.Integer">
+    DELETE FROM dlanalyseprocess WHERE Id = (SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid})
+    </delete>
+
+    <insert id="insertdlblock" parameterType="java.lang.Integer">
+          INSERT INTO dljsplumbblock SELECT * FROM jsplumbblock WHERE id  in (SELECT block_id from pro_block where project_id=(SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}));
+          INSERT INTO 新表(字段1,字段2,.......) SELECT 字段1,字段2,...... FROM 旧表
+    </insert>
+
+    <insert id="insertdlconnect" parameterType="java.lang.Integer">
+         INSERT INTO dljsplumbconnect SELECT * FROM jsplumbconnect where
+          pageTargetId in (SELECT blockId FROM JsPlumbBlock WHERE id in (select block_id from pro_block where project_id = (SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}))) OR
+          pageSourceId in (SELECT blockId FROM JsPlumbBlock WHERE id in (select block_id from pro_block where project_id = (SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid}))) ;
+    </insert>
+
+    <insert id="insertdlannlyse" parameterType="java.lang.Integer">
+       INSERT INTO dlanalyseprocess SELECT * FROM analyseprocess WHERE Id =(SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid})
+    </insert>
+
+    <insert id="insertdlpro" parameterType="java.lang.Integer">
+      INSERT INTO dlpro_block SELECT * FROM pro_block WHERE project_id =(SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid})
+    </insert>
+
+
+    <select id="sceneidToId" parameterType="java.lang.Integer" resultType="analyseProcess">
+     SELECT * FROM analyseprocess WHERE Id=(SELECT blockprocessid FROM business_scene WHERE sceneid = #{sceneid})
+    </select>
+
+    <!--xxxxx-->
+    <select id="selectRepeatConnection" resultType="dlJsplumbConnect">
+    select *
+    from dljsplumbconnect
+    where (dljsplumbconnect.pageSourceId,dljsplumbconnect.pageTargetId)
+     in (select pageSourceId,pageTargetId from dljsplumbconnect group by pageSourceId,pageTargetId having count(*) > 1)
+    </select>
+
+    <select id="selectMaxConnectId" resultType="java.lang.String">
+     SELECT max(id) FROM dljsplumbconnect WHERE dljsplumbconnect.pageSourceId = #{pageSourceId} and dljsplumbconnect.pageTargetId = #{pageTargetId}
+      </select>
+
+    <select id="selectMinConnectId" resultType="java.lang.String">
+
+      SELECT min(id) FROM dljsplumbconnect WHERE dljsplumbconnect.pageSourceId = #{pageSourceId} and dljsplumbconnect.pageTargetId = #{pageTargetId}
+
+      </select>
+
+    <delete id="deleteGroupConnect" parameterType="java.lang.String">
+        <![CDATA[DELETE FROM dljsplumbconnect WHERE id <=#{maxid} AND id > #{minid} and dljsplumbconnect.pageSourceId = #{pageSourceId} and dljsplumbconnect.pageTargetId = #{pageTargetId}]]>
+    </delete>
+
+    <!--yyyy-->
+
+    <select id="selectRepeatConnectionx" resultType="DarJsplumbConnect">
+    select *
+    from darjsplumbconnect
+    where (darjsplumbconnect.pageSourceId,darjsplumbconnect.pageTargetId)
+     in (select pageSourceId,pageTargetId from darjsplumbconnect group by pageSourceId,pageTargetId having count(*) > 1)
+    </select>
+
+    <select id="selectMaxConnectIdx" resultType="java.lang.String">
+     SELECT max(id) FROM darjsplumbconnect WHERE darjsplumbconnect.pageSourceId = #{pageSourceId} and darjsplumbconnect.pageTargetId = #{pageTargetId}
+      </select>
+
+    <select id="selectMinConnectIdx" resultType="java.lang.String">
+
+      SELECT min(id) FROM darjsplumbconnect WHERE darjsplumbconnect.pageSourceId = #{pageSourceId} and darjsplumbconnect.pageTargetId = #{pageTargetId}
+
+      </select>
+
+    <delete id="deleteGroupConnectx" parameterType="java.lang.String">
+        <![CDATA[DELETE FROM darjsplumbconnect WHERE id <=#{maxid} AND id > #{minid} and darjsplumbconnect.pageSourceId = #{pageSourceId} and darjsplumbconnect.pageTargetId = #{pageTargetId}]]>
+    </delete>
+
+    <!--zzz-->
+
+    <select id="processidTomodeid" parameterType="java.lang.Integer" resultType="DatamodelLink">
+        SELECT * FROM datamodel_link WHERE processid = #{processid}
+    </select>
+    <delete id="deletdatalinkToProcessid" parameterType="java.lang.Integer">
+        DELETE FROM datamodel_link WHERE processid = #{processid}
+    </delete>
+
+</mapper>

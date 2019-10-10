@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>数据格式转换与数据分组模块</title>
+    <link rel="stylesheet" th:href="@{/css/upFile.css}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+</head>
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>  文档资料 <span class="c-gray en">&gt;</span> 数据上传 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh;">
+        <div class="panel-header">文件上传
+           <!-- <a th:href="@{'/fileManage/'+${businessid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.2%;height: 28px" value="数据管理"/></a>-->
+            <a th:href="@{/data/fileManage}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.2%;height: 28px" value="数据管理"/></a>
+        </div>
+
+        <div class="panel-body">
+            <!--上传按钮区域-->
+            <div class="logo_area">
+                <div class="logo_content">
+                    <img class="logo_image" src="/image/Excel.bmp"/>
+                    <p class="logo_text" ><strong>Excel</strong></p>
+                </div>
+                <div class="logo_content">
+                    <img class="logo_image" src="/image/Oracle.bmp"/>
+                    <p class="logo_text" ><strong>Oracle</strong></p>
+                </div>
+                <div class="logo_content">
+                    <img class="logo_image" src="/image/Hive.bmp"/>
+                    <p class="logo_text" ><strong>Hive</strong></p>
+                </div>
+                <div class="logo_content">
+                    <img class="logo_image" src="/image/MySol.bmp"/>
+                    <p class="logo_text" ><strong>MySqL</strong></p>
+                </div>
+                <div class="logo_content">
+                    <img class="logo_image" src="/image/kafka.bmp"/>
+                    <p class="logo_text" ><strong>kafka</strong></p>
+                </div>
+            </div>
+            <!--上传表单区域-->
+            <div class="upfile-group">
+                <!--通过onsubmit 去进行提交前其他操作-->
+                <form id="upfileForm" action="#" th:action="@{/data/saveFile}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
+                    <div class="fileupload">
+                        <span id="filename">点击此处选择文件</span>
+                        <input type="file"  id="file" onchange="getFilename();" name="sourcename"/>
+                    </div>
+                    <input type="hidden" th:value="${modeid}" name="modeid" id="modeid"/>
+                    <div class="button_position">
+                        <input type="submit" class="btn btn-primary radius" value="提交">
+                    </div>
+                </form><br/>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<script>
+
+    //获取文件名，显示在上传文本框
+    function getFilename(){
+        var filename=document.getElementById("file").value;
+        if(filename==undefined||filename==""){
+            document.getElementById("filename").innerHTML="点击此处上传文件";
+        } else{
+            var fn=filename.substring(filename.lastIndexOf("\\")+1);
+            document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
+        }
+    }
+
+    //跳出模型保存框
+    function jumpDialog() {
+        $("#modal-demo").modal("show");
+    }
+
+    //关闭模型保存框
+    function hideDialog() {
+        setTimeout($("#modal-demo").modal("hide"),"3000");
+    }
+
+    //form表单提交前进行判断，return false意味着不再跳转
+    function verify() {
+
+// jquery .ajaxSubmit表单提交，页面不刷新
+        $("#upfileForm").ajaxSubmit(function(message) {
+// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+            $.Huimodalalert('上传成功',2000);
+            //关闭弹框
+            hideDialog();
+            //延时后页面跳转
+            window.setTimeout("window.location = '/data/fileManage'",1000);
+        });
+        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+
+
+</script>
+</body>
+
+
+</html>

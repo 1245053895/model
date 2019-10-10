@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<!--<input type="hidden" th:value="${businessid}" id="businessid"/>-->
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集 <span class="c-gray en">&gt;</span> 数据集列表<!-- <span class="c-gray en">&gt;</span> 数据管理 --><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">
+            数据集管理&nbsp;&nbsp;&nbsp;&nbsp;
+            数据集名称：<a th:text="${datamodelJi.getJiname()}"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            数据集类型：<a th:text="${datamodelJi.getJitype()}"></a>
+            <input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"  onclick="javascript:history.back(-1);"/>
+        </div>
+        <div class="panel-body">
+            <div >
+                <!--实现模糊搜索-->
+                <form method="get" action="#" th:action="@{/data/dataSearch}">
+                    <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="search_text" value=""
+                           id="search_text" autocomplete="off" style="width:30%">
+                    <button type="submit" class="btn btn-default" id="search_button">
+                    搜索
+                    </button>
+                   <!-- &nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${datamodelInfo.size()}"></a>&nbsp;&nbsp;条数据】-->
+                </form>
+            </div>
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort" style="margin-top: 1%">
+                    <thead>
+                    <tr class="text-c">
+                        <th >数据包名称</th>
+                        <th >数据格式</th>
+                        <th >操作</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+
+                    <tr class="text-c" th:each="datamodelBao:${datamodelBao}">
+                       <td  > <a th:text="${datamodelBao.baoname}" th:href="@{'/data/dataJiReview/'+ ${datamodelBao.baoid}}"></a></td>
+                        <td >.csv</td>
+                        <td>
+
+                            <a th:href="@{'/data/dataJiReview/'+ ${datamodelBao.baoid}}">
+                                <input class="btn btn-primary size-MINI radius" type="button" value="打开">
+                            </a>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+

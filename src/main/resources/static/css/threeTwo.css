@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.search{
+    height: 100vh;
+    width:100%;
+    background: white;
+    border:1px solid #004684 ;
+    box-sizing: border-box;
+    position: relative;
+}
+.date{
+    border: 1px solid black;
+    height: 96vh;
+    width: 98%;
+    margin-left:1%;
+    margin-top:1%;
+    position: absolute;
+}
+.base{
+    border: 0px solid black;
+    background: #D7D7D7;
+    height: 5vh;
+    width: 100%;
+    margin-left:0%;
+    margin-top:0%;
+    position: absolute;
+}
+#sjk{
+    display: flex;
+    justify-content:center;
+    align-items:Center;
+    margin-top: 4px;
+}
+.container {
+    height: 7px;
+    width: 30%;
+
+}
+.parent {
+    margin-top: 12%;
+    margin-left: 12%;
+    position: relative;
+}
+.search1{
+    width: 300px;
+    height: 40px;
+    border-radius: 18px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding-left: 20px;
+    position: absolute;
+}
+.btn {
+    height: 29px;
+    width: 9%;
+    position: absolute;
+    top: 6px;
+    /* left: 285px; */
+    margin-left: 78%;
+    margin-top: 0%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+   /* background-image: url(image/搜索.jpg);*/
+}
+.form1 table {
+   /* border-right-style:none;
+    border-left-style:none;*/
+    width: 98%;
+
+    margin-left: 1%;
+    border: solid 1px;
+    box-sizing: border-box;
+    margin-top: 4%;
+}
+.form1 table tr {
+    text-align: center;
+    height: 6vh;
+
+}
+
+
+

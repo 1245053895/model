@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+	<!--[if IE 6]>
+	<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>图片列表</title>
+</head>
+<body>
+<input type="hidden" value="xxx" id="blockid"/>
+	<div class="panel panel-default" style="width: 99%;height: 99vh;">
+		<div class="panel-header">场景信息</div>
+		<div class="panel-body">
+			<table class="table table-border table-bordered table-hover table-bg table-sort">
+				<thead>
+				<tr class="text-c">
+					<th >业务对象</th>
+					<th >业务数据</th>
+					<th >业务知识</th>
+
+				</tr>
+				</thead>
+				<tbody >
+
+				<!--<tr class="text-c" >-->
+
+					<!--<td>-->
+						<!--<a th:each="objectNameList:${objectNameList}"  th:text="${objectNameList.getObjectname()}"  ><br/></a>-->
+					<!--</td>-->
+					<!--<td>-->
+						<!--<a th:each="dataTypeNameList:${dataTypeNameList}"  th:text="${dataTypeNameList.getDatatypename()}"><br/></a>-->
+					<!--</td>-->
+					<!--<td>-->
+						<!--<a th:each="knowledgeNameList:${knowledgeNameList}"  th:text="${knowledgeNameList.getKnowledgename()}"><br/></a>-->
+					<!--</td>-->
+				<!--</tr>-->
+				</tbody>
+			</table>
+
+
+
+		</div>
+	</div>
+
+	<!--<div class="panel panel-default" style="width: 99%; height: 43vh;overflow-x: hidden;overflow-y: auto;margin-top: 3vh;">-->
+		<!--<div class="panel-header">节点抽取</div>-->
+		<!--&lt;!&ndash;<a id="nextstep" value="" onclick="save(this.href)" ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  -2.1%;" value="下一步" /></a>&ndash;&gt;-->
+		<!--<div class="panel-body" id="model_content"></div>-->
+
+	<!--</div>-->
+
+
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+
+
+
+    //保存页面数据，封装json，用ajax传递
+    // function save(href) {
+    //     if(href==""){
+    //         $.Huimodalalert('请先选择要抽取的节点',2000);
+    //     }
+    //     else {
+    //         var blockid =document.getElementById('nextstep').getAttribute('value');
+    //         var businessid =document.getElementById('businessid').getAttribute('value');
+    //         var id= {
+    //             "blockid" : blockid,
+		// 		"businessid" : businessid
+    //         };
+    //         $.ajax({
+    //             url : "/getblockid",
+    //             type : "POST",
+    //             async : true,
+    //             contentType: "application/json; charset=utf-8",
+    //             data : JSON.stringify(id),
+    //             dataType : 'json',
+    //             success : function(data) {
+    //             }
+    //         });
+    //     }
+    // }
+
+    //跳出模型保存框
+    function jumpDialog() {
+        $("#modal-demo").modal("show");
+    }
+
+    //获取模型数据，保存除模型名称以外的其他数据
+    function getModelAndData(){
+
+        //保存流程图
+        var flowchart = "";
+        $("#model_content input[type='button']").each(function() {
+
+            var v = $(this).val();
+            flowchart = flowchart + v + ";";
+        });
+        flowchart = flowchart.substr(0,flowchart.length-1);
+
+        //保存参数
+        var param_forms = ["param1_form","param2_form","param3_form","param4_form"];
+        var arr = new Array(param_forms.length);
+        for (var i = 0;i<param_forms.length;i++){
+            var temp ="";
+            $("#"+param_forms[i]+" input[type='text']").each(function () {
+                var v = $(this).val();
+                temp = temp + v +";";
+            })
+            temp = temp.substr(0,temp.length-1);
+            arr[i] = temp;
+        }
+        //用{}封装json
+        var data = {};
+
+        var jsonkey = ["proc_Name","proc_Elements","param1_form","param2_form","param3_form","param4_form"]
+        for (var i = 0;i< jsonkey.length;i++){
+            var res = jsonkey[i];
+            if (i==0){
+                data[res] = "";
+            }
+            else if (i==1){
+                data[res] = flowchart;
+            }
+            else {
+                data[res] = arr[i-2];
+            }
+        }
+        return data;
+    }
+
+    //初始化删除按钮
+    function init() {
+        $(".algorithm_elements").mouseenter(function () {
+            $(this).find(".delete").show();
+
+        });
+
+        $(".algorithm_elements").mouseleave(function () {
+            $(this).find(".delete").hide();
+        });
+
+        //执行删除操作
+        $('.delete').click(function(){
+            $(this).parent().parent().remove();
+            //初始化下一步按钮
+            var question = document.getElementById('nextstep');
+            var href = "" ;
+            question.setAttribute("href",href);
+        })
+    }
+    //判断是否有节点
+    function countStop(){
+        var inputs_stop = $("#model_content input[value !='']");
+        return inputs_stop.length;
+
+    }
+    //添加算法图标及信息,逻辑判断信息，获取节点id
+    function add(value,id){
+
+        var num_stop = countStop();
+
+        if(num_stop >0){
+            $.Huimodalalert('仅能提取一个节点，请先删除已选子节点',2000);
+
+        }
+        else{
+                $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left;' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' style='width: 29vh;height: 5vh;font-weight: 700;font-size: larger;' value='"
+                    + value
+					+"' value='"
+					+ id
+                    +"'/>"+"<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>"+"</div>");
+                init();
+			//获取节点id
+            var question = document.getElementById('blockid');
+
+            question.setAttribute("value",id);
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.business.BusinessModelMapper">
+    <select id="selectbusinessmodel" resultType="businessModel">
+        SELECT * FROM business_model ;
+    </select>
+
+    <select id="selectAllNode" parameterType="String" resultType="businessScene">
+        SELECT * FROM business_scene WHERE businessid = #{businessid}
+    </select>
+
+
+    <!--业务场景-业务对象-节点名称-->
+<!--    <select id="selectblockContent" resultType="" >
+        SELECT jsplumbblock.blockContent FROM business_scene,jsplumbblock WHERE business_scene.blockid=jsplumbblock.id and businessid=#{businessid}
+    </select>-->
+<!--    </select>&ndash;&gt;-->
+
+<select id="selectprocesid" parameterType="Integer" resultType="Integer">
+    select processid from business_model where businessid = #{businessid}
+</select>
+
+    <select id="searchBusiness" parameterType="String" resultType="BusinessModel">
+        select * from business_model where businessname like CONCAT('%',#{businessname},'%')
+    </select>
+</mapper>
