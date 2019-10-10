@@ -8,6 +8,7 @@ import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.business.BusinessScene;
 import com.xd.zt.domain.business.SceneShow;
 import com.xd.zt.domain.business.flow.JsPlumbBlock;
+import com.xd.zt.service.business.BusinessFileService;
 import com.xd.zt.service.business.BusinessObjectService;
 import com.xd.zt.service.business.PictureService;
 import com.xd.zt.service.business.QuestionBuildService;
@@ -27,10 +28,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.xd.zt.util.business.UploadUtils.IMG_PATH_PREFIX;
+
 @RequestMapping("/business")
 @Controller
 
 public class QuestionController {
+    @Autowired
+    private BusinessFileService fileService;
+
     @Autowired
     private QuestionBuildService questionBuildService;
     @Autowired
@@ -125,7 +131,15 @@ public class QuestionController {
     public String deletequestion(@RequestBody String jsonData) {
         JSONObject jsonObject = JSON.parseObject(jsonData);
         String questionid = jsonObject.getString("questionid");
+     BusinessQuestion businessQuestion=questionBuildService.getPictureByQestionId(questionid);
+      String filepath=  businessQuestion.getPicture();
+       /* String filepath = businessFile.getFilepath();*/
         questionBuildService.deletequestion(questionid);
+        /* 删除对应的图片*/
+        File file = new File(filepath);
+        if (file.exists()) {
+            file.delete();
+        }
         return questionid;
     }
     @RequestMapping(value = "/questionDefine/{id}",method = RequestMethod.GET)  //business_question表的blockid
@@ -147,7 +161,7 @@ public class QuestionController {
         String filename = file.getOriginalFilename();
         // 存放上传图片的文件夹
         File fileDir = UploadUtils.getImgDirFile();
-        String sqlPath = null;
+        String fileDirPath = new String("src/main/resources/static/uploadImage/"+filename);
         // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
         System.out.println(fileDir.getAbsolutePath());
         try {
@@ -156,8 +170,8 @@ public class QuestionController {
             System.out.println(newFile.getAbsolutePath());
             // 上传图片到 -》 “绝对路径”
             file.transferTo(newFile);
-            sqlPath = "/uploadImage/"+filename;
-            businessQuestion.setPicture(sqlPath);
+        //    sqlPath = "/uploadImage/"+filename;
+            businessQuestion.setPicture(fileDirPath);
             questionBuildService.updatePicture(businessQuestion);
 
         } catch (IOException e) {

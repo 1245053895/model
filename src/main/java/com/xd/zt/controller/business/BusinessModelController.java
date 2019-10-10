@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -224,8 +225,12 @@ public class BusinessModelController {
     public ModelAndView questionView(Model model, @PathVariable("id") Integer questionid){
         List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
         BusinessQuestion businessQuestion = businessQuestionList.get(0);
+        String path=businessQuestion.getPicture();
+        File file=new File(path.trim());
+        String pictureName=file.getName();
+       String picture = "/uploadImage/"+pictureName;
+        businessQuestion.setPicture(picture);
         model.addAttribute("businessQuestion",businessQuestion);
-
         String scenename = modelCreateService.selectnamebysceneid(questionid);
 //        String sceneblock = modelCreateService.selectsceneblockbysceneid(questionid);
         String questionblock = modelCreateService.selectquestionblock(questionid);

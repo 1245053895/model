@@ -49,7 +49,7 @@ public class BusinessFileController {
     @ResponseBody
     @PostMapping("/saveFile/{businessid}")
     public void upFile(@RequestParam("filename") MultipartFile multipartFile, @PathVariable("businessid") Integer businessid) throws Exception {
-
+ /*      String sqlPath=null;*/
         String[] fileInformation = fileService.Upload(multipartFile);
         String filename = fileInformation[0];
        String filepath = fileInformation[1];
@@ -58,6 +58,8 @@ public class BusinessFileController {
 
         BusinessFile businessFile = new BusinessFile();
         businessFile.setFilename(filename);
+  /*      filepath = "/file/"+filename;*/
+
         businessFile.setFilepath(filepath);
         businessFile.setFilesize(filesize);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

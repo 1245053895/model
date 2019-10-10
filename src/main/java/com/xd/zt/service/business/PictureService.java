@@ -33,7 +33,7 @@ public class PictureService {
 
         String[] fileInformation = new String[3];
         if(!picture.isEmpty()) {
-            // 获取文件名称,包含后缀//image.png
+            // 获取文件名称,包含后缀
             String fileName = picture.getOriginalFilename();
 
             // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)

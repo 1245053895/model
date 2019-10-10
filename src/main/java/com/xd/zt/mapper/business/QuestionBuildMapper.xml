@@ -43,4 +43,9 @@ UPDATE business_question SET questioname=#{questioname}, questiondes=#{questiond
     <update id="updatePicture" parameterType="businessQuestion">
         UPDATE business_question SET picture=#{picture} WHERE blockid=#{blockid}
     </update>
+
+    <select id="getPictureByQestionId" parameterType="String" resultType="businessQuestion">
+         SELECT * FROM business_question WHERE questionid =#{questionid}
+    </select>
+
 </mapper>

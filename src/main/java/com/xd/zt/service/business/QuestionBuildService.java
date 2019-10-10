@@ -30,4 +30,5 @@ public interface QuestionBuildService {
 
     BusinessQuestion selectquestionbyblockid(@Param("blockid") String blockid);
     public void updatePicture(BusinessQuestion businessQuestion);
+    public BusinessQuestion getPictureByQestionId(@Param("questionid") String questionid);
 }

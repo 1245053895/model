@@ -89,5 +89,11 @@ public class QuestionBuildServiceImpl implements QuestionBuildService {
         questionBuildMapper.updatePicture(businessQuestion);
     }
 
+    @Override
+    public BusinessQuestion getPictureByQestionId(@Param("questionid") String questionid) {
+      BusinessQuestion businessQuestion=  questionBuildMapper.getPictureByQestionId(questionid);
+        return businessQuestion;
+    }
+
 
 }

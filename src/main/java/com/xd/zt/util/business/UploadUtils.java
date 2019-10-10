@@ -18,4 +18,11 @@ public class UploadUtils {
         }
         return fileDir;
     }
+
+
+
+    public void deleteFile(String filepath){
+        File file = new File(filepath);
+        file.delete();
+    }
 }
