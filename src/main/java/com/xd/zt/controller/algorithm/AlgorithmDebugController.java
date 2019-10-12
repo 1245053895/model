@@ -5,27 +5,31 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import com.xd.zt.domain.analyse.Algorithm;
+import com.xd.zt.domain.business.BusinessFile;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
+import com.xd.zt.service.algorithm.AlgorithmUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @RequestMapping("/algorithm")
 @Controller
 public class AlgorithmDebugController {
     @Autowired
     private AlgorithmDebugService algorithmDebugService;
-
+    @Autowired
+    private AlgorithmUpdateService algorithmUpdateService;
     @RequestMapping("/index")
     public String index(){
         return "algorithm/index";
@@ -90,10 +94,39 @@ public class AlgorithmDebugController {
     public String deleteAlgorithm(@RequestBody String jsonData){
         JSONObject jsonObject = JSON.parseObject(jsonData);
         String algorithmid = jsonObject.getString("algorithmid");
+        Algorithm algorithm = algorithmDebugService.selectAlgorithmById(Integer.parseInt(algorithmid));
+        if (algorithm.getAlgorithmpath() != null) {
+            File file = new File(algorithm.getAlgorithmpath());
+            file.delete();
+            //清除进程
+            boolean result = file.delete();
+            if (!result) {
+                System.gc();
+                file.delete();
+            }
+        }
+
         algorithmDebugService.deleteAlgorithm(algorithmid);
         return jsonData;
     }
 
+    @ResponseBody
+    @PostMapping("/updateAlgorithm")
+    public void upFile(@RequestParam("filename") MultipartFile multipartFile) throws Exception {
+        /*      String sqlPath=null;*/
+        String[] fileInformation = algorithmUpdateService.Upload(multipartFile);
+        String filename = fileInformation[0];
+        String filepath = fileInformation[1];
+        String filesize = fileInformation[2];
+//        System.out.println(filename+"----"+ filepath+"----"+filesize);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = simpleDateFormat.format(new Date());
+        Algorithm algorithm = new Algorithm();
+        algorithm.setAlgorithmname(filename);
+        algorithm.setAlgorithmpath(filepath);
+        algorithm.setAlgorithmtime(date);
+        algorithmDebugService.saveAlgorithm(algorithm);
+    }
 ////模型
 //@RequestMapping("/algorithmModelDebug")
 //public ModelAndView algorithmModelDebug(Model model){

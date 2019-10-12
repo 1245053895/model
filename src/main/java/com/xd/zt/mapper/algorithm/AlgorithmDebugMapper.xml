@@ -18,6 +18,9 @@
         DELETE FROM `algorithm` WHERE algorithmid = #{algorithmid}
     </select>
 
+    <select id="saveAlgorithm" parameterType="Algorithm">
+        insert into `algorithm` values (null,#{algorithmname},null,null,null,#{algorithmtime},null,null,#{algorithmpath})
+    </select>
     <!--在线代码编辑-->
     <insert id="insertAlgorithm" parameterType="Algorithm" useGeneratedKeys="true" keyProperty="id">
        insert into Algorithm values (null,#{algorithmname},null,null,null,null,null,null,#{algorithmpath});

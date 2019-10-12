@@ -23,6 +23,8 @@ public interface AlgorithmDebugMapper {
     void deleteAlgorithm(@Param("algorithmid") String algorithmid);
 
     void insertAlgorithm(Algorithm algorithm);
+
+    void saveAlgorithm(Algorithm algorithm);
 ////模型
 //    //查询所有模型
 //    List<AlgorithmModel> selectAlgorithmModel();

@@ -43,6 +43,11 @@ public class AlgorithmDebugServiceImpl implements AlgorithmDebugService {
         algorithmDebugMapper.insertAlgorithm(algorithm);
     }
 
+    @Override
+    public void saveAlgorithm(Algorithm algorithm) {
+        algorithmDebugMapper.saveAlgorithm(algorithm);
+    }
+
 
 //    @Override
 //    public List<AlgorithmModel> selectAlgorithmModel() {
