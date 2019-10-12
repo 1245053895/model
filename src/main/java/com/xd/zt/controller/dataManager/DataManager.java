@@ -16,6 +16,10 @@ public class DataManager {
         return "dataManager/welcome";
     }
 
+    @RequestMapping("/dataManager")
+    public String dataManager(){
+        return "dataManager/dataManager";
+    }
     @RequestMapping("/structure")
     public String structure(){
         return "dataManager/structure";

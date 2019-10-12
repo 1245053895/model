@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyPicConfig implements WebMvcConfigurer {
    @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-       String a=System.getProperty("user.dir");
+         String a=System.getProperty("user.dir");
         String b = a.replaceAll("\\\\","/");
       registry.addResourceHandler("/uploadImage/**").addResourceLocations("file:"+b+"/src/main/resources/static/uploadImage/");
  }
