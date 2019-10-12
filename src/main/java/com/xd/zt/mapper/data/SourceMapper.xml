@@ -117,6 +117,9 @@
         SELECT * FROM algorithm
     </select>
 
+<select id="getQuestionId" resultType="datamodelName" parameterType="Integer">
+    SELECT * FROM datamodel_name WHERE modelid=#{modelid}
+</select>
 
 
     <!--//-->

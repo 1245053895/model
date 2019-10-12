@@ -24,7 +24,7 @@
 </head>
 <body>
 <input type="hidden" th:value="${modeid}" id="modeid"/>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span>针对问题 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据建模 <span class="c-gray en">&gt;</span>针对问题 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;" >
 
@@ -40,18 +40,24 @@
 
     <div class="panel panel-default" style=" width: 47%;height: 31vh;overflow-x: hidden;  overflow-y: auto; margin-top: 3vh;">
         <div class="panel-header">问题描述：</div>
-        <div class="panel-body" id="questiondescribe">
+        <div class="panel-body" id="questiondescribe" th:text="${businessQuestion.questiondes}">
         </div>
     </div>
     <div class="panel panel-default" style=" width: 47%;height: 32.5vh;overflow-x: hidden;  overflow-y: auto; margin-top: 3vh;">
         <div class="panel-header">数学描述：</div>
-        <div class="panel-body" id="mathdecribe" ></div>
+        <div class="panel-body" id="mathdecribe" th:text="${businessQuestion.formulatdes}"></div>
     </div>
     <div class="panel panel-default" style=" width: 51%;height: 67vh;overflow-x: hidden;  overflow-y: auto; margin-top: -67vh; margin-left: 49%;">
         <div class="panel-header">可视化展示：</div>
-        <div class="panel-body" id="viewdescribe"></div>
+            <div id="headimg">   <!--image src="/image/question.png"-->
+                <img th:src="${businessQuestion.picture}" style="width: 100%;height: 100%;margin-left: 0vh;margin-top: 0vh;">
+            </div>
     </div>
+<!--
     <a id="nextstep" value="" th:each="businessQuestionList:${businessQuestionList}" th:href="@{'/data/dataLinkFirstflow/'+${modeid}}" ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  5%;" value="下一步" /></a>
+-->
+    <a id="nextstep" value="" th:href="@{'/data/dataLinkFirstflow/'+${modeid}}" ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  5%;" value="下一步" /></a>
+
 </div>
 
 <!--_footer 作为公共模版分离出去-->

@@ -56,4 +56,6 @@ public interface SourceMapper {
     BusinessQuestion modelidToscenceid(Integer modeid);
     DatamodelLink processidTomodeid(Integer processid);
     DatamodelArea darprocessidTomodeid(Integer processid);
+
+     DatamodelName getQuestionId(Integer modelid);
 }

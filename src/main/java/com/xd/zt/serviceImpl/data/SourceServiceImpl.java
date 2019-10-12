@@ -190,4 +190,10 @@ public class SourceServiceImpl implements SourceService {
     public DatamodelArea darprocessidTomodeid(Integer processid) {
         return sourceMapper.darprocessidTomodeid(processid);
     }
+
+    @Override
+    public DatamodelName getQuestionId(@Param("modeid") Integer modelid) {
+       DatamodelName datamodelName= sourceMapper.getQuestionId(modelid);
+        return datamodelName;
+    }
 }
