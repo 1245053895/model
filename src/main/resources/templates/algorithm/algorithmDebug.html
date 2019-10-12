@@ -111,9 +111,9 @@
 
 //算法参数
 function switchParam_form(value) {
-
+var name = value.split(".");
 var paramsArr = new Array();
-       paramsArr.push("<div id='a"+ value +"' style='display: none' class='paramsdiv'><form method='post' class='"+ value +"' >");
+       paramsArr.push("<div id='a"+ name[0] +"' style='display: none' class='paramsdiv'><form method='post' class='"+ value +"' >");
         var algorithmParams = document.getElementById(value).getAttribute("value");
         var algorithmParams_Arr = algorithmParams.split(';');
         for (var i=0; i<algorithmParams_Arr.length;i++) {
@@ -131,7 +131,8 @@ function switchParam(value) {
     document.getElementById('resultname').innerText=resultname;
 
     $(".paramsdiv").hide(300);
-    $("#a"+value).show(300);
+    var algorithmname = value.split(".");
+    $('#a'+algorithmname[0]).show(300);
     var algorithmParams = document.getElementById(value).getAttribute("value");
     document.getElementById('selectedparams').setAttribute("value",algorithmParams);
 }
