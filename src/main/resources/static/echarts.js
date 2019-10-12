@@ -92495,7 +92495,7 @@ svgText.brush = function (el) {
     }
 };
 
-// Myers' Diff Algorithm
+// Myers' Diff algorithm
 // Modified from https://github.com/kpdecker/jsdiff/blob/master/src/diff/base.js
 
 function Diff() {}

@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+	<!--[if IE 6]>
+	<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title></title>
+</head>
+<body>
+<input type="hidden" th:value="${algorithmName}" id="algorithmName"/><input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparams}" th:id="${algorithmList.algorithmname}"/><input type="hidden" value="" id="selectedparams"/>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 算法库 <span class="c-gray en">&gt;</span> 算法校验  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" style="position: absolute;width: 97%;height: 90%;">
+
+	<div class="panel panel-default" style="width: 97%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
+		<div class="panel-header">算法列表</div>
+		<div class="panel-body" id="model_content">
+			<table class="table table-border table-bordered table-hover table-bg table-sort">
+				<thead>
+				<tr class="text-c">
+					<th >算法名称</th>
+					<th >算法版本</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+
+				<tbody>
+				<tr class="text-c" th:if="${algorithmList.size()} eq 0">
+					<td colspan="7">当前不存在算法</td>
+				</tr>
+				<tr class="text-c"  th:each="algorithmList:${algorithmList}">
+					<td ><input style="background-color: rgba(0,0,0,0);border: 0px;color: black" class="btn btn-success radius" type="button"  th:value="${algorithmList.algorithmname}"  onclick="switchParam(value)"></input></td>
+					<td  th:text="${algorithmList.algorithmversion}" ></td>
+					<td>
+						<a th:href="'/algorithm/algorithmView/'+${algorithmList.algorithmid}">
+							<input th:id="${algorithmList.algorithmid}" class="btn btn-primary size-MINI radius" type="button" value="查看"  >
+						</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-default" style="width: 43%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header"><div  id="paramsname" >参数设置：</div>
+			<a ><input class="btn btn-success radius" type="button" style="position: relative; margin-left: 87%;margin-top: -4%;float: left;" value="参数校验" onclick="paramsdebug()"/></a>
+		</div>
+
+		<!--<form method="post" class="loginForm" >-->
+			<div class="panel-body" id="params_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+
+		</div>
+
+	</div>
+
+	<div class="panel panel-default" style="width: 52%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header"><div  id="resultname" >运行结果：</div>
+			<a ><input class="btn btn-success radius" type="button" style="position: relative;float: left;margin-left: 92%;margin-top: -3.3%;" value="运行" onclick="algorithmrun()"/></a>
+		</div>
+	</div>
+
+
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+    //获取
+    $(document).ready(function(){
+        get_Proc_Elements();
+    });
+
+    var debug ;
+
+	function get_Proc_Elements() {
+        var algorithmName = document.getElementById('algorithmName').getAttribute("value");
+        var algorithmNameArr = algorithmName.split(';');
+        for (var i = 0; i < algorithmNameArr.length - 1; i++) {
+            var name = algorithmNameArr[i];
+                switchParam_form(name);
+
+        }
+    }
+
+
+//算法参数
+function switchParam_form(value) {
+
+var paramsArr = new Array();
+       paramsArr.push("<div id='a"+ value +"' style='display: none' class='paramsdiv'><form method='post' class='"+ value +"' >");
+        var algorithmParams = document.getElementById(value).getAttribute("value");
+        var algorithmParams_Arr = algorithmParams.split(';');
+        for (var i=0; i<algorithmParams_Arr.length;i++) {
+            var param = algorithmParams_Arr[i];
+           paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>"+param+"</div>"+ "<input type='text' placeholder='请输入..' class='input-text ac_input' name='"+param+"'  id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+        }
+       paramsArr.push("</form></div>");
+    $("#params_text").append(paramsArr.join("\n"));
+}
+//显示参数
+function switchParam(value) {
+    var name = "参数设置："+value;
+    var resultname = "运行结果："+value;
+    document.getElementById('paramsname').innerText=name;
+    document.getElementById('resultname').innerText=resultname;
+
+    $(".paramsdiv").hide(300);
+    $("#a"+value).show(300);
+    var algorithmParams = document.getElementById(value).getAttribute("value");
+    document.getElementById('selectedparams').setAttribute("value",algorithmParams);
+}
+
+//参数校验
+	function paramsdebug() {
+		var algorithmParams = document.getElementById('selectedparams').getAttribute('value');
+        var algorithmParams_Arr = algorithmParams.split(';');
+        for(var i = 0; i < algorithmParams_Arr.length; i++){
+            var data = document.getElementById(algorithmParams_Arr[i]).value;
+           var boolen = isNumber(data);
+        if(boolen == false){
+            $.Huimodalalert('存在非法字符', 1000);
+            debug = false;
+            break;
+		}
+            $.Huimodalalert('校验通过', 1000);
+        debug = true;
+		}
+    }
+    
+    //正则表达式, 判断是不是一个数字 或者 一个字符串里全是数字
+	function isNumber (value) {
+        if (value === undefined || value === null || value === '') {
+            return false
+        }
+
+        if (typeof(value) === 'string') {
+            //正整数
+            var reNumber = /^\d+$/
+            //负整数
+            var reNeNumber = /^-\d+$/
+            //正实数
+            var reRealNumber1 = /^[1-9]\d*[.]\d+$/  //非零开头
+            var reRealNumber2 = /^0[.]\d+$/ //零开头
+            //负实数
+            var reNeRealNumber1 = /^-[1-9]\d*[.]\d+$/  //非零开头
+            var reNeRealNumber2 = /^-0[.]\d+$/ //零开头
+
+            if (reNumber.test(value) || reNeNumber.test(value)
+                || reRealNumber1.test(value) || reRealNumber2.test(value)
+                || reNeRealNumber1.test(value)|| reNeRealNumber2.test(value)) {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else if (typeof(value) === 'number') {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+
+    function algorithmrun() {
+		if(debug == null){
+            $.Huimodalalert('请先进行参数校验', 1000);
+		}
+		else if(debug == false){
+            $.Huimodalalert('参数校验未通过，请修改参数', 1000);
+		}
+		else if(debug == true){
+
+		}
+		else {
+
+		}
+    }
+</script>
+</body>
+</html>

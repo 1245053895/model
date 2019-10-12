@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>模型库管理</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>  <span class="c-gray en"></span> 模型库 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">工程列表
+            <a th:href="@{'//'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>
+        </div>
+        <div class="panel-body">
+            <div >
+                <!--实现模糊搜索-->
+                <form method="get" action="#" th:action="@{dataSearch}">
+                    <input type="text" placeholder="请输入工程名" class="input-text ac_input" name="search_text" value=""
+                           id="search_text" autocomplete="off" style="width:30%">
+                    <button type="submit" class="btn btn-default" id="search_button">
+                    搜索
+                    </button>
+                   <!--&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${algorithmModelList.size()}"></a>&nbsp;&nbsp;个模型】-->
+
+
+                </form>
+            </div>
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >工程名称</th>
+                        <th >工程描述</th>
+                        <th >创建时间</th>
+                        <th >用户信息</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <!--<tr class="text-c" th:if="${algorithmModelList.size()} eq 0">-->
+                            <!--<td colspan="7">没有相关模型</td>-->
+                        <!--</tr>-->
+                     <tr class="text-c">
+                         <td colspan="5">当前未创建工程</td>
+                     </tr>
+
+                        <!--<tr class="text-c"  th:each="algorithmModelList:${algorithmModelList}">-->
+                            <!--<td ><a th:text="${algorithmModelList.algorithmmodelname}" ></a></td>-->
+                            <!--<td  th:text="${algorithmModelList.algorithmmodeltype}" ></td>-->
+                            <!--<td  th:text="${algorithmModelList.algorithmmodellabel}" ></td>-->
+                            <!--<td  th:text="${algorithmModelList.algorithmmodeldescribe}" ></td>-->
+                            <!--<td th:text="${algorithmModelList.algorithmmodeltime}" ></td>-->
+                            <!--<td  th:text="${algorithmModelList.algorithmmodelversion}" ></td>-->
+                            <!--&lt;!&ndash;<td><a style="cursor:pointer" class="text-primary" th:text="${analyseInstanceList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td th:text="${analyseInstanceList.examplestatus}"></td>&ndash;&gt;-->
+                            <!--<td>-->
+                                <!--&lt;!&ndash;<a  >&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input th:id="${algorithmModelList.algorithmodelmid}" class="btn btn-primary size-MINI radius" type="button" value="运行" >&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                                <!--<a th:href="'/algorithmModelView/'+${algorithmModelList.algorithmmodelid}"  >-->
+                                    <!--<input th:id="${algorithmModelList.algorithmmodelid}" class="btn btn-primary size-MINI radius" type="button" value="查看"  >-->
+                                <!--</a>-->
+                                <!--<a   >-->
+                                    <!--<input th:id="${algorithmModelList.algorithmmodelid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >-->
+                                <!--</a>-->
+
+                            <!--</td>-->
+                        <!--</tr>-->
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    window.onload=function() {
+        var oLis = document.getElementsByTagName("input");
+        for (var index = 0; index < oLis.length; index++) {
+            oLis[index].onclick = function () {
+                var id = this.id;
+                var value = this.value;
+                if (value == "删除") {
+                    if (confirm("确定要删除此问题？")) {
+                        var algorithmmodelid = {
+                            "algorithmmodelid": id
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(algorithmmodelid),
+                            url: '/deleteAlgorithmModel',
+                            success: function () {
+                                $.Huimodalalert('删除成功', 1000);
+                                location.reload(true);
+                            }
+                        });
+                        location.reload(true);
+                    }
+                    else {
+                    }
+                }
+                if (value == "运行") {
+                    if (confirm("确定要运行？")) {
+                        var exampleid = {
+                            "exampleid": id
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(exampleid),
+                            url: '/exampleRun',
+                            success: function () {
+                                    $.Huimodalalert('已添加运行任务', 1000);
+                            },
+                            error:function () {
+                                $.Huimodalalert('已添加运行任务', 1000);
+                            }
+                        });
+                            }
+                    }
+                else{
+                }
+            }
+        }
+    }
+    
+
+</script>
+</body>
+</html>
+

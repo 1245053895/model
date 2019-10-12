@@ -1,0 +1,16 @@
+.CodeMirror{
+    height: 700px;
+}
+
+.tab-content{
+    margin-top: 50px;
+}
+
+.codeR{
+    display: none;
+}
+
+.algTable{
+    margin-top: 80px;
+    overflow: auto;
+}

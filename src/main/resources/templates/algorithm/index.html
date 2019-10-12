@@ -1,0 +1,154 @@
+<!--<!DOCTYPE HTML>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">-->
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="Bookmark" th:href="@{/favicon.ico}"/>
+		<link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
+		<!--[if lt IE 9]>
+<script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+<script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+<![endif]-->
+		<link type="text/css" rel="stylesheet" th:href="@{/h-ui/css/H-ui.min.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+		<!--[if IE 6]>
+<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+		<title>城市地下空间工程大数据分析平台</title>
+		<meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+		<meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+	</head>
+	<body  style="background-image: url(/image/bacground.jpg);background-size: 220%" >
+	<input type="hidden"  id="businessid"/>
+<header class="navbar-wrapper"style="height: 60px;">
+			<div class="navbar navbar-fixed-top " style="height: 60px;background-color: rgba(0,0,0,0)">
+				<div class="container-fluid cl" style="height: 60px;background-color: #3E3939;background-color: rgba(0,0,0,0)">
+				<img th:src="@{/temp/logo.png}" style="width: 4%;height: 100%;margin-top: 0.1%"/>
+				<span style="color: white;font-weight: bold;font-size: 1rem;margin-left:1%;margin-top: 1%;position: absolute;">城市地下空间工程大数据分析平台-算法库管理工具</span>
+				</div>
+			</div>
+		</header>
+		<aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
+			<div class="menu_dropdown bk_2">
+	<dl id="menu-tongji">
+		<dt><a data-href="welcome" data-title="首页" href="javascript:void(0)" ><center><font color="white" size="3" >菜单</font></center></a></dt>
+	</dl>
+	<dl id="menu"  >
+        <dt ><i class="Hui-iconfont" >&#xe620;</i><font color="white" size="3" >        算法库 </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dd>
+			<ul>
+				<li><a   data-href="algorithmList" data-title="算法检索" href="javascript:void(0)" >算法检索</a></li>
+				<li><a      data-href="algorithmOnline" data-title="算法编辑" href="javascript:void(0)">算法编辑</a></li>
+				<li><a  data-href="algorithmDebug" data-title="算法校验" href="javascript:void(0)">算法校验</a></li>
+			</ul>
+		</dd>
+	</dl>
+				<!--data-href="questionbuild" href="javascript:void(0)"-->
+			</div>
+		</aside>
+		<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onclick="displaynavbar(this)"></a></div>
+		<section class="Hui-article-box" style="border-radius:10px;">
+			<div id="Hui-tabNav" class="Hui-tabNav hidden-xs" >
+				<div class="Hui-tabNav-wp" >
+					<ul id="min_title_list" class="acrossTab cl">
+						<li class="active">
+							<span title="我的桌面" data-href="welcome">首页</span>
+							<em></em></li>
+					</ul>
+				</div>
+				<div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i
+						 class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i
+						 class="Hui-iconfont">&#xe6d7;</i></a></div>
+			</div>
+			<div id="iframe_box" class="Hui-article">
+				<div class="show_iframe">
+					<div style="display:none" class="loading"></div>
+					<iframe scrolling="yes" frameborder="0" th:src="@{/welcome}"></iframe>
+				</div>
+			</div>
+		</section>
+
+		<div class="contextMenu" id="Huiadminmenu">
+			<!--<ul>-->
+				<!--<li id="closethis">关闭当前 </li>-->
+				<!--<li id="closeall">关闭全部 </li>-->
+			<!--</ul>-->
+		</div>
+		<!--_footer 作为公共模版分离出去-->
+		<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+		<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+		<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+		<!--/_footer 作为公共模版分离出去-->
+
+		<!--请在下方写此页面业务相关的脚本-->
+		<script type="text/javascript" >
+
+                // window.onload=function(){
+                //     var businessid=document.getElementsByTagName("dt");
+                //     for(var index=0;index<businessid.length;index++){
+                //         businessid[index].onclick=function(){
+                //             var id =  this.id;
+                //
+                //             document.getElementById('businessid').setAttribute("value",id);
+                //
+                //             var questionhref="upFile/"+ id.toString();
+                //             var question = document.getElementById(questionhref);
+                //             question.setAttribute('data-href',questionhref);
+                //
+                //             var businessid = document.getElementById('businessid').getAttribute('value');
+                //             var businessid= {
+                //                 "businessid" : businessid
+                //             };
+                //             $.ajax({
+                //                 url : "/findprocessid",
+                //                 type : "POST",
+                //                 async : true,
+                //                 contentType: "application/json; charset=utf-8",
+                //                 data : JSON.stringify(businessid),
+                //                 dataType : 'json',
+                //                 success : function(processid) {
+                //                     var href = "processview/" + processid.toString();
+                //                     var businessid = "businessprocess/" + id;
+                //                     document.getElementById(businessid).setAttribute("data-href", href)
+                //
+                //                 },
+                //                 error : function() {
+                //                         var href = "newprocess/"+id.toString();
+					// 					var businessid = "businessprocess/"+id;
+                //                         document.getElementById(businessid).setAttribute("data-href",href)
+                //                     }
+                //
+                //
+                //
+                //
+                //             });
+                //
+                //              var questionhref="scenebuild/"+ id.toString();
+                //              var question = document.getElementById(questionhref);
+                //             question.setAttribute('data-href',questionhref);
+                //
+                //             var questionhref="questionbuild/"+ id.toString();
+                //             var question = document.getElementById(questionhref);
+                //             question.setAttribute('data-href',questionhref);
+                //         }
+                //     }
+                // }
+
+
+
+		</script>
+
+
+	</body>
+</html>

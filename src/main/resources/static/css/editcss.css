@@ -1,0 +1,152 @@
+.allBorder{
+    /*border: 1px solid red;*/
+    height: 89vh;
+}
+.leftBorder{
+    /*border: 1px solid black;*/
+    height: 89vh;
+}
+.formBorderPython{
+    /*border: 1px solid black;*/
+    height: 84.5vh;
+    position: relative;
+    width: 100%;
+}
+.formLine1Border{
+    /*border: 1px solid red;*/
+    position: relative;
+    width: 100%;
+    height: 5vh;
+}
+
+.formLine1text{
+    /*border: 1px solid red;*/
+    position: absolute;
+    margin-top: 1%;
+    margin-left: 24%;
+    font-size: 16px;
+}
+.formLine1input{
+    /*border: 1px solid blue;*/
+    position: absolute;
+    margin-top: 0.7%;
+    margin-left: 31%;
+    width: 50%;
+    height: 3vh;
+}
+#pythonName{
+    /*border: 1px solid green;*/
+    height: 100%;
+    width: 100%;
+}
+.formLine2Border{
+    /*border: 1px solid black;*/
+    height: 74vh;
+    width: 100%;
+    margin-top: -1.2%;
+}
+
+.formLine2TextareaBorder{
+    /*border: 1px solid red;*/
+}
+
+.formLine3Border{
+    /*border: 1px solid blue;*/
+    position: relative;
+    width: 100%;
+    height: 5vh;
+    margin-top: -1%;
+}
+
+
+
+.rightBorder{
+    /*border: 1px solid green;*/
+    height: 89vh;
+}
+.leftBorder2_top{
+    /*border: 1px solid red;*/
+    height: 9vh;
+}
+
+.leftBorder2_top_text{
+    /*border: 1px solid blue;*/
+    height: 3vh;
+    position: absolute;
+    margin-left: 10%;
+    margin-top: 5%;
+    font-size: 18px;
+}
+
+.leftBorder2_top_option{
+    /*border: 1px solid blue;*/
+    position: absolute;
+    margin-top: 5%;
+    height: 3vh;
+    margin-left: 25%;
+    width: 43%;
+}
+.leftBorder2_top_optionsize{
+    width: 100%;
+    height: 3vh;
+}
+
+
+.leftBorder2_mid{
+    /*border: 1px solid red;*/
+    height: 40vh;
+}
+.leftBorder2_mid_text{
+    /*border: 1px solid blue;*/
+    height: 3vh;
+    position: absolute;
+    margin-left: 10%;
+    margin-top: 2%;
+    font-size: 18px;
+}
+.inputarea{
+    border: 1px solid gray;
+    height: 20vh;
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 10%;
+    width: 71%;
+}
+
+.leftBorder2_mid_button{
+    /*border: 1px solid red;*/
+    height: 4vh;
+    position: absolute;
+    margin-top: 45%;
+    margin-left: 71%;
+}
+
+.leftBorder2_but{
+    /*border: 1px solid red;*/
+    height: 40vh;
+}
+
+.leftBorder2_but_text{
+    /*border: 1px solid blue;*/
+    height: 3vh;
+    position: absolute;
+    margin-left: 10%;
+    margin-top: 2%;
+    font-size: 18px;
+}
+.outputarea{
+    border: 1px solid gray;
+    height: 20vh;
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 10%;
+    width: 71%;
+}
+
+.leftBorder2_but_button{
+    /*border: 1px solid red;*/
+    height: 4vh;
+    position: absolute;
+    margin-top: 45%;
+    margin-left: 71%;
+}
