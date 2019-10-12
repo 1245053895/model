@@ -44,6 +44,12 @@ public class BusinessFileService {
             //获取项目类加载器下的资源路径
            /* String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/";*/
             String path = new String("src/main/resources/" + IMG_PATH_PREFIX);
+            File fileDir = new File(path);
+            if(!fileDir.exists()){
+                // 递归生成文件夹
+                fileDir.mkdirs();
+            }
+
             //String path = LOCAL_UPFILE_PATH;//尝试用参数启动，改为本地路径
             System.out.println(path);
            // path = path.substring(1,path.length());
