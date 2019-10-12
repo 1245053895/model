@@ -224,7 +224,8 @@ public class AnalyseController {
         JSONArray parameters = JSONArray.parseArray(parameterss);
         JSONObject modelinstance = new JSONObject();
         modelinstance.put("username","name");
-        modelinstance.put("modelId",modelinstanceid);
+        modelinstance.put("modelInstanceId",modelinstanceid);
+        modelinstance.put("instantData","False");
         modelinstance.put("analyzmodel",parameters);
 
         String jsonString= JSON.toJSONString(modelinstance);

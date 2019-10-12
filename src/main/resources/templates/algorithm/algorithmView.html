@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+	<!--[if IE 6]>
+	<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title></title>
+</head>
+<body>
+<!--<input type="hidden" th:value="${algorithmStringList}" id="algorithmStringList"/>-->
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 算法管理工具 <span class="c-gray en">&gt;</span> 算法查看  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" style="position: absolute;width: 97%;height: 90%;">
+
+	<div class="panel panel-default" style="width: 97%;height: 90vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
+		<div class="panel-header" th:text="'算法名：'+${algorithm.algorithmname}"></div>
+		<div class="panel-body" id="model_content">
+		</div>
+	</div>
+
+
+
+
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+    //获取
+    $(document).ready(function(){
+		viewAlgorithm();
+    });
+
+	function viewAlgorithm() {
+        var algorithmJsonString = [[${algorithmJsonString}]];
+        var algorithmJson = eval('('+algorithmJsonString+')');
+        var length = Object.keys(algorithmJson).length;
+	    var algorithmArray = new Array();
+        	algorithmArray.push("<pre>");
+        for (var i = 0; i < length; i++ ){
+            algorithmArray.push(algorithmJson[''+i+'']);
+		}
+        	algorithmArray.push("</pre>");
+        $("#model_content").append(algorithmArray.join("\n"));
+    }
+</script>
+</body>
+</html>

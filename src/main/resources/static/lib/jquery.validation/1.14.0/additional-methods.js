@@ -147,7 +147,7 @@ $.validator.addMethod( "cifES", function( value ) {
 		num[ i ] = parseInt( value.charAt( i ), 10 );
 	}
 
-	// Algorithm for checking CIF codes
+	// algorithm for checking CIF codes
 	sum = num[ 2 ] + num[ 4 ] + num[ 6 ];
 	for ( count = 1; count < 8; count += 2 ) {
 		tmp = ( 2 * num[ count ] ).toString();

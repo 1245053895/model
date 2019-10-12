@@ -9,13 +9,13 @@ public class Algorithm {
     private String algorithmtime;
     private String algorithmversion;
     private String algorithmparams;
-    private System algorithmpath;
+    private String algorithmpath;
 
-    public System getAlgorithmpath() {
+    public String getAlgorithmpath() {
         return algorithmpath;
     }
 
-    public void setAlgorithmpath(System algorithmpath) {
+    public void setAlgorithmpath(String algorithmpath) {
         this.algorithmpath = algorithmpath;
     }
 

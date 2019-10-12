@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.algorithm.AlgorithmDebugMapper">
+    <!--查询所有算法-->
+    <select id="selectAlgorithm" resultType="Algorithm">
+    SELECT * FROM `algorithm`
+    </select>
+    <select id="selectAlgorithmById" parameterType="Integer" resultType="Algorithm">
+    SELECT * FROM `algorithm` WHERE algorithmid = #{algorithmid}
+    </select>
+    <select id="searchAlgorithm" parameterType="String" resultType="Algorithm">
+    SELECT * FROM `algorithm` WHERE algorithmname LIKE CONCAT('%',CONCAT(#{searchcontent},'%'))
+    </select>
+
+    <select id="deleteAlgorithm" parameterType="String">
+        DELETE FROM `algorithm` WHERE algorithmid = #{algorithmid}
+    </select>
+
+    <!--在线代码编辑-->
+    <insert id="insertAlgorithm" parameterType="Algorithm" useGeneratedKeys="true" keyProperty="id">
+       insert into Algorithm values (null,#{algorithmname},null,null,null,null,null,null,#{algorithmpath});
+    </insert>
+    <!--&lt;!&ndash;查询所有模型&ndash;&gt;-->
+    <!--<select id="selectAlgorithmModel" resultType="AlgorithmModel">-->
+            <!--SELECT * FROM algorithmmodel-->
+    <!--</select>-->
+
+    <!--<select id="deleteAlgorithmModel" parameterType="String">-->
+        <!--DELETE FROM algorithmmodel WHERE algorithmmodelid = #{algorithmmodelid}-->
+    <!--</select>-->
+
+    <!--<select id="selectAlgorithmModelById" parameterType="Integer" resultType="AlgorithmModel">-->
+    <!--SELECT * FROM algorithmmodel WHERE algorithmmodelid = #{algorithmmodelid}-->
+    <!--</select>-->
+
+</mapper>
