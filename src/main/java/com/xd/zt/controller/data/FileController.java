@@ -5,12 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import com.xd.zt.domain.business.BusinessQuestion;
-import com.xd.zt.domain.business.flow.JsPlumbBlock;
-import com.xd.zt.domain.business.flow.JsPlumbConnect;
-import com.xd.zt.domain.data.DatamodelInfo;
-import com.xd.zt.domain.data.DatamodelLink;
-import com.xd.zt.domain.data.DatamodelSource;
+import com.xd.zt.domain.data.*;
 import com.xd.zt.repository.data.FileRepository;
+import com.xd.zt.service.business.ModelCreateService;
 import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.FileService;
 import com.xd.zt.service.data.FlowService;
@@ -42,6 +39,8 @@ public class FileController {
           return  "upFile";
       }*/
     @Autowired
+    private ModelCreateService modelCreateService;
+    @Autowired
     private DataBlockService dataBlockService;
 
     @Autowired
@@ -55,6 +54,7 @@ public class FileController {
 
     @RequestMapping("/upFile/{modeid}")
     public ModelAndView upFile(Model model, @PathVariable("modeid") Integer modeid) {
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("modeid", modeid);
         modelAndView.setViewName("data/upFile");
@@ -71,9 +71,24 @@ public class FileController {
 
     @RequestMapping("/dataLinkFirst/{modeid}")
     public ModelAndView dataLinkFirst(Model model, @PathVariable("modeid") Integer modeid) {
+        //根据modelid得到questionid
+         DatamodelName datamodelName=sourceService.getQuestionId(modeid);
+        Integer questionid=datamodelName.getQuestionid();
+        List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
+        BusinessQuestion businessQuestion = businessQuestionList.get(0);
+        String path=businessQuestion.getPicture();
+        File file=new File(path.trim());
+        String pictureName=file.getName();
+        String picture = "/uploadImage/"+pictureName;
+        businessQuestion.setPicture(picture);
+        model.addAttribute("businessQuestion",businessQuestion);
+        ModelAndView modelAndView1 = new ModelAndView("data/dataLinkFirst");
         model.addAttribute("modeid", modeid);
-        model.addAttribute("businessQuestionList", sourceService.selectquesInfo());
-        return new ModelAndView("data/dataLinkFirst", "model", model);
+        return modelAndView1;
+/*
+        model.addAttribute("modeid", modeid);
+        model.addAttribute("businessQuestionList", sourceService.selectquesInfo());*/
+
     }
 
     @ResponseBody
@@ -178,6 +193,9 @@ public class FileController {
         model.addAttribute("datalinkInfo",sourceService.dataModelLink(modelid));
         return new ModelAndView("data/dataarea","model",model);
     }
+
+
+
     //文件上传，保存数据库,void方法需要加上ResponseBody否则会报错，不加会去找url作为接收页面，如果url不是页面就报错
     @ResponseBody
     @PostMapping("/saveFile")
@@ -202,7 +220,7 @@ public class FileController {
 
     //删除数据
     @GetMapping("/fileDelete/{sourceid}")
-    public String fileDelete(@PathVariable("sourceid") Integer sourceid) {
+    public ModelAndView fileDelete(@PathVariable("sourceid") Integer sourceid,Model model) {
         DatamodelSource datamodelSource = fileRepository.findById(sourceid).orElse(null);
         String filepath = datamodelSource.getSourcepath();
         System.out.println(filepath);
@@ -211,7 +229,12 @@ public class FileController {
         fileRepository.deleteById(sourceid);
         //删除对应文件
         fileService.deleteFile(filepath);
-        return "redirect:data/fileManage";
+        ModelAndView modelAndView=new ModelAndView();
+
+        Iterable<DatamodelSource> datamodelSourceList = fileRepository.findAll();
+        model.addAttribute("datamodelSourceList", datamodelSourceList);
+      modelAndView.setViewName("data/fileManage");
+        return modelAndView;
     }
 
     //搜索数据

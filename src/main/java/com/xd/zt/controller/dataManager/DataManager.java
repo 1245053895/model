@@ -29,5 +29,4 @@ public class DataManager {
     public String unstructure(){
         return "dataManager/unstructure";
     }
-
 }
