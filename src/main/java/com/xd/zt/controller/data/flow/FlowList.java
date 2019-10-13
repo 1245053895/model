@@ -54,7 +54,7 @@ public class FlowList {
     @RequestMapping("/deletex/{processid}")
     public ModelAndView deleteProcessIdx(Model model, @PathVariable("processid") int processid){
         try {
-            flowService.dLdeleteBlocks(processid);
+//            flowService.dLdeleteBlocks(processid);
             flowService.dLdeleteProcessName(processid);
         }catch (Exception e){
             System.out.println(e);
@@ -72,7 +72,7 @@ public class FlowList {
     @RequestMapping("/deletexx/{processid}")
     public ModelAndView deleteProcessIdxx(Model model,@PathVariable("processid") int processid){
         try {
-            flowService.dardeleteBlocks(processid);
+//            flowService.dardeleteBlocks(processid);
             flowService.dardeleteProcessName(processid);
         }catch (Exception e){
             System.out.println(e);
