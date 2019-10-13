@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>数据格式转换与数据分组模块</title>
+    <link rel="stylesheet" th:href="@{/css/upFile.css}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+    <style>
+        .allborder{
+            /*border: 1px solid red;*/
+            height: 98vh;
+            width: 100%;
+            background: url("../image/first.jpg") no-repeat center center fixed;
+            background-size: 100%;
+        }
+        .projectborder{
+            width: 490px;
+            position: absolute;
+            margin-top: 271px;
+            margin-left: 39%;
+        }
+        .modal-bodyx{
+            position: relative;
+        }
+        .inputsize{
+            width: 63%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid allborder" >
+    <div class="modal-dialog projectborder">
+        <div class="modal-content radius projectposition" >
+            <div class="modal-header">
+                <h3 class="modal-title">新建工程</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-bodyx">
+                <span style="margin-left: 3%">工程名称:</span><span><input type="text" placeholder="请输入业务名称" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="saveName"></span>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="/home">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

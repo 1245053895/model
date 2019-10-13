@@ -17,7 +17,7 @@
 <div class="page-container" >
     <div class="panel panel-default" style="height: 90vh">
         <div class="panel-header">工程列表
-            <a th:href="@{'//'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>
+            <a href="javascript:parent.location.replace('/home');"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>
         </div>
         <div class="panel-body">
             <div >
@@ -46,35 +46,31 @@
                     </thead>
 
                     <tbody>
-                        <!--<tr class="text-c" th:if="${algorithmModelList.size()} eq 0">-->
-                            <!--<td colspan="7">没有相关模型</td>-->
-                        <!--</tr>-->
-                     <tr class="text-c">
-                         <td colspan="5">当前未创建工程</td>
-                     </tr>
+                        <tr class="text-c" th:if="${programmeList.size()} eq 0">
+                            <td colspan="5">没有相关模型</td>
+                        </tr>
+                     <!--<tr class="text-c">-->
+                         <!--<td colspan="5">当前未创建工程</td>-->
+                     <!--</tr>-->
 
-                        <!--<tr class="text-c"  th:each="algorithmModelList:${algorithmModelList}">-->
-                            <!--<td ><a th:text="${algorithmModelList.algorithmmodelname}" ></a></td>-->
-                            <!--<td  th:text="${algorithmModelList.algorithmmodeltype}" ></td>-->
-                            <!--<td  th:text="${algorithmModelList.algorithmmodellabel}" ></td>-->
-                            <!--<td  th:text="${algorithmModelList.algorithmmodeldescribe}" ></td>-->
-                            <!--<td th:text="${algorithmModelList.algorithmmodeltime}" ></td>-->
-                            <!--<td  th:text="${algorithmModelList.algorithmmodelversion}" ></td>-->
-                            <!--&lt;!&ndash;<td><a style="cursor:pointer" class="text-primary" th:text="${analyseInstanceList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<td th:text="${analyseInstanceList.examplestatus}"></td>&ndash;&gt;-->
-                            <!--<td>-->
-                                <!--&lt;!&ndash;<a  >&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input th:id="${algorithmModelList.algorithmodelmid}" class="btn btn-primary size-MINI radius" type="button" value="运行" >&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                <!--<a th:href="'/algorithmModelView/'+${algorithmModelList.algorithmmodelid}"  >-->
-                                    <!--<input th:id="${algorithmModelList.algorithmmodelid}" class="btn btn-primary size-MINI radius" type="button" value="查看"  >-->
-                                <!--</a>-->
-                                <!--<a   >-->
-                                    <!--<input th:id="${algorithmModelList.algorithmmodelid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >-->
-                                <!--</a>-->
+                        <tr class="text-c"  th:each="programmeList:${programmeList}">
+                            <td ><a th:text="${programmeList.programmename}" ></a></td>
+                            <td  th:text="${programmeList.programmedescribe}" ></td>
+                            <td  th:text="${programmeList.programmetime}" ></td>
+                            <td  th:text="${programmeList.username}" ></td>
+                            <td>
+                                <a  >
+                                    <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="发布"  >
+                                </a>
+                                <a  >
+                                    <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="编辑"  >
+                                </a>
+                                <a   >
+                                    <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >
+                                </a>
 
-                            <!--</td>-->
-                        <!--</tr>-->
+                            </td>
+                        </tr>
 
 
 

@@ -11,4 +11,13 @@ public class HomeController {
     public String home(){
         return "home";
     }
+
+    @GetMapping("/ZT")
+    public String zt(){
+        return "ZT";
+    }
+    @GetMapping("/newProgramme")
+    public String newProgramme(){
+        return "newProgramme";
+    }
 }

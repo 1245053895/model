@@ -35,6 +35,11 @@ public class AlgorithmDebugController {
         return "algorithm/index";
     }
 
+    @RequestMapping("/select")
+    public String select(){
+        return "algorithm/select";
+    }
+
     @RequestMapping("/algorithmList")
     public ModelAndView algorithmList(Model model){
         List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
