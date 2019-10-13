@@ -52,14 +52,14 @@ public class FileController {
     @Autowired
     private FlowService flowService;
 
-    @RequestMapping("/upFile/{modeid}")
-    public ModelAndView upFile(Model model, @PathVariable("modeid") Integer modeid) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("modeid", modeid);
-        modelAndView.setViewName("data/upFile");
-        return modelAndView;
-    }
+//    @RequestMapping("/upFile/{modeid}")
+//    public ModelAndView upFile(Model model, @PathVariable("modeid") Integer modeid) {
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("modeid", modeid);
+//        modelAndView.setViewName("data/upFile");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/datalinkshow/{modeid}")
     public ModelAndView datalinkshow(Model model, @PathVariable("modeid") Integer modeid) {
@@ -154,10 +154,11 @@ public class FileController {
 //数据包回显
 
     //预览数据
-    @GetMapping(value = "/fileManage")
-    public ModelAndView lookFile(Model model) {
+    @GetMapping(value = "/fileManage/{modeid}")
+    public ModelAndView lookFile(Model model,@PathVariable("modeid") Integer modeid) {
         Iterable<DatamodelSource> datamodelSourceList = fileRepository.findAll();
         model.addAttribute("datamodelSourceList", datamodelSourceList);
+        model.addAttribute("modeid",modeid);
         return new ModelAndView("data/fileManage", "upFileList", model);
     }
 

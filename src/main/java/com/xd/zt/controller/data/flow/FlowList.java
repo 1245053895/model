@@ -3,6 +3,8 @@ package com.xd.zt.controller.data.flow;
 
 import com.xd.zt.domain.business.flow.AnalyseProcess;
 import com.xd.zt.domain.data.*;
+import com.xd.zt.repository.data.FileRepository;
+import com.xd.zt.service.data.DataModelService;
 import com.xd.zt.service.data.FlowService;
 import com.xd.zt.service.data.SourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class FlowList {
     @Autowired
     private SourceService sourceService;
 
+    @Autowired
+    private FileRepository fileRepository;
     @RequestMapping("/getFlowList")
     public ModelAndView getFlowList() {
         ModelAndView modelAndView = new ModelAndView("data/maintool/flowList");
@@ -105,6 +109,10 @@ public class FlowList {
         int modeid = datamodelLink.getModeid();
 //         BusinessQuestion businessQuestion =sourceService.modelidToscenceid(modeid);
 //         int sceneid = businessQuestion.getSceneid();
+
+        Iterable<DatamodelSource> datamodelSourceList = fileRepository.findAll();
+        model.addAttribute("datamodelSourceList", datamodelSourceList);
+        model.addAttribute("modeid",modeid);
 
         List<DlJsPlumbBlock> blocks = flowService.dlgetBlocks(processid);
         List<DlJsplumbConnect> connects = flowService.dlgetConnects(processid);

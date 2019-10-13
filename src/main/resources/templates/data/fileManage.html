@@ -17,7 +17,7 @@
 <div class="page-container" >
     <div class="panel panel-default" style="height: 90vh">
         <div class="panel-header">数据管理
-            <a th:href="@{/data/upFile}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>
+            <a ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增" onclick="jumpDialog()"/></a>
         </div>
         <div class="panel-body">
             <div >
@@ -75,9 +75,116 @@
 
         </div>
     </div>
-
+    <div id="upfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 弹出对话框 -->
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">文档资料上传</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="upfile-group">
+                        <!--通过onsubmit 去进行提交前其他操作-->
+                        <form id="upfileForm" action="#" th:action="@{/data/saveFile}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
+                            <div class="fileupload">
+                                <span id="filename" style="margin-left: 33%">点击此处选择文件</span>
+                                <input type="file"  id="file" onchange="getFilename();" name="filename" style="opacity: 0;margin-left: -31%"/>
+                            </div>
+                            <input type="hidden" th:value="${modeid}" name="modeid" id="modeid"/>
+                            <div class="button_position">
+                                <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 38%; margin-top: 3%;">
+                            </div>
+                        </form><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    //获取文件名，显示在上传文本框
+    function getFilename(){
+        var filename=document.getElementById("file").value;
+        if(filename==undefined||filename==""){
+            document.getElementById("filename").innerHTML="点击此处上传文件";
+        } else{
+            var fn=filename.substring(filename.lastIndexOf("\\")+1);
+            document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
+        }
+    }
 
+    //跳出模型保存框
+    function jumpDialog() {
+        $("#upfile").modal("show");
+    }
+
+    //关闭模型保存框
+    function hideDialog() {
+        setTimeout($("#upfile").modal("hide"),"3000");
+    }
+    function verify() {
+
+// jquery .ajaxSubmit表单提交，页面不刷新
+        $("#upfileForm").ajaxSubmit(function(message) {
+// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+            $.Huimodalalert('上传成功',2000);
+            //关闭弹框
+            hideDialog();
+            //延时后页面跳转
+            // var  businessid = document.getElementById('businessid').getAttribute('value');
+            window.setTimeout("window.location.reload(true)",1000);
+            // window.setTimeout("window.location.href=",1000);
+        });
+        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+
+    function deletefile(id) {
+        var id={
+            "dataid":id
+        };
+        $.ajax({
+            url : "/business/fileDelete",
+            type : "POST",
+            async : true,
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(id),
+            dataType : 'json',
+            success : function() {
+                $.Huimodalalert('删除成功',2000);
+            },
+            error : function() {
+                $.Huimodalalert('删除失败',2000);
+            }
+        });
+        window.setTimeout("window.location.reload(true)",1000);
+    }
+
+    function downloadfile(id) {
+        var id={
+            "dataid":id
+        };
+        $.ajax({
+            url : "/business/fileDown",
+            type : "POST",
+            async : true,
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(id),
+            dataType : 'json',
+            success : function() {
+                $.Huimodalalert('正在下载',2000);
+            },
+            error : function() {
+                $.Huimodalalert('下载失败',2000);
+
+            }
+        });
+    }
+</script>
 </body>
 </html>
 

@@ -99,7 +99,7 @@
 
 
         function RefineNext() {
-            var href="/data/upFile/"+[[${modeid}]]
+            var href="/data/fileManage/"+[[${modeid}]]
             document.getElementById("nextstep").setAttribute("href",href)
             /*   if (click==false){
                    /!*$.Huimodalalert('请先保存',1000);*!/
@@ -126,16 +126,12 @@
 </head>
 <body>
 <input type="hidden" th:value="${modeid}" id="modeid"/>
-<!--<div class="panel-header" style="height: 4%; border:1px solid darkgray;margin-left: 0.2%;margin-top: 1%;margin-right: 1%;margin-bottom: 1%;">-->
-
-<!--</div>-->
-
-
-<div>
-    <a th:href="@{'/data/fileManage/'+${businessid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.2%;height: 28px;display: none;" value="数据管理"/></a>
-</div>
+<nav class="breadcrumb" style="text-align: left"><i class="Hui-iconfont">&#xe67f;</i> 数据链构建  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><span class="c-gray en"><i class="Hui-iconfont">&#xe68f;</i></span></a></nav>
+<div class="page-container" >
 <div id="root" style="height: 80%;">
     <div id="left">
+        <div class="righttop1_topText">流程元素
+        </div>
         <div class="node" id="node1" style="margin-left: 6vh"><img src="/newjsplumb/images/liucheng1.svg" style="width: 32px;height: 32px" alt="流程1" title="流程1"/>流程1</div>
         <div class="node node2css" style="margin-left: 6vh" id="node2"><img src="/newjsplumb/images/liucheng2.svg" style="width: 32px;height: 32px" alt="流程2" title="流程2"/>流程2</div>
         <div class="node node3css" style="margin-left: 6vh" id="node3"><img src="/newjsplumb/images/liucheng3.svg" style="width: 32px;height: 32px" alt="流程3" title="流程3"/>流程3</div>
@@ -148,11 +144,11 @@
     </div>
     <div id="right">
          <span class="xxiasna" style="border: 2px solid darkgray;width: 203px;height: 14.5vh;position: absolute; margin-top: 41.5%;margin-left: 30.2%; border:0px">
-                        <input class="btn btn-success radius" style=" margin-top:5vh;margin-left: -13vh;" type="submit"  value="添加"  onclick="getResult()"/>
-        <input class="btn btn-primary radius" type="button" onclick="save1()"  value="保存" style="margin-top: 5vh;margin-left:8vh" />
+                        <!--<input class="btn btn-success radius" style=" margin-top:5vh;margin-left: -13vh;" type="submit"  value="添加"  onclick="getResult()"/>-->
+        <input class="btn btn-primary radius" type="button" onclick="save1()"  value="保存" style="margin-top: 0vh;margin-left:-4vh" />
              <!--<a class="btn btn-success radius r" onclick="save1(),baocun()" style="line-height:1.6em;margin-top:3px"  title="保存" ><span class="c-gray en">保存</span></a></nav>-->
         <a id="nextstep">
-                <button style="margin-left:10%;margin-top: 5.3vh;"  onclick="RefineNext()" class="btn btn-primary radius">
+                <button style="margin-left:10%;margin-top: 0.3vh;"  onclick="RefineNext()" class="btn btn-primary radius">
                     下一步
                 </button>
             </a>
@@ -167,26 +163,26 @@
             <div class="content" id="main">
             </div>
         </div>
-        <div class="rightButton1" style="border: 1px solid #555;width: 105%;height: 12vh;margin-top: 1%;margin-left: -30.5vh">
-            <div class="rightButton1_topText">节点信息</div>
-            <div class="rightButton1_lowerText">
+        <!--<div class="rightButton1" style="border: 1px solid #555;width: 105%;height: 12vh;margin-top: 1%;margin-left: -30.5vh">-->
+            <!--<div class="rightButton1_topText">节点信息</div>-->
+            <!--<div class="rightButton1_lowerText">-->
 
-                <form class="navbar-form navbar-left"  id="err_form" onsubmit="return false">
-                    <input th:type="hidden" name="_method" value="put">
-                    <table class="rowAreaHeight1">
-                        <tr class="rowAreaHeight1_1">
-                            <td><p style="height: 5vh;font-size: 15px;">名称：</p></td>
-                            <td ><textarea style="height: 5vh;margin-top: -3vh;margin-left: -2vh;" rows="2" cols="50" name="comment" id="parameter1" class="inputarea1"></textarea></td>
-                            <td><p style="height: 5vh;font-size: 15px;">数值：</p></td>
-                            <td><textarea rows="2" style="height: 5vh;margin-top: -3vh; margin-left: -4vh;" cols="50" name="comment" id="parameter2" class="inputarea1"></textarea></td>
-                            <!--<td><input class="btn btn-success radius r" style=" margin-top: -3vh;margin-left: -2vh;" type="submit"  value="保存"  onclick="getResult()"/></td>-->
-                            <input type="hidden" class="form-control" style="height: 3vh;margin-top: -4vh;margin-left: 4vh;" id="testval1" value="" name="uuid" >
-                            <!--<td><p style="height: 5vh;font-size: 15px;">uuid值</p></td>-->
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
+                <!--<form class="navbar-form navbar-left"  id="err_form" onsubmit="return false">-->
+                    <!--<input th:type="hidden" name="_method" value="put">-->
+                    <!--<table class="rowAreaHeight1">-->
+                        <!--<tr class="rowAreaHeight1_1">-->
+                            <!--<td><p style="height: 5vh;font-size: 15px;">名称：</p></td>-->
+                            <!--<td ><textarea style="height: 5vh;margin-top: -3vh;margin-left: -2vh;" rows="2" cols="50" name="comment" id="parameter1" class="inputarea1"></textarea></td>-->
+                            <!--<td><p style="height: 5vh;font-size: 15px;">数值：</p></td>-->
+                            <!--<td><textarea rows="2" style="height: 5vh;margin-top: -3vh; margin-left: -4vh;" cols="50" name="comment" id="parameter2" class="inputarea1"></textarea></td>-->
+                            <!--&lt;!&ndash;<td><input class="btn btn-success radius r" style=" margin-top: -3vh;margin-left: -2vh;" type="submit"  value="保存"  onclick="getResult()"/></td>&ndash;&gt;-->
+                            <!--<input type="hidden" class="form-control" style="height: 3vh;margin-top: -4vh;margin-left: 4vh;" id="testval1" value="" name="uuid" >-->
+                            <!--&lt;!&ndash;<td><p style="height: 5vh;font-size: 15px;">uuid值</p></td>&ndash;&gt;-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 </div>

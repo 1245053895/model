@@ -86,6 +86,8 @@
 <div class="page-container" >
     <div id="root">
         <div id="left">
+            <div class="righttop1_topText">流程元素
+            </div>
             <div class="node" id="node1" style="margin-left: 6vh"><img src="/newjsplumb/images/liucheng1.svg" style="width: 32px;height: 32px" alt="流程1" title="流程1"/>流程1</div>
             <div class="node node2css" style="margin-left: 6vh" id="node2"><img src="/newjsplumb/images/liucheng2.svg" style="width: 32px;height: 32px" alt="流程2" title="流程2"/>流程2</div>
             <div class="node node3css" style="margin-left: 6vh" id="node3"><img src="/newjsplumb/images/liucheng3.svg" style="width: 32px;height: 32px" alt="流程3" title="流程3"/>流程3</div>
@@ -117,42 +119,6 @@
                 </div>
                 <div class="content" id="main">
                 </div>
-
-
-                <!-- <div style="width: 10vh;height: 20vh;background-color: red">
-                     bottom
-                 </div>
-     -->
-                <!-- <div class="panel-body" id="detail_text" style="float: left;width: 100%;margin-left: -32vh;margin-top: -2vh;width: 193vh;">
-                     <table class="table table-border table-bordered table-hover table-bg table-sort">
-                         <thead>
-                         <tr class="text-c">
-                             <th >场景名</th>
-                             <th >业务对象</th>
-                             <th >业务数据</th>
-                             <th >业务知识</th>
-
-                         </tr>
-                         </thead>
-                         <tbody >
-
-                         <tr class="text-c" >
-                             <td th:text="${scenename}">
-                             </td>
-                             <td>
-                                 <a th:each="objectNameList:${objectNameList}"  th:text="${objectNameList.getObjectname()}"  ><br/></a>
-                             </td>
-                             <td>
-                                 <a th:each="dataTypeNameList:${dataTypeNameList}"  th:text="${dataTypeNameList.getDatatypename()}"><br/></a>
-                             </td>
-                             <td>
-                                 <a th:each="knowledgeNameList:${knowledgeNameList}"  th:text="${knowledgeNameList.getKnowledgename()}"><br/></a>
-                             </td>
-                         </tr>
-                         </tbody>
-                     </table>
-                 </div>-->
-
             </div>
             <!-- <div class="rightButton1" style="border: 1px solid #555;width: 112%;height: 12vh;margin-top: 1%;margin-left: -30.5vh">
                  <div class="rightButton1_topText">节点信息</div>
@@ -174,6 +140,40 @@
                      </form>
                  </div>
              </div>-->
+                    <div style="margin-top: 1%;margin-left: -18.7%;width: 119%;">
+                        <table class="table table-border table-bordered table-hover table-bg table-sort">
+                            <thead>
+                            <tr class="text-c">
+                                <th >文件名称</th>
+                                <th >文件大小</th>
+                                <th >创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr class="text-c" th:if="${datamodelSourceList.size()} eq 0">
+                                <td colspan="4">当前未上传数据</td>
+                            </tr>
+
+                            <tr class="text-c" th:each="datamodelSource:${datamodelSourceList}">
+                                <td><a style="cursor:pointer" class="text-primary" th:text="${datamodelSource.sourcename}" th:href="@{'/data/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>
+                                <td th:text="${datamodelSource.sourcesize}"></td>
+                                <td th:text="${datamodelSource.sourcetime}"></td>
+                                <td>
+                                    <a th:href="@{'/data/fileDelete/'+ ${datamodelSource.sourceid}}">
+                                        <input class="btn btn-primary size-MINI radius" type="button" value="删除">
+                                    </a>
+                                    <a th:href="@{'/data/fileDown/'+ ${datamodelSource.sourceid}}">
+                                        <input class="btn btn-primary size-MINI radius" type="button" value="下载">
+                                    </a>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
         </div>
     </div>
 </div>
