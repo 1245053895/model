@@ -37,4 +37,8 @@
         INSERT INTO datamodel_info(dataresultname,datalink,dataarea,modelid,dataaddr) VALUES(#{dataresultname},#{datalink},#{dataarea},#{modelid},#{dataaddr})
     </insert>
 
+    <update id="updateAreaByAreaId" parameterType="String">
+        UPDATE datamodel_area SET areaname=#{areaname} WHERE areaid=#{areaid}
+    </update>
+
 </mapper>

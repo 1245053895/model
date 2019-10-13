@@ -223,11 +223,14 @@ public class DataAreaController {
         datamodelInfo.setModelid(Integer.parseInt(modelid));
         datamodelInfo.setDataaddr(dataaddr);
         dataAreaService.processAreaInfo(datamodelInfo);
+      String areaname=modelinstancename;
+   dataAreaService.updateAreaByAreaId(areaname,areaid.toString());
+
 
         //System.out.println(analyzmodel);
         String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
         if(modelinstanceid==""||modelinstanceid==null){
-            dataAreaService.insertExample(modelid,modelinstancename,analyzmodel,areaid);
+            dataAreaService.insertExample(modelid,modelinstancename,analyzmodel,areaid.toString());
             map.put("code",1);
         }
         else {

@@ -1,6 +1,7 @@
 package com.xd.zt.service.data;
 
 
+import com.xd.zt.domain.data.DatamodelArea;
 import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.domain.data.DatamodelSource;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,7 @@ public interface DataAreaService {
 
     String selectInstanceName(String modelinstancename);
 
-    void insertExample(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("areaid") Integer areaid);
+    void insertExample(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("areaid") String areaid);
 
     String selectLinkName(String areaid);
 
@@ -23,4 +24,5 @@ public interface DataAreaService {
     Integer maxAreaId();
     public Integer getLinkIdByAreaid(Integer areaid);
     public void  processAreaInfo(DatamodelInfo datamodelInfo);
+    public void updateAreaByAreaId(@Param("areaname")String areaname,@Param("areaid")String areaid);
 }

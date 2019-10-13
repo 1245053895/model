@@ -129,9 +129,17 @@ public class FlowList {
         ModelAndView modelAndView = new ModelAndView("data/dataareaReview");
         //           从datamodolarea中查processid到modeid
         DatamodelArea xin = sourceService.darprocessidTomodeid(processid);
-        int modelid =xin.getModeid();
-        int linkid = xin.getLinkid();
-        int arearid = xin.getAreaid();
+        Integer modelid =xin.getModeid();
+        Integer areaid=xin.getAreaid();
+       Integer linkid= xin.getLinkid();
+
+        List<DatamodelSource> datamodelSourceList=sourceService.getSourcesByStatusAndMoelId(modelid);
+DatamodelArea datamodelArea=sourceService.areaByAreaId(areaid);
+
+        modelAndView.addObject("datamodelSourceList", datamodelSourceList);
+        modelAndView.addObject("datamodelArea", datamodelArea);
+
+        Integer arearid = xin.getAreaid();
         modelAndView.addObject("datalinkInfo",sourceService.dataModelLink(modelid));
         List<DarJsPlumbBlock> blocks = flowService.dargetBlocks(processid);
         List<DarJsplumbConnect> connects =flowService.dargetConnects(processid);

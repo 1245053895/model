@@ -126,8 +126,8 @@
     <insert id="insertlinkModeidx" parameterType="DatamodelLink" useGeneratedKeys="true" keyProperty="id">
         insert into datamodel_link  (linkname,modeid,processid)values (#{linkname},#{modeid},#{processid});
     </insert>
-    <insert id="insertdataLinkx" parameterType="DatamodelArea" useGeneratedKeys="true" keyProperty="id">
-        insert into datamodel_area values (null,#{areaname},null ,null,null,#{linkid},#{processid},#{modeid});
+    <insert id="insertdataLinkx" parameterType="String" useGeneratedKeys="true" keyProperty="id">
+      insert into datamodel_area(linkid,processid,modeid) values(#{linkid},#{processid},#{modeid})
     </insert>
     <select id="selectlastprocessidx"  resultType="DlAnalyseProcess">
         SELECT * FROM dlanalyseprocess WHERE Id=(SELECT MAX(id) FROM dlanalyseprocess)
@@ -144,5 +144,15 @@
     <select id="darprocessidTomodeid" parameterType="java.lang.Integer" resultType="DatamodelArea">
         SELECT * FROM  datamodel_area WHERE processid =#{processid}
     </select>
+
+
+
+    <select id="getSourcesByStatusAndMoelId" resultType="datamodelSource" parameterType="Integer">
+        SELECT * FROM datamodel_source WHERE modeid=#{modeid} AND `status`=1
+    </select>
+    <select id="areaByAreaId" parameterType="Integer" resultType="datamodelArea">
+          SELECT datamodel_area.*,datamodel_info.* FROM datamodel_area,datamodel_info WHERE areaid=#{areaid} AND dataarea=areaid and linkid = datalink
+    </select>
+
 
 </mapper>

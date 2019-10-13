@@ -105,7 +105,7 @@ public class DataBaoController {
     }
 
 
-   /* @RequestMapping("/dataReview")
+    @RequestMapping("/dataReview")
     @ResponseBody
     public List<String> selectCsvHead(@RequestBody String jsonData, Map<String, Object> map) throws IOException {
         JSONObject jsonObject = JSON.parseObject(jsonData);
@@ -119,13 +119,12 @@ public class DataBaoController {
         map.put("dataName", dataName);
         map.put("dataPath", dataPath);
 
-
         File file=new File(dataPath);
         String name=file.getName();
         String type=  name.substring(name.lastIndexOf("."));
         type= type.replace(".","");
 
-   *//*     String dataType = dataName.split("\\.")[1];*//*
+      //  String dataType = dataName.split("\\.")[1];
         // System.out.println(dataName + "-----" + dataType + "-----" + dataPath);
         //确认要读取的是csv文件
         if (type.equals("csv")) {
@@ -137,7 +136,7 @@ public class DataBaoController {
         //不管是不是csv格式，都返回页面，如果不是在前端页面再处理
         return null;
 
-    }*/
+    }
 
 
     /*数据块的csv文件的回显*/

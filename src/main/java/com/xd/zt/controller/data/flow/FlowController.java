@@ -81,24 +81,24 @@ private SourceService sourceService;
         String id = jsonParam.get("Id").toString();
         String Linkid = jsonParam.get("linkid").toString();
         String modeid = jsonParam.get("modelid").toString();
-        int Id = Integer.parseInt(id);
-        int Modeid = Integer.parseInt(modeid);
-        int linkid = Integer.parseInt(Linkid);
+        Integer Id = Integer.parseInt(id);
+        Integer Modeid = Integer.parseInt(modeid);
+        Integer linkid = Integer.parseInt(Linkid);
         flowService.dardeleteProcessName(Id);
         List<DarJsplumbConnect> connects = JSONObject.parseArray(jsonParam.getJSONArray("connects").toJSONString(), DarJsplumbConnect.class);
         List<DarJsPlumbBlock> blocks = JSONObject.parseArray(jsonParam.getJSONArray("blocks").toJSONString(), DarJsPlumbBlock.class);
         String processName = jsonParam.get("name").toString();
         String msg = flowService.darsaveProcess(processName, blocks, connects);
         DarAnalyseProcess darAnalyseProcess = sourceService.selectlastprocessidxx();
-        int processid = darAnalyseProcess.getId();
+        Integer processid = darAnalyseProcess.getId();
         String areaname = darAnalyseProcess.getName();
 
-        DatamodelArea datamodelArea = new DatamodelArea();
+       /* DatamodelArea datamodelArea = new DatamodelArea();
         datamodelArea.setLinkid(linkid);
         datamodelArea.setModeid(Modeid);
-        datamodelArea.setProcessid(processid);
-        datamodelArea.setAreaname(areaname);
-        sourceService.insertdataLinkx(datamodelArea);
+        datamodelArea.setProcessid(processid);*/
+  /*      datamodelArea.setAreaname(areaname);*/
+        sourceService.insertdataLinkx(linkid.toString(),processid.toString(),modeid.toString());
 
         List<DarJsplumbConnect> jsPlumbConnectList = flowService.selectRepeatConnectionx();
         for (int i= 0; i<jsPlumbConnectList.size();i++){

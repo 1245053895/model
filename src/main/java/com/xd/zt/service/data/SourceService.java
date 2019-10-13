@@ -60,11 +60,13 @@ public interface SourceService {
 
     //
     void insertlinkModeidx(DatamodelLink datamodelLink);
-    void insertdataLinkx(DatamodelArea datamodelArea);
+    void insertdataLinkx(@Param("linkid")String linkid,@Param("processid")String processid,@Param("modeid")String modeid);
     DlAnalyseProcess selectlastprocessidx();
     DarAnalyseProcess selectlastprocessidxx();
     BusinessQuestion modelidToscenceid(Integer modeid);
     DatamodelLink processidTomodeid(Integer processid);
     DatamodelArea darprocessidTomodeid(Integer processid);
     DatamodelName getQuestionId(Integer modelid);
+    public List<DatamodelSource> getSourcesByStatusAndMoelId(@Param("modeid") Integer modeid);
+    public DatamodelArea areaByAreaId(@Param("areaid") Integer areaid);
 }

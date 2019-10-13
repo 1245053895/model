@@ -162,9 +162,11 @@ public class SourceServiceImpl implements SourceService {
     }
 
     @Override
-    public void insertdataLinkx(DatamodelArea datamodelArea) {
-        sourceMapper.insertdataLinkx(datamodelArea);
+    public void insertdataLinkx(String linkid, String processid, String modeid) {
+        sourceMapper.insertdataLinkx(linkid,processid,modeid);
     }
+
+
     @Override
     public DlAnalyseProcess selectlastprocessidx() {
         DlAnalyseProcess dlAnalyseProcess = sourceMapper.selectlastprocessidx();
@@ -195,5 +197,17 @@ public class SourceServiceImpl implements SourceService {
     public DatamodelName getQuestionId(@Param("modeid") Integer modelid) {
        DatamodelName datamodelName= sourceMapper.getQuestionId(modelid);
         return datamodelName;
+    }
+
+    @Override
+    public List<DatamodelSource> getSourcesByStatusAndMoelId(Integer modeid) {
+        List<DatamodelSource> datamodelSourceList= sourceMapper.getSourcesByStatusAndMoelId(modeid);
+        return datamodelSourceList;
+    }
+
+    @Override
+    public DatamodelArea areaByAreaId(Integer areaid) {
+      DatamodelArea datamodelArea=  sourceMapper.areaByAreaId(areaid);
+        return datamodelArea;
     }
 }

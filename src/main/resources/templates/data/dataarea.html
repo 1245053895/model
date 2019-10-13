@@ -39,7 +39,8 @@
         /*      var click=false;*/
         function save1() {
 
-            var nameOfFlow = prompt("请输入一段文字", "");
+            // var nameOfFlow = prompt("请输入一段文字", "");
+            var nameOfFlow = "数据区";
             var connects = [];
             $.each(jsPlumb.getAllConnections(), function (idx, connection) {
                 connects.push({
@@ -151,11 +152,11 @@
      </span>-->
     <div id="right">
          <span class="xxiasna" style="border: 2px solid darkgray;width: 203px;height: 14.5vh;position: absolute; margin-top: 41.5%;margin-left: 30.2%; border:0px">
-                       <input class="btn btn-success radius" style=" margin-top:5vh;margin-left: -13vh;" type="submit"  value="添加"  onclick="getResult()"/>
-        <input class="btn btn-primary radius" type="button" onclick="save1()"  value="保存" style="margin-top: 5vh;margin-left:8vh" />
+                       <!--<input class="btn btn-success radius" style=" margin-top:0vh;margin-left: -13vh;" type="submit"  value="添加"  onclick="getResult()"/>-->
+        <input class="btn btn-primary radius" type="button" onclick="save1()"  value="保存" style="margin-top: 0vh;margin-left:4vh" />
              <!--<a class="btn btn-success radius r" onclick="save1(),baocun()" style="line-height:1.6em;margin-top:3px"  title="保存" ><span class="c-gray en">保存</span></a></nav>-->
         <a id="nextstep">
-                <button style="margin-left:10%;margin-top: 5.3vh;"  onclick="RefineNext()" class="btn btn-primary radius">
+                <button style="margin-left:10%;margin-top: 0vh;"  onclick="RefineNext()" class="btn btn-primary radius">
                     下一步
                 </button>
             </a>
@@ -170,7 +171,10 @@
             <div class="content" id="main">
             </div>
         </div>
-        <div class="rightButton1" style="border: 1px solid #555;width: 105%;height: 12vh;margin-top: 1%;margin-left: -30.5vh">
+
+
+
+        <!--<div class="rightButton1" style="border: 1px solid #555;width: 105%;height: 12vh;margin-top: 1%;margin-left: -30.5vh">
             <div class="rightButton1_topText">节点信息</div>
             <div class="rightButton1_lowerText">
 
@@ -182,14 +186,17 @@
                             <td ><textarea style="height: 5vh;margin-top: -3vh;margin-left: -2vh;" rows="2" cols="50" name="comment" id="parameter1" class="inputarea1"></textarea></td>
                             <td><p style="height: 5vh;font-size: 15px;">数值：</p></td>
                             <td><textarea rows="2" style="height: 5vh;margin-top: -3vh; margin-left: -4vh;" cols="50" name="comment" id="parameter2" class="inputarea1"></textarea></td>
-                            <!--<td><input class="btn btn-success radius r" style=" margin-top: -3vh;margin-left: -2vh;" type="submit"  value="保存"  onclick="getResult()"/></td>-->
+                            &lt;!&ndash;<td><input class="btn btn-success radius r" style=" margin-top: -3vh;margin-left: -2vh;" type="submit"  value="保存"  onclick="getResult()"/></td>&ndash;&gt;
                             <input type="hidden" class="form-control" style="height: 3vh;margin-top: -4vh;margin-left: 4vh;" id="testval1" value="" name="uuid" >
 
                         </tr>
                     </table>
                 </form>
             </div>
-        </div>
+        </div>-->
+
+
+
     </div>
 </div>
 </div>

@@ -25,6 +25,87 @@ public class DatamodelArea {
 
     private String dataresultid;
 
+
+
+    private String dataaddr;
+
+    private Integer datalink;
+
+    private Integer dataarea;
+
+    private String datablock;
+
+    private Integer databao;
+
+    private Integer dataji;
+
+    private Integer modelid;
+    private Integer blockid;
+
+    public String getDataaddr() {
+        return dataaddr;
+    }
+
+    public void setDataaddr(String dataaddr) {
+        this.dataaddr = dataaddr;
+    }
+
+    public Integer getDatalink() {
+        return datalink;
+    }
+
+    public void setDatalink(Integer datalink) {
+        this.datalink = datalink;
+    }
+
+    public Integer getDataarea() {
+        return dataarea;
+    }
+
+    public void setDataarea(Integer dataarea) {
+        this.dataarea = dataarea;
+    }
+
+    public String getDatablock() {
+        return datablock;
+    }
+
+    public void setDatablock(String datablock) {
+        this.datablock = datablock;
+    }
+
+    public Integer getDatabao() {
+        return databao;
+    }
+
+    public void setDatabao(Integer databao) {
+        this.databao = databao;
+    }
+
+    public Integer getDataji() {
+        return dataji;
+    }
+
+    public void setDataji(Integer dataji) {
+        this.dataji = dataji;
+    }
+
+    public Integer getModelid() {
+        return modelid;
+    }
+
+    public void setModelid(Integer modelid) {
+        this.modelid = modelid;
+    }
+
+    public Integer getBlockid() {
+        return blockid;
+    }
+
+    public void setBlockid(Integer blockid) {
+        this.blockid = blockid;
+    }
+
     public String getDataresultid() {
         return dataresultid;
     }
