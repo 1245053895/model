@@ -149,33 +149,7 @@ public class FileController {
         return map;
     }
 
-    /*数据块的csv文件的回显*/
-    //数据预览
-    @GetMapping("/dataReview/{dataresultid}")
-    public String review(@PathVariable("dataresultid") Integer dataresultid, Map<String, Object> map) {
-        DatamodelInfo datamodelInfo = sourceService.selectResultName(dataresultid);
-        /*  DatamodelInfo datamodelInfo= blockRepository.findById(dataresultid).orElse(null);*/
-        String fileName = datamodelInfo.getDataresultname();
-        String filePath = datamodelInfo.getDataaddr();
-        /* String fileTime = datamodelSource.getSourcetime();*/
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        /* System.out.println(df.format(new Date()));*/// new Date()为获取当前系统时间
-        String fileTime = df.format(new Date());
-        map.put("fileName", fileName);
-        map.put("filePath", filePath);
-        map.put("fileTime", fileTime);
-        String fileType = fileName.split("\\.")[1];
-        map.put("fileType", fileType);
-        //System.out.println(fileName + "-----" + fileType + "-----" + filePath);
-        //确认要读取的是csv文件
-        if (fileType.equals("csv")) {
-            List<String> result = fileService.readCsvFile(filePath);
-            map.put("result", result);
-            //System.out.println(result.toString());
-        }
-        //不管是不是csv格式，都返回页面，如果不是在前端页面再处理
-        return "data/dataReview";
-    }
+
 
 //数据包回显
 
@@ -214,6 +188,7 @@ public class FileController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = simpleDateFormat.format(new Date());
         datamodelSource.setSourcetime(date);
+        datamodelSource.setStatus("0");
         fileRepository.save(datamodelSource);
     }
 

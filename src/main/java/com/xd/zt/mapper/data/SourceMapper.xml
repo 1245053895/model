@@ -31,8 +31,8 @@
 
     <!--数据块-->
     <select id="selectBlockName" resultType="datamodelInfo" parameterType="Integer">
-        SELECT datamodel_info.* FROM datamodel_info,datamodel_block WHERE datamodel_block.blockid=datamodel_info.datablock
-        AND blockid=#{blockid} and datamodel_info.databao is Null and datamodel_info.dataji is Null
+        SELECT datamodel_info.* FROM datamodel_info,datamodel_block WHERE datamodel_block.blockid=datamodel_info.blockid
+        AND datamodel_block.blockid=#{blockid} and datamodel_info.databao is Null and datamodel_info.dataji is Null
     </select>
 
     <!--数据块-->

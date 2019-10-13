@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @RequestMapping("/data")
@@ -51,13 +54,12 @@ public class DataBaoController {
     @RequestMapping("/databaocreate/{id}")
     public ModelAndView databaocreate(Model model, @PathVariable("id") Integer modelid) {
         model.addAttribute("modelid", modelid);
-        List<DatamodelBlock> datamodelBlockList = dataBlockService.selectBlockById(modelid);
+        List<DatamodelBlock> datamodelBlockList = dataBlockService.selectBlockById(modelid);  //查询数据块表
          model.addAttribute("datamodelBlockList", datamodelBlockList);
-        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBlockResultById(modelid);
+        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBlockResultById(modelid);//根据modelid查出blockid不为空的数据块结果表
         model.addAttribute("datamodelInfoList", datamodelInfoList);
         return new ModelAndView("data/databaocreate", "Modelmodel", model);
     }
-
 
     @RequestMapping(value = "/dataSave")
     @ResponseBody
@@ -86,38 +88,47 @@ public class DataBaoController {
             }
             listContent.add(csvContent);
         }
-        String csvFilePath = "F:\\Projects\\ZTPT\\src\\main\\resources\\static\\" + fileName;
+       /* String csvFilePath = "F:\\Projects\\ZTPT\\src\\main\\resources\\static\\" + fileName;*/
+        String csvFilePath = "src/main/resources/static/data/"+fileName;
         //构建csv文件
         fileService.writeCsvFile(csvFilePath, csvHeaders, listContent);
         //获取数据块id
         String blockid = jsonObject.getString("datablocks");
         //数据库存储数据包
-        dataBlockService.saveDataBaoResult(modelid, baoName, blockid);
-        String baoid = dataBlockService.selectDataBaoByBaoName(baoName);
+        dataBlockService.saveDataBaoResult(modelid, baoName, blockid); //对数据包插入数据
+       Integer databao= dataBlockService.maxBaoId();
+       // String baoid = dataBlockService.selectDataBaoByBaoName(baoName);
         //数据库存储csv文件路径
-        dataBlockService.saveDataBaoCsvResult(fileName, baoid, blockid, modelid, csvFilePath);
+        dataBlockService.saveDataBaoCsvResult(fileName, databao.toString(), blockid, modelid, csvFilePath);
 
         return json;
     }
 
 
-    @RequestMapping("/dataReview")
+   /* @RequestMapping("/dataReview")
     @ResponseBody
     public List<String> selectCsvHead(@RequestBody String jsonData, Map<String, Object> map) throws IOException {
         JSONObject jsonObject = JSON.parseObject(jsonData);
-        String datablock = jsonObject.getString("datablock");
+        String blockid = jsonObject.getString("blockid");
         //int id = Integer.parseInt(datablock);
-        System.out.println(datablock);
-        DatamodelInfo datamodelInfo = dataBlockService.selectDataAreaResultByDatablock(datablock);
+        System.out.println(blockid);
+        DatamodelInfo datamodelInfo = dataBlockService.selectDataAreaResultByDatablock(blockid);
 
         String dataName = datamodelInfo.getDataresultname();
         String dataPath = datamodelInfo.getDataaddr();
         map.put("dataName", dataName);
         map.put("dataPath", dataPath);
-        String dataType = dataName.split("\\.")[1];
+
+
+        File file=new File(dataPath);
+        String name=file.getName();
+        String type=  name.substring(name.lastIndexOf("."));
+        type= type.replace(".","");
+
+   *//*     String dataType = dataName.split("\\.")[1];*//*
         // System.out.println(dataName + "-----" + dataType + "-----" + dataPath);
         //确认要读取的是csv文件
-        if (dataType.equals("csv")) {
+        if (type.equals("csv")) {
             List<String> result = fileService.readCsvFile(dataPath);
             map.put("result", result);
             return result;
@@ -126,7 +137,45 @@ public class DataBaoController {
         //不管是不是csv格式，都返回页面，如果不是在前端页面再处理
         return null;
 
+    }*/
+
+
+    /*数据块的csv文件的回显*/
+    //数据预览
+    @GetMapping("/dataReview/{dataresultid}")
+    public String review(@PathVariable("dataresultid") Integer dataresultid, Map<String, Object> map) {
+        DatamodelInfo datamodelInfo = sourceService.selectResultName(dataresultid);
+        /*  DatamodelInfo datamodelInfo= blockRepository.findById(dataresultid).orElse(null);*/
+        String fileName = datamodelInfo.getDataresultname();
+        String filePath = datamodelInfo.getDataaddr();
+        /* String fileTime = datamodelSource.getSourcetime();*/
+        File file=new File(filePath);
+        String name=file.getName();
+        String type=  name.substring(name.lastIndexOf("."));
+        type= type.replace(".","");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        /* System.out.println(df.format(new Date()));*/// new Date()为获取当前系统时间
+        String fileTime = df.format(new Date());
+        map.put("fileName", fileName);
+        map.put("filePath", filePath);
+        map.put("fileTime", fileTime);
+        /*        String fileType = fileName.split("\\.")[1];*/
+      /*  String fileType = fileName.split("/.")[1];
+        map.put("fileType", fileType);*/
+        map.put("fileType", type);
+        //System.out.println(fileName + "-----" + fileType + "-----" + filePath);
+        //确认要读取的是csv文件
+        if (type.equals("csv")) {
+            List<String> result = fileService.readCsvFile(filePath);
+            map.put("result", result);
+            //System.out.println(result.toString());
+        }
+        //不管是不是csv格式，都返回页面，如果不是在前端页面再处理
+        return "data/dataReview";
     }
+
+
+
 
     /*数据包回显，datamodel_info表 */
     @GetMapping(value = "/baoShow/{baoid}")  //得到数据块中id

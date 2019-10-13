@@ -15,7 +15,7 @@
     </select>
 
     <insert id="insertExample" parameterType="String" >
-        INSERT INTO datamodel_instance (modelid,instancename,parameters) VALUES (#{modelid},#{modelinstancename},#{analyzmodel})
+        INSERT INTO datamodel_instance (modelid,instancename,parameters,areaid) VALUES (#{modelid},#{modelinstancename},#{analyzmodel},#{areaid})
     </insert>
 
     <select id="selectLinkName" parameterType="String" resultType="String">
@@ -25,4 +25,16 @@
     <select id="selectSourceById" parameterType="Integer" resultType="DatamodelSource">
         SELECT * FROM datamodel_source WHERE sourceid = #{sourceid}
     </select>
+
+
+    <select id="maxAreaId" resultType="Integer">
+        SELECT MAX(areaid) areaid FROM datamodel_area;
+    </select>
+    <select id="getLinkIdByAreaid" resultType="Integer" parameterType="Integer">
+        SELECT linkid FROM datamodel_area WHERE areaid=#{areaid}
+    </select>
+    <insert id="processAreaInfo" parameterType="datamodelInfo">
+        INSERT INTO datamodel_info(dataresultname,datalink,dataarea,modelid,dataaddr) VALUES(#{dataresultname},#{datalink},#{dataarea},#{modelid},#{dataaddr})
+    </insert>
+
 </mapper>

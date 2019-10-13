@@ -8,18 +8,26 @@ public class DatamodelInfo {
 
     private String dataaddr;
 
-    private String datalink;
+    private Integer datalink;
 
-    private String dataarea;
+    private Integer dataarea;
 
     private String datablock;
 
-    private String databao;
+    private Integer databao;
 
-    private String dataji;
+    private Integer dataji;
 
     private Integer modelid;
+    private Integer blockid;
 
+    public Integer getBlockid() {
+        return blockid;
+    }
+
+    public void setBlockid(Integer blockid) {
+        this.blockid = blockid;
+    }
 
     public Integer getDataresultid() {
         return dataresultid;
@@ -45,22 +53,20 @@ public class DatamodelInfo {
         this.dataaddr = dataaddr;
     }
 
-
-
-    public String getDatalink() {
+    public Integer getDatalink() {
         return datalink;
     }
 
-    public void setDatalink(String datalink) {
-        this.datalink = datalink == null ? null : datalink.trim();
+    public void setDatalink(Integer datalink) {
+        this.datalink = datalink;
     }
 
-    public String getDataarea() {
+    public Integer getDataarea() {
         return dataarea;
     }
 
-    public void setDataarea(String dataarea) {
-        this.dataarea = dataarea == null ? null : dataarea.trim();
+    public void setDataarea(Integer dataarea) {
+        this.dataarea = dataarea;
     }
 
     public String getDatablock() {
@@ -68,23 +74,23 @@ public class DatamodelInfo {
     }
 
     public void setDatablock(String datablock) {
-        this.datablock = datablock == null ? null : datablock.trim();
+        this.datablock = datablock;
     }
 
-    public String getDatabao() {
+    public Integer getDatabao() {
         return databao;
     }
 
-    public void setDatabao(String databao) {
-        this.databao = databao == null ? null : databao.trim();
+    public void setDatabao(Integer databao) {
+        this.databao = databao;
     }
 
-    public String getDataji() {
+    public Integer getDataji() {
         return dataji;
     }
 
-    public void setDataji(String dataji) {
-        this.dataji = dataji == null ? null : dataji.trim();
+    public void setDataji(Integer dataji) {
+        this.dataji = dataji;
     }
 
     public Integer getModelid() {

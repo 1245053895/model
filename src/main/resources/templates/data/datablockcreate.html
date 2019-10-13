@@ -43,15 +43,17 @@
 	</div>
 	<div class="panel panel-default"
 		 style="width: 67%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
-		<div class="panel-header">数据块构建流程<input class="btn btn-primary radius" type="button"
+		<div class="panel-header">数据块构建流程
+		<!--	<input class="btn btn-primary radius" type="button"
 												style="position: absolute;margin-top: -0.3%;right: 5%;" value="运行"
-												onclick="jumpDialogSubmit()"/>
+												onclick="jumpDialogSubmit()"/>-->
 		</div>
 		<a><input class="btn btn-success radius" type="button" style="position: absolute;right: 11%;margin-top:  -2.1%;"
-				  value="保存流程" onclick="jumpDialog()"/></a>
+				  value="运行" onclick="jumpDialog()"/></a>
 		<div class="panel-body" id="model_content"></div>
-
 	</div>
+
+
 
 	<!--算法选择-->
 	<div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-top: 2%;">
@@ -99,26 +101,26 @@
 		</div>
 	</div>
 </div>
-<div id="modal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<!-- 弹出对话框 -->
-	<div class="modal-dialog">
-		<div class="modal-content radius">
-			<div class="modal-header">
-				<h3 class="modal-title"></h3>
-				<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
-			</div>
-			<div class="modal-body">
-				<strong>名称：</strong><input type="text" placeholder="请输入名称" class="input-text radius size-S"
-										   style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName1">
+<!--<div id="modal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+	<!--&lt;!&ndash; 弹出对话框 &ndash;&gt;-->
+	<!--<div class="modal-dialog">-->
+		<!--<div class="modal-content radius">-->
+			<!--<div class="modal-header">-->
+				<!--<h3 class="modal-title"></h3>-->
+				<!--<a class="close" data-dismiss="modal" aria-hidden="true">×</a>-->
+			<!--</div>-->
+			<!--<div class="modal-body">-->
+				<!--<strong>名称：</strong><input type="text" placeholder="请输入名称" class="input-text radius size-S"-->
+										   <!--style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName1">-->
 
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal" onclick="saveParameters();">确定</button>
-				<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-			</div>
-		</div>
-	</div>
-</div>
+			<!--</div>-->
+			<!--<div class="modal-footer">-->
+				<!--<button class="btn btn-primary" data-dismiss="modal" onclick="saveParameters();">确定</button>-->
+				<!--<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</div>-->
 </div>
 
 <!--_footer 作为公共模版分离出去-->
@@ -159,7 +161,7 @@
 					$.Huimodalalert('保存成功,请返回数据块', 1000);
 				}
 			});
-
+            saveParameters(datablockresult)
 		}
 	}
 
@@ -181,10 +183,10 @@
         }*/
 	}
 	//点击运行保存参数，运行算法
-	function saveParameters() {
-		if (document.getElementById('saveName1').value == "") {
-			$.Huimodalalert('请输入保存名称', 2000);
-		} else {
+	function saveParameters(datablockresult) {
+		// if (document.getElementById('saveName1').value == "") {
+		// 	$.Huimodalalert('请输入保存名称', 2000);
+		// } else {
 			var modelid = [[${modelid}]];
 			//alert(modelid);
 			var algorithmname= getModelAndData();
@@ -205,8 +207,8 @@
 			}
 			var analyzmodel = JSON.stringify(analyzmodelJsonArr);
 			// alert(analyzmodel);
-		}
-		var submitName = document.getElementById('saveName1').value;
+		// }
+		var submitName = datablockresult;
 		var example = {
 			"modelid": modelid,
 			"submitName": submitName,
@@ -218,7 +220,7 @@
 			dataType: "json",
 			contentType: 'application/json;charset=UTF-8',
 			data: JSON.stringify(example),
-			url: '/data/saveAreaExample',
+			url: '/data/saveBlockExample',
 			success: function (data) {
 				if (data.code == 1) {
 					$.Huimodalalert('保存成功', 1000);

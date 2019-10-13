@@ -96,8 +96,37 @@ private DataBlockMapper dataBlockMapper;
     }
 
     @Override
-    public DatamodelInfo selectDataAreaResultByDatablock(String datablock) {
-        DatamodelInfo datamodelInfo = dataBlockMapper.selectDataAreaResultByDatablock(datablock);
+    public Integer maxBlockId() {
+     Integer blockid=   dataBlockMapper.maxBlockId();
+        return blockid;
+    }
+
+    @Override
+    public Integer getAreaIdByBlockId(Integer blockid) {
+       Integer areaid= dataBlockMapper.getAreaIdByBlockId(blockid);
+        return areaid;
+    }
+
+    @Override
+    public void processBlockInfo(DatamodelInfo datamodelInfo) {
+        dataBlockMapper.processBlockInfo(datamodelInfo);
+
+    }
+
+    @Override
+    public void BlockInstance(String modelid, String modelinstancename, String analyzmodel, String blockid) {
+        dataBlockMapper.BlockInstance(modelid,modelinstancename,analyzmodel,blockid);
+    }
+
+    @Override
+    public Integer maxBaoId() {
+      Integer baoid=  dataBlockMapper.maxBaoId();
+        return baoid;
+    }
+
+    @Override
+    public DatamodelInfo selectDataAreaResultByDatablock(String blockid) {
+        DatamodelInfo datamodelInfo = dataBlockMapper.selectDataAreaResultByDatablock(blockid);
         return datamodelInfo;
     }
 }

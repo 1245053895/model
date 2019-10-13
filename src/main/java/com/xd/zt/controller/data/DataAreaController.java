@@ -156,31 +156,32 @@ public class DataAreaController {
     @ResponseBody
     public String dataSave(@RequestBody String json) {
         //存储csv文件列数据
-        List<JSONArray> list =new ArrayList<JSONArray>();
+        List<JSONArray> list = new ArrayList<JSONArray>();
         //存储csv文件行数据
-        List<String[]> listContent =new ArrayList<String[]>();
+        List<String[]> listContent = new ArrayList<String[]>();
         JSONObject jsonObject = JSON.parseObject(json);
         //获取数据包名
-        String sourceName=jsonObject.getString("fileName");
-        String fileName=sourceName+".csv";
-        String modelid=jsonObject.getString("modelid");
+        String baoName = jsonObject.getString("fileName");
+        String fileName = baoName + ".csv";
+        String modelid = jsonObject.getString("modelid");
         //获取表头数组
         JSONArray head = jsonObject.getJSONArray("表头");
         String[] csvHeaders = new String[head.size()];
-        for (int i = 0; i <head.size() ; i++) {
-            JSONArray jsonArray=jsonObject.getJSONArray(head.getString(i));
-            csvHeaders[i]=head.getString(i);
+        for (int i = 0; i < head.size(); i++) {
+            JSONArray jsonArray = jsonObject.getJSONArray(head.getString(i));
+            csvHeaders[i] = head.getString(i);
             list.add(jsonArray);
         }
-        for (int i = 0; i <list.get(0).size(); i++) {
+        for (int i = 0; i < list.get(0).size(); i++) {
             String[] csvContent = new String[head.size()];
-            for (int j = 0; j <head.size() ; j++) {
-                csvContent[j]=list.get(j).getString(i);
+            for (int j = 0; j < head.size(); j++) {
+                csvContent[j] = list.get(j).getString(i);
             }
             listContent.add(csvContent);
         }
-        String csvFilePath = "F:\\Projects\\ZTPT\\src\\main\\resources\\static\\"+fileName;
-        //构建csv文件
+//        String csvFilePath = "E:\\ideal_workspace\\svn\\ZTPT\\src\\main\\resources\\static\\"+fileName;
+        String csvFilePath = "src/main/resources/static/data/"+fileName;
+        //构建csv文件E:\ideal_workspace\svn\ZTPT\src\main\resources\static\data\test2.csv
         fileService.writeCsvFile(csvFilePath,csvHeaders,listContent);
         //获取数据源id
         String linksource=jsonObject.getString("sourceid");
@@ -209,10 +210,24 @@ public class DataAreaController {
         String modelid = jsonObject.get("modelid").toString();
         String modelinstancename = jsonObject.get("submitName").toString();
         String analyzmodel = jsonObject.get("analyzmodel").toString();
+        JSONArray jsonArray = JSON.parseArray(analyzmodel); //字符串转换为json数组
+        JSONObject params = jsonArray.getJSONObject(0).getJSONObject("params"); //取json数组对象
+        String dataaddr = params.getString("path");
+
+        Integer areaid= dataAreaService.maxAreaId();
+        Integer datalink=  dataAreaService.getLinkIdByAreaid(areaid);
+        DatamodelInfo datamodelInfo=new DatamodelInfo();
+        datamodelInfo.setDataresultname(modelinstancename);
+        datamodelInfo.setDatalink(datalink);
+        datamodelInfo.setDataarea(areaid);
+        datamodelInfo.setModelid(Integer.parseInt(modelid));
+        datamodelInfo.setDataaddr(dataaddr);
+        dataAreaService.processAreaInfo(datamodelInfo);
+
         //System.out.println(analyzmodel);
         String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
         if(modelinstanceid==""||modelinstanceid==null){
-            dataAreaService.insertExample(modelid,modelinstancename,analyzmodel);
+            dataAreaService.insertExample(modelid,modelinstancename,analyzmodel,areaid);
             map.put("code",1);
         }
         else {
@@ -220,4 +235,6 @@ public class DataAreaController {
         }
         return map;
     }
+
+
 }

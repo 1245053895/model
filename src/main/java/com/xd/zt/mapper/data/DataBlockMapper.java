@@ -19,7 +19,7 @@ public interface DataBlockMapper {
 
     void deleteblock(@Param("blockid") String blockid);
 
-    DatamodelInfo selectDataAreaResultByDatablock(@Param("datablock") String datablock);
+    DatamodelInfo selectDataAreaResultByDatablock(@Param("blockid") String blockid);
 
     List<DatamodelBao> selectBaoById(@Param("modelid") Integer modelid);
 
@@ -36,4 +36,12 @@ public interface DataBlockMapper {
     void saveDataBaoResult(@Param("modelid") String modelid, @Param("baoname") String baoname, @Param("blockid") String blockid);
     void saveDataBaoCsvResult(@Param("dataresultname") String dataresultname, @Param("databao") String databao, @Param("blockid") String blockid, @Param("modelid") String modelid, @Param("dataaddr") String dataaddr);
     String selectAreaId(@Param("dataresultid") String dataresultid);
+
+    Integer maxBlockId();
+    public Integer getAreaIdByBlockId(Integer blockid);
+    void processBlockInfo(DatamodelInfo datamodelInfo);
+    void BlockInstance(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("blockid") String blockid);
+
+Integer maxBaoId();
+
 }

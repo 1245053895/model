@@ -89,11 +89,11 @@
 		<div class="modal-dialog">
 			<div class="modal-content radius">
 				<div class="modal-header">
-					<h3 class="modal-title">数据包保存</h3>
+					<h3 class="modal-title">抽取结果保存</h3>
 					<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
 				</div>
 				<div class="modal-body">
-					<strong>名称：</strong><input type="text" placeholder="请输入数据包名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+					<strong>名称：</strong><input type="text" placeholder="请输入处理结果表名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
 
 				</div>
 				<div class="modal-footer">
@@ -126,6 +126,7 @@
 		var modelid = [[${modelid}]];
 		file["fileName"]=document.getElementById('saveName').value;
 		file["modelid"]=modelid;
+		console.log(file);
 		$.ajax({
 			url : "/data/datahandingSave",
 			type : "POST",
@@ -150,6 +151,8 @@
 		}
 		delete file.表头;
 		delete file.sourceid;
+        delete file.fileName;
+        delete file.modelid;
 		console.log(file);
 	}
 	

@@ -80,7 +80,7 @@ private SourceService sourceService;
     public String saveProcessd2(@RequestBody JSONObject jsonParam) throws Exception {
         String id = jsonParam.get("Id").toString();
         String Linkid = jsonParam.get("linkid").toString();
-        String modeid = jsonParam.get("modeid").toString();
+        String modeid = jsonParam.get("modelid").toString();
         int Id = Integer.parseInt(id);
         int Modeid = Integer.parseInt(modeid);
         int linkid = Integer.parseInt(Linkid);
@@ -196,7 +196,7 @@ private SourceService sourceService;
         modelAndView.addObject("datalinkInfo", sourceService.dataModelLink(modeid));
         modelAndView.addObject("myblocks", blocks1);
         modelAndView.addObject("myconnects", connects1);
-        modelAndView.addObject("modeid",modeid);
+        modelAndView.addObject("modelid",modeid);
         modelAndView.addObject("Id",processid);
         modelAndView.addObject("linkid",linkid);
         return modelAndView;

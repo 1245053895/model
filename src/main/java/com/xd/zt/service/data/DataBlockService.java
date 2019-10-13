@@ -19,7 +19,7 @@ public interface DataBlockService {
 
     void deleteblock(@Param("blockid") String blockid);
 
-    DatamodelInfo selectDataAreaResultByDatablock(String datablock);
+    DatamodelInfo selectDataAreaResultByDatablock(String blockid);
 
     List<DatamodelBao> selectBaoById(@Param("modelid") Integer modelid);
 
@@ -40,4 +40,11 @@ public interface DataBlockService {
     String selectDataBaoByBaoName(@Param("baoname") String baoname);
 
     String selectAreaId(@Param("dataresultid") String dataresultid);
+    Integer maxBlockId();
+    public Integer getAreaIdByBlockId(Integer blockid);
+    void processBlockInfo(DatamodelInfo datamodelInfo);
+    void BlockInstance(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("blockid") String blockid);
+    Integer maxBaoId();
+
+
 }

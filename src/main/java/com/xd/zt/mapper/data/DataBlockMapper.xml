@@ -22,7 +22,7 @@
     </delete>
 
     <select id="selectDataAreaResultByDatablock" resultType="DatamodelInfo" parameterType="String">
-    SELECT * FROM datamodel_info WHERE datamodel_info.datablock = #{datablock} AND datamodel_info.dataaddr is not null
+    SELECT * FROM datamodel_info WHERE datamodel_info.blockid = #{blockid} AND datamodel_info.dataaddr is not null
     </select>
 
     <select id="selectBaoById" resultType="DatamodelBao" parameterType="Integer">
@@ -30,7 +30,7 @@
     </select>
 
     <select id="selectDataBlockResultById" resultType="DatamodelInfo" parameterType="Integer">
-    SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.datablock is not null
+    SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.blockid is not null
     </select>
 
 
@@ -58,7 +58,32 @@
     SELECT baoid FROM datamodel_bao WHERE baoname = #{baoname}
     </select>
 
+    <select id="maxBaoId" resultType="Integer">
+        SELECT MAX(baoid) FROM datamodel_bao
+    </select>
+
+
     <insert id="saveDataBaoCsvResult" parameterType="String" >
        INSERT INTO datamodel_info (dataresultname,databao,datablock,modelid,dataaddr) VALUES (#{dataresultname},#{databao},#{blockid},#{modelid},#{dataaddr})
     </insert>
+
+
+
+
+    <select id="maxBlockId" resultType="Integer">
+        SELECT MAX(blockid) FROM datamodel_block
+    </select>
+    <select id="getAreaIdByBlockId" resultType="Integer" parameterType="Integer">
+        SELECT areaid FROM datamodel_block WHERE blockid=#{blockid}
+    </select>
+    <insert id="processBlockInfo" parameterType="datamodelInfo">
+  INSERT INTO datamodel_info(dataresultname,dataarea,modelid,dataaddr,blockid)
+VALUES(#{dataresultname},#{dataarea},#{modelid},#{dataaddr},#{blockid})
+ </insert>
+
+    <insert id="BlockInstance" parameterType="String" >
+        INSERT INTO datamodel_instance (modelid,instancename,parameters,blockid) VALUES (#{modelid},#{modelinstancename},#{analyzmodel},#{blockid})
+    </insert>
+
+
 </mapper>

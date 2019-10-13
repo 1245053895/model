@@ -2,6 +2,7 @@ package com.xd.zt.serviceImpl.data;
 
 
 
+import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.domain.data.DatamodelSource;
 import com.xd.zt.mapper.data.DataAreaMapper;
 import com.xd.zt.service.data.DataAreaService;
@@ -27,8 +28,8 @@ private DataAreaMapper dataAreaMapper;
     }
 
     @Override
-    public void insertExample(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel) {
-        dataAreaMapper.insertExample(modelid,modelinstancename,analyzmodel);
+    public void insertExample(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("areaid") Integer areaid) {
+        dataAreaMapper.insertExample(modelid,modelinstancename,analyzmodel,areaid);
     }
 
     @Override
@@ -44,5 +45,23 @@ private DataAreaMapper dataAreaMapper;
     @Override
     public Integer selectAreaid() {
         return dataAreaMapper.selectAreaid();
+    }
+
+    @Override
+    public Integer maxAreaId() {
+       Integer areaid= dataAreaMapper.maxAreaId();
+        return areaid;
+    }
+
+    @Override
+    public Integer getLinkIdByAreaid(Integer areaid) {
+      Integer datalink=  dataAreaMapper.getLinkIdByAreaid(areaid);
+        return datalink;
+    }
+
+    @Override
+    public void processAreaInfo(DatamodelInfo datamodelInfo) {
+        dataAreaMapper.processAreaInfo(datamodelInfo);
+
     }
 }

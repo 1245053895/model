@@ -65,7 +65,7 @@
             });
 
             var id = [[${Id}]];
-            var modeid = [[${modeid}]];
+            var modelid = [[${modelid}]];
             var linkid = [[${linkid}]];
             $.ajax({
                 type: "post",
@@ -74,7 +74,7 @@
                     name: nameOfFlow,
                     blocks: blocks,
                     connects: connects,
-                    modeid:modeid,
+                    modelid: modelid,
                     Id:id,
                     linkid:linkid
                 }),
@@ -94,20 +94,6 @@
                 }*/
 
 
-        function RefineNext() {
-            var href="/data/datahanding/"+[[${modeid}]];
-            document.getElementById("nextstep").setAttribute("href",href)
-            /*    if (click==false){
-                    /!*$.Huimodalalert('请先保存',1000);*!/
-                    alert("请先保存")
-                }
-                else {
-                    /!*var href="/dataareacreate/"+[[${modelid}]]*!/
-                    var href="'/dataareacreate/1'
-                    document.getElementById("nextstep").setAttribute("href",href)
-                }*/
-
-        }
 
 
 
@@ -208,6 +194,25 @@
 </div>
 </div>
 
+
+<script type="text/javascript" th:inline="javascript">
+    function RefineNext() {
+        var modelid=[[${modelid}]];
+        /*  var href="/data/datahanding/"+[[${modelid}]];*/
+        var href="/data/datahanding/"+modelid;
+        document.getElementById("nextstep").setAttribute("href",href)
+        /*    if (click==false){
+                /!*$.Huimodalalert('请先保存',1000);*!/
+                alert("请先保存")
+            }
+            else {
+                /!*var href="/dataareacreate/"+[[${modelid}]]*!/
+                var href="'/dataareacreate/1'
+                document.getElementById("nextstep").setAttribute("href",href)
+            }*/
+
+    }
+</script>
 
 <script>
     function getResult() {
