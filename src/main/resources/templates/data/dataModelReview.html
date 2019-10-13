@@ -34,22 +34,13 @@
         <div class="panel-header">数据链
         </div>
         <div class="panel-body">
-            <div class="panel panel-default"
-                 style="height: 12vh;width: 9vw;float: left;margin-left: 1.5%;margin-top: 0%;">
-                <div class="panel-header" style="text-align: center;height: 2vh;">数据源</div>
+
+            <div  th:id="${datamodelLinkList.linkid}"  class="panel panel-default" style="height: 12vh;width: 9vw;float: left;margin-left: 1.5%;margin-top: 0%;" th:each="datamodelLinkList:${datamodelLinkList}">
+
+                <div class="panel-header"  th:text="${datamodelLinkList.linkname}"  style="text-align: center"></div>
                 <div style="height: 49%;width: 37%;float: left;margin-left: 30%;margin-top: 6%;">
-                    <a id="dataSource" th:href="@{'/data/dataSourceManage/'+${modeid}}">
-                        <image src="/image/question.png" style="cursor:pointer;height: 100%;width: 97%"></image>
-                    </a>
-                </div>
-            </div>
-            <div class="panel panel-default"
-                 style="height: 12vh;width:9vw;float: left;margin-left: 1.5%;margin-top: 0%;">
-                <div class="panel-header" style="text-align: center;height: 2vh;">数据链</div>
-                <div style="height: 49%;width: 37%;float: left;margin-left: 30%;margin-top: 6%;">
-                    <a id="dataLink" th:href="@{'/data/dataLinkList/'+${modeid}}">
-                        <image src="/image/question.png" style="cursor:pointer;height: 100%;width: 97%"></image>
-                    </a>
+                    <a id="review" th:href="@{'/data/Linkviewx/'+${datamodelLinkList.processid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
+                    <!--<div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelLinkList.processid}" th:href="@{'/data/deletex/'+${datamodelLinkList.processid}}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>-->
                 </div>
             </div>
         </div>

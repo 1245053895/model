@@ -76,22 +76,22 @@ public class DataModelController {
     }
 
     //数据模型数据源显示
-    @GetMapping(value = "/dataSourceManage/{modeid}")
-    public ModelAndView lookFile(Model model, @PathVariable("modeid") Integer modeid) {
-        Iterable<DatamodelSource> datamodelSourceList = fileRepository.findByModeid(modeid);
-        model.addAttribute("datamodelSourceList", datamodelSourceList);
-        model.addAttribute("modeid", modeid);
-        return new ModelAndView("data/dataSourceManage", "modelModel", model);
-    }
+//    @GetMapping(value = "/dataSourceManage/{modeid}")
+//    public ModelAndView lookFile(Model model, @PathVariable("modeid") Integer modeid) {
+//        Iterable<DatamodelSource> datamodelSourceList = fileRepository.findByModeid(modeid);
+//        model.addAttribute("datamodelSourceList", datamodelSourceList);
+//        model.addAttribute("modeid", modeid);
+//        return new ModelAndView("data/dataSourceManage", "modelModel", model);
+//    }
     //数据模型数据链回显
-    @RequestMapping("/dataLinkList/{modeid}")
-    public ModelAndView dataLinkList(Model model, @PathVariable("modeid") Integer modeid) {
-        //System.out.println(modeid);
-        List<DatamodelLink> datamodelLinkList = dataModelService.dataModelLink(modeid);
-        model.addAttribute("datamodelLinkList", datamodelLinkList);
-        model.addAttribute("modeid", modeid);
-        return new ModelAndView("data/linkReview", "modelModel", model);
-    }
+//    @RequestMapping("/dataLinkList/{modeid}")
+//    public ModelAndView dataLinkList(Model model, @PathVariable("modeid") Integer modeid) {
+//        //System.out.println(modeid);
+//        List<DatamodelLink> datamodelLinkList = dataModelService.dataModelLink(modeid);
+//        model.addAttribute("datamodelLinkList", datamodelLinkList);
+//        model.addAttribute("modeid", modeid);
+//        return new ModelAndView("data/linkReview", "modelModel", model);
+//    }
     //数据模型数据逻辑关系图回显
     @RequestMapping("/dataLogicList/{modeid}")
     public ModelAndView dataLogicList(Model model, @PathVariable("modeid") Integer modeid) {
@@ -128,6 +128,9 @@ public class DataModelController {
 
     @RequestMapping("/modelReview/{modeid}")
     public ModelAndView dataModelManage(Model model, @PathVariable("modeid") Integer modeid) {
+        //数据链
+        List<DatamodelLink> datamodelLinkList = sourceService.dataModelLink(modeid);
+        model.addAttribute("datamodelLinkList", datamodelLinkList);
         //数据模型数据块回显
         List<DatamodelBlock> dataBlockList = dataModelService.dataModelBlock(modeid);
        /* for (DatamodelBlock datamodelBlock: dataBlockList) {
