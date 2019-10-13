@@ -136,42 +136,43 @@
             $.Huimodalalert('请输入保存名称',2000);
         }
         else {
-            var modelid = document.getElementById('modelid').getAttribute('value');
-            var algorithmname = document.getElementById('proc_Elements').getAttribute("value");
-            var algorithmnameArr = algorithmname.split(';');
-            var analyzmodelArr = "[]";
-            var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
-            for (var i = 1; i < algorithmnameArr.length-1; i++) {
-                var name = algorithmnameArr[i];
-                jsonObj = $('.'+name).serializeObject();
 
-               var instance = {
-              		"name" : name,
-                	"params": jsonObj
-               };
-              analyzmodelJsonArr.push(instance);
-			   }
-			   var analyzmodel = JSON.stringify(analyzmodelJsonArr);
+                var modelid = document.getElementById('modelid').getAttribute('value');
+                var algorithmname = document.getElementById('proc_Elements').getAttribute("value");
+                var algorithmnameArr = algorithmname.split(';');
+                var analyzmodelArr = "[]";
+                var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
+                for (var i = 1; i < algorithmnameArr.length - 1; i++) {
+                    var name = algorithmnameArr[i];
+                    jsonObj = $('.' + name).serializeObject();
+
+                    var instance = {
+                        "name": name,
+                        "params": jsonObj
+                    };
+                    analyzmodelJsonArr.push(instance);
                 }
-            var examplename =  document.getElementById('saveName').value;
-            var example ={
+            var analyzmodel = JSON.stringify(analyzmodelJsonArr);
+            var examplename = document.getElementById('saveName').value;
+            var example = {
                 "modelid": modelid,
                 "examplename": examplename,
-                "analyzmodel" : analyzmodel
+                "analyzmodel": analyzmodel,
             };
             $.ajax({
                 async: false,
-                type : "post",
+                type: "post",
                 dataType: "json",
-                contentType : 'application/json;charset=UTF-8',
+                contentType: 'application/json;charset=UTF-8',
                 data: JSON.stringify(example),
-                url : '/analyse/saveExample',
-                success : function(data) {
-                    if(data.code ==1){
-                    $.Huimodalalert('保存成功',1000);}
+                url: '/analyse/saveExample',
+                success: function (data) {
+                    if (data.code == 1) {
+                        $.Huimodalalert('保存成功', 1000);
+                    }
                     else {
-                        $.Huimodalalert('已存在实例名，请重新保存',1000);
-					}
+                        $.Huimodalalert('已存在实例名，请重新保存', 1000);
+                    }
 
                     //传输成功后延时500ms跳转到模型列表
                     // window.setTimeout("window.location = '/'",1500);
@@ -179,6 +180,7 @@
                     /*window.setTimeout("window.location.href = '/modelList'",1500);*/
                 }
             });
+        }
 
 
     }

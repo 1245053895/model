@@ -46,7 +46,7 @@
     </select>
 
     <select id="selectTask" resultType="AnalyticsTask">
-     SELECT analytics_task.id,analytics_task.`timestamp`,analytics_task.`status`,analytics_task.modelInstanceId,analytics_task.result,analytics_task.complete_time FROM analytics_task
+     SELECT * FROM analytics_task
     </select>
 
 

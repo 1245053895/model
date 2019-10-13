@@ -52,7 +52,7 @@
                         <th >任务状态</th>
                         <th >任务结果</th>
                         <th >完成时间</th>
-                        <!--<th >操作</th>-->
+                        <th >操作</th>
                     </tr>
                     </thead>
 
@@ -61,27 +61,22 @@
                             <td colspan="6">当前没有任务</td>
                         </tr>
                         <tr class="text-c"  th:each="analyticsTaskList:${analyticsTaskList}">
-                            <td th:text="${analyticsTaskList.id}"></td>
+                            <td th:text="${analyticsTaskList.taskId}"></td>
                             <td th:text="${analyticsTaskList.modelInstanceId}"></td>
                             <td th:text="${analyticsTaskList.timestamp}"></td>
                             <td th:text="${analyticsTaskList.status}"></td>
                             <td th:text="${analyticsTaskList.result}"></td>
                             <!--<td><a style="cursor:pointer" class="text-primary" th:text="${analyseFlowList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>-->
                             <td th:text="${analyticsTaskList.completeTime}"></td>
-                            <!--<td>-->
-                                <!--&lt;!&ndash;<a  >&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input th:id="${analyticsTaskList.exampleid}" class="btn btn-primary size-MINI radius" type="button" value="运行" >&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                <!--<a   >-->
-                                    <!--<input th:id="${analyticsTaskList.modelInstanceId}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >-->
-                                <!--</a>-->
-
-                            <!--</td>-->
+                            <td>
+                                <a   >
+                                    <input th:id="${analyticsTaskList.taskId}+','+${analyticsTaskList.modelInstanceId}" class="btn btn-primary size-MINI radius" type="button" value="下载" >
+                                </a>
+                                <a   >
+                                    <input th:id="${analyticsTaskList.taskId}+','+${analyticsTaskList.modelInstanceId}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >
+                                </a>
+                            </td>
                         </tr>
-
-
-
-
                     </tbody>
                 </table>
             </div>
@@ -101,60 +96,64 @@
 <script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    // window.onload=function() {
-    //     var oLis = document.getElementsByTagName("input");
-    //     for (var index = 0; index < oLis.length; index++) {
-    //         oLis[index].onclick = function () {
-    //             var id = this.id;
-    //             var value = this.value;
-    //             if (value == "删除") {
-    //                 if (confirm("确定要删除此问题？")) {
-    //                     var exampleid = {
-    //                         "exampleid": id
-    //                     };
-    //                     $.ajax({
-    //                         async: false,
-    //                         type: "post",
-    //                         dataType: "json",
-    //                         contentType: 'application/json;charset=UTF-8',
-    //                         data: JSON.stringify(exampleid),
-    //                         url: '/exampleDelete',
-    //                         success: function () {
-    //                             $.Huimodalalert('删除成功', 1000);
-    //                             location.reload(true);
-    //                         }
-    //                     });
-    //                     location.reload(true);
-    //                 }
-    //                 else {
-    //                 }
-    //             }
-    //             if (value == "运行") {
-    //                 if (confirm("确定要运行？")) {
-    //                     var exampleid = {
-    //                         "exampleid": id
-    //                     };
-    //                     $.ajax({
-    //                         async: false,
-    //                         type: "post",
-    //                         dataType: "json",
-    //                         contentType: 'application/json;charset=UTF-8',
-    //                         data: JSON.stringify(exampleid),
-    //                         url: '/exampleRun',
-    //                         success: function () {
-    //                                 $.Huimodalalert('已添加运行任务', 1000);
-    //                         },
-    //                         error:function () {
-    //                             $.Huimodalalert('已添加运行任务', 1000);
-    //                         }
-    //                     });
-    //                         }
-    //                 }
-    //             else{
-    //             }
-    //         }
-    //     }
-    // }
+    window.onload=function() {
+        var oLis = document.getElementsByTagName("input");
+        for (var index = 0; index < oLis.length; index++) {
+            oLis[index].onclick = function () {
+                var ids = this.id;
+                var id = ids.split(',');
+                var taskid = id[0];
+                var modelinstanceid = id[1];
+                var value = this.value;
+                if (value == "删除") {
+                    if (confirm("确定要删除此任务？")) {
+                        var taskId = {
+                            "taskId": taskid,
+                            "modelInstanceId":modelinstanceid
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: taskId,
+                            url: '/analyse/taskDelete',
+                            success: function () {
+                                $.Huimodalalert('删除成功', 1000);
+                              // location.reload(true);
+                            }
+                        });
+                        window.setTimeout(window.location.reload(true));
+                    }
+                    else {
+                    }
+                }
+                if (value == "下载") {
+                    if (confirm("确定下载？(下载目录：D:\\分析处理任务结果\\)")) {
+                        var taskId = {
+                            "taskId": taskid
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(taskId),
+                            url: '/analyse/downloadLinuxFile',
+                            success: function () {
+                                    $.Huimodalalert('下载成功', 1000);
+                            },
+                            error:function () {
+                                $.Huimodalalert('下载成功', 1000);
+                            }
+                        });
+                            }
+                    }
+                else{
+                }
+            }
+        }
+    }
 
 
 </script>

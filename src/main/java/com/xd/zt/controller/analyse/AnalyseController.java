@@ -219,13 +219,15 @@ public class AnalyseController {
     @RequestMapping("/exampleRun")
     public String exampleRun(@RequestBody JSONObject jsonObject) throws Exception{
         String modelinstanceid = jsonObject.get("exampleid").toString();
+        String instantData = jsonObject.get("instantData").toString();
         String parameterss = analyseService.selectParams(modelinstanceid);
+
         //生成json文件
         JSONArray parameters = JSONArray.parseArray(parameterss);
         JSONObject modelinstance = new JSONObject();
         modelinstance.put("username","name");
         modelinstance.put("modelInstanceId",modelinstanceid);
-        modelinstance.put("instantData","False");
+        modelinstance.put("instantData",instantData);
         modelinstance.put("analyzmodel",parameters);
 
         String jsonString= JSON.toJSONString(modelinstance);
