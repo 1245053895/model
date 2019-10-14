@@ -52,7 +52,8 @@
                 <form id="upfileForm" action="#" th:action="@{/data/saveFile}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
                     <div class="fileupload">
                         <span id="filename">点击此处选择文件</span>
-                        <input type="file"  id="file" onchange="getFilename();" name="sourcename"/>
+                      <!--  <input type="file"  id="file" onchange="getFilename();" name="sourcename"/>-->
+                        <input type="file"  id="file" onchange="getFilename();"/>
                     </div>
                     <input type="hidden" th:value="${modeid}" name="modeid" id="modeid"/>
                     <div class="button_position">

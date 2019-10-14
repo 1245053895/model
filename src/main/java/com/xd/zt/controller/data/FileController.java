@@ -174,13 +174,13 @@ public class FileController {
     //文件上传，保存数据库,void方法需要加上ResponseBody否则会报错，不加会去找url作为接收页面，如果url不是页面就报错
     @ResponseBody
     @PostMapping("/saveFile")
-    public void upFile(@RequestParam("sourcename") MultipartFile multipartFile, @RequestParam("modeid") Integer modeid) throws Exception {
+    public void upFile(@RequestParam("filename") MultipartFile filename, @RequestParam("modeid") Integer modeid) throws Exception {
 
-        String[] fileInformation = fileService.Upload(multipartFile);
+        String[] fileInformation = fileService.Upload(filename);
         String sourcename = fileInformation[0];
         String sourcepath = fileInformation[1];
         String sourcesize = fileInformation[2];
-        System.out.println(sourcename + "----" + sourcepath + "----" + sourcesize);
+        System.out.println(filename + "----" + sourcepath + "----" + sourcesize);
         DatamodelSource datamodelSource = new DatamodelSource();
         datamodelSource.setModeid(modeid);
         datamodelSource.setSourcename(sourcename);
