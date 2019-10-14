@@ -43,6 +43,7 @@
                         <th >算法描述</th>
                         <th >添加时间</th>
                         <th >算法版本</th>
+                        <th>操作人</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -62,6 +63,7 @@
                             <td  th:text="${algorithmList.algorithmdescribe}" ></td>
                             <td th:text="${algorithmList.algorithmtime}" ></td>
                             <td  th:text="${algorithmList.algorithmversion}" ></td>
+                            <td th:text="${algorithmList.algorithmman}"></td>
                             <!--<td><a style="cursor:pointer" class="text-primary" th:text="${analyseInstanceList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>-->
                             <!--<td th:text="${analyseInstanceList.examplestatus}"></td>-->
                             <td>

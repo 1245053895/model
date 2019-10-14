@@ -9,6 +9,16 @@ public class Algorithm {
     private String algorithmtime;
     private String algorithmversion;
     private String algorithmparams;
+    private String algorithmman;
+
+    public String getAlgorithmman() {
+        return algorithmman;
+    }
+
+    public void setAlgorithmman(String algorithmman) {
+        this.algorithmman = algorithmman;
+    }
+
     private String algorithmpath;
 
     public String getAlgorithmpath() {
