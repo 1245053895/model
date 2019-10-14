@@ -35,6 +35,11 @@ public class AlgorithmDebugController {
         return "algorithm/index";
     }
 
+
+    @RequestMapping("/algorithmWelcome")
+    public String algorithmWelcome(){
+        return "algorithm/algorithmWelcome";
+    }
     @RequestMapping("/select")
     public String select(){
         return "algorithm/select";

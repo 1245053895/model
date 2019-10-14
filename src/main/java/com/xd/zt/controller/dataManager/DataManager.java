@@ -11,9 +11,9 @@ public class DataManager {
 
         return "dataManager/index";
     }
-    @RequestMapping("/welcome")
+    @RequestMapping("/dataManagerWelcome")
     public String welcome(){
-        return "dataManager/welcome";
+        return "dataManager/dataManagerWelcome";
     }
 
     @RequestMapping("/dataManager")

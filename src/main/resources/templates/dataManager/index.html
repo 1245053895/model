@@ -41,7 +41,7 @@
 		<aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
 			<div class="menu_dropdown bk_2">
 				<dl id="menu-tongji">
-					<dt><a data-href="/dataManager/welcome" data-title="首页" href="javascript:void(0)" ><center><font color="white" >集成管理</font></center></a></dt>
+					<dt><a data-href="/dataManager/dataManagerWelcome" data-title="首页" href="javascript:void(0)" ><center><font color="white" >集成管理</font></center></a></dt>
 				</dl>
 <!--	<dl id="menu" th:each="questionList:${questionList}" >
         <dt th:id="${questionList.modelid}"   ><i class="Hui-iconfont" >&#xe620;</i><font color="white" th:text="${questionList.name}"  > </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
@@ -78,7 +78,7 @@
 				<div class="Hui-tabNav-wp">
 					<ul id="min_title_list" class="acrossTab cl">
 						<li class="active">
-							<span title="我的桌面" data-href="welcome">首页</span>
+							<span title="我的桌面" data-href="/dataManager/dataManagerWelcome">首页</span>
 							<em></em></li>
 					</ul>
 				</div>
@@ -89,7 +89,7 @@
 			<div id="iframe_box" class="Hui-article">
 				<div class="show_iframe">
 					<div style="display:none" class="loading"></div>
-					<iframe scrolling="yes" frameborder="0" th:src="@{/dataManager/welcome}"></iframe>
+					<iframe scrolling="yes" frameborder="0" th:src="@{/dataManager/dataManagerWelcome}"></iframe>
 				</div>
 			</div>
 		</section>
