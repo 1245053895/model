@@ -21,7 +21,9 @@ public class TaskController {
         String modelInstanceId = jsonObject.get("modelInstanceId").toString();
         HttpUtil httpUtil = new HttpUtil();
         try {
-            httpUtil.post("/tasks/"+modelInstanceId+"/"+taskId+"/delete/",null);
+
+            httpUtil.post("http://127.0.0.1:8000/tasks/"+modelInstanceId+"/"+taskId+"/delete/",null);
+//            httpUtil.post("http://120.24.157.214:8000/tasks/"+modelInstanceId+"/"+taskId+"/delete/",null);
 
         }catch (Exception e){
             System.out.println(e.getMessage());

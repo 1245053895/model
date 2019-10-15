@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -206,7 +207,8 @@ public class AnalyseController {
 
         HttpUtil httpUtil = new HttpUtil();
         try {
-            httpUtil.post("/tasks/"+modelinstanceid+"/cancel",null);
+            httpUtil.post("http://127.0.0.1:8000/tasks/"+modelinstanceid+"/delete/",null);
+//            httpUtil.post("http://120.24.157.214:8000/tasks/"+modelinstanceid+"/delete/",null);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -232,9 +234,12 @@ public class AnalyseController {
 
         String jsonString= JSON.toJSONString(modelinstance);
 //        CreateFileUtil.createJsonFile(jsonString,"C:\\Users\\ZLJ\\Desktop\\test","XGBregressor");
-       HttpUtil httpUtil = new HttpUtil();
+
+
+        HttpUtil httpUtil = new HttpUtil();
         try {
-             httpUtil.post("/tasks",jsonString);
+//             httpUtil.post("http://120.24.157.214:8000/tasks/",jsonString);
+            httpUtil.post("http://127.0.0.1:8000/tasks/",jsonString);
 
         }catch (Exception e){
             System.out.println(e.getMessage());

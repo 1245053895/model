@@ -273,7 +273,7 @@ var paramsArr = new Array();
             var param = algorithmParams_Arr[i];
            paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>"+param+"</div>"+ "<input type='text' placeholder='请输入..' class='input-text ac_input' name='"+param+"' value='' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
         }
-    paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='"+value+"' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+    paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
     paramsArr.push("</form></div>");
     $("#params_text").append(paramsArr.join("\n"));
 }

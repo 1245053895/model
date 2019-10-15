@@ -116,7 +116,7 @@
                             type: "post",
                             dataType: "json",
                             contentType: 'application/json;charset=UTF-8',
-                            data: taskId,
+                            data: JSON.stringify(taskId),
                             url: '/analyse/taskDelete',
                             success: function () {
                                 $.Huimodalalert('删除成功', 1000);

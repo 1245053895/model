@@ -126,13 +126,19 @@ public class AlgorithmDebugController {
         /*      String sqlPath=null;*/
         String[] fileInformation = algorithmUpdateService.Upload(multipartFile);
         String filename = fileInformation[0];
+
+
+        String[] fileName = filename.split(".");
+        String algorithmName = fileName[0];
+
+
         String filepath = fileInformation[1];
         String filesize = fileInformation[2];
 //        System.out.println(filename+"----"+ filepath+"----"+filesize);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = simpleDateFormat.format(new Date());
         Algorithm algorithm = new Algorithm();
-        algorithm.setAlgorithmname(filename);
+        algorithm.setAlgorithmname(algorithmName);
         algorithm.setAlgorithmpath(filepath);
         algorithm.setAlgorithmtime(date);
         algorithmDebugService.saveAlgorithm(algorithm);

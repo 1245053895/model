@@ -102,7 +102,7 @@ public class DataBlockController {
         JSONArray jsonArray = JSON.parseArray(analyzmodel);
         JSONObject params = jsonArray.getJSONObject(0).getJSONObject("params");
         String dataaddr = params.getString("path");
-      Integer blockid=  dataBlockService.maxBlockId();
+        Integer blockid=  dataBlockService.maxBlockId();
         Integer areaid= dataBlockService.getAreaIdByBlockId(blockid);
         DatamodelInfo datamodelInfo=new DatamodelInfo();
         datamodelInfo.setDataresultname(modelinstancename);
@@ -115,8 +115,6 @@ public class DataBlockController {
         String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
         if(modelinstanceid==""||modelinstanceid==null){
             dataBlockService.BlockInstance(modelid,modelinstancename,analyzmodel,blockid.toString());
-
-
             map.put("code",1);
         }
         else {

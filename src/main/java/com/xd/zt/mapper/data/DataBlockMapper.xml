@@ -67,9 +67,6 @@
        INSERT INTO datamodel_info (dataresultname,databao,datablock,modelid,dataaddr) VALUES (#{dataresultname},#{databao},#{blockid},#{modelid},#{dataaddr})
     </insert>
 
-
-
-
     <select id="maxBlockId" resultType="Integer">
         SELECT MAX(blockid) FROM datamodel_block
     </select>
