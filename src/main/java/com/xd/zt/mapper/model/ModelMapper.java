@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface ModelMapper {
     List<Programme> selectAllModel();
+    void insertProgram(Programme programme);
 }

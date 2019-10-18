@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 @RequestMapping("/algorithm")
 @Controller
 public class AlgorithmDebugController {
@@ -48,10 +50,70 @@ public class AlgorithmDebugController {
     @RequestMapping("/algorithmList")
     public ModelAndView algorithmList(Model model){
         List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+
         model.addAttribute("algorithmList",algorithmList);
 
         return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
     }
+
+
+    @RequestMapping("/algorithmList1")
+    public ModelAndView algorithmList1(Model model){
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+        List<Algorithm> arr1 = new ArrayList<Algorithm>();
+        for (Algorithm algorithm : algorithmList) {
+            String sss =algorithm.getAlgorithmlabel();
+            if(sss.equals("行业专用")){
+                arr1.add(algorithm);
+            }
+        }
+
+        model.addAttribute("algorithmList",arr1);
+
+        return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
+    }
+
+
+    @RequestMapping("/algorithmList2")
+    public ModelAndView algorithmList2(Model model){
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+        List<Algorithm> arr1 = new ArrayList<Algorithm>();
+        for (Algorithm algorithm : algorithmList) {
+            String sss =algorithm.getAlgorithmlabel();
+            if(sss.equals("行业通用")){
+                arr1.add(algorithm);
+            }
+        }
+
+        model.addAttribute("algorithmList",arr1);
+
+        return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
+    }
+
+    @RequestMapping("/algorithmList3")
+    public ModelAndView algorithmList3(Model model){
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+        List<Algorithm> arr1 = new ArrayList<Algorithm>();
+        for (Algorithm algorithm : algorithmList) {
+            String sss =algorithm.getAlgorithmlabel();
+            if(sss.equals("人工智能")){
+                arr1.add(algorithm);
+            }
+        }
+
+        model.addAttribute("algorithmList",arr1);
+
+        return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
+    }
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/algorithmSearch")
     public ModelAndView dataSearch(Model model, String search_text){

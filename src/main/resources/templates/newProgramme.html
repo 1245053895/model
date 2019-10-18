@@ -40,16 +40,26 @@
 <div class="container-fluid allborder" >
     <div class="modal-dialog projectborder">
         <div class="modal-content radius projectposition" >
+             <form id="updateForm" th:method="post" th:action="@{/home}">
+                 <input type="hidden" name="_method" value="put">
             <div class="modal-header">
                 <h3 class="modal-title">新建工程</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             </div>
             <div class="modal-bodyx">
-                <span style="margin-left: 3%">工程名称:</span><span><input type="text" placeholder="请输入业务名称" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="saveName"></span>
+                <span style="margin-left: 3%">工程名称:</span><span><input type="text" placeholder="请输入工程名称" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="saveName" name="saveName"></span>
+            </div>
+            <div class="modal-bodyx">
+                <span style="margin-left: 3%">问题描述:</span><span><input type="text" placeholder="请输入问题描述" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="savequestion" name="savequestion"></span>
+            </div>
+            <div class="modal-bodyx">
+                <span style="margin-left: 3%">用户姓名:</span><span><input type="text" placeholder="请输入用户姓名" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="saveuser" name="saveuser"></span>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-primary" data-dismiss="modal" href="/home">确定</a>
+                <input type="button" value="确定" class="btn btn-primary"  onclick="$('#updateForm').submit();">
+                <!--<a data-dismiss="modal" href="/home">确定</a>-->
             </div>
+             </form>
         </div>
     </div>
 </div>

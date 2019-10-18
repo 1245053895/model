@@ -8,4 +8,5 @@ import java.util.List;
 @Controller
 public interface ModelService {
     List<Programme> selectAllModel();
+    void insertProgram(Programme programme);
 }

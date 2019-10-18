@@ -7,4 +7,7 @@
         select * from programme
     </select>
 
+    <insert id="insertProgram" parameterType="Programme" useGeneratedKeys="true" keyProperty="id">
+       insert into programme values (null,#{programmename},null,#{programmedescribe},null,#{programmetime},#{username});
+    </insert>
 </mapper>

@@ -39,10 +39,19 @@
                     <tr class="text-c">
                         <th >算法名称</th>
                         <th >算法类别</th>
-                        <th >算法标签</th>
+                        <th >
+                            <select style="background-color: #F5FAFE;border-right-style: none; border-top-style: none;border-left-style: none;border-bottom-style: none;">
+                                <option>算法标签</option>
+                                <option th:value="algorithmList1" th:text="行业专用">行业专用</option>
+                                <option th:value="algorithmList2" th:text="行业通用">行业通用</option>
+                                <option th:value="algorithmList3" th:text="人工智能">人工智能</option>
+                                <option th:value="algorithmList" th:text="所有算法">所有算法</option>
+                            </select>
+                        </th>
                         <th >算法描述</th>
                         <th >添加时间</th>
                         <th >算法版本</th>
+                        <th>操作人</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -62,6 +71,7 @@
                             <td  th:text="${algorithmList.algorithmdescribe}" ></td>
                             <td th:text="${algorithmList.algorithmtime}" ></td>
                             <td  th:text="${algorithmList.algorithmversion}" ></td>
+                            <td th:text="${algorithmList.algorithmman}"></td>
                             <!--<td><a style="cursor:pointer" class="text-primary" th:text="${analyseInstanceList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>-->
                             <!--<td th:text="${analyseInstanceList.examplestatus}"></td>-->
                             <td>
@@ -188,6 +198,13 @@
             // window.setTimeout("window.location.href=",1000);
         });
         return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+</script>
+<script>
+    var select = document.querySelector('select');
+    select.onchange = function(){
+        // alert(this.value);
+        window.location=this.value;
     }
 </script>
 </body>

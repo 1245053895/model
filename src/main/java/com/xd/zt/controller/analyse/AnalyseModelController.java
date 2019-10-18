@@ -8,6 +8,8 @@ import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.business.flow.AnalyseProcess;
 import com.xd.zt.domain.business.flow.JsPlumbBlock;
 import com.xd.zt.domain.business.flow.JsPlumbConnect;
+import com.xd.zt.service.algorithm.AlgorithmDebugService;
+import com.xd.zt.service.algorithm.AlgorithmUpdateService;
 import com.xd.zt.service.analyse.AnalyseModelService;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
@@ -19,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/analyse")
@@ -38,6 +37,11 @@ public class AnalyseModelController {
 
     @Autowired
    private BusinessFlowService flowService;
+
+    @Autowired
+    private AlgorithmDebugService algorithmDebugService;
+    @Autowired
+    private AlgorithmUpdateService algorithmUpdateService;
 
     @RequestMapping("/index")
     public ModelAndView selectAnalyz(Model model) {
@@ -91,6 +95,31 @@ public class AnalyseModelController {
     public ModelAndView selectBusiness(Model model){
         model.addAttribute("businessModelList",analyseModelService.selectBusiness());
         return new ModelAndView("analyse/welcome","modelModel",model);
+    }
+
+    @RequestMapping("/wel")
+    public ModelAndView wel(Model model){
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+        List<Algorithm> arr1 = new ArrayList<Algorithm>();
+        List<Algorithm> arr2 = new ArrayList<Algorithm>();
+        List<Algorithm> arr3 = new ArrayList<Algorithm>();
+        for (Algorithm algorithm : algorithmList) {
+            String sss =algorithm.getAlgorithmlabel();
+            if(sss.equals("行业通用")){
+                arr2.add(algorithm);
+            }else {
+                if(sss.equals("行业专用")){
+                    arr1.add(algorithm);
+                }else {
+                    arr3.add(algorithm);
+                }
+            }
+
+        }
+        model.addAttribute("algorithmList1",arr1);
+        model.addAttribute("algorithmList2",arr2);
+        model.addAttribute("algorithmList3",arr3);
+        return new ModelAndView("/wel","modelModel",model);
     }
 
     @RequestMapping("/analyseReview/{modelid}")

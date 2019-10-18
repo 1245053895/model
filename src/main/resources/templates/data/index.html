@@ -28,6 +28,16 @@
 		<meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 		<meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 	</head>
+	<script type="text/javascript">
+		function nannanhu() {
+			if($('#hidden_enent').is(':hidden')){
+				$('#hidden_enent').show();
+			}
+			else{
+				$('#hidden_enent').hide();
+			}
+		}
+	</script>
 	<body style="background-image: url(/image/bacground.jpg);background-size: 220%">
 <header class="navbar-wrapper"style="height: 60px;background-color: rgba(0,0,0,0)">
 			<div class="navbar navbar-fixed-top " style="height: 60px;background-color: rgba(0,0,0,0)">
@@ -37,6 +47,11 @@
 				<span style="color: white;font-weight: bold;font-size: 1rem;margin-left:1%;margin-top: 1%;position: absolute;">城市地下空间工程大数据分析平台-数据建模</span>
 					</a></div>
 			</div>
+	<div class="dirsuanfa"
+		 style="height: 40px;position: absolute;margin-left:93%;margin-top: 9px;z-index: 10000;"
+		 onclick="nannanhu()">
+		<img th:src="@{/image/ss1.png}"/>
+	</div>
 		</header>
 		<aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
 			<div class="menu_dropdown bk_2">
@@ -76,6 +91,10 @@
 				<div class="show_iframe">
 					<div style="display:none" class="loading"></div>
 					<iframe scrolling="yes" frameborder="0" th:src="@{/data/welcome}"></iframe>
+				</div>
+				<div style="border: 1px solid yellow;height: 39vh;width: 360px; position: absolute;margin-left: 77%; display:none;"
+					 id="hidden_enent">
+					<iframe scrolling="yes" frameborder="0"  width="100%" height="100%"    th:src="@{/analyse/wel}"></iframe>
 				</div>
 			</div>
 		</section>
