@@ -37,6 +37,8 @@
 	<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
 	<title></title>
 </head>
+
+
 <body>
 <input type="hidden" th:value="${sceneid}" id="sceneid">
 
@@ -53,7 +55,8 @@
 
 	<div class="panel panel-default" style="width: 99%;height: 66vh;float: left;margin-left: 0%;margin-top: 2%;">
 		<div class="panel-header">添加业务对象</div>
-		<button class="btn btn-primary radius" style="position: absolute; margin-top: -2.2%;right: 3%;" onclick="chuangzhi()">保存</button>
+		<button class="btn btn-primary radius" style="position: absolute; margin-top: 28.3%;right: 8%;" onclick="chuangzhi()">保存</button>
+		<button class="btn btn-primary radius" style="position: absolute; margin-top: -2.2%;right: 3%;" onclick="xinzeng()">新增</button>
 		<div class="panel-body" id="detail_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
 			<table class="table table-border table-bordered table-hover table-bg table-sort" style="margin-top: 1%">
 				<thead>
@@ -62,6 +65,7 @@
 					<th >类型</th>
 					<th >属性</th>
 					<th >说明</th>
+					<th>操作</th>
 
 				</tr>
 				</thead>
@@ -72,12 +76,78 @@
 					<td th:text="${sceneObject.getObjecttype()}"></td>
 					<td th:text="${sceneObject.getObjectattribute()}"></td>
 					<td th:text="${sceneObject.getObjectdescribe()}"></td>
+					<td>
+						<input class="btn btn-primary size-MINI radius" type="button" value="删除" onclick="dobject(id)" th:id="${sceneObject.getObjectid()}">
+					</td>
 				</tr>
 				</tbody>
+
+				<script type="text/javascript">
+
+                    function dobject(id) {
+                        var id={
+                            "objectid":id
+                        };
+                        $.ajax({
+                            url : "/business/objectDelete",
+                            type : "POST",
+                            async : true,
+                            contentType: "application/json; charset=utf-8",
+                            data : JSON.stringify(id),
+                            dataType : 'json',
+                            success : function() {
+                                $.Huimodalalert('删除成功',2000);
+                            },
+                            error : function() {
+                                $.Huimodalalert('删除失败',2000);
+                            }
+                        });
+                        window.setTimeout("window.location.reload(true)",1000);
+                    }
+				</script>
+
 			</table>
 		</div>
 
+
+
+		<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<!-- 弹出对话框 -->
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-header">
+						<h3 class="modal-title">添加业务对象</h3>
+						<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+					</div>
+					<div class="modal-body">
+						<strong style="margin-left: 5%">对&nbsp;&nbsp;&nbsp;&nbsp;象：</strong><input type="text" placeholder="请输入业务对象" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectname">
+					</div>
+					<div class="modal-body">
+						<strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;型</strong><input type="text" placeholder="请输入对象类型" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objecttype">
+					</div>
+					<div class="modal-body" style="margin-left: 3.5vh;">属&nbsp;&nbsp;&nbsp;&nbsp;性：</strong><input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">
+					</div>
+					<div class="modal-body">
+						<strong style="margin-left: 5%">说&nbsp;&nbsp;&nbsp;&nbsp;明：</strong><input type="text" placeholder="请输入对象说明" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectdescribe">
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" data-dismiss="modal" onclick="object();">确定</button>
+						<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
 	</div>
+
+
+
+
 
 <!--	<input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: 43.5%;right: 9%;"  value="上一步" />-->
     <a id="nextstep">
@@ -87,6 +157,51 @@
 	</a>
 
 </div>
+
+<script type="text/javascript">
+    function xinzeng() {
+        console.log("sdsd");
+        $("#dataAggreDivide").modal("show");
+    }
+
+
+
+    function object() {
+       /* if(document.getElementById('saveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        }*/
+      /*  else {*/
+            var data = {};//定义一个数组
+            data["objectname"] = document.getElementById('objectname').value;
+            data["objecttype"] = document.getElementById('objecttype').value;
+            data["objectattribute"] = document.getElementById('objectattribute').value;
+            data["objectdescribe"] = document.getElementById('objectdescribe').value;
+            var dataToJson = JSON.stringify(data);
+            console.log(dataToJson);
+            $.ajax({
+                async: false,
+                type : "post",
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                data:dataToJson,
+                url : '/business/object',
+                traditional:true,
+                success : function(data) {
+                    if (data.code==1) {
+                        $.Huimodalalert('添加成功',1000);
+					}
+                    //传输成功后延时500ms跳转到模型列表
+
+                    //这两种写法都可以
+                    /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+                }
+            });
+			window.setTimeout("window.location.reload(true)",2000);
+        /*}*/
+    }
+
+
+</script>
 
 <script type="text/javascript" th:inline="javascript">
 	var zhuangtai = false;

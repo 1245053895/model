@@ -1,6 +1,12 @@
 package com.xd.zt.domain.business;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+@Entity
 public class BusinessObject {
+    @Id//主键
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//自增策略
     private Integer objectid;
 
     private String objectname;

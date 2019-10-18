@@ -1,11 +1,11 @@
 package com.xd.zt.controller.business;
 
 
-import com.xd.zt.domain.business.BusinessKnowledge;
-import com.xd.zt.domain.business.BusinessScene;
-import com.xd.zt.domain.business.BusinessType;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.xd.zt.domain.business.*;
 import com.xd.zt.domain.business.flow.JsPlumbBlock;
-import com.xd.zt.repository.business.BusinessRepository;
+import com.xd.zt.repository.business.*;
 import com.xd.zt.service.business.BusinessModelService;
 import com.xd.zt.service.business.BusinessObjectService;
 import com.xd.zt.service.business.ModelCreateService;
@@ -22,6 +22,12 @@ import java.util.Map;
 @RequestMapping("/business")
 @Controller
 public class BusinessSceneController {
+    @Autowired
+    private ObjectRepository objectRepository;
+    @Autowired
+    private TypeRepository typeRepository;
+    @Autowired
+    private KnowledgeRepository knowledgeRepository;
 
     @Autowired
     private BusinessObjectService businessObjectService;
@@ -33,6 +39,13 @@ public class BusinessSceneController {
 
     @Autowired
     private ModelCreateService modelCreateService;
+
+    @Autowired
+    private BusinessObjectRepository businessObjectRepository;
+    @Autowired
+    private BusinessTypeRepository businessTypeRepository;
+    @Autowired
+    private BusinessKnowledgeRepository businessKnowledgeRepository;
     /*业务场景*/
 //    @RequestMapping("/scenebuild/{id}")
 //    public ModelAndView scenebuild(Model model, @PathVariable("id") Integer id){
@@ -219,5 +232,86 @@ public class BusinessSceneController {
         model.addAttribute("sceneid",sceneid);
         return new ModelAndView("scenebuild","modelModel",model);
     }*/
+
+
+
+ /*业务知识插入*/
+    @PostMapping(value = "/object")
+    @ResponseBody
+    public Map<String,Object> object(@RequestBody BusinessObject businessObject) {
+        businessObjectRepository.save(businessObject);
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        return map;
+       /* businessRepository.save(businessModel);
+        return businessModel;*/
+    }
+
+    /*数据类型插入*/
+    @PostMapping(value = "/dataType")
+    @ResponseBody
+    public Map<String,Object> dataType(@RequestBody BusinessType businessType) {
+        businessTypeRepository.save(businessType);
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        return map;
+    }
+
+
+    /*知识绑定插入*/
+    /*数据类型插入*/
+    @PostMapping(value = "/knowledge")
+    @ResponseBody
+    public Map<String,Object> knowledge(@RequestBody BusinessKnowledge businessKnowledge) {
+        businessKnowledgeRepository.save(businessKnowledge);
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        return map;
+    }
+
+/*删除*//*
+@PostMapping(value = "/objectDelete")
+@ResponseBody
+public String objectDelete(@RequestBody String json) {
+    //businessKnowledgeRepository.save(businessKnowledge);
+    JSONObject jsonObject = JSON.parseObject(json);
+    String objectid = jsonObject.getString("objectid");
+    objectRepository.deleteById(Integer.parseInt(objectid));
+    Map<String,Object> map=new HashMap<>();
+    map.put("code",1);
+    return map;
+}*/
+
+    //删除数据
+    @ResponseBody
+    @RequestMapping("/objectDelete")
+    public String objectDelete (@RequestBody String json){
+        JSONObject jsonObject = JSON.parseObject(json);
+        String id = jsonObject.getString("objectid");
+        Integer objectid = Integer.parseInt(id);
+        objectRepository.deleteById(objectid);
+        return id;
+    }
+
+    //删除数据
+    @ResponseBody
+    @RequestMapping("/typeDelete")
+    public String typeDelete (@RequestBody String json){
+        JSONObject jsonObject = JSON.parseObject(json);
+        String id = jsonObject.getString("dataid");
+        Integer dataid = Integer.parseInt(id);
+        typeRepository.deleteById(dataid);
+        return id;
+    }
+    //删除数据
+    @ResponseBody
+    @RequestMapping("/knowledgeDelete")
+    public String knowledgeDelete (@RequestBody String json){
+        JSONObject jsonObject = JSON.parseObject(json);
+        String id = jsonObject.getString("knowledgeid");
+        Integer knowledgeid = Integer.parseInt(id);
+        knowledgeRepository.deleteById(knowledgeid);
+        return id;
+    }
 
 }
