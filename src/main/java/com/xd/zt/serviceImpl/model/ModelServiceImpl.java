@@ -10,12 +10,17 @@ import java.util.List;
 
 @Service
 public class ModelServiceImpl implements ModelService {
-@Autowired
-private ModelMapper modelMapper;
+    @Autowired
+      private ModelMapper modelMapper;
 
     @Override
     public List<Programme> selectAllModel() {
         List<Programme> programmeList = modelMapper.selectAllModel();
         return programmeList;
+    }
+
+    @Override
+    public void insertProgram(Programme programme) {
+        modelMapper.insertProgram(programme);
     }
 }

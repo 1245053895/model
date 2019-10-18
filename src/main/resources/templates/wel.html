@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>数据格式转换与数据分组模块</title>
+    <link rel="stylesheet" th:href="@{/css/upFile.css}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+
+    <style>
+        .clearfix:after{content:"\20";display:block;height:0;clear:both;visibility:hidden}.clearfix{zoom:1}
+        .tabBar {border-bottom: 2px solid #222}
+        .tabBar span {background-color: #e8e8e8;cursor: pointer;display: inline-block;float: left;font-weight: bold;height: 30px;line-height: 30px;padding: 0 15px}
+        .tabBar span.current{background-color: #222;color: #fff}
+        .tabCon {display: none}
+    </style>
+
+    <style type="text/css">
+        body{margin:0;padding:7px 0 0;font-size:14px;font-family:Arial, Helvetica, sans-serif;position:relative;}
+        a{color:#0000cc;}
+        a:link{color:#0000cc}
+        img,ul,li,h3,form,table{margin:0;padding:0;border:0;list-style:none;}
+        #head{width:100%;border-bottom: 1px solid #ebebeb;}
+        .s_form:after,.s_tab:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+        .s_form{zoom:1;width:1000px;height:55px;margin:0 auto;}
+        .logo{float:left;margin:7px 0 0;}
+        .logo img{width:101px;}
+        .fm{clear:none;position:relative;float:left; margin:11px 0 0 10px;}
+        .s_ipt_wr{border:1px solid #b6b6b6;border-color:#7b7b7b #b6b6b6 #b6b6b6 #7b7b7b;background:#fff;display:inline-block;vertical-align:top;width:539px;height:32px;margin-right:0px;border-right-width:0px;border-color:#b8b8b8 transparent #cccccc #b8b8b8;overflow:hidden;}
+        .s_ipt_wr:hover,.s_ipt_wr.ipthover{border-color:#999 transparent #b3b3b3 #999;}
+        .s_ipt_wr.iptfocus{border-color:#4791ff transparent #4791ff #4791ff;}
+        .i{width:540px;height:34px;font:16px/18px arial;line-height:22px\9;padding:5px 10px 8px 7px;background:#fff;border:0;outline:none;-webkit-appearance:none}
+        .btn_wr{width:auto;height:auto;border-bottom:1px solid transparent;*border-bottom:none;display:inline-block;}
+        .btn{width:100px;height:34px;font-size:14px;color:white;letter-spacing:1px;background:#3385ff;border:none;padding:0;border-bottom:1px solid #2d78f4;outline:medium;*border-bottom:none;-webkit-appearance:none;-webkit-border-radius:0px;cursor:pointer;}
+        .btn_h{background:#317ef3;border-bottom:1px solid #2868c8;*border-bottom:none;box-shadow:1px 1px 1px #cccccc;}
+        #s_tab{background:#f8f8f8;width:100%;height:38px;padding:0;float:none;zoom:1;font:normal 13px/36px arial,"Sim Sun"}
+        #s_tab_wrap{width:1000px;margin:0 auto;}
+        #main{width:1000px;padding:0;margin:0 auto;}
+        .crumb{font-family:arial "Sim Sun";color:#666;}
+        .crumb a{text-decoration:none;color:#0000d0;}
+        .crumb a:hover{text-decoration:underline;}
+        input{padding-top:0;padding-bottom:0;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+        #u,#head,#tool,#search,#foot{font-size:13px}
+        .seth{margin-left:20px;display:none;}
+        .seth a{color:#00c}
+        #help{margin-left:20px;}
+        .short-line{margin:0 0 0 7px;color:#999999;}
+        #tb_mr{color:#00c;cursor:pointer;position:relative;z-index:298}
+        #tb_mr small{font-size:11px}
+        #tb_mr b{font-weight:normal;text-decoration:underline}
+        #more{width:58px;height:100px;border:1px solid #9A99FF;background:#fff;position:absolute;z-index:298;left:452px;top:45px;*top:46px;overflow:hidden;display:none;outline:none}
+        #more a{width:53px;height:25%;line-height:24px;display:block;padding:0 0 0 7px;color:#0001CF;text-decoration:none}
+        #more a span{font-family:"宋体"}
+        #more a:hover{background:#D9E1F6}
+        #more div{height:1px;overflow:hidden;background:#ccf;margin:0 3px}
+        #page{white-space:nowrap}
+        #page{word-spacing:4px}
+        #page .n{font-size:16px}
+        .tools{width:220px;position:absolute;top:10px;}
+        .tools a{text-decoration:none;}
+        .tools a:hover{text-decoration:underline;}
+        #mHolder{width:62px;position:relative;z-index:296;top:-18px;margin-left:9px;margin-right:-12px;display:none}
+        #mCon{height:18px;position:absolute;right:7px;top:3px;top:6px\9;cursor:pointer;padding:0 18px 0 0;line-height:18px;background-position:right -135px\9}
+        #mCon span{color:#00c;cursor:default;display:block}
+        #mCon .hw{text-decoration:underline;cursor:pointer}
+        #mMenu{width:56px;border:1px solid #9a99ff;position:absolute;right:7px;top:28px;display:none;background:#fff}
+        #mMenu a{width:100%;height:100%;color:#00c;display:block;line-height:22px;text-indent:6px;text-decoration:none}
+        #mMenu a:hover{background:#d9e1f6}
+        #mMenu .ln{height:1px;background:#ccf;overflow:hidden;margin:2px;font-size:1px;line-height:1px}
+
+        h3{font-size:14px;padding-bottom:10px;margin:30px 0 0 0;border-bottom:1px solid #ebebeb;font-family:arial,"Sim Sun";color:#333;width:1000px;}
+        h3 sup{font:normal 14px arial,"Sim Sun";color:#fff;padding-left:2px;vertical-align:top;background-color:#f43d39;margin-left:6px;}
+        h3.new{margin:30px 0 0 0;}
+        .l{float:left;}
+        .con{float:left;width:225px;margin:0 20px 0  0;_overflow:hidden;_height:66px;padding:15px 0 16px 10px;height:34px;border-bottom:1px solid #f3f3f3;}
+        .con_last{margin:0;}
+        .con a{margin-bottom:4px;display:inline-block;font-family:arial "MicroSoft YaHei";font-weight:bold;color:#014cd2;text-decoration:none;}
+        .con a:hover{text-decoration:underline;}
+        .con span{font-family:arial,"Sim Sun";font-size:12px;color:#666;}
+
+        .abg{width:24px;height:24px;display:block;float:left;margin-right:8px;overflow:hidden;background:url(../img/data.png) no-repeat left -2244px;}
+
+        .con .xiaodu{background:url(../img/data.png) no-repeat;background-size: 24px 24px;}
+        .con .anquan{background:url(../img/data.png) no-repeat;background-size: 24px 24px;}
+        .con .baifubao{background:url(../img/data.png) no-repeat;background-size: 24px 24px;}
+        .con .finance{background:url(../img/data.png) no-repeat;background-size: 24px 24px;}
+        .con .ydapp{background:url(../img/data.png) no-repeat;background-size: 24px 24px;}
+        .con .fanyiapp{background:url(../img/data.png) no-repeat;background-size: 24px 24px;}
+        .yueduqi{background-position:left -2244px;}
+        .yidongyingyong{background-position:left top;}
+        .jdo{background-position:left -2142px;}
+        .yi{background-position:left -1802px;}
+        .car{background-position:left -1734px;}
+        .web{background-position:left -1700px;}
+        .video{background-position:left -1292px;}
+        .mp3{background-position:left -1020px;}
+        /*这里可以加图片*/
+        .map{background:url(/image/data1.png) no-repeat;}
+        .news{background-position:left -1088px;}
+        .image{background-position:left -714px;}
+        .dict{background-position:left -476px;}
+        .u_tool{background-position:left -884px;}
+        .tuan{background-position:left -1564px;}
+        .hao123{background-position:left -612px;}
+        .site_nav{background-position:left -1360px;}
+        .lvyou{background-position:left -2108px;}
+        .zhidao{background-position:left -2040px;}
+        .baike{background-position:left -238px;}
+        .tieba{background-position:left -1156px;}
+        .xinzhi{background-position:left -2210px;}
+        .hi{background-position:left -646px;}
+        .wenku{background-position:left -1666px;}
+        .zhangmen{background-position:left -1054px;}
+        .shenbian{background-position:left -1258px;}
+        .jingyan{background-position:left -816px;}
+        .cang{background-position:left -340px;}
+        .youxi{background-position:left -1904px;}
+        .ting{background-position:left -1462px;}
+        .youxizixun{background-position:left -1938px;}
+        .search_mobile{background-position:left -1836px;}
+        .baidu_mobile{background-position:left -1836px;}
+        .kuaisou{background-position:left -136px;}
+        .map_mobile{background-position:left -986px;}
+        .open{background-position:left -1122px;}
+        .zhanzhang{background-position:left -2006px;}
+        .tongji{background-position:left -1496px;}
+        .lianmeng{background-position:left -1632px;}
+        .tuiguang{background-position:left -1598px;}
+        .guanjia{background-position:left -578px;}
+        .data{background-position:left -442px;}
+        .fengyunbang{background-position:left -1530px;}
+        .zhishu{background-position:left -748px;}
+        .yingyong{background-position:left -68px;}
+
+        .hi{background-position:left -680px;}
+        .tool{background-position:left -306px;}
+        .ime{background-position:left -1428px;}
+        .qian{background-position:left -1190px;}
+        .liubanlv{background-position:left -272px;}
+        .fanyi{background-position:left -102px;}
+        .xunren{background-position:left -1768px;}
+        .gongyi{background-position:left -544px;}
+        .jijinhui{background-position:left -374px;}
+        .mangdao{background-position:left -408px;}
+        .laonian{background-position:left -34px;}
+        .zhuanli{background-position:left -2074px;}
+        .qiyi{background-position:left -1224px;}
+        .youa{background-position:left -1870px;}
+        .leju{background-position:left -850px;}
+        .tiankong{background-position:left -1394px;}
+        .skygame{background-position:left -2278px;}
+        .developer{background-position:left -2312px;}
+        .mobileexplore{background-position:left -2346px;}
+        .yuedu{background-position:left -2380px;}
+        .leju{background-position:left -2414px;}
+        .mobilesearch{background-position:left -2448px;}
+        .zhangshangbaidu{background-position:left -2482px;}
+        .mobile-tongxunlu{background-position:left -2516px;}
+        .liulanqi{background-position:left -2550px;}
+        .fenxiang{background-position:left -2584px;}
+        .yunzhineng{background-position:left -2618px;}
+        .ydtongji{background-position:left -2652px;}
+        .kaifazhe{background-position:left -2720px;}
+        .baiduxiangche{background-position:left -2754px;}
+        .wangpan{background-position:left -2788px;}
+        .xiaoyuan{background-position:left -2822px;}
+        .ting2{background-position:left -2890px;}
+
+        /**/
+        .attr_881{background-position:left -9496px;}
+        .attr_879{background-position:left -9428px;}
+        .attr_878{background-position:left -9394px;}
+        .attr_877{background-position:left -9360px;}
+        .attr_876{background-position:left -9326px;}
+        .attr_875{background-position:left -9292px;}
+        .attr_873{background-position:left -9164px;}
+        .attr_872{background-position:left -9198px;}
+        .attr_871{background-position:left -8994px;}
+        .attr_870{background-position:left -8960px;}
+        .attr_869{background-position:left -8892px;}
+        .attr_868{background-position:left -8858px;}
+        .attr_860{background-position:left -8246px;}
+        .attr_859{background-position:left -8172px;}
+        .attr_858{background-position:left -8036px;}
+        .attr_857{background-position:left -9028px;}
+        .attr_855{background-position:left -7900px;}
+        .attr_854{background-position:left -9062px;}
+        .attr_851{background-position:left -7594px;}
+        .attr_850{background-position:left -7560px;}
+        .attr_849{background-position:left -7492px;}
+        .attr_848{background-position:left -7424px;}
+        .attr_845{background-position:left -7220px;}
+        .attr_843{background-position:left -6574px;}
+        .attr_842{background-position:left -6540px;}
+        .attr_841{background-position:left -6506px;}
+        .attr_840{background-position:left -6472px;}
+        .attr_839{background-position:left -6438px;}
+        .attr_838{background-position:left -6404px;}
+        .attr_835{background-position:left -6316px;}
+        .attr_833{background-position:left -6248px;}
+        .attr_831{background-position:left -6180px;}
+        .attr_827{background-position:left -6044px;}
+        .attr_824{background-position:left -5908px;}
+        .attr_823{background-position:left -7526px;}
+        .attr_821{background-position:left -5806px;}
+        .attr_819{background-position:left -5738px;}
+        .attr_816{background-position:left -5704px;}
+        .attr_813{background-position:left -5500px;}
+        .attr_809{background-position:left -5942px;}
+        .attr_806{background-position:left -5263px;}
+        .attr_805{background-position:left -7186px;}
+        .attr_804{background-position:left -5195px;}
+        .attr_803{background-position:left -5127px;}
+        .attr_802{background-position:left -8104px;}
+        .attr_800{background-position:left -8070px;}
+        .attr_796{background: url('../img/data.png') no-repeat center;}
+        .attr_795{background-position:left -4777px;}
+        .attr_794{background-position:left -4743px;}
+        .attr_793{background-position:left -4709px;}
+        .attr_792{background-position:left -4675px;}
+        .attr_791{background-position:left -4811px;}
+        .attr_790{background-position:left -4505px;}
+        .attr_789{background-position:left -5093px;}
+        .attr_787{background-position:left -4301px;}
+        .attr_786{background: url('../img/data.png') no-repeat center;}
+        .attr_784{background: url('../img/data.png') no-repeat center;}
+        .attr_783{background-position:left -4132px;}
+        .attr_782{background-position:left -4098px;}
+        .attr_775{background-position:left -3792px;}
+        .attr_771{background-position:left -3452px;}
+        .attr_767{background-position:left -3316px;}
+        .attr_766{background-position:left -3282px;}
+        .attr_720{background-position:left -6880px;}
+        .attr_701{background-position:left -3928px;}
+        .ydtongji{background-position:left -2652px;}
+        .kaifazhe{background-position:left -8280px;}
+        .lvyou{background-position:left -6778px;}
+        .zhishu{background-position:left -748px;}
+        .yuedu{background-position:left -7084px;}
+        .fengyunbang{background-position:left -1530px;}
+        .jingyan{background-position:left -6744px;}
+        .ime{background-position:left -7322px;}
+        .guanjia{background-position:left -578px;}
+        .image{background-position:left -6948px;}
+        .tuiguang{background-position:left -1598px;}
+        .mobileexplore{background-position:left -2346px;}
+        .news{background-position:left -6914px;}
+        .zhidao{background-position:left -7118px;}
+        .lianmeng{background-position:left -1632px;}
+        .tieba{background-position:left -6982px;}
+        .gongyi{background-position:left -544px;}
+        .tongji{background-position:left -1496px;}
+        .ime_mobile {background: url(../img/data.png);}
+        .mp3{background-position:left -1020px;}
+        .baike{background-position:left -9975px;}
+        .wangpan{background-position:left -2788px;}
+        .zhanzhang{background-position:left -2006px;}
+        .yingyong{background-position:left -68px;}
+        .video{background-position:left -7016px;}
+        .site_nav{background-position:left -6846px;}
+        .liulanqi{background-position:left -4539px;}
+        .fanyi{background-position:left -102px;}
+        .open{background-position:left -1122px;}
+        .youxi{background-position:left -1904px;}
+        .web{background-position:left -1700px;}
+        .hao123{background-position:left -4437px;}
+        .wenku{background-position:left -7050px;}
+        /*.liulanqi{background-position:left -9530px;}*/
+        .ime{background-position:left -9564px;}
+        .baijiahao{background-position:left -9598px;}
+        .con .haokan{background:url(../img/data.png) no-repeat;}
+        .con .quanmin{background:url(../img/data.png) no-repeat;}
+        .wangpan{background-position:left -9701px;}
+        .attr_851{background-position:left -9667px;}
+        .translate{background-position:left -9735px;}
+        .ai{background-position:left -9770px;}
+        .quzheng{background-position:left -9805px;}
+        .lvshi{background-position:left -9840px;}
+        .lingxi{background-position:left -9874px;}
+        .jiaoyu{background-position:left -10045px;}
+        .bit{background-position:left -9941px;}
+        .yingxiao_center{background-position:left -10009px;}
+        .trust{background-position:left -10080px;}
+        .baipin{background-position:left -10149px;}
+        .baiji{background-position:left -10182px;}
+        .bear{background-position:left -10250px;}
+
+        .cl{clear:both;height:0px;line-height:0px;font-size:0px;overflow:hidden;}
+        .footer{height:42px;line-height:42px;border-top:1px solid #ebebeb;background-color:#f8f8f8;text-align:center;color:#666;font-size:12px;margin-top:40px;width:100%;}
+        .footer a{color:#666;}
+
+        .con .fengyunbang{background-position:0px 0px}
+        .con .nuomi{background-position:0px -25px}
+        .con .image{background-position:0px -50px}
+        .con .qqyy{background-position:0px -75px}
+        .con .tuiguang{background-position:0px -100px}
+        .con .wenku{background-position:0px -125px}
+        .con .zhidao{background-position:0px -150px}
+        .con .fengyunbang,.con .nuomi,.con .image,.con .qqyy,.con .tuiguang,.con .wenku,.con .zhidao{background-image: url(../image/data1.png);background-size: 24px;}
+    </style>
+
+    <style type="text/css">
+        @media (max-width:1024px) {
+            body {position:relative;}
+            h3 {width: 100%;}
+            h3, h3.new {margin-top:15px;}
+            #head { padding-bottom: 7px; margin: 0 10px; width: auto; border-bottom:0;}
+            #help {padding:13px; margin:0; display: block;}
+            #main {margin: 0 10px; width: auto;}
+            #foot { width: auto}
+            .i {width: 100%; height: 38px;}
+            .s_form {width: 100%; height: auto; position: relative;}
+            .fm{ margin: 0 42px 0 108px; float: none;}
+            .s_ipt_wr {margin-right: 90px; display: block; width: auto; height: auto; box-sizing: border-box;}
+            .btn_wr{position: absolute; right: 0; top:0;}
+            .btn {height: 40px; width: 90px;}
+            .logo {position: absolute; margin-top: 0px;}
+            .tools {width: auto; min-width: 30px; top: 0; right: -52px;}
+
+            #s_tab {border-top: 1px solid #ebebeb; padding: 0 10px; width: auto;}
+            #s_tab_wrap {width: 100%;}
+            .crumb a {line-height:40px; display: inline-block;}
+
+            .con {padding: 8px 0 15px; position: relative;}
+            .con_last {margin:0 20px 0 0;}
+            .con .abg {margin-bottom:0;}
+            .con .secr {margin-bottom:0;}
+            .con .aipage {margin-bottom:0;}
+            div[id^="sd"] {top: 39px!important; z-index: 1;}
+            div[id^="sd"] td{line-height: 28px!important;}
+            .con div:last-child>a { margin: 2px 0 0; padding:0;position: absolute; padding: 0 0 15px 30px; display: block; width: 80%;     text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+            .con span { height: 15px; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; width: 100%;}
+
+        }
+        @media (max-width:740px) {
+            .con { margin: 0; width: 33.3%;}
+            .con span { height: 15px; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; width: 100%;}
+
+        }
+        @media (max-width:512px) {
+            .fm {padding: 30px 0 0 0; margin: 0;}
+            .btn_wr {top: 30px;}
+            .tools{ right: 0;}
+            div[id^="sd"] {top: 69px!important;}
+            #help {margin-top: -10px;}
+            .logo img {width: 70px;}
+            .con .abg {display: none;}
+            .con .secr {display: none;}
+            .con .aipage {display: none;}
+            .con { width: 50%; margin: 0;}
+            .con span { height: 15px; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; width: 100%; margin-top:4px;}
+            .con div:last-child>a { margin: 2px 0 0; padding:0;position: absolute; padding: 0 0 18px 0; display: block; width: 95%;}
+
+        }
+    </style>
+
+
+
+    <script>
+        jQuery.Huitab =function(tabBar,tabCon,class_name,tabEvent,i){
+            var $tab_menu=$(tabBar);
+            // 初始化操作
+            $tab_menu.removeClass(class_name);
+            $(tabBar).eq(i).addClass(class_name);
+            $(tabCon).hide();
+            $(tabCon).eq(i).show();
+
+            $tab_menu.bind(tabEvent,function(){
+                $tab_menu.removeClass(class_name);
+                $(this).addClass(class_name);
+                var index=$tab_menu.index(this);
+                $(tabCon).hide();
+                $(tabCon).eq(index).show()})}
+    </script>
+    <script>
+        $(function(){
+            $.Huitab("#tab_demo .tabBar span","#tab_demo .tabCon","current","click","1")});
+    </script>
+</head>
+<body>
+<div id="tab_demo" class="HuiTab">
+    <div class="tabBar clearfix"><span>行业专用</span><span>行业通用</span><span>人工智能</span></div>
+    <div class="tabCon">
+        <tr th:each="algorithmList1:${algorithmList1}">
+        <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><a href="#" target="_blank"><td th:text="${algorithmList1.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+        </tr>
+    </div>
+    <div class="tabCon">
+        <tr th:each="algorithmList2:${algorithmList2}">
+            <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><a href="#" target="_blank"><td th:text="${algorithmList2.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+        </tr>
+    </div>
+    <div class="tabCon">
+        <tr th:each="algorithmList3:${algorithmList3}">
+            <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><a href="#" target="_blank"><td th:text="${algorithmList3.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+        </tr>
+    </div>
+</div>
+</body>
+</html>
