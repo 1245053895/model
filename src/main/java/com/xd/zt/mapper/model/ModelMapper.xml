@@ -10,4 +10,15 @@
     <insert id="insertProgram" parameterType="Programme" useGeneratedKeys="true" keyProperty="id">
        insert into programme values (null,#{programmename},null,#{programmedescribe},null,#{programmetime},#{username});
     </insert>
+    <!--根据工程id查询三大建模-->
+    <select id="selectBusinessModelByProgramme" resultType="BusinessModel">
+        SELECT * from business_model WHERE business_model.programmeid = #{programmeid}
+    </select>
+    <select id="selectDataModelByProgramme" resultType="DataModelName">
+        SELECT * from datamodel_name WHERE datamodel_name.programmeid = #{programmeid}
+    </select>
+    <select id="selectAnalyseModelByProgramme" resultType="AnalyseModel">
+        SELECT * from analyse_model WHERE analyse_model.programmeid = #{programmeid}
+    </select>
+
 </mapper>

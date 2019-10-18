@@ -5,6 +5,15 @@ public class AnalyseModel {
     private String name;
     private Integer questionid;
     private String questioname;
+    private Integer programmeid;
+
+    public Integer getProgrammeid() {
+        return programmeid;
+    }
+
+    public void setProgrammeid(Integer programmeid) {
+        this.programmeid = programmeid;
+    }
 
     public String getName() {
         return name;

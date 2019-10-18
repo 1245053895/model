@@ -26,7 +26,10 @@ public class HomeController {
         modelService.insertProgram(programme);
         return "home";
     }
-
+    @RequestMapping("/returnhome")
+    public String returnhome(){
+        return "home";
+    }
     @GetMapping("/ZT")
     public String zt(){
         return "ZT";

@@ -20,7 +20,22 @@
             <a href="javascript:location.replace('/model/modelList');"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>
         </div>
         <div class="panel-body">
+            <div class="panel panel-default" style="width: 25%;height: 70vh;float: left;margin-top: 3%;margin-left: 5%">
+                <div class="panel-header" style="text-align: center">业务模型</div>
 
+                <a th:each="businessModelList:${businessModelList}" th:href="@{'/business/businessview/'+${businessModelList.businessid}}"><input style="display:block; margin: 20vh auto;"  class="btn btn-success radius" type="button"  th:value="${businessModelList.businessname}" th:id="${businessModelList.businessid}"  /></a>
+
+            </div>
+            <div style="height: 0vh;"><img src="/home/images/jian.png" style=" margin-left: 2%; margin-top: 37vh;"></div>
+            <div class="panel panel-default" style="width: 25%;height: 70vh;float: left;margin-top: 3%;margin-left: 7%">
+                <div class="panel-header" style="text-align: center">数据模型</div>
+                <a th:each="datamodelNameList:${datamodelNameList}" th:href="@{'/data/modelReview/'+${datamodelNameList.modelid}}"><input style="display:block; margin: 20vh auto;" class="btn btn-success radius" type="button"   th:value="${datamodelNameList.modelname}" th:id="${datamodelNameList.modelid}" /></a>
+            </div>
+            <div style="height: 0vh;"><img src="/home/images/jian.png" style=" margin-left: 2%; margin-top: 37vh;"></div>
+            <div class="panel panel-default" style="width: 25%;height: 70vh;float: left;margin-top: 3%;margin-left: 7%">
+                <div class="panel-header" style="text-align: center">分析模型</div>
+                <a th:each="analyseModelList:${analyseModelList}" th:href="@{'/analyse/analyseReview/'+ ${analyseModelList.modelid}}"><input style="display:block; margin: 20vh auto;" class="btn btn-success radius" type="button"   th:value="${analyseModelList.name}" th:id="${analyseModelList.modelid}" /></a>
+            </div>
 
         </div>
     </div>

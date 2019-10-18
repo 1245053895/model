@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.data.DatamodelBao;
 import com.xd.zt.domain.data.DatamodelBlock;
 import com.xd.zt.domain.data.DatamodelInfo;
+import com.xd.zt.domain.data.DatamodelSource;
 import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.FileService;
 import com.xd.zt.service.data.SourceService;
@@ -173,7 +174,37 @@ public class DataBaoController {
         return "data/dataReview";
     }
 
-
+    @GetMapping("/fileReview/{sourceid}")
+    public String fileReview(@PathVariable("sourceid") Integer sourceid, Map<String, Object> map) {
+        DatamodelSource datamodelSource = sourceService.selectSourceById(sourceid);
+        /*  DatamodelInfo datamodelInfo= blockRepository.findById(dataresultid).orElse(null);*/
+        String fileName = datamodelSource.getSourcename();
+        String filePath = datamodelSource.getSourcepath();
+        /* String fileTime = datamodelSource.getSourcetime();*/
+        File file=new File(filePath);
+        String name=file.getName();
+        String type=  name.substring(name.lastIndexOf("."));
+        type= type.replace(".","");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        /* System.out.println(df.format(new Date()));*/// new Date()为获取当前系统时间
+        String fileTime = df.format(new Date());
+        map.put("fileName", fileName);
+        map.put("filePath", filePath);
+        map.put("fileTime", fileTime);
+        /*        String fileType = fileName.split("\\.")[1];*/
+      /*  String fileType = fileName.split("/.")[1];
+        map.put("fileType", fileType);*/
+        map.put("fileType", type);
+        //System.out.println(fileName + "-----" + fileType + "-----" + filePath);
+        //确认要读取的是csv文件
+        if (type.equals("csv")) {
+            List<String> result = fileService.readCsvFile(filePath);
+            map.put("result", result);
+            //System.out.println(result.toString());
+        }
+        //不管是不是csv格式，都返回页面，如果不是在前端页面再处理
+        return "data/dataReview";
+    }
 
 
     /*数据包回显，datamodel_info表 */

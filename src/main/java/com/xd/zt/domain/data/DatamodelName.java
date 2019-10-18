@@ -10,6 +10,15 @@ public class DatamodelName {
     private String modeltime;
 
     private Integer questionid;
+    private Integer programmeid;
+
+    public Integer getProgrammeid() {
+        return programmeid;
+    }
+
+    public void setProgrammeid(Integer programmeid) {
+        this.programmeid = programmeid;
+    }
 
     public String getModeltime() {
         return modeltime;

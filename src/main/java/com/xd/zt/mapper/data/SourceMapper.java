@@ -61,6 +61,7 @@ public interface SourceMapper {
      public List<DatamodelSource> getSourcesByStatusAndMoelId(@Param("modeid") Integer modeid);
      public DatamodelArea areaByAreaId(@Param("areaid") Integer areaid);
 
+     DatamodelSource selectSourceById(@Param("sourceid") Integer sourceid);
 
 
 

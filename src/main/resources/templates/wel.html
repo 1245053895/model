@@ -391,17 +391,17 @@
     <div class="tabBar clearfix"><span>行业专用</span><span>行业通用</span><span>人工智能</span></div>
     <div class="tabCon">
         <tr th:each="algorithmList1:${algorithmList1}">
-        <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><a href="#" target="_blank"><td th:text="${algorithmList1.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+        <div class="con"><div><a  class="abg map" target="_blank"></a></div><div><a th:href="@{/algorithm/algorithmView/1}" target="_blank"><td th:text="${algorithmList1.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
         </tr>
     </div>
     <div class="tabCon">
         <tr th:each="algorithmList2:${algorithmList2}">
-            <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><a href="#" target="_blank"><td th:text="${algorithmList2.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+            <div class="con"><div><a  class="abg map" target="_blank"></a></div><div><a  th:href="@{/algorithm/algorithmView/11}"target="_blank"><td th:text="${algorithmList2.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
         </tr>
     </div>
     <div class="tabCon">
         <tr th:each="algorithmList3:${algorithmList3}">
-            <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><a href="#" target="_blank"><td th:text="${algorithmList3.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+            <div class="con"><div><a  class="abg map" target="_blank"></a></div><div><a th:href="@{/algorithm/algorithmView/1}" target="_blank"><td th:text="${algorithmList3.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
         </tr>
     </div>
 </div>

@@ -154,5 +154,8 @@
           SELECT datamodel_area.*,datamodel_info.* FROM datamodel_area,datamodel_info WHERE areaid=#{areaid} AND dataarea=areaid and linkid = datalink
     </select>
 
+    <select id="selectSourceById" resultType="datamodelSource" parameterType="Integer">
+        SELECT * FROM datamodel_source WHERE sourceid=#{sourceid}
+    </select>
 
 </mapper>

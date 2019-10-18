@@ -210,4 +210,10 @@ public class SourceServiceImpl implements SourceService {
       DatamodelArea datamodelArea=  sourceMapper.areaByAreaId(areaid);
         return datamodelArea;
     }
+
+    @Override
+    public DatamodelSource selectSourceById(Integer sourceid) {
+        DatamodelSource datamodelSource = sourceMapper.selectSourceById(sourceid);
+        return datamodelSource;
+    }
 }

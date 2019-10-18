@@ -19,6 +19,15 @@ public class BusinessModel {
     private String businessscene;
     private String businessobject;
     private Integer processid;
+    private Integer programmeid;
+
+    public Integer getProgrammeid() {
+        return programmeid;
+    }
+
+    public void setProgrammeid(Integer programmeid) {
+        this.programmeid = programmeid;
+    }
 
     public Integer getProcessid() {
         return processid;

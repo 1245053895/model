@@ -114,7 +114,6 @@ public class AnalyseModelController {
                     arr3.add(algorithm);
                 }
             }
-
         }
         model.addAttribute("algorithmList1",arr1);
         model.addAttribute("algorithmList2",arr2);

@@ -1,5 +1,8 @@
 package com.xd.zt.controller.model;
 
+import com.xd.zt.domain.analyse.AnalyseModel;
+import com.xd.zt.domain.business.BusinessModel;
+import com.xd.zt.domain.data.DatamodelName;
 import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.model.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +38,12 @@ public class ModelController {
 
     @RequestMapping("/modelView/{programmeid}")
     public ModelAndView modelView(Model model, @PathVariable("programmeid") Integer programmeid){
-
-
+        List<BusinessModel> businessModelList = modelService.selectBusinessModelByProgramme(programmeid);
+        List<DatamodelName> datamodelNameList = modelService.selectDataModelByProgramme(programmeid);
+        List<AnalyseModel> analyseModelList = modelService.selectAnalyseModelByProgramme(programmeid);
+        model.addAttribute("businessModelList",businessModelList);
+        model.addAttribute("datamodelNameList",datamodelNameList);
+        model.addAttribute("analyseModelList",analyseModelList);
         return new ModelAndView("model/modelView","Modelmodel",model);
     }
 }
