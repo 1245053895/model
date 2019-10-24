@@ -39,4 +39,9 @@ public class HomeController {
         return "newProgramme";
     }
 
+    @GetMapping("/wel")
+    public String wel(){
+        return "wel";
+    }
+
 }

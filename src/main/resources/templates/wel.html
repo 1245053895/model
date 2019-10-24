@@ -104,7 +104,7 @@
         .video{background-position:left -1292px;}
         .mp3{background-position:left -1020px;}
         /*这里可以加图片*/
-        .map{background:url(/image/data1.png) no-repeat;}
+        /*.map{background:url(/image/data1.png) no-repeat;}*/
         .news{background-position:left -1088px;}
         .image{background-position:left -714px;}
         .dict{background-position:left -476px;}
@@ -129,7 +129,7 @@
         .search_mobile{background-position:left -1836px;}
         .baidu_mobile{background-position:left -1836px;}
         .kuaisou{background-position:left -136px;}
-        .map_mobile{background-position:left -986px;}
+        /*.map_mobile{background-position:left -986px;}*/
         .open{background-position:left -1122px;}
         .zhanzhang{background-position:left -2006px;}
         .tongji{background-position:left -1496px;}
@@ -391,17 +391,17 @@
     <div class="tabBar clearfix"><span>行业专用</span><span>行业通用</span><span>人工智能</span></div>
     <div class="tabCon">
         <tr th:each="algorithmList1:${algorithmList1}">
-        <div class="con"><div><a  class="abg map" target="_blank"></a></div><div><a th:href="@{/algorithm/algorithmView/1}" target="_blank"><td th:text="${algorithmList1.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+        <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div> <img th:src="@{/image/data1.png}"><a href="#" target="_blank" style="margin-top: -11%;margin-left: 20%;"><td th:text="${algorithmList1.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
         </tr>
     </div>
     <div class="tabCon">
         <tr th:each="algorithmList2:${algorithmList2}">
-            <div class="con"><div><a  class="abg map" target="_blank"></a></div><div><a  th:href="@{/algorithm/algorithmView/11}"target="_blank"><td th:text="${algorithmList2.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+            <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><img th:src="@{/image/data1.png}"><a href="#" target="_blank" style="margin-top: -11%;margin-left: 20%;"><td th:text="${algorithmList2.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
         </tr>
     </div>
     <div class="tabCon">
         <tr th:each="algorithmList3:${algorithmList3}">
-            <div class="con"><div><a  class="abg map" target="_blank"></a></div><div><a th:href="@{/algorithm/algorithmView/1}" target="_blank"><td th:text="${algorithmList3.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
+            <div class="con"><div><a href="#" class="abg map" target="_blank"></a></div><div><img th:src="@{/image/data1.png}"><a href="#" target="_blank" style="margin-top: -11%;margin-left: 20%;"><td th:text="${algorithmList3.algorithmname}"></td></a><br /><span>算法简介</span></div></div>
         </tr>
     </div>
 </div>
