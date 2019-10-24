@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.ApiMapper">
+    <select id="findInstanceByProgrammeId" parameterType="Integer" resultType="AnalyseInstance">
+        select analyse_instance.modelinstanceid,analyse_instance.modelinstancename,analyse_instance.parameters from analyse_instance,analyse_model_process,analyse_model where analyse_instance.modelid = analyse_model_process.modelid
+        and analyse_model_process.analysemodelid = analyse_model.modelid
+        and analyse_model.programmeid = #{programmeid}
+    </select>
+
+    <select id="selectInstanceById" parameterType="Integer" resultType="AnalyseInstance">
+        select * from analyse_instance where modelinstanceid = #{modelinstanceid}
+    </select>
+</mapper>

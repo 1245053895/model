@@ -62,7 +62,7 @@
                                 <a  >
                                     <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="发布"  >
                                 </a>
-                                <a  >
+                                <a  th:href="@{'/model/modelView/'+${programmeList.programmeid}}">
                                     <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="编辑"  >
                                 </a>
                                 <a   >
@@ -102,16 +102,16 @@
                 var value = this.value;
                 if (value == "删除") {
                     if (confirm("确定要删除此问题？")) {
-                        var algorithmmodelid = {
-                            "algorithmmodelid": id
+                        var programmeid = {
+                            "programmeid": id
                         };
                         $.ajax({
                             async: false,
                             type: "post",
                             dataType: "json",
                             contentType: 'application/json;charset=UTF-8',
-                            data: JSON.stringify(algorithmmodelid),
-                            url: '/deleteAlgorithmModel',
+                            data: JSON.stringify(programmeid),
+                            url: '/model/deleteModel',
                             success: function () {
                                 $.Huimodalalert('删除成功', 1000);
                                 location.reload(true);

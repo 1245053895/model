@@ -21,4 +21,7 @@
         SELECT * from analyse_model WHERE analyse_model.programmeid = #{programmeid}
     </select>
 
+    <delete id="deleteModel" parameterType="Integer">
+        delete from programme where programmeid = #{programmeid}
+    </delete>
 </mapper>

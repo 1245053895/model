@@ -28,6 +28,11 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public void deleteModel(Integer programmeid) {
+        modelMapper.deleteModel(programmeid);
+    }
+
+    @Override
     public List<BusinessModel> selectBusinessModelByProgramme(Integer programmeid) {
         List<BusinessModel> businessModelList= modelMapper.selectBusinessModelByProgramme(programmeid);
         return businessModelList;

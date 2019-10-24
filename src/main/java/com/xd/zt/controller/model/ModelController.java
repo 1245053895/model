@@ -1,5 +1,6 @@
 package com.xd.zt.controller.model;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.AnalyseModel;
 import com.xd.zt.domain.business.BusinessModel;
 import com.xd.zt.domain.data.DatamodelName;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -45,5 +48,14 @@ public class ModelController {
         model.addAttribute("datamodelNameList",datamodelNameList);
         model.addAttribute("analyseModelList",analyseModelList);
         return new ModelAndView("model/modelView","Modelmodel",model);
+    }
+
+    @ResponseBody
+    @RequestMapping("/deleteModel")
+    public String deleteModel(@RequestBody JSONObject jsonObject){
+        Integer programmeid = jsonObject.getInteger("programmeid");
+        modelService.deleteModel(programmeid);
+
+        return programmeid.toString();
     }
 }

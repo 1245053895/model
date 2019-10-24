@@ -21,8 +21,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin"/>
     <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}"/>
 
-    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>-->
     <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
     <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
     <!--[if IE 6]>
@@ -68,9 +68,7 @@
             </a></dt>
         </dl>
         <dl id="menu" th:each="questionList:${questionList}">
-            <dt th:id="${questionList.modelid}"><i class="Hui-iconfont">&#xe620;</i><font color="white"
-                                                                                          th:text="${questionList.name}"> </font><i
-                    class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt th:id="${questionList.modelid}"><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${questionList.name}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a th:id="'/analyse/analyseProcessBuild/'+ ${questionList.modelid}" data-href="analyseProcess"

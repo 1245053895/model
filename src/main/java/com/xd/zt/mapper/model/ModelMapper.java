@@ -18,4 +18,6 @@ public interface ModelMapper {
     List<BusinessModel> selectBusinessModelByProgramme(@Param("programmeid") Integer programmeid);
     List<DatamodelName> selectDataModelByProgramme(@Param("programmeid") Integer programmeid);
     List<AnalyseModel> selectAnalyseModelByProgramme(@Param("programmeid") Integer programmeid);
+
+    void deleteModel(@Param("programmeid")Integer programmeid);
 }
