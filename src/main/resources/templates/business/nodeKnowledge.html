@@ -52,15 +52,15 @@
 
 	<div class="panel panel-default" style="width: 99%;height: 66vh;float: left;margin-left: 0%;margin-top: 2%;">
 		<div class="panel-header">添加业务知识</div>
-		<button class="btn btn-primary radius" style="position: absolute; margin-top: -2.2%;right: 3%;" onclick="savaKnowledge()">保存</button>
+		<button class="btn btn-primary radius" style="position: absolute;margin-top: 28.3%;right: 8%;" onclick="savaKnowledge()">保存</button>
+		<button class="btn btn-primary radius" style="position: absolute; margin-top: -2.2%;right: 3%;" onclick="xinzeng()">新增</button>
 		<div class="panel-body" id="detail_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
 			<table class="table table-border table-bordered table-hover table-bg table-sort" style="margin-top: 1%">
 				<thead>
 				<tr class="text-c">
 					<th >业务知识</th>
 					<th >描述</th>
-			<!--		<th >属性</th>
-					<th >说明</th>-->
+					<th>操作</th>
 
 				</tr>
 				</thead>
@@ -71,21 +71,39 @@
 
 					<!--<td colspan="4">当前未添加模型</td>-->
 				<!--</tr>-->
-
+<!--style="cursor:pointer"-->
 				<tr class="text-c" th:each="businessKnowledges:${businessKnowledgeList}">
-					<td><label><input th:value="${businessKnowledges.getKnowledgeid()}" type="checkbox" name="knowledgename"  style="cursor:pointer" class="text-primary" th:text="${businessKnowledges.getKnowledgename()}" ></label></td>
+					<td><label><input th:value="${businessKnowledges.getKnowledgeid()}" type="checkbox" name="knowledgename"   class="text-primary" th:text="${businessKnowledges.getKnowledgename()}" ></label></td>
 					<td th:text="${businessKnowledges.getKnowledgedescribe()}"></td>
-				<!--	<td th:text="${sceneObject.getObjectattribute()}"></td>
-					<td th:text="${sceneObject.getObjectdescribe()}"></td>-->
-					<!--<td>-->
-						<!--跳转modelView  实现模型打开-->
-						<!--<a th:href="@{'/analyzView/'+ ${analyzAndParam.getId()}}"><input class="btn btn-primary size-MINI radius" type="button" value="打开"></a>-->
-						<!--&lt;!&ndash;跳转modelModify 实现模型修改&ndash;&gt;-->
-						<!--<a th:href="@{'/analyzModify/'+ ${analyzAndParam.getId()}}"><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>-->
-						<!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;-->
-						<!--<a th:href="@{'/analyzDelete/'+ ${analyzAndParam.getId()}}"><input class="btn btn-primary size-MINI radius" type="button" value="删除"></a>-->
-					<!--</td>-->
+					<td>
+						<input class="btn btn-primary size-MINI radius" type="button" value="删除" onclick="dknowledge(id)" th:id="${businessKnowledges.getKnowledgeid()}">
+					</td>
+					<script type="text/javascript">
+
+                        function dknowledge(id) {
+                            var id={
+                                "knowledgeid":id
+                            };
+                            $.ajax({
+                                url : "/business/knowledgeDelete",
+                                type : "POST",
+                                async : true,
+                                contentType: "application/json; charset=utf-8",
+                                data : JSON.stringify(id),
+                                dataType : 'json',
+                                success : function() {
+                                    $.Huimodalalert('删除成功',2000);
+                                },
+                                error : function() {
+                                    $.Huimodalalert('删除失败',2000);
+                                }
+                            });
+                            window.setTimeout("window.location.reload(true)",1000);
+                        }
+					</script>
 				</tr>
+
+
 				</tbody>
 			</table>
 		</div>
@@ -105,7 +123,48 @@
 	background-color:#5A98DE;color: white;border-color: #5A98DE">
 		完成
 	</button>
+	<script type="text/javascript">
+        function xinzeng() {
+            console.log("sdsd");
+            $("#dataAggreDivide").modal("show");
+        }
 
+
+
+        function knowledge() {
+            /* if(document.getElementById('saveName').value == ""){
+                 $.Huimodalalert('请输入保存名称',2000);
+             }*/
+            /*  else {*/
+            var data = {};//定义一个数组
+            data["knowledgename"] = document.getElementById('knowledgename').value;
+            data["knowledgedescribe"] = document.getElementById('knowledgedescribe').value;
+            var dataToJson = JSON.stringify(data);
+            console.log(dataToJson);
+            $.ajax({
+                async: false,
+                type : "post",
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                data:dataToJson,
+                url : '/business/knowledge',
+                traditional:true,
+                success : function(data) {
+                    if (data.code==1) {
+                        $.Huimodalalert('添加成功',1000);
+                    }
+                    //传输成功后延时500ms跳转到模型列表
+
+                    //这两种写法都可以
+                    /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+                }
+            });
+            window.setTimeout("window.location.reload(true)",2000);
+            /*}*/
+        }
+
+
+	</script>
 
 	<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<!-- 弹出对话框 -->
@@ -127,10 +186,38 @@
 	</div>
 
 
+	<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- 弹出对话框 -->
+		<div class="modal-dialog">
+			<div class="modal-content radius">
+				<div class="modal-header">
+					<h3 class="modal-title">添加业务知识</h3>
+					<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+				</div>
+				<div class="modal-body">
+					<strong style="margin-left: 5%">知&nbsp;&nbsp;&nbsp;&nbsp;识：</strong><input type="text" placeholder="请输入业务知识" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="knowledgename">
+				</div>
+				<div class="modal-body">
+					<strong style="margin-left: 5%">描&nbsp;&nbsp;&nbsp;&nbsp;述：</strong><input type="text" placeholder="请输入知识描述" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="knowledgedescribe">
+				</div>
+				<!--<div class="modal-body" style="margin-left: 3.5vh;">属&nbsp;&nbsp;&nbsp;&nbsp;性：</strong><input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+				</div>
+				<div class="modal-body">
+					<strong style="margin-left: 5%">说&nbsp;&nbsp;&nbsp;&nbsp;明：</strong><input type="text" placeholder="请输入对象说明" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+				</div>-->
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-dismiss="modal" onclick="knowledge();">确定</button>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 
 
 </div>
+
 
 
 
@@ -179,6 +266,11 @@
         }
 
     }
+
+    function jumpDialog1() {
+        $("#dataAggreDivide").modal("show");
+    }
+
 
 
     //跳出模型保存框

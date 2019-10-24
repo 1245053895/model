@@ -49,13 +49,15 @@
 
 	<div class="panel panel-default" style="width: 99%;height: 66vh;float: left;margin-left: 0%;margin-top: 2%;">
 		<div class="panel-header">添加业务数据</div>
-		<button class="btn btn-primary radius" style="position: absolute; margin-top: -2.2%;right: 3%;" onclick="savaValue()">保存</button>
+		<button class="btn btn-primary radius" style="position: absolute;margin-top: 28.3%;right: 8%;" onclick="savaValue()">保存</button>
+		<button class="btn btn-primary radius" style="position: absolute; margin-top: -2.2%;right: 3%;" onclick="xinzeng()">新增</button>
 		<div class="panel-body" id="detail_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
 			<table class="table table-border table-bordered table-hover table-bg table-sort" style="margin-top: 1%">
 				<thead>
 				<tr class="text-c">
 					<th >业务数据</th>
 					<th >类型</th>
+					<th>删除</th>
 				<!--	<th >属性</th>
 					<th >说明</th>-->
 
@@ -72,11 +74,34 @@
 				<tr class="text-c" th:each="businessTypes:${businessTypeList}">
 					<td><label><input th:value="${businessTypes.getDataid()}" type="checkbox" name="typedataname" th:text="${businessTypes.getDatatypename()}" style="cursor:pointer" class="text-primary" ></label></td>
 					<td th:text="${businessTypes.getTypea()}"></td>
+					<td>
+						<input class="btn btn-primary size-MINI radius" type="button" value="删除" onclick="dtype(id)" th:id="${businessTypes.getDataid()}">
+					</td>
 				</tr>
-
-
-
+				<script type="text/javascript">
+                    function dtype(id) {
+                        var id={
+                            "dataid":id
+                        };
+                        $.ajax({
+                            url : "/business/typeDelete",
+                            type : "POST",
+                            async : true,
+                            contentType: "application/json; charset=utf-8",
+                            data : JSON.stringify(id),
+                            dataType : 'json',
+                            success : function() {
+                                $.Huimodalalert('删除成功',2000);
+                            },
+                            error : function() {
+                                $.Huimodalalert('删除失败',2000);
+                            }
+                        });
+                        window.setTimeout("window.location.reload(true)",1000);
+                    }
+				</script>
 				</tbody>
+
 			</table>
 		</div>
 		<!--<div class="panel-body" style="float: left;width: 63.6%;height:80%;overflow-x:hidden;overflow-y:auto;border-left: 1px solid #ddd;">-->
@@ -91,7 +116,83 @@
 			下一步
 		</button>
 	</a>
+
+
+
+
+
+	<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- 弹出对话框 -->
+		<div class="modal-dialog">
+			<div class="modal-content radius">
+				<div class="modal-header">
+					<h3 class="modal-title">添加数据类型</h3>
+					<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+				</div>
+				<div class="modal-body">
+					<strong style="margin-left: 5%">数&nbsp;&nbsp;&nbsp;&nbsp;据：</strong><input type="text" placeholder="请输入数据类型" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="datatypename">
+				</div>
+				<div class="modal-body">
+					<strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;型：</strong><input type="text" placeholder="请输入数据类型" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="typea">
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-dismiss="modal" onclick="dataType();">确定</button>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
 </div>
+
+<script type="text/javascript">
+    function xinzeng() {
+        console.log("sdsd");
+        $("#dataAggreDivide").modal("show");
+    }
+
+
+
+    function dataType() {
+        /* if(document.getElementById('saveName').value == ""){
+             $.Huimodalalert('请输入保存名称',2000);
+         }*/
+        /*  else {*/
+        var data = {};//定义一个数组
+        data["datatypename"] = document.getElementById('datatypename').value;
+        data["typea"] = document.getElementById('typea').value;
+        var dataToJson = JSON.stringify(data);
+        console.log(dataToJson);
+        $.ajax({
+            async: false,
+            type : "post",
+            dataType: "json",
+            contentType : 'application/json;charset=UTF-8',
+            data:dataToJson,
+            url : '/business/dataType',
+            traditional:true,
+            success : function(data) {
+                if (data.code==1) {
+                    $.Huimodalalert('添加成功',1000);
+                }
+                //传输成功后延时500ms跳转到模型列表
+
+                //这两种写法都可以
+                /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+            }
+        });
+        window.setTimeout("window.location.reload(true)",2000);
+        /*}*/
+    }
+
+
+</script>
+
+
+
 
 
 <script type="text/javascript">
@@ -134,7 +235,12 @@
 
     }
 
-function dataNext() {
+    function jumpDialog() {
+        $("#dataAggreDivide").modal("show");
+    }
+
+
+    function dataNext() {
         var status=click;
     if (status==false){
         $.Huimodalalert('请先进行保存',1000);
