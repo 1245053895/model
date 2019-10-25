@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.*;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
+import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpClientGet;
 import com.xd.zt.util.analyse.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -220,17 +221,19 @@ public class AnalyseController {
 
     @ResponseBody
     @RequestMapping("/exampleRun")
-    public String exampleRun(@RequestBody JSONObject jsonObject) throws Exception{
+    public JSON exampleRun(@RequestBody JSONObject jsonObject) throws Exception{
         String modelinstanceid = jsonObject.get("exampleid").toString();
         String instantData = jsonObject.get("instantData").toString();
         String parameterss = analyseService.selectParams(modelinstanceid);
-
+        Boolean status = false;
+        if (instantData == "false"){status = false;}
+        else {status = true;}
         //生成json文件
         JSONArray parameters = JSONArray.parseArray(parameterss);
         JSONObject modelinstance = new JSONObject();
         modelinstance.put("username","name");
         modelinstance.put("modelInstanceId",modelinstanceid);
-        modelinstance.put("instantData",instantData);
+        modelinstance.put("instantData",status);
         modelinstance.put("analyzmodel",parameters);
 
         String jsonString= JSON.toJSONString(modelinstance);
@@ -239,14 +242,15 @@ public class AnalyseController {
 
         HttpUtil httpUtil = new HttpUtil();
         try {
-//             httpUtil.post("http://120.24.157.214:8000/tasks/",jsonString);
-            httpUtil.post("http://127.0.0.1:8000/tasks/",jsonString);
-        System.out.printf(jsonString);
+//              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
+            String result =  HttpCientPost.restPost("http://127.0.0.1:8000/tasks/",jsonString);
+            JSON resultjson = JSON.parseObject(result);
+            return resultjson;
         }catch (Exception e){
             System.out.println(e.getMessage());
+            return null;
         }
 
-        return modelinstanceid;
     }
 
 
