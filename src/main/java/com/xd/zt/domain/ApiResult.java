@@ -1,31 +1,31 @@
 package com.xd.zt.domain;
 
 public class ApiResult {
-    private Integer code;
-    private String messange;
-    private Object data;
+    private Integer resp_code;
+    private String resp_msg;
+    private Object datas;
 
-    public Integer getCode() {
-        return code;
+    public Integer getResp_code() {
+        return resp_code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setResp_code(Integer resp_code) {
+        this.resp_code = resp_code;
     }
 
-    public String getMessange() {
-        return messange;
+    public String getResp_msg() {
+        return resp_msg;
     }
 
-    public void setMessange(String messange) {
-        this.messange = messange;
+    public void setResp_msg(String resp_msg) {
+        this.resp_msg = resp_msg;
     }
 
-    public Object getData() {
-        return data;
+    public Object getDatas() {
+        return datas;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setDatas(Object datas) {
+        this.datas = datas;
     }
 }

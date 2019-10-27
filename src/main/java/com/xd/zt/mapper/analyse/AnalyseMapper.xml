@@ -61,4 +61,15 @@
     <select id="selectProcessid" parameterType="String" resultType="Integer">
         select processid FROM analyse_flowprocess WHERE  flowprocessid=#{flowprocessid}
     </select>
+
+
+    <select id="selectDataResult" parameterType="Integer" resultType="DatamodelInfo">
+        select datamodel_info.dataresultname,datamodel_info.dataresultid,datamodel_info.dataaddr
+        from datamodel_info,datamodel_name,analyse_model,analyse_model_process
+        where datamodel_info.databao is not null
+        and datamodel_info.modelid = datamodel_name.modelid
+        and datamodel_name.questionid = analyse_model.questionid
+        and analyse_model.modelid = analyse_model_process.analysemodelid
+        and analyse_model_process.modelid = 7
+    </select>
 </mapper>

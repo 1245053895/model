@@ -38,9 +38,9 @@ public class Api {
             programmeJsonArray.add(i,programmeJson);
         }
         ApiResult apiResult = new ApiResult();
-        apiResult.setData(programmeJsonArray);
-        apiResult.setCode(0);
-        apiResult.setMessange("返回成功");
+        apiResult.setDatas(programmeJsonArray);
+        apiResult.setResp_code(0);
+        apiResult.setResp_msg("返回成功");
         return apiResult;
 
     }
@@ -57,9 +57,9 @@ public class Api {
         programmeJsonArray.add(i,programmeJson);
         }
         ApiResult apiResult = new ApiResult();
-        apiResult.setData(programmeJsonArray);
-        apiResult.setCode(0);
-        apiResult.setMessange("返回成功");
+        apiResult.setDatas(programmeJsonArray);
+        apiResult.setResp_code(0);
+        apiResult.setResp_msg("返回成功");
         return apiResult;
 
     }
@@ -76,14 +76,14 @@ public class Api {
             instanceJson.put("instanceName",analyseInstanceList.get(i).getModelinstancename());
             instanceArray.add(i,instanceJson);
         }
-        apiResult.setData(instanceArray);
-        apiResult.setCode(0);
-        apiResult.setMessange("返回成功");
+        apiResult.setDatas(instanceArray);
+        apiResult.setResp_code(0);
+        apiResult.setResp_msg("返回成功");
     }
         catch (Exception e){
-        apiResult.setCode(1);
-        apiResult.setMessange("工程不存在");
-        apiResult.setData(null);
+        apiResult.setResp_code(1);
+        apiResult.setResp_msg("工程不存在");
+        apiResult.setDatas(null);
     }
         return apiResult;
     }
@@ -100,14 +100,14 @@ public class Api {
             modelinstance.put("instantData", false);
             modelinstance.put("analyzmodel", parameters);
 
-            apiResult.setData(modelinstance);
-            apiResult.setCode(0);
-            apiResult.setMessange("返回成功");
+            apiResult.setDatas(modelinstance);
+            apiResult.setResp_code(0);
+            apiResult.setResp_msg("返回成功");
         }
         catch (Exception e){
-            apiResult.setCode(1);
-            apiResult.setMessange("模型不存在");
-            apiResult.setData(null);
+            apiResult.setResp_code(1);
+            apiResult.setResp_msg("模型不存在");
+            apiResult.setDatas(null);
         }
         return apiResult;
     }
