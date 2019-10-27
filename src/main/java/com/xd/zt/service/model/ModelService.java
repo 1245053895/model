@@ -12,6 +12,7 @@ import java.util.List;
 @Controller
 public interface ModelService {
     List<Programme> selectAllModel();
+    List<Programme> selectAllModelByType(@Param("programmetype") String programmetype);
 
     //根据工程id查询三大建模
     List<BusinessModel> selectBusinessModelByProgramme(@Param("programmeid") Integer programmeid);
@@ -20,4 +21,6 @@ public interface ModelService {
     void insertProgram(Programme programme);
 
     void deleteModel(@Param("programmeid")Integer programmeid);
+    void saveProgramme(Programme programme);
+    Programme selectProgrammeById(@Param("programmeid")Integer programmeid);
 }

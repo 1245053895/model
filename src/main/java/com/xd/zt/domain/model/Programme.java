@@ -8,6 +8,15 @@ public class Programme {
     String programmelabel;
     String programmetime;
     String username;
+    String programmepath;
+
+    public String getProgrammepath() {
+        return programmepath;
+    }
+
+    public void setProgrammepath(String programmepath) {
+        this.programmepath = programmepath;
+    }
 
     public Integer getProgrammeid() {
         return programmeid;

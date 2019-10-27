@@ -7,8 +7,12 @@
         select * from programme
     </select>
 
+    <select id="selectAllModelByType" resultType="Programme" parameterType="String">
+        select * from programme where programmetype = #{programmetype}
+    </select>
+
     <insert id="insertProgram" parameterType="Programme" useGeneratedKeys="true" keyProperty="id">
-       insert into programme values (null,#{programmename},null,#{programmedescribe},null,#{programmetime},#{username});
+       insert into programme values (null,#{programmename},null,#{programmedescribe},null,#{programmetime},#{username},null);
     </insert>
     <!--根据工程id查询三大建模-->
     <select id="selectBusinessModelByProgramme" resultType="BusinessModel">
@@ -24,4 +28,11 @@
     <delete id="deleteModel" parameterType="Integer">
         delete from programme where programmeid = #{programmeid}
     </delete>
+
+    <insert id="saveProgramme" parameterType="Programme" useGeneratedKeys="true" keyProperty="id" >
+        insert into programme values (null,#{programmename},#{programmetype},#{programmedescribe},null,#{programmetime},#{username},#{programmepath})
+    </insert>
+    <select id="selectProgrammeById" parameterType="Integer" resultType="Programme">
+        select * from programme where programmeid = #{programmeid}
+    </select>
 </mapper>

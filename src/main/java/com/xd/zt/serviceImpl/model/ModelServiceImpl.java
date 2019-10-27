@@ -6,6 +6,7 @@ import com.xd.zt.domain.data.DatamodelName;
 import com.xd.zt.domain.model.Programme;
 import com.xd.zt.mapper.model.ModelMapper;
 import com.xd.zt.service.model.ModelService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,12 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public List<Programme> selectAllModelByType(@Param("programmetype") String programmetype) {
+        List<Programme> programmeList = modelMapper.selectAllModelByType(programmetype);
+        return programmeList;
+    }
+
+    @Override
     public void insertProgram(Programme programme) {
         modelMapper.insertProgram(programme);
     }
@@ -30,6 +37,17 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public void deleteModel(Integer programmeid) {
         modelMapper.deleteModel(programmeid);
+    }
+
+    @Override
+    public void saveProgramme(Programme programme) {
+        modelMapper.saveProgramme(programme);
+    }
+
+    @Override
+    public Programme selectProgrammeById(Integer programmeid) {
+        Programme programme = modelMapper.selectProgrammeById(programmeid);
+        return programme;
     }
 
     @Override

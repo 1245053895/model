@@ -12,6 +12,7 @@ import java.util.List;
 @Mapper
 public interface ModelMapper {
     List<Programme> selectAllModel();
+    List<Programme> selectAllModelByType(@Param("programmetype") String programmetype);
     void insertProgram(Programme programme);
 
     //根据工程id查询三大建模
@@ -20,4 +21,8 @@ public interface ModelMapper {
     List<AnalyseModel> selectAnalyseModelByProgramme(@Param("programmeid") Integer programmeid);
 
     void deleteModel(@Param("programmeid")Integer programmeid);
+
+    void saveProgramme(Programme programme);
+
+    Programme selectProgrammeById(@Param("programmeid")Integer programmeid);
 }

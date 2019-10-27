@@ -27,8 +27,27 @@ public class Api {
     private ApiService apiService;
 
     @RequestMapping(value = "/getAllProgramme", method = GET, produces = "application/json")
-    public ApiResult saveArticle() {
+    public ApiResult getAllProgramme() {
         List<Programme> programmeList = modelService.selectAllModel();
+        JSONArray programmeJsonArray = new JSONArray();
+        for (int i = 0 ; i < programmeList.size(); i++){
+            JSONObject programmeJson = new JSONObject();
+            programmeJson.put("programmeId",programmeList.get(i).getProgrammeid());
+            programmeJson.put("programmeName",programmeList.get(i).getProgrammename());
+            programmeJson.put("username",programmeList.get(i).getUsername());
+            programmeJsonArray.add(i,programmeJson);
+        }
+        ApiResult apiResult = new ApiResult();
+        apiResult.setData(programmeJsonArray);
+        apiResult.setCode(0);
+        apiResult.setMessange("返回成功");
+        return apiResult;
+
+    }
+
+    @RequestMapping(value = "/getAllProgramme/{programmetype}", method = GET, produces = "application/json")
+    public ApiResult getAllProgrammeByType(@PathVariable("programmetype")String programmetype) {
+        List<Programme> programmeList = modelService.selectAllModelByType(programmetype);
         JSONArray programmeJsonArray = new JSONArray();
         for (int i = 0 ; i < programmeList.size(); i++){
         JSONObject programmeJson = new JSONObject();
