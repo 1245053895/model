@@ -10,7 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/experiment")
 public class experimentController {
     @RequestMapping("/index")
-    public ModelAndView selectAnalyz(Model model) {
+    public ModelAndView experimentindex(Model model) {
         return new ModelAndView("experiment/index", "modelModel", model);
+    }
+    @RequestMapping("/firstpage")
+    public ModelAndView experimentfirstpage(Model model) {
+        return new ModelAndView("experiment/firstpage", "modelModel", model);
     }
 }
