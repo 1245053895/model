@@ -1,0 +1,199 @@
+<!--<!DOCTYPE HTML>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">-->
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" th:href="@{/favicon.ico}"/>
+    <link rel="Shortcut Icon" th:href="@{/favicon.ico}"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" th:href="@{/h-ui/css/H-ui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.adminx.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/smallwindows/samllwindows.css}"/>
+    <!--<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>-->
+
+    <!--<script type="text/javascript" th:src="@{/js/smallwindows/jquery-1.4.2.min.js}"></script>-->
+    <script type="text/javascript" th:src="@{/js/smallwindows/popup_layer.js}"></script>
+
+    <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+    <!--[if IE 6]>
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>城市地下空间工程大数据验证平台</title>
+    <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+    <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+</head>
+<script type="text/javascript">
+    function nannanhu() {
+        var a=document.getElementById("Hidden1").value++;
+        if(a%2==1){
+            $("#ele3").trigger( "click" );
+        }else {
+            $("#close3").trigger( "click" );
+        }
+    }
+</script>
+<body style="background-image: url(/image/bacground.jpg);background-size: 220%">
+<header class="navbar-wrapper" style="height: 60px;background-color: rgba(0,0,0,0)">
+    <div class="navbar navbar-fixed-top " style="height: 60px;background-color: rgba(0,0,0,0)">
+        <div class="container-fluid cl"
+             style="height: 60px;background-color: #3E3939;background-color: rgba(0,0,0,0);">
+            <a th:href="@{/returnhome}">
+                <img th:src="@{/temp/logo.png}" style="width: 4%;height: 100%;margin-top: 0.1%"/>
+                <span style="color: white;font-weight: bold;font-size: 1rem;margin-left:1%;margin-top: 1%;position: absolute;">城市地下空间工程大数据验证平台-验证建模</span>
+            </a>
+            <div id="emample3" class="example" style="float: right;width: 1%;height: 1%;margin-right: 24%;margin-top: -1.6%;border: 1px solid red;display: none">
+            <div id="ele3" class="tigger">触发元素3</div>
+            <input id="Hidden1" type="hidden" value="1" />
+            <div class="clr"></div>
+            <div id="blk3" class="blk" style="display:none;">
+                <div class="head"><div class="head-right"></div></div>
+                <div class="main">
+                    <div style="width: 100%;height: 100%;">
+                        <a  id="close3" class="closeBtn" style="display: none">关闭</a>
+                        <iframe scrolling="yes" frameborder="0"  width="100%" height="100%" th:src="@{/analyse/wel1}"></iframe>
+                    </div>
+                </div>
+                <div class="foot"><div class="foot-right"></div></div>
+            </div>
+        </div><!--emample3 end-->
+        </div>
+    </div>
+    <div class="dirsuanfa"
+         style="height: 41px;position: absolute;margin-left:93%;margin-top: 9px;z-index: 10000;text-align: center; width: 70px;"
+         onclick="nannanhu()">
+        <img th:src="@{/image/threepoint.png}"/>
+    </div>
+    <!--<div style="border: 1px solid gray;height: 59vh;width: 360px; position: absolute;margin-left: 77%; display:none;background-color: #E0E0E0"  id="hidden_enent" >-->
+        <!--<div style="border: 1px solid blue;height: 100%;width: 100%">-->
+            <!--&lt;!&ndash;<iframe scrolling="yes" frameborder="0"  width="100%" height="100%"    th:src="@{/analyse/wel}"></iframe>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+</header>
+<aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
+    <div class="menu_dropdown bk_2">
+        <dl id="menu-tongji">
+            <dt><a data-href="/analyse/welcome" data-title="首页" href="javascript:void(0)">
+                <center><font color="white">新建验证模型</font></center>
+            </a></dt>
+        </dl>
+        <dl id="menu" th:each="questionList:${questionList}">
+            <dt th:id="${questionList.modelid}"><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${questionList.name}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a th:id="'/analyse/analyseProcessBuild/'+ ${questionList.modelid}" data-href="analyseProcess"
+                           data-title="分析流程" href="javascript:void(0)">验证流程</a></li>
+                    <li><a th:id="'/analyse/analyzModelCreate/'+ ${questionList.modelid}" data-href="analyzModelCreate"
+                           data-title="分析单元" href="javascript:void(0)">验证单元</a></li>
+                    <li><a th:id="'/analyse/analyzList/'+ ${questionList.modelid}" data-href="analyzList"
+                           data-title="分析模型" href="javascript:void(0)">验证模型</a></li>
+                    <li><a th:id="'/analyse/analyzModelList/'+ ${questionList.modelid}" data-href="analyzModelList"
+                           data-title="分析模型实例" href="javascript:void(0)">验证模型实例</a></li>
+                    <li><a data-href="taskList" data-title="分析处理任务" href="javascript:void(0)">分析处理任务</a></li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+</div>
+<section class="Hui-article-box" style="border-radius:10px;">
+    <div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+        <div class="Hui-tabNav-wp">
+            <ul id="min_title_list" class="acrossTab cl">
+                <li class="active">
+                    <span title="我的桌面" data-href="welcome">首页</span>
+                    <em></em></li>
+            </ul>
+        </div>
+        <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S"
+                                                  href="javascript:;"><i
+                class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S"
+                                                        href="javascript:;"><i
+                class="Hui-iconfont">&#xe6d7;</i></a></div>
+    </div>
+    <div id="iframe_box" class="Hui-article">
+        <div class="show_iframe">
+            <div style="display:none" class="loading"></div>
+            <iframe scrolling="yes" frameborder="0" th:src="@{/analyse/welcome}"></iframe>
+        </div>
+
+    </div>
+</section>
+
+<div class="contextMenu" id="Huiadminmenu">
+
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    window.onload = function () {
+        var modelid = document.getElementsByTagName("dt");
+        for (var index = 0; index < modelid.length; index++) {
+            modelid[index].onclick = function () {
+                var id = this.id;
+                var analyseProcesskshow = "/analyse/analyseProcessBuild/" + id.toString();
+                var analysemodel = document.getElementById(analyseProcesskshow);
+                analysemodel.setAttribute('data-href', analyseProcesskshow);
+
+                var analyzModelCreate = "/analyse/analyzModelCreate/" + id.toString();
+                var analysemodel = document.getElementById(analyzModelCreate);
+                analysemodel.setAttribute('data-href', analyzModelCreate);
+
+                var analyzList = "/analyse/analyzList/" + id.toString();
+                var analysemodel = document.getElementById(analyzList);
+                analysemodel.setAttribute('data-href', analyzList);
+
+                var analyzModelList = "/analyse/analyzModelList/" + id.toString();
+                var analysemodel = document.getElementById(analyzModelList);
+                analysemodel.setAttribute('data-href', analyzModelList);
+            }
+        }
+        // var businessid=document.getElementsByTagName("a");
+        // for(var index=0;index<businessid.length;index++){
+        // 	businessid[index].onclick=function(){
+        // 		var id =  this.id;
+        //
+        // 		// var examplehref="exampleList/"+ id.toString();
+        // 		var example = document.getElementById(id);
+        // 		example.setAttribute('data-href',id);
+        // 	}
+        // }
+
+    }
+
+</script>
+<script>
+    $(document).ready(function(){
+        new PopupLayer({
+            trigger:"#ele3",
+            popupBlk:"#blk3",
+            closeBtn:"#close3",
+            useFx:true
+        });
+    });
+</script>
+</body>
+</html>
