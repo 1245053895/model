@@ -20,6 +20,8 @@
 		<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
 		<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/smallwindows/samllwindows.css}"/>
+		<script type="text/javascript" th:src="@{/js/smallwindows/popup_layer.js}"></script>
 		<!--[if IE 6]>
 <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -30,11 +32,11 @@
 	</head>
 	<script type="text/javascript">
 		function nannanhu() {
-			if($('#hidden_enent').is(':hidden')){
-				$('#hidden_enent').show();
-			}
-			else{
-				$('#hidden_enent').hide();
+			var a=document.getElementById("Hidden1").value++;
+			if(a%2==1){
+				$("#ele3").trigger( "click" );
+			}else {
+				$("#close3").trigger( "click" );
 			}
 		}
 	</script>
@@ -46,12 +48,28 @@
 					<a href="/ZT">
 				<img th:src="@{/temp/logo.png}" style="width: 4%;height: 100%;margin-top: 0.1%"/>
 				<span style="color: white;font-weight: bold;font-size: 1rem;margin-left:1%;margin-top: 1%;position: absolute;">城市地下空间工程大数据分析平台-模型库管理工具</span>
-					</a></div>
+					</a>
+					<div id="emample3" class="example" style="float: right;width: 1%;height: 1%;margin-right: 24%;margin-top: -1.6%;border: 1px solid red;display: none">
+						<div id="ele3" class="tigger">触发元素3</div>
+						<input id="Hidden1" type="hidden" value="1" />
+						<div class="clr"></div>
+						<div id="blk3" class="blk" style="display:none;">
+							<div class="head"><div class="head-right"></div></div>
+							<div class="main">
+								<div style="width: 100%;height: 100%;">
+									<a  id="close3" class="closeBtn" style="display: none">关闭</a>
+									<iframe scrolling="yes" frameborder="0"  width="100%" height="100%" th:src="@{/analyse/wel1}"></iframe>
+								</div>
+							</div>
+							<div class="foot"><div class="foot-right"></div></div>
+						</div>
+					</div><!--emample3 end-->
+				</div>
 			</div>
 	<div class="dirsuanfa"
-		 style="height: 40px;position: absolute;margin-left:93%;margin-top: 9px;z-index: 10000;"
+		 style="height: 41px;position: absolute;margin-left:93%;margin-top: 9px;z-index: 10000;text-align: center; width: 70px;"
 		 onclick="nannanhu()">
-		<img th:src="@{/image/ss1.png}"/>
+		<img th:src="@{/image/threepoint.png}"/>
 	</div>
 		</header>
 
@@ -170,6 +188,16 @@
 
 
 		</script>
+	<script>
+		$(document).ready(function(){
+			new PopupLayer({
+				trigger:"#ele3",
+				popupBlk:"#blk3",
+				closeBtn:"#close3",
+				useFx:true
+			});
+		});
+	</script>
 
 
 	</body>

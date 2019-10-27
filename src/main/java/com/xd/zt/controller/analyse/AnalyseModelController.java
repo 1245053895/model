@@ -97,7 +97,7 @@ public class AnalyseModelController {
         return new ModelAndView("analyse/welcome","modelModel",model);
     }
 
-    @RequestMapping("/wel")
+    @RequestMapping("/wel1")
     public ModelAndView wel(Model model){
         List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
         List<Algorithm> arr1 = new ArrayList<Algorithm>();
@@ -118,7 +118,7 @@ public class AnalyseModelController {
         model.addAttribute("algorithmList1",arr1);
         model.addAttribute("algorithmList2",arr2);
         model.addAttribute("algorithmList3",arr3);
-        return new ModelAndView("/wel","modelModel",model);
+        return new ModelAndView("/wel1","modelModel",model);
     }
 
     @RequestMapping("/analyseReview/{modelid}")
