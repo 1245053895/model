@@ -5,6 +5,7 @@ import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.analyse.AnalyseInstance;
 import com.xd.zt.domain.analyse.AnalyseModelProcess;
 import com.xd.zt.domain.analyse.AnalyticsTask;
+import com.xd.zt.domain.data.DatamodelInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,8 @@ public interface AnalyseService {
     void deleteanalyseprocess(@Param("processid") Integer processid);
 
     Integer  selectProcessid(@Param("flowprocessid")String flowprocessid);
+
+
+    List<DatamodelInfo> selectDataResult(@Param("modelid")Integer modelid);
 
 }

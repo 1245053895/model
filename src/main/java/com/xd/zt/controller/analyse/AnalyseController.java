@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.xd.zt.domain.analyse.*;
+import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
 import com.xd.zt.util.analyse.HttpCientPost;
@@ -140,6 +141,9 @@ public class AnalyseController {
             params.add(algorithm1);
         }
         model.addAttribute("params",params);
+
+        List<DatamodelInfo> datamodelInfoList = analyseService.selectDataResult(modelid);
+        model.addAttribute("datamodelInfoList",datamodelInfoList);
         return new ModelAndView("analyse/analyzModelExample","Modelmodel",model);
     }
 
