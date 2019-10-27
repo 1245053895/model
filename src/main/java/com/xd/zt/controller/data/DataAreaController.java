@@ -117,7 +117,16 @@ public class DataAreaController {
         List<DatamodelSource> datamodelSourceList = sourceService.datamodelSourceByModeId(modelid,"1");
         model.addAttribute("datamodelSourceList", datamodelSourceList);
         List<Algorithm> algorithmList = sourceService.selectAlgorithm();
-        model.addAttribute("algorithmList",algorithmList);
+        List<Algorithm> algorithmList1 = new ArrayList<>();
+        for (int i = 0 ; i < algorithmList.size(); i++){
+            String type = algorithmList.get(i).getAlgorithmtype();
+            if ("预处理".equals(type)){
+                int j = 0;
+                algorithmList1.add(j,algorithmList.get(i));
+                j++;
+            }
+        }
+        model.addAttribute("algorithmList",algorithmList1);
         return new ModelAndView("data/dataareacreate", "Modelmodel", model);
     }
 

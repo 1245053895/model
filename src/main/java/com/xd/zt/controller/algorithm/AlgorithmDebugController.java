@@ -156,6 +156,8 @@ public class AlgorithmDebugController {
             algorithmStringList.add(String.valueOf(lineNumber1) + " " + str1);
             lineNumber1++;
         }
+        bfr.close();
+        bfr1.close();
         String algorithmJsonString= JSON.toJSONString(algorithmStringList);
         model.addAttribute("algorithmJsonString",algorithmJsonString);
         return new ModelAndView("algorithm/algorithmView","Modelmodel",model);
@@ -190,7 +192,7 @@ public class AlgorithmDebugController {
         String filename = fileInformation[0];
 
 
-        String[] fileName = filename.split(".");
+        String[] fileName = filename.split("\\.");
         String algorithmName = fileName[0];
 
 

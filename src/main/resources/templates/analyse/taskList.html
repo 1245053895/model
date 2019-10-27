@@ -50,7 +50,6 @@
                         <th >分析模型实例id</th>
                         <th >创建时间</th>
                         <th >任务状态</th>
-                        <th >任务结果</th>
                         <th >完成时间</th>
                         <th >操作</th>
                     </tr>
@@ -65,7 +64,6 @@
                             <td th:text="${analyticsTaskList.modelInstanceId}"></td>
                             <td th:text="${analyticsTaskList.timestamp}"></td>
                             <td th:text="${analyticsTaskList.status}"></td>
-                            <td th:text="${analyticsTaskList.result}"></td>
                             <!--<td><a style="cursor:pointer" class="text-primary" th:text="${analyseFlowList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>-->
                             <td th:text="${analyticsTaskList.completeTime}"></td>
                             <td>

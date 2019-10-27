@@ -121,10 +121,10 @@
                 if (value == "运行") {
                     if (confirm("确定要运行？")) {
                         if (confirm("是否需要立即获得结果？")) {
-                            var instantData = "true"
+                            var instantData = true
                         }
                         else {
-                            var instantData = "false"
+                            var instantData = false
                         }
                         var exampleid = {
                             "exampleid": id,
@@ -137,11 +137,20 @@
                             contentType: 'application/json;charset=UTF-8',
                             data: JSON.stringify(exampleid),
                             url: '/analyse/exampleRun',
-                            success: function () {
-                                    $.Huimodalalert('已添加运行任务', 1000);
+                            success: function (data) {
+                                    // var result = JSON.parse(data);
+
+                                    if(data.resultMessage == "模型分析实例任务添加成功"){
+                                        $.Huimodalalert(data.resultMessage, 1000);
+                                    }
+                                    else {
+
+                                        alert("结果数据为："+data.resultData) ;
+                                        $.Huimodalalert("成功返回结果", 1000);
+                                    }
                             },
                             error:function () {
-                                $.Huimodalalert('已添加运行任务', 1000);
+                                $.Huimodalalert('任务添加失败', 1000);
                             }
                         });
                             }

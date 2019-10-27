@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,16 @@ public class DataBlockController {
         List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataAreaResultById(modelid);
         model.addAttribute("datamodelInfoList", datamodelInfoList);
         List<Algorithm> algorithmList = sourceService.selectAlgorithm();
-        model.addAttribute("algorithmList", algorithmList);
+        List<Algorithm> algorithmList1 = new ArrayList<>();
+        for (int i = 0 ; i < algorithmList.size(); i++){
+            String type = algorithmList.get(i).getAlgorithmtype();
+            if ("特征工程".equals(type)){
+                int j = 0;
+                algorithmList1.add(j,algorithmList.get(i));
+                j++;
+            }
+        }
+        model.addAttribute("algorithmList", algorithmList1);
         return new ModelAndView("data/datablockcreate", "Modelmodel", model);
     }
 
