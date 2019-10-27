@@ -1,5 +1,8 @@
 package com.xd.zt.domain.model;
 
+import javax.persistence.*;
+
+
 public class Programme {
     Integer programmeid;
     String programmename;
@@ -9,6 +12,8 @@ public class Programme {
     String programmetime;
     String username;
     String programmepath;
+
+
 
     public String getProgrammepath() {
         return programmepath;

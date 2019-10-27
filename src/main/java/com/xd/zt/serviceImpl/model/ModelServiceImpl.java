@@ -29,10 +29,7 @@ public class ModelServiceImpl implements ModelService {
         return programmeList;
     }
 
-    @Override
-    public void insertProgram(Programme programme) {
-        modelMapper.insertProgram(programme);
-    }
+
 
     @Override
     public void deleteModel(Integer programmeid) {
@@ -66,5 +63,10 @@ public class ModelServiceImpl implements ModelService {
     public List<AnalyseModel> selectAnalyseModelByProgramme(Integer programmeid) {
         List<AnalyseModel> analyseModelList = modelMapper.selectAnalyseModelByProgramme(programmeid);
         return analyseModelList;
+    }
+
+    @Override
+    public void insertProgram(@Param("programmename") String programmename,@Param("programmetype") String programmetype,@Param("programmedescribe") String programmedescribe,@Param("programmetime")String programmetime,@Param("username")String username) {
+        modelMapper.insertProgram(programmename,programmetype,programmedescribe,programmetime,username);
     }
 }

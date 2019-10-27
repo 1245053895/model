@@ -7,6 +7,17 @@
     <select id="selectAlgorithm" resultType="Algorithm">
     SELECT * FROM `algorithm`
     </select>
+    <select id="selectAlgorithmCommon" resultType="Algorithm" parameterType="String">
+    SELECT * FROM `algorithm` WHERE algorithmlabel="行业通用"
+    </select>
+    <select id="selectAlgorithmProcess" resultType="Algorithm" parameterType="String">
+    SELECT * FROM `algorithm` WHERE algorithmlabel="行业专用"
+    </select>
+    <select id="selectAlgorithmLogical" resultType="Algorithm" parameterType="String">
+    SELECT * FROM `algorithm` WHERE algorithmlabel="人工智能"
+    </select>
+
+
     <select id="selectAlgorithmById" parameterType="Integer" resultType="Algorithm">
     SELECT * FROM `algorithm` WHERE algorithmid = #{algorithmid}
     </select>
@@ -14,16 +25,17 @@
     SELECT * FROM `algorithm` WHERE algorithmname LIKE CONCAT('%',CONCAT(#{searchcontent},'%'))
     </select>
 
-    <select id="deleteAlgorithm" parameterType="String">
+    <delete id="deleteAlgorithm" parameterType="String">
         DELETE FROM `algorithm` WHERE algorithmid = #{algorithmid}
-    </select>
+    </delete>
 
-    <select id="saveAlgorithm" parameterType="Algorithm">
-        insert into `algorithm` values (null,#{algorithmname},null,null,null,#{algorithmtime},null,null,#{algorithmpath})
-    </select>
+    <insert id="saveAlgorithm" parameterType="Algorithm">
+    INSERT INTO algorithm(algorithmname,algorithmtype,algorithmdescribe,algorithmlabel,algorithmtime,algorithmversion,algorithmparams,algorithmpath,algorithmman)
+    VALUES(#{algorithmname},#{algorithmtype},#{algorithmdescribe},#{algorithmlabel},#{algorithmtime},#{algorithmversion},#{algorithmparams},#{algorithmpath},#{algorithmman})
+    </insert>
     <!--在线代码编辑-->
     <insert id="insertAlgorithm" parameterType="Algorithm" useGeneratedKeys="true" keyProperty="id">
-       insert into Algorithm values (null,#{algorithmname},null,null,null,null,null,null,#{algorithmpath});
+       insert into Algorithm values (null,#{algorithmname},null,null,null,null,null,null,#{algorithmpath},null);
     </insert>
     <!--&lt;!&ndash;查询所有模型&ndash;&gt;-->
     <!--<select id="selectAlgorithmModel" resultType="AlgorithmModel">-->
