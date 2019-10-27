@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>数据格式转换与数据分组模块</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body style="height: 100vh;width: 355px; ">
+   <div style="width: 100%;height: 5vh;position: relative;background-color: #0C8484;text-align: center;line-height: 5vh;color: white;font-size: 18px">
+       算  法  库
+   </div>
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#home">行业专用</a></li>
+        <li><a href="#profile">行业通用</a></li>
+        <li><a href="#messages">人工智能</a></li>
+    </ul>
+
+    <div class="tab-content" style="height: 87%;overflow: auto">
+        <div class="tab-pane active" id="home">
+            <tr th:each="algorithmList1:${algorithmList1}">
+            <div style="height: 7vh;width: 45%;border: 1px solid #C1C1C1;float: left;margin-left: 15px;margin-top: 5px;border-top-style:none;border-right-style: none;border-left-style: none;">
+                <img th:src="@{/image/warep.png}"><a style="margin-left: 8%"><td th:text="${algorithmList1.algorithmname}"></td></a>
+            </div>
+            </tr>
+        </div>
+        <div class="tab-pane" id="profile">
+            <tr th:each="algorithmList2:${algorithmList2}">
+                <div style="height: 7vh;width: 45%;border: 1px solid #C1C1C1;float: left;margin-left: 15px;margin-top: 5px;border-top-style:none;border-right-style: none;border-left-style: none;">
+                    <img th:src="@{/image/warep.png}"><a style="margin-left: 8%"><td th:text="${algorithmList2.algorithmname}"></td></a>
+                </div>
+            </tr>
+        </div>
+        <div class="tab-pane" id="messages">
+            <tr th:each="algorithmList3:${algorithmList3}">
+                <div style="height: 7vh;width: 45%;border: 1px solid #C1C1C1;float: left;margin-left: 15px;margin-top: 5px;border-top-style:none;border-right-style: none;border-left-style: none;">
+                    <img th:src="@{/image/warep.png}"><a style="margin-left: 8%"><td th:text="${algorithmList3.algorithmname}"></td></a>
+                </div>
+            </tr>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(function () {
+        $('#myTab a:last').tab('show');
+    })
+    $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+</html>

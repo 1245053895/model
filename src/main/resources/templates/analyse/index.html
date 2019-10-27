@@ -16,13 +16,16 @@
     <script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
     <![endif]-->
     <link type="text/css" rel="stylesheet" th:href="@{/h-ui/css/H-ui.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.adminx.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin"/>
     <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}"/>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/css/smallwindows/samllwindows.css}"/>
     <!--<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>-->
-    <!--<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>-->
+
+    <!--<script type="text/javascript" th:src="@{/js/smallwindows/jquery-1.4.2.min.js}"></script>-->
+    <script type="text/javascript" th:src="@{/js/smallwindows/popup_layer.js}"></script>
+
     <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
     <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
     <!--[if IE 6]>
@@ -35,11 +38,11 @@
 </head>
 <script type="text/javascript">
     function nannanhu() {
-        if($('#hidden_enent').is(':hidden')){
-            $('#hidden_enent').show();
-        }
-        else{
-            $('#hidden_enent').hide();
+        var a=document.getElementById("Hidden1").value++;
+        if(a%2==1){
+            $("#ele3").trigger( "click" );
+        }else {
+            $("#close3").trigger( "click" );
         }
     }
 </script>
@@ -52,13 +55,36 @@
                 <img th:src="@{/temp/logo.png}" style="width: 4%;height: 100%;margin-top: 0.1%"/>
                 <span style="color: white;font-weight: bold;font-size: 1rem;margin-left:1%;margin-top: 1%;position: absolute;">城市地下空间工程大数据分析平台-分析建模</span>
             </a>
+            <div id="emample3" class="example" style="float: right;width: 1%;height: 1%;margin-right: 24%;margin-top: -1.6%;border: 1px solid red;display: none">
+            <div id="ele3" class="tigger">触发元素3</div>
+            <input id="Hidden1" type="hidden" value="1" />
+            <div class="clr"></div>
+            <div id="blk3" class="blk" style="display:none;">
+                <div class="head"><div class="head-right"></div></div>
+                <div class="main">
+                    <div style="width: 100%;height: 100%;">
+                        <a  id="close3" class="closeBtn" style="display: none">关闭</a>
+                        <iframe scrolling="yes" frameborder="0"  width="100%" height="100%" th:src="@{/analyse/wel1}"></iframe>
+                    </div>
+                </div>
+                <div class="foot"><div class="foot-right"></div></div>
+            </div>
+        </div><!--emample3 end-->
         </div>
     </div>
     <div class="dirsuanfa"
-         style="height: 40px;position: absolute;margin-left:93%;margin-top: 9px;z-index: 10000;"
+         style="height: 41px;position: absolute;margin-left:93%;margin-top: 9px;z-index: 10000;text-align: center; width: 70px;"
          onclick="nannanhu()">
-        <img th:src="@{/image/ss1.png}"/>
+        <img th:src="@{/image/threepoint.png}"/>
     </div>
+    <!--<div style="border: 1px solid gray;height: 59vh;width: 360px; position: absolute;margin-left: 77%; display:none;background-color: #E0E0E0"  id="hidden_enent" >-->
+        <!--<div style="border: 1px solid blue;height: 100%;width: 100%">-->
+            <!--&lt;!&ndash;<iframe scrolling="yes" frameborder="0"  width="100%" height="100%"    th:src="@{/analyse/wel}"></iframe>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
 </header>
 <aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
     <div class="menu_dropdown bk_2">
@@ -107,10 +133,7 @@
             <div style="display:none" class="loading"></div>
             <iframe scrolling="yes" frameborder="0" th:src="@{/analyse/welcome}"></iframe>
         </div>
-        <div style="border: 1px solid gray;height: 39vh;width: 360px; position: absolute;margin-left: 77%; display:none;background-color: #E0E0E0"
-             id="hidden_enent" >
-            <iframe scrolling="yes" frameborder="0"  width="100%" height="100%"    th:src="@{/analyse/wel}"></iframe>
-        </div>
+
     </div>
 </section>
 
@@ -162,6 +185,15 @@
     }
 
 </script>
-
+<script>
+    $(document).ready(function(){
+        new PopupLayer({
+            trigger:"#ele3",
+            popupBlk:"#blk3",
+            closeBtn:"#close3",
+            useFx:true
+        });
+    });
+</script>
 </body>
 </html>

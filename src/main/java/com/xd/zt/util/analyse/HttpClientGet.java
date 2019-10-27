@@ -23,7 +23,7 @@ public class HttpClientGet {
             //执行请求
             response = httpClient.execute(get);
             //得到并返回数据
-            String Result = EntityUtils.toString(response.getEntity(),Charset.forName("UTF-8"));
+            String Result = EntityUtils.toString(response.getEntity(), String.valueOf(Charset.forName("UTF-8")));
             return Result;
         } catch (IOException e) {
             e.printStackTrace();

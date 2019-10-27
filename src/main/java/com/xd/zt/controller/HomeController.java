@@ -44,4 +44,9 @@ public class HomeController {
         return "wel";
     }
 
+    @GetMapping("/wel1")
+    public String wel1(){
+        return "wel1";
+    }
+
 }
