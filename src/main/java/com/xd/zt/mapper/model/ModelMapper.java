@@ -13,7 +13,7 @@ import java.util.List;
 public interface ModelMapper {
     List<Programme> selectAllModel();
     List<Programme> selectAllModelByType(@Param("programmetype") String programmetype);
-    void insertProgram(Programme programme);
+    void insertProgram(@Param("programmename") String programmename,@Param("programmetype") String programmetype,@Param("programmedescribe") String programmedescribe,@Param("programmetime")String programmetime,@Param("username")String username);
 
     //根据工程id查询三大建模
     List<BusinessModel> selectBusinessModelByProgramme(@Param("programmeid") Integer programmeid);

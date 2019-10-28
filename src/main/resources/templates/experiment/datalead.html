@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+	<!--[if IE 6]>
+	<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title></title>
+
+	<script type="text/javascript" th:src="@{/laydate/laydate.js}"></script>
+
+	<script>
+        lay('#version').html('-v'+ laydate.v);
+        //日期时间范围
+        laydate.render({
+            elem: '#test10'
+            ,type: 'datetime'
+            ,range: true
+        });
+	</script>
+
+	<style>
+		body{padding: 20px;}
+		.demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
+
+	</style>
+
+
+
+</head>
+<body>
+
+<!--<input type="hidden" th:value="${businessid}" id="businessid"/>-->
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 验证模型 <span class="c-gray en">&gt;</span> 数据导入 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" style="position: absolute;width: 97%;height: 90%;">
+	<div class="panel panel-default" style="height: 33vh;width: 100%;float: left" >
+		<div class="selectScene" style="height: 50%;">
+			<div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">数据导入</div>
+			<div style="float: left;font-size:14px; font-weight:700;margin-left: 3%;margin-top:9vh;">请选择导入的数据</div>
+			<div class="select-box" style="width: 16%;margin-left: 1%;margin-top: 8vh;float: left;">
+			<select  class="select" size="1"  name="sceneSelect" id="selectScene" onchange="selectblock()" >
+				<option  value="选择" selected>请选择数据...</option>   <!--th:value="${businessSceneList.blockid}"-->
+				<!--<option  th:each="businessSceneList:${businessSceneList}" th:value="${businessSceneList.sceneid}"  th:text="${businessSceneList.scenename}"  ></option>-->
+				<option onclick="selectbatch()">批处理数据</option>
+				<option onclick="selectflow()">实时数据</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="panel panel-default" style="height: 50vh;width: 100%;float: left;margin-top: 3vh;" >
+		<div class="selectScene" style="height: 50%;">
+			<div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">参数配置</div>
+			<div class="panel-body" id="params_text" style="float: left; width: 98%;height: 160%;overflow-x:hidden;overflow-y:auto;">
+				<div id="batch" style="display: none" class="paramsdiv">
+											<div class="modal-body">
+												<strong style="margin-left: 5%">设备ID：</strong><input type="text" placeholder="请输入设备ID" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 18%;">
+											</div>
+											<div class="modal-body">
+												<strong style="margin-left: 5%">线路ID</strong>
+												<input type="text" placeholder="请输入线路ID" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 18%;">
+											</div>
+											<div class="modal-body">
+												<strong style="margin-left: 5%">时间范围</strong>
+												<!--<input type="text" placeholder="请输入起始时间" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
+												<!--<input type="text" class="demo-input" placeholder="日期时间范围" id="test10">-->
+												<input type="text" class="input-text radius size-S" placeholder="日期时间范围" style="margin:10px 15px 10px 15px;;width: 18%;" id="test10">
+											</div>
+										<br/>
+				</div>
+				<div id="flow" style="display: none" class="paramsdiv">
+					把输入数据以某一时间间隔批量的处理，将批处理间隔缩短到秒级时，以实现处理实时数据流
+				</div>
+			</div>
+		</div>
+</div>
+	<input class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  18.6%;" value="保存" />
+	<!--<input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  42.9%;" value="下一步" onclick="showstatus()"/>
+-->
+	<input class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  40.9%;" value="下一步"/>
+
+
+
+	<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	function selectbatch() {
+		$(".paramsdiv").hide(300);
+		$("#batch").show(300);
+    }
+    function selectflow(){
+        $(".paramsdiv").hide(300);
+        $("#flow").show(300);
+	}
+</script>
+<script>
+    var status = "xxx";
+	function selectblock(){
+	var type = $("#selectScene").val();
+if (type == "批处理数据") {
+    selectbatch();
+}
+else if (type == "实时数据") {
+    selectflow();
+}
+else {}
+	// 	selectNodes();
+	// 	selectObject()
+	}
+
+	function selectNodes(){
+
+		var sceneid = $("#selectScene").val();
+        		$("#questionprocesss :first-child").remove();
+                var questionprocess = '<iframe  name="questionprocess" src="/business/selectNodes/' +
+					'' +sceneid+
+					'" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>';
+                $("#questionprocesss").append(questionprocess);
+
+	}
+
+	function selectObject() {
+        var sceneid = $("#selectScene").val();
+        $("#sceneinformation :first-child").remove();
+        var sceneinformation = '<iframe  name="sceneinformation" src="/business/sceneinformation/' +
+            '' +sceneid+
+            '" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>';
+        $("#sceneinformation").append(sceneinformation);
+    }
+
+	function nextstep() {
+		var blockid = window.frames["questionprocess"].document.getElementById('blockid').value;
+		status=blockid;
+		if(status=="xxx"||status==undefined||status==null){
+            $.Huimodalalert('请先提取节点',2000);
+		}
+		else {
+        var businessid =document.getElementById('businessid').getAttribute('value');
+        var sceneid = $("#selectScene").val();
+        var id= {
+            "blockid" : blockid,
+            "businessid" : businessid,
+			"sceneid":sceneid
+        };
+        $.ajax({
+            url : "/business/savequestion",
+            type : "POST",
+            async : true,
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(id),
+            dataType : 'json',
+            success : function(data) {
+			if(data.code==1){
+    			var href = "/business/questionDefine/"+blockid.toString();
+    			document.getElementById('nextstep').setAttribute("href",href);
+    			$.Huimodalalert('节点提取成功',2000);
+			}
+			else {
+                $.Huimodalalert('节点已提取，请重新提取节点或删除已提取的节点',2000);
+                status="xxx"
+			}
+            }
+        });
+
+		}
+    }
+
+    function showstatus() {
+	    if(status=="xxx"||status==undefined||status==null){
+            $.Huimodalalert('请先保存提取的节点',2000);
+		}
+		else{
+            var href = "/business/questionDefine/"+status.toString();
+            location.href = href;
+		}
+
+    }
+</script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<!--<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">-->
+</body>
+</html>
