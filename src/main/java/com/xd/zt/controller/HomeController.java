@@ -32,11 +32,11 @@ public class HomeController {
     public String returnhome(){
         return "home";
     }
-    @GetMapping("/model")
+    @GetMapping("/ZT")
     public String zt(){
         return "ZT";
     }
-    @GetMapping("/ZT")
+    @GetMapping("/newProgramme")
     public String newProgramme(){
         return "newProgramme";
     }
