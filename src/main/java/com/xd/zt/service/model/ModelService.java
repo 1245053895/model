@@ -18,7 +18,8 @@ public interface ModelService {
     List<BusinessModel> selectBusinessModelByProgramme(@Param("programmeid") Integer programmeid);
     List<DatamodelName> selectDataModelByProgramme(@Param("programmeid") Integer programmeid);
     List<AnalyseModel> selectAnalyseModelByProgramme(@Param("programmeid") Integer programmeid);
-    void insertProgram(Programme programme);
+    void insertProgram(@Param("programmename") String programmename,@Param("programmetype") String programmetype,@Param("programmedescribe") String programmedescribe,@Param("programmetime")String programmetime,@Param("username")String username);
+
 
     void deleteModel(@Param("programmeid")Integer programmeid);
     void saveProgramme(Programme programme);

@@ -47,19 +47,39 @@ public class AlgorithmDebugController {
         return "algorithm/select";
     }
 
+    /*行业通用算法*/
     @RequestMapping("/algorithmList")
     public ModelAndView algorithmList(Model model){
-        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
-
+        String algorithmlabel="行业通用";
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
         model.addAttribute("algorithmList",algorithmList);
+        return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
+    }
 
+    /*行业专用算法*/
+    @RequestMapping("/algorithmListProcess")
+    public ModelAndView algorithmListProcess(Model model){
+        String algorithmlabel="行业专用";
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithmProcess(algorithmlabel);
+        model.addAttribute("algorithmList",algorithmList);
         return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
     }
 
 
-    @RequestMapping("/algorithmList1")
+    /*人工智能算法*/
+    @RequestMapping("/algorithmListLogical")
+    public ModelAndView algorithmListLogical(Model model){
+        String algorithmlabel="人工智能";
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithmLogical(algorithmlabel);
+        model.addAttribute("algorithmList",algorithmList);
+        return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
+    }
+
+
+  /*  @RequestMapping("/algorithmList1")
     public ModelAndView algorithmList1(Model model){
-        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+        String algorithmlabel="行业专用";
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithmProcess(algorithmlabel);
         List<Algorithm> arr1 = new ArrayList<Algorithm>();
         for (Algorithm algorithm : algorithmList) {
             String sss =algorithm.getAlgorithmlabel();
@@ -67,7 +87,6 @@ public class AlgorithmDebugController {
                 arr1.add(algorithm);
             }
         }
-
         model.addAttribute("algorithmList",arr1);
 
         return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
@@ -76,11 +95,12 @@ public class AlgorithmDebugController {
 
     @RequestMapping("/algorithmList2")
     public ModelAndView algorithmList2(Model model){
-        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+        String algorithmlabel="人工智能";
+        List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithmLogical(algorithmlabel);
         List<Algorithm> arr1 = new ArrayList<Algorithm>();
         for (Algorithm algorithm : algorithmList) {
             String sss =algorithm.getAlgorithmlabel();
-            if(sss.equals("行业通用")){
+            if(sss.equals("人工智能")){
                 arr1.add(algorithm);
             }
         }
@@ -104,16 +124,7 @@ public class AlgorithmDebugController {
         model.addAttribute("algorithmList",arr1);
 
         return new ModelAndView("algorithm/algorithmList","Modelmodel",model);
-    }
-
-
-
-
-
-
-
-
-
+    }*/
 
     @GetMapping("/algorithmSearch")
     public ModelAndView dataSearch(Model model, String search_text){
@@ -186,26 +197,39 @@ public class AlgorithmDebugController {
 
     @ResponseBody
     @PostMapping("/updateAlgorithm")
-    public void upFile(@RequestParam("filename") MultipartFile multipartFile) throws Exception {
+    public void upFile(@RequestParam(value = "filename" ,required=false) MultipartFile multipartFile,Algorithm algorithm) throws Exception {
         /*      String sqlPath=null;*/
         String[] fileInformation = algorithmUpdateService.Upload(multipartFile);
         String filename = fileInformation[0];
-
-
         String[] fileName = filename.split("\\.");
-        String algorithmName = fileName[0];
-
-
-        String filepath = fileInformation[1];
+//        String algorithmName = fileName[0];
+       // String filepath = fileInformation[1];
         String filesize = fileInformation[2];
 //        System.out.println(filename+"----"+ filepath+"----"+filesize);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = simpleDateFormat.format(new Date());
-        Algorithm algorithm = new Algorithm();
-        algorithm.setAlgorithmname(algorithmName);
-        algorithm.setAlgorithmpath(filepath);
-        algorithm.setAlgorithmtime(date);
-        algorithmDebugService.saveAlgorithm(algorithm);
+//        String date = simpleDateFormat.format(new Date());
+        Algorithm algorithm1 = new Algorithm();
+//        String algorithmname=fileName[0];
+//        String algorithmtype=algorithm.getAlgorithmtype();
+//        String algorithmdescribe=algorithm.getAlgorithmdescribe();
+//        String algorithmlabel=algorithm.getAlgorithmlabel();
+//        String algorithmtime=simpleDateFormat.format(new Date());
+//        String algorithmversion=algorithm.getAlgorithmversion();
+//        String algorithmparams=algorithm.getAlgorithmparams();
+//        String algorithmpath=fileInformation[1];
+//        String algorithmman="xidian";
+        algorithm1.setAlgorithmname(fileName[0]);
+        algorithm1.setAlgorithmtype(algorithm.getAlgorithmtype());
+       algorithm1.setAlgorithmdescribe(algorithm.getAlgorithmdescribe());
+        algorithm1.setAlgorithmlabel(algorithm.getAlgorithmlabel());
+       algorithm1.setAlgorithmtime(simpleDateFormat.format(new Date()));
+        algorithm1.setAlgorithmversion(algorithm.getAlgorithmversion());
+        algorithm1.setAlgorithmparams(algorithm.getAlgorithmparams());
+        algorithm1.setAlgorithmpath(fileInformation[1]);
+       algorithm1.setAlgorithmman("xidian");
+
+         algorithmDebugService.saveAlgorithm(algorithm1);
+//        algorithmDebugService.saveAlgorithm(algorithmname,algorithmtype,algorithmdescribe,algorithmlabel,algorithmtime,algorithmversion,algorithmparams,algorithmpath,algorithmman);
     }
 ////模型
 //@RequestMapping("/algorithmModelDebug")

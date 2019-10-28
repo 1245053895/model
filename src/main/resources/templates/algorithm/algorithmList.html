@@ -19,6 +19,8 @@
         <div class="panel-header">算法列表
             <a onclick="jumpDialog()"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增" /></a>
         </div>
+
+
         <div class="panel-body">
             <div >
                 <!--实现模糊搜索-->
@@ -39,15 +41,16 @@
                     <tr class="text-c">
                         <th >算法名称</th>
                         <th >算法类别</th>
-                        <th >
-                            <select style="background-color: #F5FAFE;border-right-style: none; border-top-style: none;border-left-style: none;border-bottom-style: none;">
-                                <option>算法标签</option>
-                                <option th:value="algorithmList1" th:text="行业专用">行业专用</option>
-                                <option th:value="algorithmList2" th:text="行业通用">行业通用</option>
-                                <option th:value="algorithmList3" th:text="人工智能">人工智能</option>
-                                <option th:value="algorithmList" th:text="所有算法">所有算法</option>
-                            </select>
-                        </th>
+                        <th >算法标签</th>
+                        <!--<th >-->
+                            <!--<select style="background-color: #F5FAFE;border-right-style: none; border-top-style: none;border-left-style: none;border-bottom-style: none;">-->
+                                <!--<option>算法标签</option>-->
+                                <!--<option th:value="algorithmList1" th:text="行业专用">行业专用</option>-->
+                                <!--<option th:value="algorithmList2" th:text="行业通用">行业通用</option>-->
+                                <!--<option th:value="algorithmList3" th:text="人工智能">人工智能</option>-->
+                                <!--<option th:value="algorithmList" th:text="所有算法">所有算法</option>-->
+                            <!--</select>-->
+                        <!--</th>-->
                         <th >算法描述</th>
                         <th >添加时间</th>
                         <th >算法版本</th>
@@ -106,21 +109,98 @@
                 <div class="modal-body">
                     <div class="upfile-group">
                         <!--通过onsubmit 去进行提交前其他操作-->
-                        <form id="upfileForm" action="#" th:action="@{'/algorithm/updateAlgorithm'}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
-                            <div class="fileupload">
-                                <span id="filename" style="margin-left: 33%">点击此处选择文件</span>
+                        <form id="upfileForm" th:action="@{'/algorithm/updateAlgorithm'}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
+                            <!--<div class="fileupload">-->
+                                <!--<span id="filename" style="margin-left: 33%">点击此处选择文件</span>-->
+                                <!--<input type="file"  id="file" onchange="getFilename();" name="filename" style="opacity: 0;margin-left: -31%"/>-->
+                            <!--</div>-->
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">算法文件：</strong>
+                                <span id="filename" style="margin-left: 1%">点击此处选择文件</span>
                                 <input type="file"  id="file" onchange="getFilename();" name="filename" style="opacity: 0;margin-left: -31%"/>
                             </div>
 
-                            <div class="button_position">
-                                <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 38%; margin-top: 3%;">
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;别：</strong><input type="text" placeholder="请输入算法类别" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="algorithmtype" name="algorithmtype">
                             </div>
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">描&nbsp;&nbsp;&nbsp;&nbsp;述</strong><input type="text" placeholder="请输入算法描述" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 43%;" id="algorithmdescribe" name="algorithmdescribe">
+                            </div>
+                            <div class="modal-body" style="margin-left: 3.5vh;">标&nbsp;&nbsp;&nbsp;&nbsp;签：</strong>
+                                <!--<input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">-->
+                                <select class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmlabel">
+                                    <option style="font-size: 12px">请选择算法类型</option>
+                                    <option style="font-size: 12px" name="algorithmlabel">行业通用</option>
+                                    <option style="font-size: 12px" name="algorithmlabel">行业专用</option>
+                                    <option style="font-size: 12px" name="algorithmlabel">人工智能</option>
+                                </select>
+                            </div>
+                            <div class="modal-body" style="margin-left: 3.5vh;">版&nbsp;&nbsp;&nbsp;&nbsp;本：</strong>
+                                <!--<input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">-->
+                                <select class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmversion">
+                                    <option style="font-size: 12px">请选择算法版本</option>
+                                    <option style="font-size: 12px" name="algorithmversion">spark</option>
+                                    <option style="font-size: 12px" name="algorithmversion">python</option>
+                                </select>
+                            </div>
+                            <!--<div class="modal-bodyx">-->
+                                <!--&lt;!&ndash;<span style="margin-left: 3%">用户姓名:</span><span><input type="text" placeholder="请输入用户姓名" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="saveuser" name="username"></span>&ndash;&gt;-->
+                                <!--<span style="margin-left: 3%">算法版本:</span>-->
+                                <!--<select class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;font-size: 12px" name="programmetype">-->
+                                    <!--<option style="font-size: 12px" name="programmetype">spark</option>-->
+                                    <!--<option style="font-size: 12px" name="programmetype">python</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">参&nbsp;&nbsp;&nbsp;&nbsp;数：</strong><input type="text" placeholder="请输入算法参数,以分号进行隔开" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmparams">
+                            </div>
+                            <div class="button_position">
+                                <!--<button class="btn btn-primary" data-dismiss="modal" onclick="object();">确定</button>-->
+                                <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 80%; margin-top: 0%;">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                            </div>
+                            <!--<div class="button_position">-->
+                                <!--<input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 38%; margin-top: 3%;">-->
+                            <!--</div>-->
                         </form><br/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!--<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <!--&lt;!&ndash; 弹出对话框 &ndash;&gt;-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content radius">-->
+                <!--<div class="modal-header">-->
+                    <!--<h3 class="modal-title">添加业务对象</h3>-->
+                    <!--<a class="close" data-dismiss="modal" aria-hidden="true">×</a>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<strong style="margin-left: 5%">对&nbsp;&nbsp;&nbsp;&nbsp;象：</strong><input type="text" placeholder="请输入业务对象" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectname">-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;型</strong><input type="text" placeholder="请输入对象类型" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objecttype">-->
+                <!--</div>-->
+                <!--<div class="modal-body" style="margin-left: 3.5vh;">属&nbsp;&nbsp;&nbsp;&nbsp;性：</strong><input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<strong style="margin-left: 5%">说&nbsp;&nbsp;&nbsp;&nbsp;明：</strong><input type="text" placeholder="请输入对象说明" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectdescribe">-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button class="btn btn-primary" data-dismiss="modal" onclick="object();">确定</button>-->
+                    <!--<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+
+
 </div>
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
@@ -200,13 +280,13 @@
         return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
     }
 </script>
-<script>
-    var select = document.querySelector('select');
-    select.onchange = function(){
-        // alert(this.value);
-        window.location=this.value;
-    }
-</script>
+<!--<script>-->
+    <!--var select = document.querySelector('select');-->
+    <!--select.onchange = function(){-->
+        <!--// alert(this.value);-->
+        <!--window.location=this.value;-->
+    <!--}-->
+<!--</script>-->
 </body>
 </html>
 

@@ -11,8 +11,8 @@
         select * from programme where programmetype = #{programmetype}
     </select>
 
-    <insert id="insertProgram" parameterType="Programme" useGeneratedKeys="true" keyProperty="id">
-       insert into programme values (null,#{programmename},null,#{programmedescribe},null,#{programmetime},#{username},null);
+    <insert id="insertProgram" parameterType="String">
+    insert into programme(programmename,programmetype,programmedescribe,programmetime,username)values(#{programmename},#{programmetype},#{programmedescribe},#{programmetime},#{username})
     </insert>
     <!--根据工程id查询三大建模-->
     <select id="selectBusinessModelByProgramme" resultType="BusinessModel">
