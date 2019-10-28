@@ -1,6 +1,8 @@
 package com.xd.zt.controller.experiment;
 
 
+import com.xd.zt.service.experiment.ExperimentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,11 @@ public class ExperimentController {
     @RequestMapping("/datalead")
     public ModelAndView datalead(Model model) {
         return new ModelAndView("experiment/datalead", "modelModel", model);
+    }
+
+    @RequestMapping("/resultShow")
+    public ModelAndView experimentresultShow(Model model) {
+        return new ModelAndView("experiment/resultShow", "modelModel", model);
     }
 
     @RequestMapping("/time")
