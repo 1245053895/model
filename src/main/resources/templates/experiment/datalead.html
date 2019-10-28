@@ -21,69 +21,110 @@
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
 	<title></title>
+
+	<script type="text/javascript" th:src="@{/laydate/laydate.js}"></script>
+
+	<script>
+        lay('#version').html('-v'+ laydate.v);
+        //日期时间范围
+        laydate.render({
+            elem: '#test10'
+            ,type: 'datetime'
+            ,range: true
+        });
+	</script>
+
+	<style>
+		body{padding: 20px;}
+		.demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
+
+	</style>
+
+
+
 </head>
 <body>
-<input type="hidden" th:value="${businessid}" id="businessid"/>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 业务问题 <span class="c-gray en">&gt;</span> 业务问题定位 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
+<!--<input type="hidden" th:value="${businessid}" id="businessid"/>-->
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 验证模型 <span class="c-gray en">&gt;</span> 数据导入 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
 	<div class="panel panel-default" style="height: 33vh;width: 100%;float: left" >
 		<div class="selectScene" style="height: 50%;">
-		<div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">场景定位</div>
-		<div style="float: left;font-size:14px; font-weight:700;margin-left: 14%;margin-top:9vh;">请选择场景</div>
-		<div class="select-box" style="width: 40%;margin-left: 43%;margin-top: -3vh;float: left;">
+			<div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">数据导入</div>
+			<div style="float: left;font-size:14px; font-weight:700;margin-left: 3%;margin-top:9vh;">请选择导入的数据</div>
+			<div class="select-box" style="width: 16%;margin-left: 1%;margin-top: 8vh;float: left;">
 			<select  class="select" size="1"  name="sceneSelect" id="selectScene" onchange="selectblock()" >
-				<option  value="选择" selected>请选择场景...</option>   <!--th:value="${businessSceneList.blockid}"-->
-				<option  th:each="businessSceneList:${businessSceneList}" th:value="${businessSceneList.sceneid}"  th:text="${businessSceneList.scenename}"  ></option>
-			</select>
+				<option  value="选择" selected>请选择数据...</option>   <!--th:value="${businessSceneList.blockid}"-->
+				<!--<option  th:each="businessSceneList:${businessSceneList}" th:value="${businessSceneList.sceneid}"  th:text="${businessSceneList.scenename}"  ></option>-->
+				<option onclick="selectbatch()">批处理数据</option>
+				<option onclick="selectflow()">实时数据</option>
+				</select>
+			</div>
 		</div>
-		</div>
-
-
-		<div  style="height: 47vh;width: 101%;float: left;margin-left: -0.2%;margin-top: 25%;">
-		<div id="sceneinformation"   style="height: 100%;width: 100%;">
-			<iframe  name="sceneinformation" src="/business/sceneinformation1" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>
-		</div>
-		</div>
-
 	</div>
 
-	<!--<div  style="height: 90vh;width: 56%;float: left;margin-left: 3%;">-->
-		<!--<div id="questionprocesss"   style="height: 100%;width: 100%;">-->
-			<!--<iframe  name="questionprocess" src="/business/questionprocess1" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>-->
-		<!--</div>-->
-	<!--</div>-->
-	<a   onclick="nextstep()"  ><input class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  22.3%;" value="保存" /></a>
-	<input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  43.9%;" value="下一步" onclick="showstatus()"/>
 
+	<div class="panel panel-default" style="height: 50vh;width: 100%;float: left;margin-top: 3vh;" >
+		<div class="selectScene" style="height: 50%;">
+			<div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">参数配置</div>
+			<div class="panel-body" id="params_text" style="float: left; width: 98%;height: 160%;overflow-x:hidden;overflow-y:auto;">
+				<div id="batch" style="display: none" class="paramsdiv">
+											<div class="modal-body">
+												<strong style="margin-left: 5%">设备ID：</strong><input type="text" placeholder="请输入设备ID" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 18%;">
+											</div>
+											<div class="modal-body">
+												<strong style="margin-left: 5%">线路ID</strong>
+												<input type="text" placeholder="请输入线路ID" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 18%;">
+											</div>
+											<div class="modal-body">
+												<strong style="margin-left: 5%">时间范围</strong>
+												<!--<input type="text" placeholder="请输入起始时间" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
+												<!--<input type="text" class="demo-input" placeholder="日期时间范围" id="test10">-->
+												<input type="text" class="input-text radius size-S" placeholder="日期时间范围" style="margin:10px 15px 10px 15px;;width: 18%;" id="test10">
+											</div>
+										<br/>
+				</div>
+				<div id="flow" style="display: none" class="paramsdiv">
+					把输入数据以某一时间间隔批量的处理，将批处理间隔缩短到秒级时，以实现处理实时数据流
+				</div>
+			</div>
+		</div>
 </div>
+	<input class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  18.6%;" value="保存" />
+	<!--<input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  42.9%;" value="下一步" onclick="showstatus()"/>
+-->
+	<input class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  40.9%;" value="下一步"/>
 
-<!--_footer 作为公共模版分离出去-->
+
+
+	<!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
-
+<script type="text/javascript" th:inline="javascript">
+	function selectbatch() {
+		$(".paramsdiv").hide(300);
+		$("#batch").show(300);
+    }
+    function selectflow(){
+        $(".paramsdiv").hide(300);
+        $("#flow").show(300);
+	}
+</script>
 <script>
     var status = "xxx";
 	function selectblock(){
-	// document.getElementById('sceneObject').setAttribute('type',"button");
-	// var sceneid = $("#selectScene").val();
-	//alert(blockid);
-	// 	$.ajax({
-	// 		url : "/selectObjectNode",
-	// 		type:"post",
-	// 		data : {
-	// 			"sceneid" : encodeURI(sceneid),
-	// 			async : false
-	// 		},
-	// 		success : function(data) {
-	// 				 $("#sceneObject").val(data);
-	//
-	//
-	// 		}
-	// 	});
-		selectNodes();
-		selectObject()
+	var type = $("#selectScene").val();
+if (type == "批处理数据") {
+    selectbatch();
+}
+else if (type == "实时数据") {
+    selectflow();
+}
+else {}
+	// 	selectNodes();
+	// 	selectObject()
 	}
 
 	function selectNodes(){
