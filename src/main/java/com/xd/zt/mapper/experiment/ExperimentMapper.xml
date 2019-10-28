@@ -3,5 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xd.zt.mapper.experiment.ExperimentMapper">
 
+    <select id="modelConfiguration" resultType="java.lang.String">
+       SELECT modelinstancename from analyse_instance;
+   </select>
+
+
 
 </mapper>
