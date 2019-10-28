@@ -5,6 +5,7 @@ import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.analyse.AnalyseInstance;
 import com.xd.zt.domain.analyse.AnalyseModelProcess;
 import com.xd.zt.domain.analyse.AnalyticsTask;
+import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.mapper.analyse.AnalyseMapper;
 import com.xd.zt.service.analyse.AnalyseService;
 import org.apache.ibatis.annotations.Param;
@@ -43,6 +44,12 @@ public class AnalyseServiceImpl implements AnalyseService {
     public Integer selectProcessid(String flowprocessid) {
         Integer processid = analyseMapper.selectProcessid(flowprocessid);
         return processid;
+    }
+
+    @Override
+    public List<DatamodelInfo> selectDataResult(Integer modelid) {
+        List<DatamodelInfo> datamodelInfoList = analyseMapper.selectDataResult(modelid);
+        return datamodelInfoList;
     }
 
     @Override

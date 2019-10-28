@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/experiment")
-public class experimentController {
+public class ExperimentController {
     @RequestMapping("/index")
     public ModelAndView experimentindex(Model model) {
         return new ModelAndView("experiment/index", "modelModel", model);
@@ -16,5 +16,9 @@ public class experimentController {
     @RequestMapping("/firstpage")
     public ModelAndView experimentfirstpage(Model model) {
         return new ModelAndView("experiment/firstpage", "modelModel", model);
+    }
+    @RequestMapping("/datalead")
+    public ModelAndView datalead(Model model) {
+        return new ModelAndView("experiment/datalead", "modelModel", model);
     }
 }
