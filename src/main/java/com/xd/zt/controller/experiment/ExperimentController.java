@@ -56,4 +56,9 @@ public class ExperimentController {
     }
 
 
+    @RequestMapping("/welcome")
+    public ModelAndView welcome(Model model) {
+        return new ModelAndView("experiment/welcome", "modelModel", model);
+    }
+
 }

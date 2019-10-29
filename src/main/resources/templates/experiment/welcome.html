@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>数据格式转换与数据分组模块</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/upFile.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="panel panel-default" style="height: 90vh;">
+        <div class="panel-header">验证建模新建/打开</div>
+
+        <div class="panel-body">
+
+
+            <div class="logo1" >
+                <H3 STYLE="margin-left: 45%;margin-top: -2%;">验证建模</H3>
+            </div>
+
+            <!--上传按钮区域-->
+            <div class="logo_area">
+                <div class="logo_content" style="margin-left: 20%;" >
+                    <a onclick="jumpDialog() ">
+                        <img   class="logo_image" src="/image/Newbusiness.png"/>
+                        <p class="logo_text" ><strong>新建验证模型</strong></p>
+                    </a>
+                </div>
+
+
+                <div class="logo_content" style="margin-left: 20%;">
+                    <a th:href="@{/analyse/analyseManage}">
+                        <img  class="logo_image" src="/image/Openbusiness.png"/>
+                        <p class="logo_text" ><strong>打开验证模型</strong></p>
+                    </a>
+                </div>
+
+                <!--<div class="logo_content" style="margin-left: 20%;">-->
+                <!--<a th:href="@{/businessManage}">-->
+                <!--<img th:href="@{/businessManage}" class="logo_image" src="image/Showbusiness.png"/>-->
+                <!--<p class="logo_text" ><strong>业务列表</strong></p>-->
+                <!--</a>-->
+                <!--</div>-->
+            </div>
+            <div class="logo2"></div>
+            <!--上传表单区域-->
+
+
+
+
+            <!--</form><br/>-->
+        </div>
+
+    </div>
+</div>
+<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">新建验证模型</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                <strong style="margin-left: 5%">验证模型名称：</strong><input type="text" placeholder="请输入验证模型名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+                    <!--<div style="width: 19%; font-weight: 700; margin-left: 4%;margin-top: 1vh;">请选择业务模型</div>
+                    <select  class="select" size="1"  name="sceneSelect" id="selectbusinessModel" onchange="selectQuestion()" style="width: 43%; margin-left: 25%;margin-top: -4%;float: left;">
+                        <option  value="选择" selected style="color: grey">请选择业务模型...</option>
+                        <option  th:each="businessModelList:${businessModelList}" th:value="${businessModelList.businessid}"  th:text="${businessModelList.businessname}"  ></option>
+                    </select>
+                    <div style=" width: 19%; font-weight: 700; margin-left: 4%;margin-top: 3vh;">请选择业务问题</div>
+                    <select class="select" size="1"  name="selectQuestion" id="selectQuestion" style="width: 43%; margin-left: 25%;margin-top: -4%;float: left;">
+                        <option  value="选择" selected style="color: grey">请选择业务问题...</option>
+                    </select>
+                    </div>-->
+            <div style="width: 13vh;margin-left: 53vh">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="showLeftList();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="page-container">-->
+    <!--<div class="panel panel-default" style="height: 90vh;">-->
+        <!--<div class="panel-header">分析新建</div>-->
+
+        <!--<div class="panel-body">-->
+            <!--<div class="logo1" >-->
+               <!--<H3 style="margin-left: 35%;margin-top: -2%;">分析建模</H3>-->
+            <!--</div>-->
+            <!--<div id="selectBuild" style="height: 34vh;width: 68vh;border: 1px solid rgba(0,0,0,0.25);margin-top: 15%;margin-left: 29%;border-radius: 12px;">-->
+            <!--<div class="selectScene" style="height: 50%;">-->
+                <!--<div style="float: left; font-size: 14px;font-weight: 700; padding-left: 25%;padding-top: 9vh;">请选择业务</div>-->
+                <!--<div class="select-box" style=" width: 27%;margin-left: 10%;margin-top: 8vh;float: left;">-->
+                    <!--<select  class="select" size="1"  name="sceneSelect" id="selectbusinessModel" onchange="selectQuestion()" >-->
+                        <!--<option  value="选择" selected>请选择业务...</option>-->
+                        <!--<option  th:each="businessModelList:${businessModelList}" th:value="${businessModelList.businessid}"  th:text="${businessModelList.businessname}"  ></option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="selectScene" style="height: 50%;">-->
+                <!--<div style=" float: left;font-size: 14px;font-weight: 700;margin-left: 25.3%;">请选择业务问题</div>-->
+                <!--<div class="select-box" style="width: 27%;margin-left: 48%; margin-top: -3vh;float: left;">-->
+                    <!--<select class="select" size="1"  name="selectQuestion" id="selectQuestion">-->
+                        <!--<option  value="选择" selected>请选择业务问题...</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+                <!--<button   style="float: left;font-size: 15px;margin-left: 64%;margin-top: 6%;width: 25%;height: 35px; border-radius: 6px;background-color: #4c72bf;color: white;" onclick="showLeftList()" >-->
+                   <!--点击构建分析模型-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--</div>-->
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+</body>
+<script>
+    function jumpDialog() {
+        $("#dataAggreDivide").modal("show");
+    }
+    function selectQuestion(){
+        var businessid = $("#selectbusinessModel").val();
+       //alert(businessid);
+            $.ajax({
+            url : "/analyse/selectQuestion",
+            type:"post",
+                data : {
+                "businessid" : encodeURI(businessid),
+                async : false
+            },
+            success : function(data) {
+                var t2 = $("#selectQuestion").empty();
+                var data = data;
+                for(var key in data){
+                    t2.append("<option value='" + key + "'>" + data[key] + "</option>");
+                }
+                // alert(data);
+                // console.log(data);
+                // for (var i = 0; i < data.length; i++) {
+                //     t2.append("<option value='" + data[i].key + "'>" + data[i].value + "</option>");
+                // }
+            }
+        });
+    }
+
+//var question;
+    function showLeftList() {
+        if(document.getElementById('selectQuestion').value == ""){
+            $.Huimodalalert('请选择业务问题',2000);
+        }
+        else {
+            var data = {};//定义一个数组
+            data["questionid"] = document.getElementById('selectQuestion').value;
+            data["name"] = document.getElementById('saveName').value;
+            var dataToJson = JSON.stringify(data);
+            //question = questionid;
+            //alert(questionid);
+            $.ajax({
+                async: false,
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                type : "post",
+                data:dataToJson,
+                url : '/analyse/quesListshow',
+                success : function() {
+                    $.Huimodalalert('保存成功',1000);
+                    //传输成功后延时500ms跳转到模型列表
+                    parent.location.reload()
+                }
+            });
+
+        }
+    }
+</script>
+</html>
