@@ -58,19 +58,15 @@
                             <!--<td><a style="cursor:pointer" class="text-primary" th:text="${analyseInstanceList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>-->
                             <!--<td th:text="${analyseInstanceList.examplestatus}"></td>-->
                             <td>
-                                <a  >
+                                <a>
                                     <input th:id="${analyseInstanceList.modelinstanceid}" class="btn btn-primary size-MINI radius" type="button" value="运行" >
                                 </a>
-                                <a   >
+                                <a>
                                     <input th:id="${analyseInstanceList.modelinstanceid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >
                                 </a>
 
                             </td>
                         </tr>
-
-
-
-
                     </tbody>
                 </table>
             </div>
@@ -78,6 +74,25 @@
         </div>
     </div>
 
+    <div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 弹出对话框 -->
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">返回的结果</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                </div>
+                <div class="modal-body">
+                   <pre id="showData" >
+                   </pre>
+                </div>
+                <div class="modal-footer">
+                    <!--<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>-->
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
@@ -138,18 +153,17 @@
                             data: JSON.stringify(exampleid),
                             url: '/analyse/exampleRun',
                             success: function (data) {
-                                    // var result = JSON.parse(data);
-
                                     if(data.resultMessage == "模型分析实例任务添加成功"){
                                         $.Huimodalalert(data.resultMessage, 1000);
                                     }
                                     else {
-
-                                        alert("结果数据为："+data.resultData) ;
+                                        // alert("结果数据为："+data.resultData) ;
+                                        document.getElementById("showData").innerText = data.resultData.toString();
+                                        $("#modal-demo").modal("show");
                                         $.Huimodalalert("成功返回结果", 1000);
                                     }
                             },
-                            error:function () {
+                            error:function (){
                                 $.Huimodalalert('任务添加失败', 1000);
                             }
                         });
@@ -161,6 +175,10 @@
         }
     }
 </script>
+<script type="text/javascript" th:inline="javascript">
+
+</script>
+
 </body>
 </html>
 

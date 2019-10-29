@@ -36,9 +36,11 @@
 	<div class="panel panel-default" style="width: 67%;height: 43vh;float: left;margin-left: 2%;">
 		<div class="panel panel-default" style="height: 100%;width: 100%;" id="CsvTable">
 			<div class="panel-header">
+				<div style="width: 40%;">
 				数据预览&nbsp;&nbsp;&nbsp;&nbsp;
-				数据名称：<span id="dataName"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-				<button class="btn btn-success radius" id="addData" data-dismiss="modal" style="position: absolute;right: 4%;;margin-top:  -0.3%;" onclick="addData(this.value);">确定</button>
+				数据名称：<span id="dataName"></span>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<input  class="btn btn-success radius" type="button" value="全选" style="position:absolute;margin-left: 55%;margin-top: -1.6%;"  onclick="selectAllCheckbox()"/>
+				<button class="btn btn-success radius" id="addData" data-dismiss="modal" style="position: absolute;right: 3.5%;margin-top: -1.6%;" onclick="addData(this.value);">确定</button>
 			</div>
 
 			<div class="panel-body" id="dataTable" style="height: 81%;overflow-x: hidden;overflow-y: auto;">
@@ -317,6 +319,11 @@
 
 	}
 
+</script>
+<script type="text/javascript" th:inline="javascript">
+	function selectAllCheckbox() {
+        $('.check-box').prop('checked',true);
+    }	
 </script>
 </body>
 </html>
