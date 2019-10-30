@@ -101,8 +101,22 @@
                 <!--</ul>-->
             <!--</dd>-->
         <!--</dl>-->
+        <dl id="menu" th:each="TestnameModelList:${TestnameModelList}">
+            <dt ><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${ TestnameModelList.testname}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
 
-        <dl id="menu">
+
+
+
+                    <ul>
+                        <li><a data-href="/experiment/modelConfiguration" data-title="模型配置" href="javascript:void(0)"    th:id="'/experiment/modelConfiguration/'+TestnameModelList.analysemodeid">模型配置</a></li>
+                        <li><a data-href="/experiment/datalead" data-title="数据导入" href="javascript:void(0)"   th:id="'/experiment/datalead/'+TestnameModelList.analysemodeid">数据导入</a></li>
+                        <li><a data-href="/experiment/resultShow" data-title="模型验证" href="javascript:void(0)"     th:id="'/experiment/resultShow/'+TestnameModelList.analysemodeid">模型验证</a></li>
+                    </ul>
+                </ul>
+            </dd>
+        </dl>
+       <!-- <dl id="menu">
             <dt><i class="Hui-iconfont" >&#xe620;</i><font color="white" size="3"> 验证模型</font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -111,7 +125,7 @@
                     <li><a data-href="/experiment/resultShow" data-title="模型验证" href="javascript:void(0)" >模型验证</a></li>
                 </ul>
             </dd>
-        </dl>
+        </dl>-->
 
 
 
@@ -124,7 +138,7 @@
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
                 <li class="active">
-                    <span title="我的桌面" data-href="welcome">首页</span>
+                    <span title="我的桌面" data-href="/experiment/welcome">首页</span>
                     <em></em></li>
             </ul>
         </div>

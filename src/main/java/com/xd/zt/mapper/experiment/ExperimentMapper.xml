@@ -7,6 +7,17 @@
        SELECT modelinstancename from analyse_instance;
    </select>
 
+    <select id="selectAnalyse" resultType="AnalyseModel" >
+        SELECT * FROM analyse_model;
+    </select>
 
+
+    <select id="selectTestname" resultType="ExperimentModel" >
+        SELECT * FROM experiment_model;
+    </select>
+    <insert id="insertExperimentModel" parameterType="ExperimentModel">
+
+         insert into  experiment_model(testname,analysemodeid) VALUES(#{testname},#{analysemodeid})
+    </insert>
 
 </mapper>

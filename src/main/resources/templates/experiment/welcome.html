@@ -80,6 +80,12 @@
                         <option  value="选择" selected style="color: grey">请选择业务问题...</option>
                     </select>
                     </div>-->
+                <div style="width: 19%; font-weight: 700; margin-left: 4%;margin-top: 1vh;">选择验证模型：</div>
+                <select  class="select" size="1"  name="sceneSelect" id="selectQuestion"  onchange="selectQuestion()" style="width: 43%; margin-left: 25%;margin-top: -4%;float: left;">
+                    <option  value="选择" selected style="color: grey">请选择模型...</option>
+                 <!--   <option  th:each="businessModelList:${businessModelList}" th:value="${businessModelList.businessid}"  th:text="${businessModelList.businessname}"  ></option>-->
+                    <option  th:each="analyseModelList:${analyseModelList}" th:id="${analyseModelList.modelid}"  th:text="${analyseModelList.name}"  ></option>
+                </select>
             <div style="width: 13vh;margin-left: 53vh">
                 <button class="btn btn-primary" data-dismiss="modal" onclick="showLeftList();">确定</button>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
@@ -133,6 +139,11 @@
     function jumpDialog() {
         $("#dataAggreDivide").modal("show");
     }
+
+
+
+
+
     function selectQuestion(){
         var businessid = $("#selectbusinessModel").val();
        //alert(businessid);
@@ -161,12 +172,17 @@
 //var question;
     function showLeftList() {
         if(document.getElementById('selectQuestion').value == ""){
-            $.Huimodalalert('请选择业务问题',2000);
+            $.Huimodalalert('请选择验证模型',2000);
         }
         else {
             var data = {};//定义一个数组
-            data["questionid"] = document.getElementById('selectQuestion').value;
-            data["name"] = document.getElementById('saveName').value;
+
+
+            data["analysemodeid"] = document.getElementById( $("#selectQuestion option:selected").attr("id")).id;
+
+         /*   data["analysemodeid"] = document.getElementById('${analyseModelList.modelid}').value;*/
+            data["testname"] = document.getElementById('saveName').value;
+          /*  data["analysemodeid"] = document.getElementById('${analyseModelList.modelid}').value;*/
             var dataToJson = JSON.stringify(data);
             //question = questionid;
             //alert(questionid);
@@ -175,8 +191,8 @@
                 dataType: "json",
                 contentType : 'application/json;charset=UTF-8',
                 type : "post",
-                data:dataToJson,
-                url : '/analyse/quesListshow',
+                data : dataToJson,
+                url : '/experiment/analyseListshow',
                 success : function() {
                     $.Huimodalalert('保存成功',1000);
                     //传输成功后延时500ms跳转到模型列表
