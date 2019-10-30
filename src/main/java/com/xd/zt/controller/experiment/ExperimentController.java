@@ -45,15 +45,7 @@ public class ExperimentController {
     public ModelAndView modelConfiguration(Model model) {
         return new ModelAndView("experiment/modelConfiguration", "modelModel", model);
     }*/
-    @RequestMapping("/modelConfiguration")
-    public ModelAndView modelConfiguration(Model model){
 
-        ArrayList modelConfiguration  = experimentService.modelConfiguration();
-
-        model.addAttribute("modelConfiguration",modelConfiguration);
-
-        return new ModelAndView("experiment/modelConfiguration","Modelmodel",model) ;
-    }
 
 
     @RequestMapping("/welcome")
