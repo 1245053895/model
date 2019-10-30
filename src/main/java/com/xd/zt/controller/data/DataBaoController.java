@@ -43,7 +43,12 @@ public class DataBaoController {
             String blockNames="";
             for (int i = 0; i < blockids.length; i++) {
                 DatamodelBlock datamodelBlock = sourceService.selectBlockById(Integer.parseInt(blockids[i]));
-                blockNames =blockNames+ datamodelBlock.getBlockname();
+                try {
+                    blockNames =blockNames + datamodelBlock.getBlockname();
+                }
+              catch (Exception e){
+                    continue;
+              }
             }
             datamodelBao.setBlockname(blockNames);
         }
@@ -90,7 +95,7 @@ public class DataBaoController {
             listContent.add(csvContent);
         }
        /* String csvFilePath = "F:\\Projects\\ZTPT\\src\\main\\resources\\static\\" + fileName;*/
-        String csvFilePath = "src/main/resources/static/data/"+fileName;
+        String csvFilePath = "/var/data/celery/input/"+fileName;
         //构建csv文件
         fileService.writeCsvFile(csvFilePath, csvHeaders, listContent);
         //获取数据块id
@@ -217,7 +222,10 @@ public class DataBaoController {
         String[] blockNames = new String[blockids.length];
         for (int i = 0; i < blockids.length; i++) {
             DatamodelBlock datamodelBlock = sourceService.selectBlockById(Integer.parseInt(blockids[i]));
-            blockNames[i] = datamodelBlock.getBlockname();
+            try{
+                blockNames[i] = datamodelBlock.getBlockname();
+            }
+           catch (Exception e){continue;}
         }
         modelAndView.setViewName("data/baoShow");
         modelAndView.addObject("datamodelInfo", datamodelInfo);

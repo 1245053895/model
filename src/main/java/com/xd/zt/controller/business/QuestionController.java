@@ -139,6 +139,11 @@ public class QuestionController {
         File file = new File(filepath);
         if (file.exists()) {
             file.delete();
+            boolean result = file.delete();
+            if (!result) {
+                System.gc();
+                file.delete();
+            }
         }
         return questionid;
     }

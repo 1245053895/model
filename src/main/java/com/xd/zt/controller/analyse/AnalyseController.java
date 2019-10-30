@@ -213,7 +213,7 @@ public class AnalyseController {
 
         HttpUtil httpUtil = new HttpUtil();
         try {
-            httpUtil.post("http://127.0.0.1:8000/tasks/"+modelinstanceid+"/delete/",null);
+            httpUtil.post("http://10.101.201.174:8000/tasks/"+modelinstanceid+"/delete/",null);
 //            httpUtil.post("http://120.24.157.214:8000/tasks/"+modelinstanceid+"/delete/",null);
 
         }catch (Exception e){
@@ -241,13 +241,10 @@ public class AnalyseController {
         modelinstance.put("analyzmodel",parameters);
 
         String jsonString= JSON.toJSONString(modelinstance);
-//        CreateFileUtil.createJsonFile(jsonString,"C:\\Users\\ZLJ\\Desktop\\test","XGBregressor");
-
-
         HttpUtil httpUtil = new HttpUtil();
         try {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
-            String result =  HttpCientPost.restPost("http://127.0.0.1:8000/tasks/",jsonString);
+            String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
             JSON resultjson = JSON.parseObject(result);
             return resultjson;
         }catch (Exception e){
@@ -265,12 +262,12 @@ public class AnalyseController {
         String taskString = new String();
         try {
 //        taskString =  HttpClientGet.restGet("http://120.24.157.214:8000/tasks/"+"name"+"/",null);
-        taskString =  HttpClientGet.restGet("http://127.0.0.1:8000/tasks/"+"name"+"/",null);
+        taskString =  HttpClientGet.restGet("http://10.101.201.174:8000/tasks/"+"name"+"/",null);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
         JSONObject taskJson = JSON.parseObject(taskString);
-        JSONArray taskListArray = taskJson.getJSONArray("data");
+        JSONArray taskListArray = taskJson.getJSONArray("datas");
         for (int i = 0 ; i < taskListArray.size(); i++){
             AnalyticsTask analyticsTask = new AnalyticsTask();
             analyticsTask.setTaskId(taskListArray.getJSONObject(i).getString("taskId"));

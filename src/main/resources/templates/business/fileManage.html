@@ -23,7 +23,7 @@
         <div class="panel-body">
             <div >
                 <!--实现模糊搜索-->
-                <form method="get" action="#" th:action="@{dataSearch}">
+                <form method="get" action="#" th:action="@{/business/dataSearch}">
                     <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="search_text" value="" id="search_text" autocomplete="off" style="width:30%"><button type="submit" class="btn btn-default" id="search_button">搜索</button>&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${businessFileList.size()}"></a>&nbsp;&nbsp;个文件】
                 </form>
             </div>
@@ -57,7 +57,7 @@
                                 <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;-->
                                 <a th:id="${businessFile.dataid}" onclick="deletefile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="删除"></a>
                                 <!--&lt;!&ndash;跳转modelModify 实现模型下载&ndash;&gt;-->
-                                <a th:id="${businessFile.dataid}"  onclick="downloadfile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="下载"></a>
+                                <!--<a th:id="${businessFile.dataid}"  onclick="downloadfile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="下载"></a>-->
                             </td>
 
                         </tr>

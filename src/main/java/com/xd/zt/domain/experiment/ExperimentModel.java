@@ -4,7 +4,7 @@ public class ExperimentModel {
     private Integer id;
     private String testname;
     private Integer analysemodeid;
-    private Integer processid;
+    private Integer programmeid;
 
     public Integer getId() {
         return id;
@@ -30,11 +30,11 @@ public class ExperimentModel {
         this.analysemodeid = analysemodeid;
     }
 
-    public Integer getProcessid() {
-        return processid;
+    public Integer getProgrammeid() {
+        return programmeid;
     }
 
-    public void setProcessid(Integer processid) {
-        this.processid = processid;
+    public void setProgrammeid(Integer programmeid) {
+        this.programmeid = programmeid;
     }
 }

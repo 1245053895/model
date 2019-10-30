@@ -22,7 +22,7 @@ public class TaskController {
         HttpUtil httpUtil = new HttpUtil();
         try {
 
-            httpUtil.post("http://127.0.0.1:8000/tasks/"+modelInstanceId+"/"+taskId+"/delete/",null);
+            httpUtil.post("http://10.101.201.174::8000/tasks/"+modelInstanceId+"/"+taskId+"/delete/",null);
 //            httpUtil.post("http://120.24.157.214:8000/tasks/"+modelInstanceId+"/"+taskId+"/delete/",null);
 
         }catch (Exception e){
@@ -35,7 +35,7 @@ public class TaskController {
     @RequestMapping("/downloadLinuxFile")
     public String downloadLinuxFile(@RequestBody JSONObject jsonObject){
         String taskId = jsonObject.get("taskId").toString();
-     String Directory = FindLinuxDirectory.FindDirectory("120.24.157.214",22,"root","Slw123456","find /var/data/celery/output/"+taskId+" -type f");
+     String Directory = FindLinuxDirectory.FindDirectory("10.101.201.174",22,"root","C:/IA","find /var/data/celery/output/"+taskId+" -type f");
      String[] DirectoryList = Directory.split("\n");
      for (int i = 0; i < DirectoryList.length; i++ ){
          String[] FileDirectory = DirectoryList[i].split("/");
@@ -49,7 +49,7 @@ public class TaskController {
              System.out.println("Status = " + result);
          }
 
-         DownloadFileUtil.downloadFromLinux("120.24.157.214",22,"root","Slw123456",DirectoryList[i],targetDirectory+"\\");
+         DownloadFileUtil.downloadFromLinux("10.101.201.174",22,"root","C:/IA",DirectoryList[i],targetDirectory+"\\");
 
      }
         return taskId;

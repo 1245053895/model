@@ -10,6 +10,8 @@ import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.service.data.DataAreaService;
 import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.SourceService;
+import com.xd.zt.util.analyse.HttpCientPost;
+import com.xd.zt.util.analyse.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -112,20 +114,44 @@ public class DataBlockController {
         JSONArray jsonArray = JSON.parseArray(analyzmodel);
         JSONObject params = jsonArray.getJSONObject(0).getJSONObject("params");
         String dataaddr = params.getString("path");
+
         Integer blockid=  dataBlockService.maxBlockId();
         Integer areaid= dataBlockService.getAreaIdByBlockId(blockid);
-        DatamodelInfo datamodelInfo=new DatamodelInfo();
-        datamodelInfo.setDataresultname(modelinstancename);
-        datamodelInfo.setDataarea(areaid);
-        datamodelInfo.setModelid(Integer.parseInt(modelid));
-        datamodelInfo.setDataaddr(dataaddr);
-        datamodelInfo.setBlockid(blockid);
-        dataBlockService.processBlockInfo(datamodelInfo);
-        //System.out.println(analyzmodel);
+
+
         String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
         if(modelinstanceid==""||modelinstanceid==null){
             dataBlockService.BlockInstance(modelid,modelinstancename,analyzmodel,blockid.toString());
             map.put("code",1);
+            String modelinstanceid1 = dataAreaService.selectInstanceName(modelinstancename);
+            JSONObject modelinstance = new JSONObject();
+            modelinstance.put("username","name");
+            modelinstance.put("modelInstanceId",modelinstanceid1);
+            modelinstance.put("instantData",true);
+            modelinstance.put("analyzmodel",jsonArray);
+
+            String jsonString= JSON.toJSONString(modelinstance);
+            HttpUtil httpUtil = new HttpUtil();
+            try {
+//              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
+                String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
+                JSON resultjson = JSON.parseObject(result);
+
+
+
+                String resultdataaddr = ((JSONObject) resultjson).getString("resp_path");
+                DatamodelInfo datamodelInfo=new DatamodelInfo();
+                datamodelInfo.setDataresultname(modelinstancename);
+                datamodelInfo.setDataarea(areaid);
+                datamodelInfo.setModelid(Integer.parseInt(modelid));
+                datamodelInfo.setDataaddr(resultdataaddr);
+                datamodelInfo.setBlockid(blockid);
+                dataBlockService.processBlockInfo(datamodelInfo);
+                //System.out.println(analyzmodel);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
         else {
             map.put("code",0);

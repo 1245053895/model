@@ -12,6 +12,7 @@ import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.FileService;
 import com.xd.zt.service.data.FlowService;
 import com.xd.zt.service.data.SourceService;
+import com.xd.zt.util.data.ShellUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,11 +181,15 @@ public class FileController {
         String sourcename = fileInformation[0];
         String sourcepath = fileInformation[1];
         String sourcesize = fileInformation[2];
+        ShellUtil.execCmd("mv /zt/"+sourcepath+" /var/data/celery/input/\n","root","/zt/IA","10.101.201.173",22);
         System.out.println(filename + "----" + sourcepath + "----" + sourcesize);
         DatamodelSource datamodelSource = new DatamodelSource();
         datamodelSource.setModeid(modeid);
         datamodelSource.setSourcename(sourcename);
-        datamodelSource.setSourcepath(sourcepath);
+
+        String sourcepath1 = "/var/data/celery/input/"+sourcename;
+        datamodelSource.setSourcepath(sourcepath1);
+
         datamodelSource.setSourcesize(sourcesize);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = simpleDateFormat.format(new Date());

@@ -16,6 +16,8 @@ import com.xd.zt.service.data.DataAreaService;
 import com.xd.zt.service.data.FileService;
 import com.xd.zt.service.data.FlowService;
 import com.xd.zt.service.data.SourceService;
+import com.xd.zt.util.analyse.HttpCientPost;
+import com.xd.zt.util.analyse.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -189,7 +191,7 @@ public class DataAreaController {
             listContent.add(csvContent);
         }
 //        String csvFilePath = "E:\\ideal_workspace\\svn\\ZTPT\\src\\main\\resources\\static\\"+fileName;
-        String csvFilePath = "src/main/resources/static/data/"+fileName;
+        String csvFilePath = "/var/data/celery/input/"+fileName;
         //构建csv文件E:\ideal_workspace\svn\ZTPT\src\main\resources\static\data\test2.csv
         fileService.writeCsvFile(csvFilePath,csvHeaders,listContent);
         //获取数据源id
@@ -221,26 +223,46 @@ public class DataAreaController {
         String analyzmodel = jsonObject.get("analyzmodel").toString();
         JSONArray jsonArray = JSON.parseArray(analyzmodel); //字符串转换为json数组
         JSONObject params = jsonArray.getJSONObject(0).getJSONObject("params"); //取json数组对象
-        String dataaddr = params.getString("path");
+        String dataaddr = params.getString("input");
 
         Integer areaid= dataAreaService.maxAreaId();
         Integer datalink=  dataAreaService.getLinkIdByAreaid(areaid);
-        DatamodelInfo datamodelInfo=new DatamodelInfo();
-        datamodelInfo.setDataresultname(modelinstancename);
-        datamodelInfo.setDatalink(datalink);
-        datamodelInfo.setDataarea(areaid);
-        datamodelInfo.setModelid(Integer.parseInt(modelid));
-        datamodelInfo.setDataaddr(dataaddr);
-        dataAreaService.processAreaInfo(datamodelInfo);
-      String areaname=modelinstancename;
-   dataAreaService.updateAreaByAreaId(areaname,areaid.toString());
-
 
         //System.out.println(analyzmodel);
         String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
         if(modelinstanceid==""||modelinstanceid==null){
             dataAreaService.insertExample(modelid,modelinstancename,analyzmodel,areaid.toString());
             map.put("code",1);
+            String modelinstanceid1 = dataAreaService.selectInstanceName(modelinstancename);
+            JSONObject modelinstance = new JSONObject();
+            modelinstance.put("username","name");
+            modelinstance.put("modelInstanceId",modelinstanceid1);
+            modelinstance.put("instantData",true);
+            modelinstance.put("analyzmodel",jsonArray);
+
+            String jsonString= JSON.toJSONString(modelinstance);
+            HttpUtil httpUtil = new HttpUtil();
+            try {
+//              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
+                String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
+                JSON resultjson = JSON.parseObject(result);
+
+                String resultdataaddr = ((JSONObject) resultjson).getString("resp_path");
+
+
+                DatamodelInfo datamodelInfo=new DatamodelInfo();
+                datamodelInfo.setDataresultname(modelinstancename);
+                datamodelInfo.setDatalink(datalink);
+                datamodelInfo.setDataarea(areaid);
+                datamodelInfo.setModelid(Integer.parseInt(modelid));
+                datamodelInfo.setDataaddr(resultdataaddr);
+                dataAreaService.processAreaInfo(datamodelInfo);
+                String areaname=modelinstancename;
+                dataAreaService.updateAreaByAreaId(areaname,areaid.toString());
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
         else {
             map.put("code",0);

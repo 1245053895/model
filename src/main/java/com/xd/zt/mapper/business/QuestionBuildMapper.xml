@@ -28,8 +28,8 @@
         INSERT  INTO business_question (businessid,blockid,sceneid) VALUES (#{businessid},#{blockid},#{sceneid})
     </insert>
 
-    <insert id="savedescribe" parameterType="String" >
-UPDATE business_question SET questioname=#{questioname}, questiondes=#{questiondes},formulatdes=#{formulatdes} WHERE business_question.blockid = #{blockid}
+    <insert id="savedescribe" parameterType="String">
+UPDATE business_question SET questioname=#{questioname},questiondes=#{questiondes},formulatdes=#{formulatdes} WHERE business_question.blockid = #{blockid}
     </insert>
 
     <delete id="deletequestion" parameterType="String">

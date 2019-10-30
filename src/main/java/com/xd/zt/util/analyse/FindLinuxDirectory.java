@@ -14,14 +14,15 @@ public class FindLinuxDirectory {
 	 * JSch Example Tutorial
 	 * Java SSH Connection Program
 	 */
-	public static String FindDirectory(String IP,Integer PORT,String USER ,String PASSWORD,String Command) {
+	public static String FindDirectory(String IP,Integer PORT,String USER ,String KEYPATH,String Command) {
 	    try{
 			String Directory = "";
 	    	java.util.Properties config = new java.util.Properties(); 
 	    	config.put("StrictHostKeyChecking", "no");
 	    	JSch jsch = new JSch();
+			jsch.addIdentity(KEYPATH);
 	    	Session session=jsch.getSession(USER, IP, PORT);
-	    	session.setPassword(PASSWORD);
+//	    	session.setPassword(PASSWORD);
 	    	session.setConfig(config);
 	    	session.connect();
 	    	System.out.println("Connected");
