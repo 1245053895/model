@@ -21,6 +21,14 @@
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
     <title></title>
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+      window.onload=function () {
+          var analysemodelid = 17
+          // alert(analysemodelid)
+      }
+    </script>
+
 </head>
 <body>
 
@@ -31,176 +39,131 @@
             <div class="panel-header" style="border-color: #ddd;background-color: #f5f5f5;color: #444;">模型配置</div>
             <div style="float: left;font-size:14px; font-weight:700;margin-left: 14%;margin-top:9vh;">请选择模型</div>
             <div class="select-box" style="width: 40%;margin-left: 43%;margin-top: -3vh;float: left;">
-                <select  class="select" size="1"  name="sceneSelect" id="selectScene" onchange="selectblock()" >
+                <select  class="select" size="1"  name="sceneSelect" id="selectScene" onchange="selectQuestion()" >
                     <option  value="选择" selected>请选择要验证的模型...</option>   <!--th:value="${businessSceneList.blockid}"-->
-                    <option  th:each="data1:${modelConfiguration}" th:text="${data1} "    ></option>
+                    <option  th:each="name:${name}" th:text="${name}"th:value="${modelid}"></option>
                 </select>
             </div>
         </div>
 
 
-      <!--  <div  style="height: 47vh;width: 101%;float: left;margin-left: -0.2%;margin-top: 25%;">
-            <div id="sceneinformation"   style="height: 100%;width: 100%;">
-                <iframe  name="sceneinformation" src="/business/sceneinformation1" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>
-            </div>
-        </div>-->
+  
 
     </div>
     <div class="panel panel-default" style="width: 100%;height: 31vh;float: left;margin-top: 2%;overflow-x:hidden;overflow-y:auto">
         <div class="panel-header">验证模型展示
-            <!--模型预览&nbsp;&nbsp;&nbsp;&nbsp;-->
-            <!--模型名称：<a th:text="${analyzAndParam.procName}"></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
-            <!--修改时间：<a th:text="${analyzAndParam.time}"></a>-->
-            <!--<p id="proc_Elements" th:text="${analyzAndParam.proc_Elements}" style="display: none"></p>-->
-            <!--<p id="param1" th:text="${analyzAndParam.param1_form}" style="display: none"></p>-->
-            <!--<p id="param2" th:text="${analyzAndParam.param2_form}" style="display: none"></p>-->
-            <!--<p id="param3" th:text="${analyzAndParam.param3_form}" style="display: none"></p>-->
-            <!--<p id="param4" th:text="${analyzAndParam.param4_form}" style="display: none"></p>-->
-         <!--   <a href="#"><input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;" value="保存" onclick="jumpDialog()" /></a>
-            <a th:href="@{'/analyse/exampleList/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>-->
+
         </div>
-        <div class="panel-body" id="model_content">
+        <div class="panel-body" id="model_content" style="text-align: center;">
 
         </div>
     </div>
     <div class="panel panel-default"style="width: 100%;height: 20vh;float: left;margin-top: 2%;overflow-x:hidden;overflow-y:auto">
         <div class="panel-header">参数<input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  -0.1%;" value="下一步"  th:href="@{'experiment/modelConfiguration'}"></div>
-            <!--模型预览&nbsp;&nbsp;&nbsp;&nbsp;-->
-            <!--模型名称：<a th:text="${analyzAndParam.procName}"></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
-            <!--修改时间：<a th:text="${analyzAndParam.time}"></a>-->
-            <!--<p id="proc_Elements" th:text="${analyzAndParam.proc_Elements}" style="display: none"></p>-->
-            <!--<p id="param1" th:text="${analyzAndParam.param1_form}" style="display: none"></p>-->
-            <!--<p id="param2" th:text="${analyzAndParam.param2_form}" style="display: none"></p>-->
-            <!--<p id="param3" th:text="${analyzAndParam.param3_form}" style="display: none"></p>-->
-            <!--<p id="param4" th:text="${analyzAndParam.param4_form}" style="display: none"></p>-->
-            <!--   <a href="#"><input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;" value="保存" onclick="jumpDialog()" /></a>
-               <a th:href="@{'/analyse/exampleList/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>-->
-
-        <div class="panel-body" id="model_content">
+        <div class="panel-body" id="params_text">
 
         </div>
     </div>
-   <!-- <div class="panel panel-default"  style="width: 100%;height: 18vh;float: left;margin-top: 2%;overflow-x:hidden;overflow-y:auto">
-        <div class="panel-header">参数<input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  -0.1%;" value="下一步"  th:href="@{'experiment/modelConfiguration'}"></div>
-        &lt;!&ndash;<form method="post" class="loginForm" >&ndash;&gt;
-        <div class="panel-body" id="params_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
-
-        </div>
-    </div>-->
-    <!--<div  style="height: 90vh;width: 56%;float: left;margin-left: 3%;">-->
-    <!--<div id="questionprocesss"   style="height: 100%;width: 100%;">-->
-    <!--<iframe  name="questionprocess" src="/business/questionprocess1" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>-->
-    <!--</div>-->
-    <!--</div>-->
-   <!-- <a   onclick="nextstep()"  ><input class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  22.3%;" value="保存" /></a>
-    <input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  43.9%;" value="下一步" onclick="showstatus()"/>-->
-
 </div>
-
-<<!--!&#45;&#45;_footer 作为公共模版分离出去&ndash;&gt;
-<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
-<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
-<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+</body>
 
 <script>
-    var status = "xxx";
-    function selectblock(){
-        // document.getElementById('sceneObject').setAttribute('type',"button");
-        // var sceneid = $("#selectScene").val();
-        //alert(blockid);
-        // 	$.ajax({
-        // 		url : "/selectObjectNode",
-        // 		type:"post",
-        // 		data : {
-        // 			"sceneid" : encodeURI(sceneid),
-        // 			async : false
-        // 		},
-        // 		success : function(data) {
-        // 				 $("#sceneObject").val(data);
-        //
-        //
-        // 		}
-        // 	});
-        selectNodes();
-        selectObject()
-    }
-
-    function selectNodes(){
-
-        var sceneid = $("#selectScene").val();
-        $("#questionprocesss :first-child").remove();
-        var questionprocess = '<iframe  name="questionprocess" src="/business/selectNodes/' +
-            '' +sceneid+
-            '" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>';
-        $("#questionprocesss").append(questionprocess);
-
-    }
-
-    function selectObject() {
-        var sceneid = $("#selectScene").val();
-        $("#sceneinformation :first-child").remove();
-        var sceneinformation = '<iframe  name="sceneinformation" src="/business/sceneinformation/' +
-            '' +sceneid+
-            '" frameborder="0" scrolling="auto" style="height: 100%;width: 100%;"></iframe>';
-        $("#sceneinformation").append(sceneinformation);
-    }
-
-    function nextstep() {
-        var blockid = window.frames["questionprocess"].document.getElementById('blockid').value;
-        status=blockid;
-        if(status=="xxx"||status==undefined||status==null){
-            $.Huimodalalert('请先提取节点',2000);
-        }
-        else {
-            var businessid =document.getElementById('businessid').getAttribute('value');
-            var sceneid = $("#selectScene").val();
-            var id= {
-                "blockid" : blockid,
-                "businessid" : businessid,
-                "sceneid":sceneid
-            };
-            $.ajax({
-                url : "/business/savequestion",
-                type : "POST",
-                async : true,
-                contentType: "application/json; charset=utf-8",
-                data : JSON.stringify(id),
-                dataType : 'json',
-                success : function(data) {
-                    if(data.code==1){
-                        var href = "/business/questionDefine/"+blockid.toString();
-                        document.getElementById('nextstep').setAttribute("href",href);
-                        $.Huimodalalert('节点提取成功',2000);
-                    }
-                    else {
-                        $.Huimodalalert('节点已提取，请重新提取节点或删除已提取的节点',2000);
-                        status="xxx"
+    function selectQuestion(){
+        var modelid=document.getElementById('selectScene').value;
+        $.ajax({
+            url : "/experiment/selectQuestion",
+            type:"post",
+            data : {
+                "modelid" : encodeURI(modelid),
+                async : false
+            },
+            success : function(data) {
+                var data = data;
+                for(var key in data){
+                    var test = "newModelProcess";
+                    var ss = data[key];
+                    var xx= key;
+                    if(xx == test){
+                        var proc_Elements = ss;
+                    }else {
+                        var paramsdata = ss;
                     }
                 }
-            });
 
+                var proc_Elements_Arr = proc_Elements.split(';');
+                for (var i = 0; i < proc_Elements_Arr.length; i++) {
+                    var proc_element = proc_Elements_Arr[i];
+                    add(proc_element);//实现按钮回显
+                    if (proc_element != '开始' && proc_element != '结束') {
+                        switchParam_form(paramsdata,proc_element);
+                    }
+                }
         }
-    }
-
-    function showstatus() {
-        if(status=="xxx"||status==undefined||status==null){
-            $.Huimodalalert('请先保存提取的节点',2000);
-        }
-        else{
-            var href = "/business/questionDefine/"+status.toString();
-            location.href = href;
-        }
-
+        });
     }
 </script>
--->
-<!--/_footer 作为公共模版分离出去-->
 
-<!--请在下方写此页面业务相关的脚本-->
-<!--<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
-<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
-<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
-<script type="text/javascript" th:inline="javascript">-->
-</body>
+<script>
+    function add(value){
+        var num_start = countStart();
+        var num_stop = countStop();
+        if(num_start == 0 && value != '开始'){
+            $.Huimodalalert('请先添加【开始】',2000);
+        }
+        else if(num_start >0 && value == '开始'){
+            $.Huimodalalert('单个模型只能添一个【开始】',2000);
+        }
+        else if(num_stop >0){
+            $.Huimodalalert('【结束】后不能再添加元素',2000);
+        }
+        else{
+            // relation_detail(value);
+            // switchParam_form(value);
+
+            if(value != '结束'){
+                $("#model_content").append("<div style = 'margin-right: 2%;;margin-top: 5%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                    + value
+                    +"' onclick='switchParam(value);'/>"+"<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>"+"<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+                // init();
+
+            }
+            else{
+                $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 5%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                    + value
+                    +"' onclick='switchParam(value);'/>"+"<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>"+"</div>");
+                // init();
+            }
+        }
+    }
+</script>
+
+<script>
+    function switchParam_form(value,name) {
+        var paramsArr = new Array();
+        paramsArr.push("<div id='a"+ name +"' style='display: none' class='paramsdiv'><form method='post' class='"+ name +"' >");
+        var algorithmParams_Arr = value.split(';');
+        for (var i=0; i<algorithmParams_Arr.length;i++) {
+            var param = algorithmParams_Arr[i];
+            paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>"+param+"</div>"+ "<input type='text' placeholder='请输入..' class='input-text ac_input' name='"+param+"' value='' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+        }
+        paramsArr.push("</form></div>");
+        $("#params_text").append(paramsArr.join("\n"));
+    }
+    function switchParam(value) {
+        $(".paramsdiv").hide(300);
+        $("#a"+value).show(300);
+    }
+</script>
+
+<script>
+    function countStart(){
+        var inputs_start = $("#model_content input[value='开始']");
+        return inputs_start.length;
+    }
+    function countStop(){
+        var inputs_stop = $("#model_content input[value='结束']");
+        return inputs_stop.length;
+    }
+</script>
+
 </html>
