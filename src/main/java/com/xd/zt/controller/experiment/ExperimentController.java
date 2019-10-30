@@ -29,15 +29,8 @@ public class ExperimentController {
     public ModelAndView experimentfirstpage(Model model) {
         return new ModelAndView("experiment/firstpage", "modelModel", model);
     }
-    @RequestMapping("/datalead")
-    public ModelAndView datalead(Model model) {
-        return new ModelAndView("experiment/datalead", "modelModel", model);
-    }
 
-    @RequestMapping("/resultShow")
-    public ModelAndView experimentresultShow(Model model) {
-        return new ModelAndView("experiment/resultShow", "modelModel", model);
-    }
+
 
     @RequestMapping("/time")
     public ModelAndView time(Model model) {

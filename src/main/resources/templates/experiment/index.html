@@ -102,30 +102,15 @@
             <!--</dd>-->
         <!--</dl>-->
         <dl id="menu" th:each="TestnameModelList:${TestnameModelList}">
-            <dt ><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${ TestnameModelList.testname}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt th:id="${TestnameModelList.id}" ><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${ TestnameModelList.testname}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
-
-
-
-
-                    <ul>
-                        <li><a data-href="/experiment/modelConfiguration" data-title="模型配置" href="javascript:void(0)"    th:id="'/experiment/modelConfiguration/'+TestnameModelList.analysemodeid">模型配置</a></li>
-                        <li><a data-href="/experiment/datalead" data-title="数据导入" href="javascript:void(0)"   th:id="'/experiment/datalead/'+TestnameModelList.analysemodeid">数据导入</a></li>
-                        <li><a data-href="/experiment/resultShow" data-title="模型验证" href="javascript:void(0)"     th:id="'/experiment/resultShow/'+TestnameModelList.analysemodeid">模型验证</a></li>
-                    </ul>
+                <ul>
+                    <li><a th:id="'/experiment/modelConfiguration/'+${TestnameModelList.id}" data-href="xx" data-title="模型配置" href="javascript:void(0)" >模型配置</a></li>
+                    <li><a th:id="'/experiment/datalead/'+${TestnameModelList.id}" data-href="xxx" data-title="数据导入" href="javascript:void(0)">数据导入</a></li>
+                    <li><a th:id="'/experiment/resultShow/'+${TestnameModelList.id}" data-href="xxx" data-title="模型验证" href="javascript:void(0)">模型验证</a></li>
                 </ul>
             </dd>
         </dl>
-       <!-- <dl id="menu">
-            <dt><i class="Hui-iconfont" >&#xe620;</i><font color="white" size="3"> 验证模型</font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
-                <ul>
-                    <li><a data-href="/experiment/modelConfiguration/1" data-title="模型配置" href="javascript:void(0)" >模型配置</a></li>
-                    <li><a data-href="/experiment/datalead" data-title="数据导入" href="javascript:void(0)">数据导入</a></li>
-                    <li><a data-href="/experiment/resultShow" data-title="模型验证" href="javascript:void(0)" >模型验证</a></li>
-                </ul>
-            </dd>
-        </dl>-->
 
 
 
@@ -168,27 +153,24 @@
 <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     window.onload = function () {
         var modelid = document.getElementsByTagName("dt");
         for (var index = 0; index < modelid.length; index++) {
             modelid[index].onclick = function () {
                 var id = this.id;
-                var analyseProcesskshow = "/analyse/analyseProcessBuild/" + id.toString();
-                var analysemodel = document.getElementById(analyseProcesskshow);
-                analysemodel.setAttribute('data-href', analyseProcesskshow);
+                var experimentData = "/experiment/datalead/" + id.toString();
+                var experimentmodel = document.getElementById(experimentData);
+                experimentmodel.setAttribute('data-href',experimentData);
 
-                var analyzModelCreate = "/analyse/analyzModelCreate/" + id.toString();
-                var analysemodel = document.getElementById(analyzModelCreate);
-                analysemodel.setAttribute('data-href', analyzModelCreate);
+                var experimentConfig = "/experiment/modelConfiguration/" + id.toString();
+                var modelConfig = document.getElementById(experimentConfig);
+                modelConfig.setAttribute('data-href',experimentConfig);
 
-                var analyzList = "/analyse/analyzList/" + id.toString();
-                var analysemodel = document.getElementById(analyzList);
-                analysemodel.setAttribute('data-href', analyzList);
+                var modeltest="/experiment/resultShow/"+ id.toString();
+                var test = document.getElementById(modeltest);
+                test.setAttribute('data-href',modeltest);
 
-                var analyzModelList = "/analyse/analyzModelList/" + id.toString();
-                var analysemodel = document.getElementById(analyzModelList);
-                analysemodel.setAttribute('data-href', analyzModelList);
             }
         }
     }

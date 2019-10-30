@@ -31,6 +31,6 @@
     </delete>
 
     <insert id="addDatamoddelName" parameterType="DatamodelName" useGeneratedKeys="true" keyProperty="modelid">
-        insert into datamodel_name values (null,#{modelname},#{modeltime},#{questionid});
+        insert into datamodel_name values (null,#{modelname},#{modeltime},#{questionid},null);
     </insert>
 </mapper>

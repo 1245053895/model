@@ -118,13 +118,13 @@
                         <td th:text="${scenename}">
                         </td>
                         <td>
-                            <a th:each="objectNameList:${objectNameList}"  th:text="${objectNameList.getObjectname()}"  ><br/></a>
+                              <div th:each="objectNameList:${objectNameList}"> <a th:text="${objectNameList.getObjectname()}" ></a><br/></div>
+                       </td>
+                        <td>
+                           <div th:each="dataTypeNameList:${dataTypeNameList}"> <a th:text="${dataTypeNameList.getDatatypename()}"></a><br/></div>
                         </td>
                         <td>
-                            <a th:each="dataTypeNameList:${dataTypeNameList}"  th:text="${dataTypeNameList.getDatatypename()}"><br/></a>
-                        </td>
-                        <td>
-                            <a th:each="knowledgeNameList:${knowledgeNameList}"  th:text="${knowledgeNameList.getKnowledgename()}"><br/></a>
+                            <div th:each="knowledgeNameList:${knowledgeNameList}"><a   th:text="${knowledgeNameList.getKnowledgename()}"></a><br/></div>
                         </td>
                     </tr>
                     </tbody>

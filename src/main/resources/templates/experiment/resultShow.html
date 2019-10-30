@@ -40,9 +40,9 @@
                 <div class="panel-header">数据导入</div>
                 <div class="panel-body" style="height:70vh; font-size: 10px">
                     <div style="height: 22vh;width: 12%;"></div>
-                    <div>设备ID&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" placeholder="xd123553325" class="input-text radius size-M" style="width: 70%"></div>
-                    <div>线路ID&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" placeholder="xd1532153121" class="input-text radius size-M" style="width: 70%"></div>
-                    <div>时间范围&nbsp;&nbsp;&nbsp;<input type="text" readonly='readonly' placeholder="2019-10-16 17:40:02 - 2019-11-27 22:03:04" class="input-text radius size-M" style="width: 70%"></div>
+                    <div>设备ID&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" th:value="${datatype}" class="input-text radius size-M" style="width: 70%"></div>
+                    <div>线路ID&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" th:value="${xianlu}" class="input-text radius size-M" style="width: 70%"></div>
+                    <div>时间范围&nbsp;&nbsp;&nbsp;<input type="text" readonly='readonly' th:value="${shijian}" class="input-text radius size-M" style="width: 70%"></div>
                 </div>
             </div>
         </div>
@@ -53,9 +53,24 @@
         <div class="col-md-5 col-lg-5 col-sm-5" style="height: 92vh;color: grey;font-size: 24px;text-align: center;line-height: 5vh; border: 0px solid red;">
             <div class="panel panel-default">
                 <div class="panel-header">模型配置</div>
-                <div class="panel-body" style="height:70vh; ">
+              <!--  <div class="panel-body" style="height:70vh; ">
                     <img th:src="@{/image/xscf.png}" style="border: 0px solid red;margin-top: 30%"/>
+                </div>-->
+
+                <div class="panel panel-default" style="width: 100%;height: 89vh;float: left;overflow-x: hidden;overflow-y: auto;">
+                 <!--   <div class="panel-header">建模<input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;"  value="修改" onclick="jumpDialog()"/></div>
+                    <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  -2.1%;" value="返回"/></a>
+                    -->
+                    <input class="btn btn-success radius" type="button" style="margin-left: -4%;margin-top: 42%;" value="开始"/>
+                    <i class='Hui-iconfont' style='padding-left: 19px;position: absolute;margin-top: 31.5vh; margin-left: -3.2vh;'>&#xe67a;</i>
+                    <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top:42%;" value="蒙特卡洛" />
+                    <i class='Hui-iconfont' style='padding-left: 19px;position: absolute;margin-top: 31.5vh;margin-left: -3vh;'>&#xe67a;</i>
+                    <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 42%;" value="结束"/>
+                    <div class="panel-body" id="model_content"></div>
                 </div>
+
+
+
             </div>
         </div>
         <div class="col-md-1 col-lg-1 col-sm-1" style="height: 92vh;color: grey;font-size: 24px;text-align: center;line-height: 5vh; border: 0px solid red;">

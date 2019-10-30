@@ -70,11 +70,11 @@
 			<div class="panel-body" id="params_text" style="float: left; width: 98%;height: 160%;overflow-x:hidden;overflow-y:auto;">
 				<div id="batch" style="display: none" class="paramsdiv">
 											<div class="modal-body">
-												<strong style="margin-left: 5%">设备ID：</strong><input type="text" placeholder="请输入设备ID" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 18%;">
+												<strong style="margin-left: 5%">设备ID：</strong><input id="shebei" type="text" placeholder="请输入设备ID" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 18%;">
 											</div>
 											<div class="modal-body">
 												<strong style="margin-left: 5%">线路ID</strong>
-												<input type="text" placeholder="请输入线路ID" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 18%;">
+												<input type="text" id="xianlu" placeholder="请输入线路ID" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 18%;">
 											</div>
 											<div class="modal-body">
 												<strong style="margin-left: 5%">时间范围</strong>
@@ -90,10 +90,11 @@
 			</div>
 		</div>
 </div>
-	<input class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  18.6%;" value="保存" />
+	<!--<input class="btn btn-success radius" type="button" style="position: absolute;right: 3%;margin-top:  18.6%;" value="保存" />-->
+	<button class="btn btn-success radius" data-dismiss="modal" style="position: absolute;right: 2%;margin-top:  40.9%;" onclick="savedata();">保存</button>
 	<!--<input id="nextstep"   class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  42.9%;" value="下一步" onclick="showstatus()"/>
 -->
-	<input class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  40.9%;" value="下一步"/>
+	<!--<a href ="/experiment/resultShow" ><input class="btn btn-success radius" type="button" style="position: absolute;right: 2%;margin-top:  40.9%;" value="下一步"/></a>-->
 	<!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
@@ -109,6 +110,69 @@
         $("#flow").show(300);
 	}
 </script>
+
+
+
+	<script type="text/javascript" th:inline="javascript">
+
+
+        //保存页面数据，封装json，用ajax传递
+        function savedata() {
+            if (document.getElementById('selectScene').value=='批处理数据'){
+                if(document.getElementById('shebei').value == ""){
+                    $.Huimodalalert('请输入设备id',2000);
+                }else if (document.getElementById('xianlu').value=='') {
+                    $.Huimodalalert('请输入线路id',2000);
+                }else if (document.getElementById('test10').value=='') {
+                    $.Huimodalalert('请输入时间范围',2000);
+                }
+                else {
+                    var data={};
+                    data["datatype"]=document.getElementById('selectScene').value;
+                    data["shebei"]=document.getElementById('shebei').value;
+                    data["xianlu"]=document.getElementById('xianlu').value;
+                    data['test10']=document.getElementById('test10').value;
+                    var dataToJson = JSON.stringify(data);
+                    $.ajax({
+                        async: false,
+                        type : "post",
+                        dataType: "json",
+                        contentType : 'application/json;charset=UTF-8',
+                        data:dataToJson,
+                        url : '/experiment/saveData',
+                        success : function() {
+                            $.Huimodalalert('保存成功',2000);
+                            //传输成功后延时500ms跳转到模型列表
+                            /* window.setTimeout("window.location = '/over?sceneid="[[${sceneid}]],1500);*/
+                            //这两种写法都可以
+
+                            /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+                        }
+                    });
+
+                }
+			}else {
+                $.Huimodalalert('保存成功',2000);
+			}
+        }
+
+        function showstatus() {
+            if(status1=="xxx"||status1==undefined||status1==null){
+                $.Huimodalalert('请先保存',2000);
+            }
+            else{
+                var href = "/experiment/resultShow";
+                location.href = href;
+            }
+
+        }
+
+	</script>
+
+
+
+
+
 <script>
     var status = "xxx";
 	function selectblock(){
@@ -180,16 +244,7 @@ else {}
 		}
     }
 
-    function showstatus() {
-	    if(status=="xxx"||status==undefined||status==null){
-            $.Huimodalalert('请先保存提取的节点',2000);
-		}
-		else{
-            var href = "/business/questionDefine/"+status.toString();
-            location.href = href;
-		}
 
-    }
 </script>
 <!--/_footer 作为公共模版分离出去-->
 
