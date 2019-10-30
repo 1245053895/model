@@ -33,7 +33,7 @@
             <div class="select-box" style="width: 40%;margin-left: 43%;margin-top: -3vh;float: left;">
                 <select  class="select" size="1"  name="sceneSelect" id="selectScene" onchange="selectblock()" >
                     <option  value="选择" selected>请选择要验证的模型...</option>   <!--th:value="${businessSceneList.blockid}"-->
-                    <option  th:each="data1:${modelConfiguration}" th:text="${data1}"></option>
+                    <option  th:each="data1:${modelConfiguration}" th:text="${data1} "    ></option>
                 </select>
             </div>
         </div>
