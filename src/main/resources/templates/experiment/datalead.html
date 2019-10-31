@@ -45,7 +45,7 @@
 </head>
 <body>
 
-<!--<input type="hidden" th:value="${businessid}" id="businessid"/>-->
+<input type="hidden" th:value="${experimentid}" id="experimentid"/>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 验证模型 <span class="c-gray en">&gt;</span> 数据导入 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
 	<div class="panel panel-default" style="height: 33vh;width: 100%;float: left" >
@@ -114,8 +114,6 @@
 
 
 	<script type="text/javascript" th:inline="javascript">
-
-
         //保存页面数据，封装json，用ajax传递
         function savedata() {
             if (document.getElementById('selectScene').value=='批处理数据'){
@@ -132,6 +130,7 @@
                     data["shebei"]=document.getElementById('shebei').value;
                     data["xianlu"]=document.getElementById('xianlu').value;
                     data['test10']=document.getElementById('test10').value;
+                    data['experimentid']=document.getElementById('experimentid').getAttribute('value');
                     var dataToJson = JSON.stringify(data);
                     $.ajax({
                         async: false,
@@ -142,11 +141,6 @@
                         url : '/experiment/saveData',
                         success : function() {
                             $.Huimodalalert('保存成功',2000);
-                            //传输成功后延时500ms跳转到模型列表
-                            /* window.setTimeout("window.location = '/over?sceneid="[[${sceneid}]],1500);*/
-                            //这两种写法都可以
-
-                            /*window.setTimeout("window.location.href = '/modelList'",1500);*/
                         }
                     });
 
@@ -155,21 +149,7 @@
                 $.Huimodalalert('保存成功',2000);
 			}
         }
-
-        function showstatus() {
-            if(status1=="xxx"||status1==undefined||status1==null){
-                $.Huimodalalert('请先保存',2000);
-            }
-            else{
-                var href = "/experiment/resultShow";
-                location.href = href;
-            }
-
-        }
-
 	</script>
-
-
 
 
 
