@@ -248,16 +248,23 @@ public class DataAreaController {
                 JSON resultjson = JSON.parseObject(result);
 
                 String resultdataaddr = ((JSONObject) resultjson).getString("resp_path");
-
+                JSONArray resultPath = JSON.parseArray(resultdataaddr);
+                String[] resultpath = new String[resultPath.size()];
+                for (int i = 0 ; i < resultPath.size(); i++){
+                    JSONObject resultaddr =resultPath.getJSONObject(i);
+                    resultpath[i] = resultaddr.getString(String.valueOf(i));
+                }
 
                 DatamodelInfo datamodelInfo=new DatamodelInfo();
                 datamodelInfo.setDataresultname(modelinstancename);
                 datamodelInfo.setDatalink(datalink);
                 datamodelInfo.setDataarea(areaid);
                 datamodelInfo.setModelid(Integer.parseInt(modelid));
-                datamodelInfo.setDataaddr(resultdataaddr);
+
+                datamodelInfo.setDataaddr(resultpath[0]);
+
                 dataAreaService.processAreaInfo(datamodelInfo);
-                String areaname=modelinstancename;
+                String areaname = modelinstancename;
                 dataAreaService.updateAreaByAreaId(areaname,areaid.toString());
             }catch (Exception e){
                 System.out.println(e.getMessage());

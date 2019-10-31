@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 @RequestMapping("/data")
 @Controller
@@ -110,7 +111,17 @@ public class FlowList {
 //         BusinessQuestion businessQuestion =sourceService.modelidToscenceid(modeid);
 //         int sceneid = businessQuestion.getSceneid();
 
-        Iterable<DatamodelSource> datamodelSourceList = fileRepository.findAll();
+        Iterable<DatamodelSource> datamodelSourceList1 = fileRepository.findAll();
+
+        List<DatamodelSource> datamodelSourceList = new ArrayList<>();
+        for (int i = 0 , j = 0; i < ((List<DatamodelSource>) datamodelSourceList1).size(); i++){
+            if (((List<DatamodelSource>) datamodelSourceList1).get(i).getModeid() == modeid){
+                datamodelSourceList.add(j,((List<DatamodelSource>) datamodelSourceList1).get(i));
+                j++;
+            }
+            else {
+            }
+        }
         model.addAttribute("datamodelSourceList", datamodelSourceList);
         model.addAttribute("modeid",modeid);
 
