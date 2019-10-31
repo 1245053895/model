@@ -23,10 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by KAIRUN on 2019/3/6.
@@ -157,7 +154,16 @@ public class FileController {
     //预览数据
     @GetMapping(value = "/fileManage/{modeid}")
     public ModelAndView lookFile(Model model,@PathVariable("modeid") Integer modeid) {
-        Iterable<DatamodelSource> datamodelSourceList = fileRepository.findAll();
+        Iterable<DatamodelSource> datamodelSourceList1 = fileRepository.findAll();
+        List<DatamodelSource> datamodelSourceList = new ArrayList<>();
+        for (int i = 0 ,j = 0; i < ((List<DatamodelSource>) datamodelSourceList1).size(); i++){
+            if (((List<DatamodelSource>) datamodelSourceList1).get(i).getModeid() == modeid){
+                datamodelSourceList.add(j,((List<DatamodelSource>) datamodelSourceList1).get(i));
+                j++;
+            }
+            else {
+            }
+        }
         model.addAttribute("datamodelSourceList", datamodelSourceList);
         model.addAttribute("modeid",modeid);
         return new ModelAndView("data/fileManage", "upFileList", model);

@@ -45,7 +45,16 @@ public class AnalyseController {
     @RequestMapping("/analyzModelCreate/{analysemodelid}")
     public ModelAndView analyzModelCreate(Model model,@PathVariable("analysemodelid")Integer analysemodelid){
         List<Algorithm> algorithmList = analyseService.selectAlgorithm();
-        model.addAttribute("algorithmList",algorithmList);
+        List<Algorithm> algorithmList1 = new ArrayList<>();
+        for (int i = 0 ; i < algorithmList.size(); i++){
+            String type = algorithmList.get(i).getAlgorithmtype();
+            if ("模型训练".equals(type)){
+                int j = 0;
+                algorithmList1.add(j,algorithmList.get(i));
+                j++;
+            }
+        }
+        model.addAttribute("algorithmList",algorithmList1);
         model.addAttribute("analysemodelid",analysemodelid);
         return new ModelAndView("analyse/analyzModelCreate","Modelmoddel",model);
     }
@@ -105,7 +114,17 @@ public class AnalyseController {
         String modelprocess = analyseService.selectAnalyseProcess(modelid);
         model.addAttribute("modelprocess",modelprocess);
         List<Algorithm> algorithmList = analyseService.selectAlgorithm();
-        model.addAttribute("algorithmList",algorithmList);
+        List<Algorithm> algorithmList1 = new ArrayList<>();
+        for (int i = 0 ; i < algorithmList.size(); i++){
+            String type = algorithmList.get(i).getAlgorithmtype();
+            if ("模型训练".equals(type)){
+                int j = 0;
+                algorithmList1.add(j,algorithmList.get(i));
+                j++;
+            }
+        }
+
+        model.addAttribute("algorithmList",algorithmList1);
         return new ModelAndView("analyse/analyzModelView","modelModel",model);
     }
 
