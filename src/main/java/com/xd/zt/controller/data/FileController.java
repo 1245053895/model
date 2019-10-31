@@ -201,6 +201,17 @@ public class FileController {
         String date = simpleDateFormat.format(new Date());
         datamodelSource.setSourcetime(date);
         datamodelSource.setStatus("0");
+/*        System.out.println(filename + "----" + sourcepath + "----" + sourcesize);
+        DatamodelSource datamodelSource = new DatamodelSource();
+        datamodelSource.setModeid(modeid);
+        datamodelSource.setSourcename(sourcename);
+        datamodelSource.setSourcepath(sourcepath);
+        datamodelSource.setSourcesize(sourcesize);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = simpleDateFormat.format(new Date());
+        datamodelSource.setSourcetime(date);
+        datamodelSource.setStatus("0");*/
+
         fileRepository.save(datamodelSource);
     }
 

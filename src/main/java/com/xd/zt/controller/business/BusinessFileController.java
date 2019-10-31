@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import com.xd.zt.domain.business.BusinessFile;
+import com.xd.zt.domain.data.DatamodelSource;
 import com.xd.zt.repository.business.BusinessFileRepository;
 import com.xd.zt.service.business.BusinessFileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class BusinessFileController {
     private BusinessFileRepository fileRepository;
     @Autowired
     private BusinessFileService fileService;
+    @Autowired
+    private BusinessFileRepository businessFileRepository;
 
 
   //预览数据
@@ -102,15 +105,15 @@ public class BusinessFileController {
         return new ModelAndView("business/fileManage","upFileList",model);
     }
 
-    @ResponseBody
-    @RequestMapping("/fileDown")
-    public  String fileDown (HttpServletResponse response, String filePath, @RequestBody String json) {
-        JSONObject jsonObject = JSON.parseObject(json);
-        String id = jsonObject.getString("dataid");
-        Integer dataid = Integer.parseInt(id);
-        BusinessFile businessFile = fileRepository.findById(dataid).orElse(null);
-        String filepath = businessFile.getFilepath();
+    /*文件下载*/
+    @GetMapping("/businessFileDown/{dataid}")
+    public String fileDown(HttpServletResponse response, String filePath, @PathVariable("dataid") Integer dataid) {
+      BusinessFile businessFile=  businessFileRepository.findById(dataid).orElse(null);
+       // DatamodelSource datamodelSource = fileRepository.findById(dataid).orElse(null);
+        String filepath=businessFile.getFilepath();
+//        String filepath = datamodelSource.getSourcepath();
         System.out.println(filepath);
+
         try {
             // path是指欲下载的文件的路径。
             File file = new File(filepath);
@@ -120,6 +123,7 @@ public class BusinessFileController {
             String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
 
             // 以流的形式下载文件。
+
             InputStream fis = new BufferedInputStream(new FileInputStream(filepath));
             byte[] buffer = new byte[fis.available()];
             fis.read(buffer);
@@ -137,7 +141,50 @@ public class BusinessFileController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return id;
+        return null;
 
     }
+
+
+
+
+
+//    @ResponseBody
+//    @RequestMapping("/fileDown")
+//    public  String fileDown (HttpServletResponse response, String filePath, @RequestBody String json) {
+//        JSONObject jsonObject = JSON.parseObject(json);
+//        String id = jsonObject.getString("dataid");
+//        Integer dataid = Integer.parseInt(id);
+//        BusinessFile businessFile = fileRepository.findById(dataid).orElse(null);
+//        String filepath = businessFile.getFilepath();
+//        System.out.println(filepath);
+//        try {
+//            // path是指欲下载的文件的路径。
+//            File file = new File(filepath);
+//            // 取得文件名。
+//            String filename = file.getName();
+//            // 取得文件的后缀名。
+//            String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
+//
+//            // 以流的形式下载文件。
+//            InputStream fis = new BufferedInputStream(new FileInputStream(filepath));
+//            byte[] buffer = new byte[fis.available()];
+//            fis.read(buffer);
+//            fis.close();
+//            // 清空response
+//            response.reset();
+//            // 设置response的Header
+//            response.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes()));
+//            response.addHeader("Content-Length", "" + file.length());
+//            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+//            response.setContentType("application/octet-stream");
+//            toClient.write(buffer);
+//            toClient.flush();
+//            toClient.close();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        return id;
+//
+//    }
 }

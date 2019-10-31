@@ -112,14 +112,6 @@ private SourceService sourceService;
     }
 
 
-
-
-
-
-
-
-
-
     //数据链保存
     @RequestMapping("/dataLinkFirstflow/{modeid}")
     public ModelAndView dataLink(@PathVariable("modeid") Integer modeid) throws Exception {
@@ -157,13 +149,6 @@ private SourceService sourceService;
         modelAndView.addObject("Id",processid);
         return modelAndView;
     }
-
-
-
-
-
-
-
 
     //数据区保存
     @RequestMapping("/dataareaflowx/{processid}")

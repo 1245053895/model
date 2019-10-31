@@ -56,9 +56,9 @@
                                 <!--&lt;!&ndash;<a><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>&ndash;&gt;-->
                                 <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;-->
                                 <a th:id="${businessFile.dataid}" onclick="deletefile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="删除"></a>
-                                <!--&lt;!&ndash;跳转modelModify 实现模型下载&ndash;&gt;-->
-                                <!--<a th:id="${businessFile.dataid}"  onclick="downloadfile(id)"><input class="btn btn-primary size-MINI radius" type="button" value="下载"></a>-->
-                            </td>
+                                <a th:href="@{'/business/businessFileDown/'+ ${businessFile.dataid}}">
+                                    <input class="btn btn-primary size-MINI radius" type="button" value="下载">
+                                </a> </td>
 
                         </tr>
                     </tbody>
