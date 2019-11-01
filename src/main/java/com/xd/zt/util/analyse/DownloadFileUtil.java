@@ -18,8 +18,9 @@ public class DownloadFileUtil {
                     System.out.printf("连接成功");
 
                     SCPClient scpClient = connection.createSCPClient();
-
-                    scpClient.get(fileResourcePath, fileTargetPath);
+                    System.out.printf(fileResourcePath);
+                    System.out.printf(fileTargetPath);
+                    scpClient.get(fileResourcePath,fileTargetPath);
                 }
                 else {
                     System.out.printf("连接失败");

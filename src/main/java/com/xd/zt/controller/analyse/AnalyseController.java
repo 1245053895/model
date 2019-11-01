@@ -264,6 +264,7 @@ public class AnalyseController {
         try {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
             String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
+            System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
             return resultjson;
         }catch (Exception e){
@@ -277,11 +278,12 @@ public class AnalyseController {
     @RequestMapping("/taskList")
     public ModelAndView taskList(Model model){
 //        List<AnalyticsTask> analyticsTaskList = analyseService.selectTask();
-        List<AnalyticsTask> analyticsTaskList = new ArrayList<>();
+         List<AnalyticsTask> analyticsTaskList = new ArrayList<>();
         String taskString = new String();
         try {
 //        taskString =  HttpClientGet.restGet("http://120.24.157.214:8000/tasks/"+"name"+"/",null);
         taskString =  HttpClientGet.restGet("http://10.101.201.174:8000/tasks/"+"name"+"/",null);
+        System.out.printf(taskString);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

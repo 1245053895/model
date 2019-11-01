@@ -42,7 +42,8 @@
 	<div class="panel panel-default" style="width: 35%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
 		<div class="panel-header">数据包选择</div>
 		<div class="panel-body"  style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
-			<input class="btn btn-primary radius" type="button" style="position: absolute;" th:each="datamodelInfoList:${datamodelInfoList}" th:value="${datamodelInfoList.dataresultname}" th:id="${datamodelInfoList.dataaddr}" onclick="chooseData(this.id)" />
+			<!--<input class="btn btn-primary radius" type="button" style="position: absolute;margin-left: 1%" th:each="datamodelInfoList:${datamodelInfoList}" th:value="${datamodelInfoList.dataresultname}" th:id="${datamodelInfoList.dataaddr}" onclick="chooseData(this.id)" />-->
+			<input th:each="datamodelInfoList:${datamodelInfoList}" class="btn btn-success radius" type="button" style="background-color: #0e90d2;margin-left: 2%;margin-top: 2%;"th:value="${datamodelInfoList.dataresultname}" />
 		</div>
 	</div>
 
@@ -276,7 +277,7 @@ function switchParam_form(value) {
                 paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='' id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
             }
         }
-    paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+    // paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
     paramsArr.push("</form></div>");
     $("#params_text").append(paramsArr.join("\n"));
 }

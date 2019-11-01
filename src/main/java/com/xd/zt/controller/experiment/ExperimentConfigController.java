@@ -53,7 +53,10 @@ public class ExperimentConfigController {
         String last = aa[2];
         String algorithmname = aa[1];
         Algorithm algorithm = experimentConfigService.showAlgorithm(algorithmname);
-        String algorithmparams =  algorithm.getAlgorithmparams();
+
+        String algorithminput =  algorithm.getAlgorithmparamsinput();
+        String algorithmcontent =  algorithm.getAlgorithmparamscontent();
+        String algorithmoutput =  algorithm.getAlgorithmparamsoutput();
 
         ExperimentTraintest experimentTraintest = experimentConfigService.showExperimentTaintest(trainname);
         String testname = experimentTraintest.getTestname();
@@ -61,7 +64,10 @@ public class ExperimentConfigController {
         System.out.println(newModelProcess);
         Map<String,Object> map = new HashMap<>();
         map.put("newModelProcess",newModelProcess);
-        map.put("algorithmparams",algorithmparams);
+
+        map.put("algorithminput",algorithminput);
+        map.put("algorithmcontent",algorithmcontent);
+        map.put("algorithmoutput",algorithmoutput);
         return map;
     }
 

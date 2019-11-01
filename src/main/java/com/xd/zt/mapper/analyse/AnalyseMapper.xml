@@ -70,6 +70,6 @@
         and datamodel_info.modelid = datamodel_name.modelid
         and datamodel_name.questionid = analyse_model.questionid
         and analyse_model.modelid = analyse_model_process.analysemodelid
-        and analyse_model_process.modelid = 7
+        and analyse_model_process.modelid = #{modelid}
     </select>
 </mapper>

@@ -224,7 +224,9 @@ public class AlgorithmDebugController {
         algorithm1.setAlgorithmlabel(algorithm.getAlgorithmlabel());
        algorithm1.setAlgorithmtime(simpleDateFormat.format(new Date()));
         algorithm1.setAlgorithmversion(algorithm.getAlgorithmversion());
-        algorithm1.setAlgorithmparams(algorithm.getAlgorithmparams());
+        algorithm1.setAlgorithmparamsinput(algorithm.getAlgorithmparamsinput());
+        algorithm1.setAlgorithmparamscontent(algorithm.getAlgorithmparamscontent());
+        algorithm1.setAlgorithmparamsoutput(algorithm.getAlgorithmparamsoutput());
         algorithm1.setAlgorithmpath(fileInformation[1]);
        algorithm1.setAlgorithmman("xidian");
 
