@@ -8,8 +8,34 @@ public class Algorithm {
     private String algorithmlabel;
     private String algorithmtime;
     private String algorithmversion;
-    private String algorithmparams;
+    private String algorithmparamsinput;
+    private String algorithmparamscontent;
+    private String algorithmparamsoutput;
     private String algorithmman;
+
+    public String getAlgorithmparamsinput() {
+        return algorithmparamsinput;
+    }
+
+    public void setAlgorithmparamsinput(String algorithmparamsinput) {
+        this.algorithmparamsinput = algorithmparamsinput;
+    }
+
+    public String getAlgorithmparamscontent() {
+        return algorithmparamscontent;
+    }
+
+    public void setAlgorithmparamscontent(String algorithmparamscontent) {
+        this.algorithmparamscontent = algorithmparamscontent;
+    }
+
+    public String getAlgorithmparamsoutput() {
+        return algorithmparamsoutput;
+    }
+
+    public void setAlgorithmparamsoutput(String algorithmparamsoutput) {
+        this.algorithmparamsoutput = algorithmparamsoutput;
+    }
 
     public String getAlgorithmman() {
         return algorithmman;
@@ -85,13 +111,7 @@ public class Algorithm {
         this.algorithmversion = algorithmversion;
     }
 
-    public String getAlgorithmparams() {
-        return algorithmparams;
-    }
 
-    public void setAlgorithmparams(String algorithmparams) {
-        this.algorithmparams = algorithmparams;
-    }
 
 
 }
