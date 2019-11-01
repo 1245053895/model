@@ -27,6 +27,16 @@ public class ExperimentServiceImp implements ExperimentService {
     }
 
     @Override
+    public List<ExperimentModel> selectExperimentModelList() {
+        return experimentMapper.selectExperimentModelList();
+    }
+
+    @Override
+    public void deleteExperiment(Integer modelid) {
+        experimentMapper.deleteExperiment(modelid);
+    }
+
+    @Override
     public void insertExperimentModel( @Param("testname") String testname,@Param("analysemodeid")Integer analysemodeid) {
         experimentMapper.insertExperimentModel(testname,analysemodeid);
     }
