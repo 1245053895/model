@@ -15,6 +15,11 @@ public interface ExperimentService {
     List<AnalyseModel> selectAnalyse();
     List<ExperimentModel> selectTestname();
 
+    List<ExperimentModel>  selectExperimentModelList();
+
+
+    void deleteExperiment(@Param("modelid")Integer modelid);
+
 
     void insertExperimentModel( @Param("testname") String testname,@Param("analysemodeid") Integer analysemodeid);
 }

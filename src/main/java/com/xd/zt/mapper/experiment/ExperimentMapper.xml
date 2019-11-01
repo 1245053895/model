@@ -20,4 +20,13 @@
          insert into  experiment_model(testname,analysemodeid) VALUES(#{testname},#{analysemodeid})
     </insert>
 
+
+    <select id="selectExperimentModelList" resultType="ExperimentModel" >
+        SELECT * FROM experiment_model;
+    </select>
+
+    <delete id="deleteExperiment" parameterType="Integer" >
+        delete from experiment_model where id = #{modelid}
+    </delete>
+
 </mapper>
