@@ -63,7 +63,7 @@ public class BusinessFileController {
         businessFile.setFilename(filename);
   /*      filepath = "/file/"+filename;*/
 
-        businessFile.setFilepath(filepath);
+        businessFile.setFilepath("/zt/"+filepath);
         businessFile.setFilesize(filesize);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
        String date = simpleDateFormat.format(new Date());
