@@ -40,31 +40,31 @@
 <div class="container-fluid allborder" >
     <div class="modal-dialog projectborder">
 
-        <div class="logo_area">
-            <div class="logo_content" style="margin-left: 20%;" >
-                <a onclick="jumpDialog() ">
-                    <img   class="logo_image" src="/image/Newbusiness.png"/>
-                    <p class="logo_text" ><strong>新建业务模型</strong></p>
-                </a>
-            </div>
+        <!--<div class="logo_area">-->
+            <!--<div class="logo_content" style="margin-left: 20%;" >-->
+                <!--<a onclick="jumpDialog() ">-->
+                    <!--<img   class="logo_image" src="/image/Newbusiness.png"/>-->
+                    <!--<p class="logo_text" ><strong>新建业务模型</strong></p>-->
+                <!--</a>-->
+            <!--</div>-->
 
-
-            <div class="logo_content" style="margin-left: 20%;">
-                <a th:href="@{/business/businessManage}">
-                    <img th:href="@{/business/businessManage}" class="logo_image" src="/image/Openbusiness.png"/>
-                    <p class="logo_text" ><strong>打开业务模型</strong></p>
-                </a>
-            </div>
 
             <!--<div class="logo_content" style="margin-left: 20%;">-->
-            <!--<a th:href="@{/businessManage}">-->
-            <!--<img th:href="@{/businessManage}" class="logo_image" src="image/Showbusiness.png"/>-->
-            <!--<p class="logo_text" ><strong>业务列表</strong></p>-->
-            <!--</a>-->
+                <!--<a th:href="@{/business/businessManage}">-->
+                    <!--<img th:href="@{/business/businessManage}" class="logo_image" src="/image/Openbusiness.png"/>-->
+                    <!--<p class="logo_text" ><strong>打开业务模型</strong></p>-->
+                <!--</a>-->
             <!--</div>-->
-        </div>
 
-      <!--  <div class="modal-content radius projectposition" >
+            <!--&lt;!&ndash;<div class="logo_content" style="margin-left: 20%;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<a th:href="@{/businessManage}">&ndash;&gt;-->
+            <!--&lt;!&ndash;<img th:href="@{/businessManage}" class="logo_image" src="image/Showbusiness.png"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<p class="logo_text" ><strong>业务列表</strong></p>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+
+        <div class="modal-content radius projectposition" >
              <form id="updateForm" th:method="post" th:action="@{/home}">
                  <input type="hidden" name="_method" value="put">
             <div class="modal-header">
@@ -78,8 +78,7 @@
                 <span style="margin-left: 3%">问题描述:</span><span><input type="text" placeholder="请输入问题描述" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="savequestion" name="programmedescribe"></span>
             </div>
             <div class="modal-bodyx">
-                &lt;!&ndash;<span style="margin-left: 3%">用户姓名:</span><span><input type="text" placeholder="请输入用户姓名" class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;" id="saveuser" name="username"></span>&ndash;&gt;
-                <span style="margin-left: 3%">工程类型:</span>
+               <span style="margin-left: 3%">工程类型:</span>
                 <select class="input-text radius size-S inputsize" style="margin:10px 15px 10px 15px;font-size: 12px" name="programmetype">
                     <option style="font-size: 12px" name="programmetype">勘察设计</option>
                     <option style="font-size: 12px" name="programmetype">工程施工</option>
@@ -89,10 +88,10 @@
             </div>
             <div class="modal-footer">
                 <input type="button" value="确定" class="btn btn-primary"  onclick="$('#updateForm').submit();">
-                &lt;!&ndash;<a data-dismiss="modal" href="/home">确定</a>&ndash;&gt;
+                <!--<a data-dismiss="modal" href="/home">确定</a>-->
             </div>
              </form>
-        </div>-->
+        </div>
 
 
 
