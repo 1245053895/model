@@ -59,6 +59,8 @@ public class FileController {
 //        return modelAndView;
 //    }
 
+
+
     @RequestMapping("/datalinkshow/{modeid}")
     public ModelAndView datalinkshow(Model model, @PathVariable("modeid") Integer modeid) {
         List<DatamodelLink> datamodelLinkList = sourceService.dataModelLink(modeid);
