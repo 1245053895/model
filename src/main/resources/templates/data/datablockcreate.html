@@ -349,7 +349,7 @@ var count = {};
                 var algorithmParams_Arr = algorithmParams.split(';');
                 for (var i = 0; i < algorithmParams_Arr.length; i++) {
                     var param = algorithmParams_Arr[i];
-                    paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='' id='" + param + "path'autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>" +
+                    paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='' id='"+value + param + "path'autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>" +
                         "<input id='" + param + "' class='btn btn-success radius' type='button' onclick='showBaoData(this.id)' value='配置' style='margin-top: -9%;margin-left: 6%;'/>");
                 }
                 // paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
@@ -398,6 +398,7 @@ var count = {};
 		$(".paramsdiv").hide(300);
 		$("#a" + value).show(300);
         $("#b" + value).show(300);
+        name = value;
 	}
 
 	//form表单生成jSON对象
@@ -416,7 +417,7 @@ var count = {};
 		});
 		return o;
 	};
-
+	var name;
     var data ;
     function showBaoData(id) {
         data = id;
@@ -426,7 +427,7 @@ var count = {};
     function selectData(id) {
         var dataresultid = document.getElementById(id).getAttribute("value");
         datasourcePath(dataresultid);
-        document.getElementById(data+'path').setAttribute("value",id);
+        document.getElementById(name+data+'path').setAttribute("value",id);
         $("#data").hide(300);
         $.Huimodalalert('数据源添加成功',3000);
     }

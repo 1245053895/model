@@ -11,6 +11,7 @@ import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.SourceService;
 import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpUtil;
+import com.xd.zt.util.data.JsonKeyToStringList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/data")
 @Controller
@@ -73,11 +71,11 @@ public class BlockController {
 //        if(modelinstanceid==""||modelinstanceid==null){
             dataBlockService.BlockInstance(modelid,modelinstancename,analyzmodel,blockid.toString());
             map.put("code",1);
-            String modelinstanceid1 = dataAreaService.selectInstanceName(modelinstancename);
+//            String modelinstanceid1 = dataAreaService.selectInstanceName(modelinstancename);
             JSONObject modelinstance = new JSONObject();
-            modelinstance.put("username","name");
-            modelinstance.put("modelInstanceId",modelinstanceid1);
-            modelinstance.put("instantData",true);
+            modelinstance.put("username","data");
+            modelinstance.put("modelInstanceId",modelid);
+            modelinstance.put("instantData",false);
             modelinstance.put("analyzmodel",jsonArray);
 
             String jsonString= JSON.toJSONString(modelinstance);
@@ -86,22 +84,24 @@ public class BlockController {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
                 String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
                 JSON resultjson = JSON.parseObject(result);
-                String resultdataaddr = ((JSONObject) resultjson).getString("resp_path");
-                JSONArray resultPath = JSON.parseArray(resultdataaddr);
-                String[] resultpath = new String[resultPath.size()];
-                for (int i = 0 ; i < resultPath.size(); i++){
-                    JSONObject resultaddr =resultPath.getJSONObject(i);
-                    resultpath[i] = resultaddr.getString(String.valueOf(i));
+                String taskId = ((JSONObject) resultjson).getString("taskId");
+
+                JSONObject outputpath = params.getJSONObject("outputpath");
+
+                String[] filenames = JsonKeyToStringList.translate(outputpath);
+
+                for (int i = 0 ; i < outputpath.size(); i++ ) {
+
+                    DatamodelInfo datamodelInfo = new DatamodelInfo();
+                    datamodelInfo.setDataresultname(filenames[i]);
+                    datamodelInfo.setDataarea(areaid);
+                    datamodelInfo.setModelid(Integer.parseInt(modelid));
+
+                    datamodelInfo.setDataaddr("/var/data/celery/output/"+taskId+"/output/"+filenames[i]);
+
+                    datamodelInfo.setBlockid(blockid);
+                    dataBlockService.processBlockInfo(datamodelInfo);
                 }
-                DatamodelInfo datamodelInfo=new DatamodelInfo();
-                datamodelInfo.setDataresultname(modelinstancename);
-                datamodelInfo.setDataarea(areaid);
-                datamodelInfo.setModelid(Integer.parseInt(modelid));
-
-                datamodelInfo.setDataaddr(resultpath[0]);
-
-                datamodelInfo.setBlockid(blockid);
-                dataBlockService.processBlockInfo(datamodelInfo);
                 //System.out.println(analyzmodel);
             }catch (Exception e){
                 System.out.println(e.getMessage());

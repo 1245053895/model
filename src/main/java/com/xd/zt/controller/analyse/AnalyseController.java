@@ -196,7 +196,7 @@ public class AnalyseController {
         for(int i = 0; i<parameters.size(); i++){
             JSONObject algorithm = new JSONObject();
             algorithm = parameters.getJSONObject(i);
-            algorithmname = algorithm.get("name").toString()+"/data";
+            algorithmname = algorithm.get("name").toString();
             algorithmparams = algorithm.get("params").toString();
 
             AlgorithmData algorithmData = new AlgorithmData();
@@ -265,7 +265,7 @@ public class AnalyseController {
         try {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
             String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
-            System.out.printf(result);
+             System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
             return resultjson;
         }catch (Exception e){

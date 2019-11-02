@@ -23,13 +23,18 @@
 	<title></title>
 </head>
 <body>
-<input type="hidden" th:value="${modelprocess}" id="proc_Elements"/><input type="hidden" th:value="${modelid}" id="modelid"/><input th:each="params:${params}" type="hidden" th:value="${params.algorithmparams}" th:id="${params.algorithmname}"/><input th:each="algorithmDataList:${algorithmDataList}" type="hidden" th:value="${algorithmDataList.algorithmdata}" th:id="${algorithmDataList.algorithmname}"/>
+<input type="hidden" th:value="${modelprocess}" id="proc_Elements"/>
+<input type="hidden" th:value="${modelid}" id="modelid"/>
+<input th:each="params:${params}" type="hidden" th:value="${params.algorithmparamsinput}" th:id="${params.algorithmname}+'/input'"/>
+<input th:each="params:${params}" type="hidden" th:value="${params.algorithmparamscontent}" th:id="${params.algorithmname}+'/content'"/>
+<input th:each="params:${params}" type="hidden" th:value="${params.algorithmparamsoutput}" th:id="${params.algorithmname}+'/output'"/>
+<input th:each="algorithmDataList:${algorithmDataList}" type="hidden" th:value="${algorithmDataList.algorithmdata}" th:id="${algorithmDataList.algorithmname}+'/data'"/>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析模型实例 <span class="c-gray en">&gt;</span> 新建分析模型实例  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
 
 	<div class="panel panel-default" style="width: 97%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
 		<div class="panel-header">建立分析模型实例
-			<a href="#"><input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;" value="保存" onclick="jumpDialog()" /></a>
+			<!--<a href="#"><input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;" value="保存" onclick="jumpDialog()" /></a>-->
 			<a th:href="@{'/analyse/exampleList/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>
 		</div>
 		<div class="panel-body" id="model_content">
@@ -37,18 +42,26 @@
 		</div>
 	</div>
 
-	<div class="panel panel-default" style="width: 43%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
-		<div class="panel-header">参数设置</div>
+	<div class="panel panel-default" style="width: 50%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header">数据源配置</div>
 		<!--<form method="post" class="loginForm" >-->
-			<div class="panel-body" id="params_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
-
+		<div class="panel-body" id="input_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
 		</div>
-
+	</div>
+	<div class="panel panel-default" style="width: 45%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header">算法参数配置</div>
+		<!--<form method="post" class="loginForm" >-->
+		<div class="panel-body" id="content_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+		</div>
 	</div>
 
-	<div class="panel panel-default" style="width: 52%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
-		<div class="panel-header">运行日志</div>
+	<div class="panel panel-default" style="display:none;width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+		<div class="panel-header">输出配置</div>
+		<!--<form method="post" class="loginForm" >-->
+		<div class="panel-body" id="output_text" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+		</div>
 	</div>
+
 	<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<!-- 弹出对话框 -->
 		<div class="modal-dialog">
@@ -123,59 +136,59 @@
         $("#modal-demo").modal("show");
     }
 
-    function save() {
-        if(document.getElementById('saveName').value == ""){
-            $.Huimodalalert('请输入保存名称',2000);
-        }
-        else {
-
-                var modelid = document.getElementById('modelid').getAttribute('value');
-                var algorithmname = document.getElementById('proc_Elements').getAttribute("value");
-                var algorithmnameArr = algorithmname.split(';');
-                var analyzmodelArr = "[]";
-                var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
-                for (var i = 1; i < algorithmnameArr.length - 1; i++) {
-                    var name = algorithmnameArr[i];
-                    jsonObj = $('.' + name).serializeObject();
-
-                    var instance = {
-                        "name": name,
-                        "params": jsonObj
-                    };
-                    analyzmodelJsonArr.push(instance);
-                }
-            var analyzmodel = JSON.stringify(analyzmodelJsonArr);
-            var examplename = document.getElementById('saveName').value;
-            var example = {
-                "modelid": modelid,
-                "examplename": examplename,
-                "analyzmodel": analyzmodel,
-            };
-            $.ajax({
-                async: false,
-                type: "post",
-                dataType: "json",
-                contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify(example),
-                url: '/analyse/saveExample',
-                success: function (data) {
-                    if (data.code == 1) {
-                        $.Huimodalalert('保存成功', 1000);
-                    }
-                    else {
-                        $.Huimodalalert('已存在实例名，请重新保存', 1000);
-                    }
-
-                    //传输成功后延时500ms跳转到模型列表
-                    // window.setTimeout("window.location = '/'",1500);
-                    //这两种写法都可以
-                    /*window.setTimeout("window.location.href = '/modelList'",1500);*/
-                }
-            });
-        }
-
-
-    }
+    // function save() {
+    //     if(document.getElementById('saveName').value == ""){
+    //         $.Huimodalalert('请输入保存名称',2000);
+    //     }
+    //     else {
+    //
+    //             var modelid = document.getElementById('modelid').getAttribute('value');
+    //             var algorithmname = document.getElementById('proc_Elements').getAttribute("value");
+    //             var algorithmnameArr = algorithmname.split(';');
+    //             var analyzmodelArr = "[]";
+    //             var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
+    //             for (var i = 1; i < algorithmnameArr.length - 1; i++) {
+    //                 var name = algorithmnameArr[i];
+    //                 jsonObj = $('.' + name).serializeObject();
+    //
+    //                 var instance = {
+    //                     "name": name,
+    //                     "params": jsonObj
+    //                 };
+    //                 analyzmodelJsonArr.push(instance);
+    //             }
+    //         var analyzmodel = JSON.stringify(analyzmodelJsonArr);
+    //         var examplename = document.getElementById('saveName').value;
+    //         var example = {
+    //             "modelid": modelid,
+    //             "examplename": examplename,
+    //             "analyzmodel": analyzmodel,
+    //         };
+    //         $.ajax({
+    //             async: false,
+    //             type: "post",
+    //             dataType: "json",
+    //             contentType: 'application/json;charset=UTF-8',
+    //             data: JSON.stringify(example),
+    //             url: '/analyse/saveExample',
+    //             success: function (data) {
+    //                 if (data.code == 1) {
+    //                     $.Huimodalalert('保存成功', 1000);
+    //                 }
+    //                 else {
+    //                     $.Huimodalalert('已存在实例名，请重新保存', 1000);
+    //                 }
+    //
+    //                 //传输成功后延时500ms跳转到模型列表
+    //                 // window.setTimeout("window.location = '/'",1500);
+    //                 //这两种写法都可以
+    //                 /*window.setTimeout("window.location.href = '/modelList'",1500);*/
+    //             }
+    //         });
+    //     }
+    //
+    //
+    // }
 //form表单生成jSON对象
     $.fn.serializeObject = function() {
         var o = {};
@@ -259,22 +272,54 @@
 
 function switchParam_form(value) {
         var id = value + "/data";
-var paramsdata = document.getElementById(id).getAttribute("value");
-var paramsdataobj =  eval('(' + paramsdata + ')');
-var paramsArr = new Array();
-       paramsArr.push("<div id='a"+ value +"' style='display: none' class='paramsdiv'><form method='post' class='"+ value +"' >");
-        var algorithmParams = document.getElementById(value).getAttribute("value");
+var paramsdatas = document.getElementById(id).getAttribute("value");
+var paramsdatasobj =  eval('(' + paramsdatas + ')');
+
+    var paramsinput =  paramsdatasobj['' + "inputpath" + ''];
+    var paramscontent =  paramsdatasobj['' + "inputpath" + ''];
+    var paramsoutput =  paramsdatasobj['' + "inputpath" + ''];
+ if (document.getElementById(value+"/input").getAttribute("value") != null && document.getElementById(value+"/input").getAttribute("value") != "") {
+     var paramsArr = new Array();
+     paramsArr.push("<div id='a" + value + "' style='display: none' class='paramsdiv'><form method='post' class='" + value + "input' >");
+     var algorithmParams = document.getElementById(value+"/input").getAttribute("value");
+     var algorithmParams_Arr = algorithmParams.split(';');
+     for (var i = 0; i < algorithmParams_Arr.length; i++) {
+         var param = algorithmParams_Arr[i];
+         paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='" + paramsinput['' + param + ''] + "' id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+     }
+     paramsArr.push("</form></div>");
+     $("#input_text").append(paramsArr.join("\n"));
+ }
+    if (document.getElementById(value+"/content").getAttribute("value") != null && document.getElementById(value+"/content").getAttribute("value") != "") {
+        var paramsArr = new Array();
+        paramsArr.push("<div id='b" + value + "' style='display: none' class='paramsdiv'><form method='post' class='" + value + "content' >");
+        var algorithmParams = document.getElementById(value+"/content").getAttribute("value");
         var algorithmParams_Arr = algorithmParams.split(';');
-        for (var i=0; i<algorithmParams_Arr.length;i++) {
+        for (var i = 0; i < algorithmParams_Arr.length; i++) {
             var param = algorithmParams_Arr[i];
-           paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>"+param+"</div>"+ "<input type='text' placeholder='请输入..' class='input-text ac_input' name='"+param+"' value='"+paramsdataobj[''+param+'']+"' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+            paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='" + paramscontent['' + param + ''] + "' id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
         }
-       paramsArr.push("</form></div>");
-    $("#params_text").append(paramsArr.join("\n"));
+        paramsArr.push("</form></div>");
+        $("#content_text").append(paramsArr.join("\n"));
+    }
+    if (document.getElementById(value+"/output").getAttribute("value") != null && document.getElementById(value+"/output").getAttribute("value") != "") {
+        var paramsArr = new Array();
+        paramsArr.push("<div id='c" + value + "' style='display: none' class='paramsdiv1'><form method='post' class='" + value + "output' >");
+        var algorithmParams = document.getElementById(value+"/output").getAttribute("value");
+        var algorithmParams_Arr = algorithmParams.split(';');
+        for (var i = 0; i < algorithmParams_Arr.length; i++) {
+            var param = algorithmParams_Arr[i];
+            paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='" + paramsoutput['' + param + ''] + "' id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+        }
+        paramsArr.push("</form></div>");
+        $("#output_text").append(paramsArr.join("\n"));
+    }
+
 }
 function switchParam(value) {
     $(".paramsdiv").hide(300);
     $("#a"+value).show(300);
+    $("#b"+value).show(300);
 }
 
 
