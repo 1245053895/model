@@ -274,6 +274,7 @@ public class BusinessModelController {
     public ModelAndView businessview(Model model, @PathVariable("businessid") Integer businessid){
 //        String businessid = modelCreateService.selectbusinessid(id);
         Integer id = businessModelService.selectprocesid(businessid);
+//        流程工具名字
         String businessprocessname = modelCreateService.selectbusinessblock(id);
         model.addAttribute("businessprocessname",businessprocessname);
         model.addAttribute("businessid",businessid);

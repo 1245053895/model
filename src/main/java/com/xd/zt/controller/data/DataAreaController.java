@@ -103,17 +103,7 @@ public class DataAreaController {
 //        map.put("code", 1);
 //        return map;
 //    }
-    @RequestMapping("/saveDataAreaResult")
-    @ResponseBody
-    public String saveDataAreaResult(@RequestBody JSONObject jsonObject){
-        String blockname = jsonObject.get("dataarearesult").toString();
-        String modelid = jsonObject.get("modelid").toString();
-        String areaid = String.valueOf(dataAreaService.selectAreaid());
-        String flowchart = jsonObject.get("flowchart").toString();
-        String areaname=blockname;
-        dataAreaService.saveDataAreaResult(areaname,blockname,flowchart,areaid);
-        return modelid;
-    }
+
 
     @RequestMapping("/dataareacreate/{modelid}")
     public ModelAndView datablockcreate(Model model, @PathVariable("modelid") String modelid) {
@@ -134,7 +124,6 @@ public class DataAreaController {
         return new ModelAndView("data/dataareacreate", "Modelmodel", model);
     }
 
-    /*数据区选择数据链后点击下一步*/
     @RequestMapping("/datahanding/{modelid}")
     public ModelAndView datahanding(Model model, @PathVariable("modelid") String modelid) {
         model.addAttribute("modelid", modelid);

@@ -29,14 +29,6 @@
 
 	<div class="panel panel-default" style="width: 97%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
 		<div class="panel-header">建立分析模型实例
-			<!--模型预览&nbsp;&nbsp;&nbsp;&nbsp;-->
-			<!--模型名称：<a th:text="${analyzAndParam.procName}"></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
-			<!--修改时间：<a th:text="${analyzAndParam.time}"></a>-->
-			<!--<p id="proc_Elements" th:text="${analyzAndParam.proc_Elements}" style="display: none"></p>-->
-			<!--<p id="param1" th:text="${analyzAndParam.param1_form}" style="display: none"></p>-->
-			<!--<p id="param2" th:text="${analyzAndParam.param2_form}" style="display: none"></p>-->
-			<!--<p id="param3" th:text="${analyzAndParam.param3_form}" style="display: none"></p>-->
-			<!--<p id="param4" th:text="${analyzAndParam.param4_form}" style="display: none"></p>-->
 			<a href="#"><input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: -0.3%;right: 9%;" value="保存" onclick="jumpDialog()" /></a>
 			<a th:href="@{'/analyse/exampleList/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"/></a>
 		</div>

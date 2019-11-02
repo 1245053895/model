@@ -1,6 +1,7 @@
 package com.xd.zt.controller.experiment;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.analyse.AlgorithmData;
 import com.xd.zt.domain.analyse.AnalyseModelProcess;
@@ -12,10 +13,7 @@ import com.xd.zt.service.experiment.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.Console;
@@ -70,5 +68,15 @@ public class ExperimentConfigController {
         map.put("algorithmoutput",algorithmoutput);
         return map;
     }
+
+    @ResponseBody
+    @PostMapping(value = "/savedata/",consumes = "application/json;charset=utf-8")
+    public Map<String,Object> saveExperimentConfig(@RequestBody JSONObject jsonParam){
+        String sceneid = jsonParam.get("formdata").toString();
+        String modelid = jsonParam.get("modelid").toString();
+        Map<String,Object> map = new HashMap<>();
+        return map;
+    }
+
 
 }

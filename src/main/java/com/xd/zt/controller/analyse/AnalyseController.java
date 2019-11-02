@@ -205,6 +205,7 @@ public class AnalyseController {
             algorithmData.setAlgorithmdata(algorithmparams);
             algorithmDataList.add(algorithmData);
         }
+
         model.addAttribute("algorithmDataList",algorithmDataList);
         model.addAttribute("modelinstanceid",modelinstanceid);
         Integer modelid = analyseService.selectModelid(modelinstanceid);

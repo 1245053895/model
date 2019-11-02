@@ -57,7 +57,7 @@ public class BusinessFileController {
         String filename = fileInformation[0];
        String filepath = fileInformation[1];
        String filesize = fileInformation[2];
-        System.out.println(filename+"----"+ filepath+"----"+filesize);
+//        System.out.println(filename+"----"+ filepath+"----"+filesize);
 
         BusinessFile businessFile = new BusinessFile();
         businessFile.setFilename(filename);

@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" charset="UTF-8">
@@ -51,7 +60,7 @@
                 //dataType: 'json',
                 contentType: "application/json",
                 success: function (data) {
-                alert(data);
+                    alert(data);
                 }
             });
         }
@@ -109,24 +118,24 @@
 
 
 <script>
-        function getResult() {
-            $.ajax({
-                async: false,
-                cache: false,
-                type: "POST",
-                dataType:"json",
-                url: "/data/blocklinkinform",
-                data: {
+    function getResult() {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            dataType:"json",
+            url: "/data/blocklinkinform",
+            data: {
                 parameter1: $("#parameter1").val(),
                 parameter2: $("#parameter2").val(),
                 uuid: $("#testval1").val()
-        },
-        success : function(data) {
-            alert("保存成功")
-        }
+            },
+            success : function(data) {
+                alert("保存成功")
+            }
         });
-            alert("保存成功")
-        }
+        alert("保存成功")
+    }
 </script>
 
 
@@ -175,9 +184,9 @@
                 joinStyle: "round",
                 outlineColor: "white",
                 outlineWidth: 2,
-                },
+            },
 
-             // aaa
+            // aaa
             connectorHoverStyle:{
                 lineWidth: 4,
                 strokeStyle: "green",
@@ -189,71 +198,67 @@
         }
 
         for (i =0; i<myconnects.length;i++){
-            try{
-                var PageSourceId = myconnects[i].pageSourceId;
-                var PageTargetId = myconnects[i].pageTargetId;
+            var PageSourceId = myconnects[i].pageSourceId;
+            var PageTargetId = myconnects[i].pageTargetId;
 
-                //用jsPlumb添加锚点
-                jsPlumb.addEndpoint(PageSourceId, {anchors: "TopCenter"}, common);
-                jsPlumb.addEndpoint(PageSourceId, {anchors: "RightMiddle"}, common);
-                jsPlumb.addEndpoint(PageSourceId, {anchors: "BottomCenter"}, common);
-                jsPlumb.addEndpoint(PageSourceId, {anchors: "LeftMiddle"}, common);
+            //用jsPlumb添加锚点
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "TopCenter"}, common);
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "RightMiddle"}, common);
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "BottomCenter"}, common);
+            jsPlumb.addEndpoint(PageSourceId, {anchors: "LeftMiddle"}, common);
 
-                jsPlumb.addEndpoint(PageTargetId, {anchors: "TopCenter"}, common);
-                jsPlumb.addEndpoint(PageTargetId, {anchors: "RightMiddle"}, common);
-                jsPlumb.addEndpoint(PageTargetId, {anchors: "BottomCenter"}, common);
-                jsPlumb.addEndpoint(PageTargetId, {anchors: "LeftMiddle"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "TopCenter"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "RightMiddle"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "BottomCenter"}, common);
+            jsPlumb.addEndpoint(PageTargetId, {anchors: "LeftMiddle"}, common);
 
-                jsPlumb.draggable(PageSourceId);
-                jsPlumb.draggable(PageTargetId);
-
-
-                $("#" + PageSourceId).draggable({containment: "parent"});//保证拖动不跨界
-                $("#" + PageTargetId).draggable({containment: "parent"});//保证拖动不跨界
+            jsPlumb.draggable(PageSourceId);
+            jsPlumb.draggable(PageTargetId);
 
 
-                jsPlumb.makeSource(PageSourceId, {
-                    endpoint: ["Dot", { radius: 8 }],
-                    anchor: "Continuous",
-                    paintStyle: {
-                        strokeStyle: "#1e8151",
-                        fillStyle: "transparent",
-                        radius: 2,
-                        lineWidth: 2
-                    }
-                });
-
-                jsPlumb.makeTarget(PageTargetId, {
-                    endpoint: ["Dot", { radius: 8 }],
-                    anchor: "Continuous",
-                    paintStyle: {
-                        strokeStyle: "#1e8151",
-                        fillStyle: "transparent",
-                        radius: 2,
-                        lineWidth: 2,
-                        // arrow:{  width: 10, length: 10,location:0.7}
-                    }
-                });
+            $("#" + PageSourceId).draggable({containment: "parent"});//保证拖动不跨界
+            $("#" + PageTargetId).draggable({containment: "parent"});//保证拖动不跨界
 
 
-                jsPlumb.connect({source:PageSourceId,target:PageTargetId,connector:["Flowchart"],
-                    paintStyle:{
-                        lineWidth: 4,
-                        strokeStyle: "#61B7CF",
-                        joinstyle: "round",
-                        outlineColor: "white",
-                        outlineWidth: 2,
-                    },
+            jsPlumb.makeSource(PageSourceId, {
+                endpoint: ["Dot", { radius: 8 }],
+                anchor: "Continuous",
+                paintStyle: {
+                    strokeStyle: "#1e8151",
+                    fillStyle: "transparent",
+                    radius: 2,
+                    lineWidth: 2
+                }
+            });
 
-                    overlays:[
-                        ["Arrow"],
-                        // ["Label", { label:"", location:0.25, id:"myLabel" }]
+            jsPlumb.makeTarget(PageTargetId, {
+                endpoint: ["Dot", { radius: 8 }],
+                anchor: "Continuous",
+                paintStyle: {
+                    strokeStyle: "#1e8151",
+                    fillStyle: "transparent",
+                    radius: 2,
+                    lineWidth: 2,
+                    // arrow:{  width: 10, length: 10,location:0.7}
+                }
+            });
 
-                    ]
-                });}
-            catch (e) {
-                continue;
-            }
+
+            jsPlumb.connect({source:PageSourceId,target:PageTargetId,connector:["Flowchart"],
+                paintStyle:{
+                    lineWidth: 4,
+                    strokeStyle: "#61B7CF",
+                    joinstyle: "round",
+                    outlineColor: "white",
+                    outlineWidth: 2,
+                },
+
+                overlays:[
+                    ["Arrow"],
+                    // ["Label", { label:"", location:0.25, id:"myLabel" }]
+
+                ]
+            });
         }
 
     });

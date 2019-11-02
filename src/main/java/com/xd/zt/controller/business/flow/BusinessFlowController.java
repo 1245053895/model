@@ -5,6 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.business.flow.JsPlumbBlock;
 import com.xd.zt.domain.business.flow.JsPlumbConnect;
 import com.xd.zt.domain.business.flow.LinkBlockInform;
+import com.xd.zt.domain.data.DatamodelLink;
+import com.xd.zt.domain.data.DlAnalyseProcess;
+import com.xd.zt.domain.data.DlJsPlumbBlock;
+import com.xd.zt.domain.data.DlJsplumbConnect;
 import com.xd.zt.service.business.BusinessFlowService;
 import com.xd.zt.service.business.ModelCreateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,7 @@ public class BusinessFlowController {
     @Autowired
     private ModelCreateService modelCreateService;
 
-    //保存
+//    保存
     @ResponseBody
     @PostMapping(value = "/newflows/",consumes = "application/json;charset=utf-8")
     public String saveProcess(@RequestBody JSONObject jsonParam) throws Exception {
@@ -55,6 +59,37 @@ public class BusinessFlowController {
             return msg+";" ;
         }
     }
+
+
+//    //保存
+//    @ResponseBody
+//    @PostMapping(value = "/newflows",consumes = "application/json;charset=utf-8")
+//    public String saveProcess(@RequestBody JSONObject jsonParam) throws Exception {
+//        List<JsPlumbConnect> connects = JSONObject.parseArray(jsonParam.getJSONArray("connects").toJSONString(),JsPlumbConnect.class);
+//        List<JsPlumbBlock> blocks = JSONObject.parseArray(jsonParam.getJSONArray("blocks").toJSONString(), JsPlumbBlock.class);
+//        String processName = jsonParam.get("name").toString();
+////        System.out.println(blocks.get(0).getBlockName());
+//        String msg = flowService.saveProcess(processName, blocks, connects);
+//        return msg ;
+//    }
+//
+//    //数据链再保存
+//    @ResponseBody
+//    @PostMapping(value = "/newflowsdl",consumes = "application/json;charset=utf-8")
+//    public String saveProcessdl(@RequestBody JSONObject jsonParam) throws Exception {
+//        String id = jsonParam.get("Id").toString();
+//        String modeid = jsonParam.get("modeid").toString();
+//
+//        return "xxxx";
+//    }
+
+
+
+
+
+
+
+
 
     @ResponseBody
     @PostMapping(value = "/newbusiness/",consumes = "application/json;charset=utf-8")
