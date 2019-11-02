@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface DataAreaMapper {
-    void saveDataAreaResult(@Param("blockname") String blockname, @Param("flowchart") String flowchart,@Param("areaid") String areaid);
+    void saveDataAreaResult(@Param("areaname") String areaname,@Param("blockname") String blockname, @Param("flowchart") String flowchart,@Param("areaid") String areaid);
     String selectInstanceName(String modelinstancename);
     void insertExample(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("areaid") String areaid);
     String selectLinkName(String areaid);

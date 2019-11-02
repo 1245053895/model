@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface DataAreaService {
-    void saveDataAreaResult(@Param("blockname") String blockname, @Param("flowchart") String flowchart,@Param("areaid") String areaid);
+    void saveDataAreaResult(@Param("areaname") String areaname,@Param("blockname") String blockname, @Param("flowchart") String flowchart,@Param("areaid") String areaid);
 
     String selectInstanceName(String modelinstancename);
 

@@ -19,8 +19,8 @@ public class DataAreaServiceImpl implements DataAreaService {
 private DataAreaMapper dataAreaMapper;
 
     @Override
-    public void saveDataAreaResult(@Param("blockname") String blockname,@Param("flowchart") String flowchart,@Param("areaid") String areaid) {
-        dataAreaMapper.saveDataAreaResult(blockname,flowchart,areaid);
+    public void saveDataAreaResult(@Param("areaname") String areaname,@Param("blockname") String blockname,@Param("flowchart") String flowchart,@Param("areaid") String areaid) {
+        dataAreaMapper.saveDataAreaResult(areaname,blockname,flowchart,areaid);
     }
 
     @Override
