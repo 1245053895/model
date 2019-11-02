@@ -6,9 +6,9 @@
         select MAX(areaid) from datamodel_area
     </select>
 
-    <insert id="saveDataAreaResult" parameterType="String" >
+    <update id="saveDataAreaResult" parameterType="String" >
     UPDATE datamodel_area set areaname=#{blockname},arealogic=#{blockname},areachuli=#{flowchart} where datamodel_area.areaid=#{areaid}
-    </insert>
+    </update>
 
     <select id="selectInstanceName" parameterType="String" resultType="String">
         SELECT instanceid FROM datamodel_instance WHERE instancename = #{modelinstancename}

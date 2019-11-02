@@ -34,6 +34,8 @@ public class AreaController {
     private FileService fileService;
     @Autowired
     private FileRepository fileRepository;
+
+
     @RequestMapping("/saveDataAreaResult")
     @ResponseBody
     public String saveDataAreaResult(@RequestBody JSONObject jsonObject){
