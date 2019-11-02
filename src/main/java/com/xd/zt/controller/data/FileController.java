@@ -137,20 +137,6 @@ public class FileController {
     }*/
 
 
-    /*删除数据链*/
-    @ResponseBody
-    @RequestMapping("/deletelink")
-    public Map<String, Object> deletelink(@RequestBody String jsonData) {
-        JSONObject jsonObject = JSON.parseObject(jsonData);
-        String linkid = jsonObject.getString("linkid");
-        sourceService.deleteLink(Integer.valueOf(linkid));
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 1);
-        return map;
-    }
-
-
-
 //数据包回显
 
     //预览数据

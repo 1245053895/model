@@ -15,7 +15,7 @@
 </head>
 <body>
 <input  type="hidden" th:value="${modelid}" id="modelid"/>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据区 <span class="c-gray en">&gt;</span> 新建 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据区 <span class="c-gray en">&gt;</span> 新建 <a id="review" class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" >
 
     <div  th:id="${datamodelAreaList.areaid}"  class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%;" th:each="datamodelAreaList:${datamodelAreaList}">
@@ -23,7 +23,9 @@
         <div class="panel-header"  th:text="${datamodelAreaList.areaname}"  style="text-align: center"></div>
         <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
             <a id="review" th:href="@{'/data/areaViewx/'+${datamodelAreaList.processid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
-            <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelAreaList.processid}" th:href="@{'/data/deletexx/'+${datamodelAreaList.processid}}"    style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+            <!--<div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelAreaList.areaid}" th:href="@{'/data/deletexx/'+${datamodelAreaList.areaid}}"    style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>-->
+            <!---->
+            <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelAreaList.areaid}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
 
         </div>
 
@@ -51,6 +53,48 @@
 <script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
 <script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    //执行删除操作
+    // window.onload=function(){
+    //     var oLis=document.getElementsByTagName("a");
+    //     for(var index=0;index<oLis.length;index++) {
+    //         oLis[index].onclick = function () {
+    //             var id = this.id;
+    //             if (id == "new"||id=="review") {
+    //
+    //             }
+    //             else {
+    //                 if (confirm("确定要删除此数据区？")) {
+    //                     var areaid = id;
+    //                     var id = {
+    //                         "areaid": areaid
+    //                     };
+    //                     $.ajax({
+    //                         url: "/data/deletexx",
+    //                         type: "POST",
+    //                         async: true,
+    //                         contentType: "application/json; charset=utf-8",
+    //                         data: JSON.stringify(id),
+    //                         dataType: 'json',
+    //                         success: function (data) {
+    //                             $.Huimodalalert('删除成功',2000);
+    //                         },
+    //                         error : function() {
+    //                             $.Huimodalalert('删除成功',2000);
+    //                         }
+    //                     });
+    //                     window.setTimeout("window.location.reload(true)",1000);
+    //                 }
+    //                 else {
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+</script>
+
 <script type="text/javascript" th:inline="javascript">
     //执行删除操作
     window.onload=function(){
@@ -70,7 +114,7 @@
                         $.ajax({
                             url: "/data/deleteArea",
                             type: "POST",
-                            async: true,
+                            async: false,
                             contentType: "application/json; charset=utf-8",
                             data: JSON.stringify(id),
                             dataType: 'json',

@@ -52,56 +52,6 @@ public class FlowList {
         return modelAndView;
     }
 
-    @RequestMapping("/deletex/{processid}")
-    public ModelAndView deleteProcessIdx(Model model, @PathVariable("processid") int processid){
-        try {
-//            flowService.dLdeleteBlocks(processid);
-            flowService.dLdeleteProcessName(processid);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        DatamodelLink datamodelLink = flowService.processidTomodeid(processid);
-        int modeid = datamodelLink.getModeid();
-        flowService.deletdatalinkToProcessid(processid);
-        List<DatamodelLink> datamodelLinkList = sourceService.dataModelLink(modeid);
-        model.addAttribute("datamodelLinkList", datamodelLinkList);
-        model.addAttribute("modeid", modeid);
-        return new ModelAndView("data/datalinkshow", "modelModel", model);
-    }
-
-
-    @RequestMapping("/deletexx/{processid}")
-    public ModelAndView deleteProcessIdxx(Model model,@PathVariable("processid") int processid){
-        try {
-//            flowService.dardeleteBlocks(processid);
-            flowService.dardeleteProcessName(processid);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        DatamodelArea xin = sourceService.darprocessidTomodeid(processid);
-        int modelid =xin.getModeid();
-        List<DatamodelArea> datamodelAreaList = sourceService.selectModelArea(modelid);
-        model.addAttribute("datamodelAreaList", datamodelAreaList);
-        model.addAttribute("modelid", modelid);
-        return new ModelAndView("data/datalareashow", "modelModel", model);
-    }
-
-
-
-
-
-
-//    @RequestMapping("/revise/{Id}")
-//    public ModelAndView getJsplumbModel(@PathVariable("Id") int id) {
-//        ModelAndView modelAndView1 = new ModelAndView("/maintool/reviewsave");
-//        List<JsPlumbBlock> blocks = flowService.getBlocks(id);
-//        List<JsPlumbConnect> connects = flowService.getConnects(id);
-//        modelAndView1.addObject("myblocks", blocks);
-//        modelAndView1.addObject("myconnects", connects);
-//        modelAndView1.addObject("Id",id);
-//        return modelAndView1;
-//    }
-
     @RequestMapping("/Linkviewx/{processid}")
     public ModelAndView dlgetJsplumbModel(Model model, @PathVariable("processid") int processid){
         ModelAndView modelAndView = new ModelAndView("data/Linkview");

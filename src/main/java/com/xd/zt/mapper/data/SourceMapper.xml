@@ -18,7 +18,6 @@
         DELETE FROM datamodel_link WHERE linkid=#{linkid}
     </delete>
 
-
     <!--数据区-->
     <select id="selectModelArea" resultType="datamodelArea" parameterType="Integer">
         SELECT * FROM datamodel_area,daranalyseprocess WHERE modeid=#{modeid} AND processid=daranalyseprocess.Id

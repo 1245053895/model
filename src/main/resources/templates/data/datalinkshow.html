@@ -23,7 +23,9 @@
         <div class="panel-header"  th:text="${datamodelLinkList.linkname}"  style="text-align: center"></div>
         <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
             <a id="review" th:href="@{'/data/Linkviewx/'+${datamodelLinkList.processid}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
-            <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelLinkList.processid}" th:href="@{'/data/deletex/'+${datamodelLinkList.processid}}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+            <!--<div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelLinkList.processid}" th:href="@{'/data/deletex/'+${datamodelLinkList.processid}}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
+            -->
+            <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${datamodelLinkList.linkid}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
         </div>
     </div>
     <div class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" >
@@ -49,46 +51,47 @@
 <script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
 <script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
-<!--<script type="text/javascript" th:inline="javascript">-->
-<!--//执行删除操作-->
-<!--window.onload=function(){-->
-<!--var oLis=document.getElementsByTagName("a");-->
-<!--for(var index=0;index<oLis.length;index++) {-->
-<!--oLis[index].onclick = function () {-->
-<!--var id = this.id;-->
-<!--if (id == "new"||id=="review") {-->
+<script type="text/javascript" th:inline="javascript">
+    //执行删除操作
+    window.onload=function(){
+        var oLis=document.getElementsByTagName("a");
+        for(var index=0;index<oLis.length;index++) {
+            oLis[index].onclick = function () {
+                var id = this.id;
+                if (id == "new"||id=="review") {
 
-<!--}-->
-<!--else {-->
-<!--if (confirm("确定要删除此数据链？")) {-->
-<!--var linkid = id;-->
-<!--var id = {-->
-<!--"linkid": linkid-->
-<!--};-->
-<!--$.ajax({-->
-<!--url: "/deletelink",-->
-<!--type: "POST",-->
-<!--async: true,-->
-<!--contentType: "application/json; charset=utf-8",-->
-<!--data: JSON.stringify(id),-->
-<!--dataType: 'json',-->
-<!--success: function (data) {-->
-<!--if (data.code==1){-->
-<!--$.Huimodalalert('删除成功',2000);-->
-<!--} else {-->
-<!--$.Huimodalalert('删除成功',2000);-->
-<!--}-->
-<!--}-->
-<!--});-->
-<!--location.reload(true);-->
-<!--}-->
-<!--else {-->
-<!--}-->
-<!--}-->
-<!--}-->
-<!--}-->
-<!--}-->
+                }
+                else {
+                    if (confirm("确定要删除此数据链？")) {
+                        var linkid = id;
+                        var id = {
+                            "linkid": linkid
+                        };
+                        $.ajax({
+                            url: "/data/deletelink",
+                            type: "POST",
+                            async: false,
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(id),
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.code==1){
+                                    $.Huimodalalert('删除成功',2000);
+                                } else {
+                                    $.Huimodalalert('删除成功',2000);
+                                }
 
-<!--</script>-->
+                            }
+                        });
+                        location.reload(true);
+                    }
+                    else {
+                    }
+                }
+            }
+        }
+    }
+
+</script>
 </body>
 </html>

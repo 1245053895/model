@@ -3,6 +3,7 @@ package com.xd.zt.controller.data.flow;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.xd.zt.domain.data.DatamodelArea;
 import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.repository.data.FileRepository;
 import com.xd.zt.service.data.DataAreaService;
@@ -110,4 +111,34 @@ public class AreaController {
         return map;
     }
 
+    @RequestMapping("/deleteArea")
+    @ResponseBody
+    public String deleteArea(@RequestBody String jsonData) {
+        JSONObject jsonObject = JSON.parseObject(jsonData);
+        String areaid1 = jsonObject.getString("areaid");
+        Integer areaid = Integer.parseInt(areaid1);
+
+        DatamodelArea datamodelArea = sourceService.modelIdByAreaid(areaid);
+        Integer processid = datamodelArea.getProcessid();
+        flowService.dardeleteProcessName(processid);
+    /*
+        DatamodelArea xin = sourceService.darprocessidTomodeid(processid);*/
+        /*  int modelid =xin.getModeid();*/
+        Integer modelid = datamodelArea.getModelid();
+        sourceService.deleteArea(areaid);
+        return areaid1;
+
+    }
+
+    /*删除数据链*/
+    @ResponseBody
+    @RequestMapping("/deletelink")
+    public Map<String, Object> deletelink(@RequestBody String jsonData) {
+        JSONObject jsonObject = JSON.parseObject(jsonData);
+        String linkid = jsonObject.getString("linkid");
+        sourceService.deleteLink(Integer.valueOf(linkid));
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 1);
+        return map;
+    }
 }
