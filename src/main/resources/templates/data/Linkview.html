@@ -79,9 +79,23 @@
 
 </head>
 <body>
-<!--<input type="hidden" th:value="${sceneprocessid}" id="sceneprocessid"/>-->
+<input type="hidden" th:value="${modeid}" id="modeid"/>
 <nav class="breadcrumb" style="text-align: left"><i class="Hui-iconfont">&#xe67f;</i> 数据链  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
     <span class="c-gray en"><i class="Hui-iconfont">&#xe68f;</i></span></a>
+    <a id="nextstep" >
+        <input class="btn btn-success radius" type="button" style="position: absolute;right: 6%;;margin-top:  0.2%;" value="数据管理" onclick="RefineNext()"/>
+    </a>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function RefineNext() {
+            var href="/data/fileManage/"+[[${modeid}]];
+            document.getElementById("nextstep").setAttribute("href",href)
+
+        }
+
+    </script>
+
 </nav>
 <div class="page-container" >
     <div id="root">
@@ -98,48 +112,13 @@
             <div class="node node4css" style="margin-left: 6vh" id="node8"><img src="/newjsplumb/images/liucheng8.svg" style="width: 32px;height: 32px" alt="流程4" title="流程4"/>流程4</div>
             <div class="node node4css" style="margin-left: 6vh" id="node9"><img src="/newjsplumb/images/liucheng9.svg" style="width: 32px;height: 32px" alt="流程4" title="流程4"/>流程4</div>
         </div>
-        <!--    <span class="xxiasna">
-                <button type="button" class="btn btn-info  btnposition" onclick="save1()">保存</button>
-                <button type="button" class="btn btn-info  btnposition2">返回</button>
-            </span>-->
         <div id="right">
-            <!--     <span class="xxiasna" style="border: 2px solid darkgray;width: 203px;height: 14.5vh;position: absolute; margin-top: 41.5%;margin-left: 30.2%; border:0px">
-                   &lt;!&ndash;       <a id="nextstep">
-                        <button style="margin-top: 5vh;"  onclick="RefineNext()" class="btn btn-primary radius">
-                            下一步
-                        </button>
-                    </a>&ndash;&gt;
-                <input class="btn btn-primary radius" type="button" onclick="save1()"  value="保存" style="margin-top: 5vh;margin-right: -11vh" />
-                     &lt;!&ndash;<a class="btn btn-success radius r" onclick="save1(),baocun()" style="line-height:1.6em;margin-top:3px"  title="保存" ><span class="c-gray en">保存</span></a></nav>&ndash;&gt;
-
-               </span>-->
-            <!--<h2>下方区域绘制流程图</h2>-->
             <div class="righttop1">
-                <div id="sceneblock" class="righttop1_topText" style="width: 100%;height: 5vh;text-align: center;line-height: 5vh;font-size: 18px"> <!--th:text="${sceneblock}"-->数据链构建
+                <div id="sceneblock" class="righttop1_topText" style="width: 100%;height: 5vh;text-align: center;line-height: 5vh;font-size: 18px">数据链构建
                 </div>
                 <div class="content" id="main">
                 </div>
             </div>
-            <!-- <div class="rightButton1" style="border: 1px solid #555;width: 112%;height: 12vh;margin-top: 1%;margin-left: -30.5vh">
-                 <div class="rightButton1_topText">节点信息</div>
-                 <div class="rightButton1_lowerText">
-
-                     <form class="navbar-form navbar-left"  id="err_form" onsubmit="return false">
-                         <input th:type="hidden" name="_method" value="put">
-                         <table class="rowAreaHeight1">
-                             <tr class="rowAreaHeight1_1">
-                                 <td><p style="height: 5vh;font-size: 15px;">名称：</p></td>
-                                 <td ><textarea style="height: 5vh;margin-top: -3vh;margin-left: -7vh;" rows="2" cols="50" name="comment" id="parameter1" class="inputarea1"></textarea></td>
-                                 <td><p style="height: 5vh;font-size: 15px;">数值：</p></td>
-                                 <td><textarea rows="2" style="height: 5vh;margin-top: -3vh; margin-left: -4vh;" cols="50" name="comment" id="parameter2" class="inputarea1"></textarea></td>
-                                 <td><input class="btn btn-success radius r" style=" margin-top: -3vh;margin-left: -2vh;" type="submit"  value="保存"  onclick="getResult()"/></td>
-                                 <td><input type="text" class="form-control" style="height: 3vh;margin-top: -4vh;margin-left: 1vh;" id="testval1" value="" name="uuid" ></td>
-                                 <td><p style="height: 5vh;font-size: 15px;">uuid值</p></td>
-                             </tr>
-                         </table>
-                     </form>
-                 </div>
-             </div>-->
                     <div style="margin-top: 1%;margin-left: -18.7%;width: 119%;">
                         <table class="table table-border table-bordered table-hover table-bg table-sort">
                             <thead>
@@ -161,9 +140,9 @@
                                 <td th:text="${datamodelSource.sourcesize}"></td>
                                 <td th:text="${datamodelSource.sourcetime}"></td>
                                 <td>
-                                    <a th:href="@{'/data/fileDelete/'+ ${datamodelSource.sourceid}}">
-                                        <input class="btn btn-primary size-MINI radius" type="button" value="删除">
-                                    </a>
+                                  <!--  <a th:href="@{'/data/fileDelete/'+ ${datamodelSource.sourceid}}">-->
+                                        <input class="btn btn-primary size-MINI radius" type="button" value="删除" onclick="deleteLinkView(this.id)" th:id="${datamodelSource.sourceid}">
+                            <!--        </a>-->
                                     <a th:href="@{'/data/fileDown/'+ ${datamodelSource.sourceid}}">
                                         <input class="btn btn-primary size-MINI radius" type="button" value="下载">
                                     </a>
@@ -179,27 +158,36 @@
 </div>
 
 
-
-<script>
-    function getResult() {
-        $.ajax({
-            async: false,
-            cache: false,
-            type: "POST",
-            dataType:"json",
-            url: "/data/blocklinkinform",
-            data: {
-                parameter1: $("#parameter1").val(),
-                parameter2: $("#parameter2").val(),
-                uuid: $("#testval1").val()
-            },
-            success : function(data) {
-                alert("保存成功")
-            }
-        });
-        alert("保存成功")
+<script type="text/javascript" th:inline="javascript">
+    function deleteLinkView(id) {
+        if (confirm("确定删除文件？")) {
+            var sourceid = id;
+            var id = {
+                "sourceid": sourceid
+            };
+            $.ajax({
+                url: "/data/fileDelete",
+                type: "POST",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(id),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code==1) {
+                        $.Huimodalalert('删除成功',2000);
+                    }
+                },
+            });
+            window.setTimeout("window.location.reload(true)",1000);
+        }
+        else {
+        }
     }
 </script>
+
+
+
+
 
 
 

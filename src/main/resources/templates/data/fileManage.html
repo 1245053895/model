@@ -54,14 +54,7 @@
 
 
                             <td>
-                                <!--&lt;!&ndash;跳转modelView  实现模型打开&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a th:href="@{'/dataReview/'+ ${fileAndUpload.id}}"><input class="btn btn-primary size-MINI radius" type="button" value="打开"></a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;跳转modelModify 实现模型修改&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;-->
-                                <a th:href="@{'/data/fileDelete/'+ ${datamodelSource.sourceid}}">
-                                    <input class="btn btn-primary size-MINI radius" type="button" value="删除">
-                                </a>
+                                <input class="btn btn-primary size-MINI radius" type="button" value="删除" onclick="deleteLinkView(this.id)" th:id="${datamodelSource.sourceid}">
                                 <a th:href="@{'/data/fileDown/'+ ${datamodelSource.sourceid}}">
                                     <input class="btn btn-primary size-MINI radius" type="button" value="下载">
                                 </a>
@@ -102,6 +95,39 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" th:inline="javascript">
+    function deleteLinkView(id) {
+        if (confirm("确定删除文件？")) {
+            var sourceid = id;
+            var id = {
+                "sourceid": sourceid
+            };
+            $.ajax({
+                url: "/data/fileDelete",
+                type: "POST",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(id),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code==1) {
+                        $.Huimodalalert('删除成功',2000);
+                    }
+                },
+            });
+            window.setTimeout("window.location.reload(true)",1000);
+        }
+        else {
+        }
+    }
+</script>
+
+
+
+
+
+
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
@@ -143,7 +169,7 @@
         return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
     }
 
-    function deletefile(id) {
+   /* function deletefile(id) {
         var id={
             "dataid":id
         };
@@ -163,7 +189,7 @@
         });
         window.setTimeout("window.location.reload(true)",1000);
     }
-
+*/
     function downloadfile(id) {
         var id={
             "dataid":id

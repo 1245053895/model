@@ -213,7 +213,7 @@ public class DataBaoController {
 
 
     /*数据包回显，datamodel_info表 */
-    @GetMapping(value = "/baoShow/{baoid}")  //得到数据块中id
+    @GetMapping(value = "/baoShow/{baoid}")
     public ModelAndView baoShow(Model model, @PathVariable("baoid") Integer baoid) {
         //得到处理后的数据包的表名和地址
         ModelAndView modelAndView = new ModelAndView();

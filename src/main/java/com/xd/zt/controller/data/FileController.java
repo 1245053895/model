@@ -204,8 +204,9 @@ public class FileController {
     }
 
 
-    //删除数据
-    @GetMapping("/fileDelete/{sourceid}")
+/*    //删除数据
+    @ResponseBody
+    @PostMapping("/fileDelete/{sourceid}")
     public ModelAndView fileDelete(@PathVariable("sourceid") Integer sourceid,Model model) {
         DatamodelSource datamodelSource = fileRepository.findById(sourceid).orElse(null);
         String filepath = datamodelSource.getSourcepath();
@@ -221,7 +222,31 @@ public class FileController {
         model.addAttribute("datamodelSourceList", datamodelSourceList);
       modelAndView.setViewName("data/fileManage");
         return modelAndView;
-    }
+    }*/
+//删除数据
+@ResponseBody
+@RequestMapping("/fileDelete")
+public Map<String,Object> fileDelete(@RequestBody JSONObject jsonObject) {
+    Map<String,Object> map=new HashMap<>();
+    String sourceid1=jsonObject.get("sourceid").toString();
+    Integer sourceid=Integer.parseInt(sourceid1);
+    DatamodelSource datamodelSource = fileRepository.findById(sourceid).orElse(null);
+    String filepath = datamodelSource.getSourcepath();
+    System.out.println(filepath);
+
+    //删除服务器记录
+    fileRepository.deleteById(sourceid);
+    //删除对应文件
+    fileService.deleteFile(filepath);
+    ModelAndView modelAndView=new ModelAndView();
+
+ /*   Iterable<DatamodelSource> datamodelSourceList = fileRepository.findAll();*/
+   /* model.addAttribute("datamodelSourceList", datamodelSourceList);
+    modelAndView.setViewName("data/fileManage");*/
+     map.put("code",1);
+    return map;
+}
+
 
     //搜索数据
     @GetMapping(value = "/dataSearch")

@@ -127,7 +127,6 @@ public class AreaController {
         Integer modelid = datamodelArea.getModelid();
         sourceService.deleteArea(areaid);
         return areaid1;
-
     }
 
     /*删除数据链*/
