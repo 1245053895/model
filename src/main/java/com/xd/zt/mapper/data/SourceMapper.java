@@ -29,6 +29,7 @@ public interface SourceMapper {
     public DatamodelBlock selectBlockById(Integer blockid);
 
     public DatamodelInfo selectBaoName(Integer baoid);
+    public List<DatamodelInfo> selectBaoName1(Integer baoid);
 /*    public DatamodelInfo resultBaoName(Integer dataresultid);*/
     public DatamodelBao selectBaoById(Integer baoid);
     public void insertlinkModeid(@Param("modeid") Integer modeid, @Param("processid") Integer processid);
@@ -44,6 +45,7 @@ public interface SourceMapper {
 
     DatamodelArea modelIdByAreaid(@Param("areaid") Integer areaid);
     List<DatamodelSource> datamodelSourceByModeId(@Param("modeid") String modeid,@Param("status") String status);
+    //List<DatamodelSource> datamodelSourceByModeId(@Param("modeid") String modeid);
     List<BusinessQuestion> selectquesInfo();
     List<BusinessQuestion> selectquesList(String questionid);
     List<Algorithm> selectAlgorithm();

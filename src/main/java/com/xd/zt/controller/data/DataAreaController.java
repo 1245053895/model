@@ -108,8 +108,10 @@ public class DataAreaController {
     @RequestMapping("/dataareacreate/{modelid}")
     public ModelAndView datablockcreate(Model model, @PathVariable("modelid") String modelid) {
         model.addAttribute("modelid", modelid);
-        List<DatamodelSource> datamodelSourceList = sourceService.datamodelSourceByModeId(modelid,"1");
-        model.addAttribute("datamodelSourceList", datamodelSourceList);
+        List<DatamodelSource> datamodelSourceList0 = sourceService.datamodelSourceByModeId(modelid,"0");
+        List<DatamodelSource> datamodelSourceList1 = sourceService.datamodelSourceByModeId(modelid,"1");
+        model.addAttribute("datamodelSourceList1", datamodelSourceList1);
+        model.addAttribute("datamodelSourceList0", datamodelSourceList0);
         List<Algorithm> algorithmList = sourceService.selectAlgorithm();
         List<Algorithm> algorithmList1 = new ArrayList<>();
         for (int i = 0 ; i < algorithmList.size(); i++){

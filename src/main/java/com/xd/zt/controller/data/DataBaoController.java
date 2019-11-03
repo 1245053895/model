@@ -110,6 +110,30 @@ public class DataBaoController {
         return json;
     }
 
+    @RequestMapping(value = "/dataSave1")
+    @ResponseBody
+    public JSONObject dataSave1(@RequestBody JSONObject jsonObject) {
+        String modelid=jsonObject.get("modelid").toString();
+        String baoName=jsonObject.get("saveName").toString();
+
+        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBlockResultById(Integer.parseInt(modelid));//根据modelid查出blockid不为空的数据块结果表
+        DatamodelInfo datamodelInfo1 = datamodelInfoList.get(0);
+        String blockid = datamodelInfo1.getBlockid().toString();
+        dataBlockService.saveDataBaoResult(modelid, baoName, blockid); //对数据包插入数据
+        String[] csvFilePath = new String[2];
+        String[] fileName = new String[2];
+        for (int i = 0; i < datamodelInfoList.size(); i++) {
+            csvFilePath[i]=datamodelInfoList.get(i).getDataaddr();
+            fileName[i]=baoName+"_"+datamodelInfoList.get(i).getDataresultname();
+        }
+        Integer databao= dataBlockService.maxBaoId();
+        for (int i = 0; i < csvFilePath.length; i++) {
+            // String baoid = dataBlockService.selectDataBaoByBaoName(baoName);
+            //数据库存储csv文件路径
+            dataBlockService.saveDataBaoCsvResult(fileName[i], databao.toString(), blockid, modelid, csvFilePath[i]);
+        }
+        return jsonObject;
+    }
 
     @RequestMapping("/dataReview")
     @ResponseBody
@@ -217,7 +241,7 @@ public class DataBaoController {
     public ModelAndView baoShow(Model model, @PathVariable("baoid") Integer baoid) {
         //得到处理后的数据包的表名和地址
         ModelAndView modelAndView = new ModelAndView();
-        DatamodelInfo datamodelInfo = sourceService.selectBaoName(baoid);
+        List<DatamodelInfo> datamodelInfos = sourceService.selectBaoName1(baoid);
         String[] blockids = sourceService.selectBaoById(baoid).getBlockid().split(",");
         String[] blockNames = new String[blockids.length];
         for (int i = 0; i < blockids.length; i++) {
@@ -228,7 +252,7 @@ public class DataBaoController {
            catch (Exception e){continue;}
         }
         modelAndView.setViewName("data/baoShow");
-        modelAndView.addObject("datamodelInfo", datamodelInfo);
+        modelAndView.addObject("datamodelInfos", datamodelInfos);
         modelAndView.addObject("baoid", baoid);
         modelAndView.addObject("blockNames", blockNames);
         return modelAndView;

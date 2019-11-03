@@ -59,9 +59,13 @@
 
 	<!--数据源选择-->
 	<div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-top: 2%;">
-		<div class="panel-header">数据块结果</div>
-		<div class="panel-body" id="datasource" style="float: left; width: 92%;height: 80%;overflow-x:hidden;overflow-y:auto;">
-			<div th:each="datamodelInfo:${datamodelInfoList}" th:id="${datamodelInfo.getBlockid()+20}" style="display: none">
+		<div class="panel-header">数据块结果
+			<button style="position: absolute;left: 24%;margin-top: -0.3%;"  onclick="jumpDialog1()" class="btn btn-primary radius">跳过合并	</button>
+		</div>
+
+
+		<div class="panel-body" id="datasource" style="float: left; width: 92%;height: 80%;overflow-x:hidden;overflow-y:auto;display: none;">
+			<div th:each="datamodelInfo:${datamodelInfoList}" th:id="${datamodelInfo.getBlockid()+20}" >
 				<input class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelInfo.getBlockid()}"
 				th:value="${datamodelInfo.getDataresultname()}" onclick="datasource(this.id,this.value)"/>
 			</div>
@@ -112,6 +116,25 @@
 			</div>
 		</div>
 	</div>
+	<div id="modal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- 弹出对话框 -->
+		<div class="modal-dialog">
+			<div class="modal-content radius">
+				<div class="modal-header">
+					<h3 class="modal-title">数据包保存</h3>
+					<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+				</div>
+				<div class="modal-body">
+					<strong>名称：</strong><input type="text" placeholder="请输入数据包名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName1">
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-dismiss="modal" onclick="saveFile1();">确定</button>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
@@ -127,6 +150,7 @@
 
 	var csvFile;
 	var file={};
+	var bloak_id;
 	//保存页面数据，封装json，用ajax传递
 	function saveFile() {
 		if(document.getElementById('saveName').value == ""){
@@ -153,6 +177,33 @@
 		});
 	}
 
+	function saveFile1() {
+		if(document.getElementById('saveName1').value == ""){
+			$.Huimodalalert('请输入保存名称',2000);
+		}
+		var modelid = [[${modelid}]];
+		var saveName =document.getElementById('saveName1').value;
+		var data = {
+			"modelid": modelid,
+			"saveName":saveName
+		};
+		$.ajax({
+			url : "/data/dataSave1",
+			type : "POST",
+			async : true,
+			contentType: "application/json; charset=utf-8",
+			data : JSON.stringify(data),
+			dataType : 'json',
+			success : function() {
+				$.Huimodalalert('保存成功',1000);
+				//传输成功后延时500ms跳转到模型列表
+
+
+
+			}
+		});
+		window.setTimeout("window.location.href = '/data/databaobuild/'+modelid",2000);
+	}
 	//清空已选数据
 	function dataFreshen() {
 		document.getElementById("select_table_head").innerHTML=null;
@@ -173,11 +224,17 @@
         $("#modal-demo").modal("show");
     }
 
+	//跳出模型保存框
+	function jumpDialog1() {
+		$("#modal-demo1").modal("show");
+	}
+
     //添加数据源
 	function showDataSource(id) {
-	    var ids = parseInt(id);
-		$("#"+(ids+20).toString()).show(300);
-
+	   /* var ids = parseInt(id);
+		$("#"+(ids+20).toString()).show(300);*/
+		$("#datasource").show(300);
+		bloak_id=id;
 	}
 
     function addData(value) {
