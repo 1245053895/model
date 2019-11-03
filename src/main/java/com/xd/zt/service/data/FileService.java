@@ -86,7 +86,14 @@ public class FileService {
 
     public void deleteFile(String filepath){
         File file = new File(filepath);
-        file.delete();
+        if (file.exists()) {
+            file.delete();
+            boolean result = file.delete();
+            if (!result) {
+                System.gc();
+                file.delete();
+            }
+        }
     }
 
 
