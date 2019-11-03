@@ -85,22 +85,6 @@
                 <center><font color="white">新建验证模型</font></center>
             </a></dt>
         </dl>
-        <!--<dl id="menu" th:each="questionList:${questionList}">-->
-            <!--<dt th:id="${questionList.modelid}"><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${questionList.name}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>-->
-            <!--<dd>-->
-                <!--<ul>-->
-                    <!--<li><a th:id="'/analyse/analyseProcessBuild/'+ ${questionList.modelid}" data-href="analyseProcess"-->
-                           <!--data-title="分析流程" href="javascript:void(0)">验证流程</a></li>-->
-                    <!--<li><a th:id="'/analyse/analyzModelCreate/'+ ${questionList.modelid}" data-href="analyzModelCreate"-->
-                           <!--data-title="分析单元" href="javascript:void(0)">验证单元</a></li>-->
-                    <!--<li><a th:id="'/analyse/analyzList/'+ ${questionList.modelid}" data-href="analyzList"-->
-                           <!--data-title="分析模型" href="javascript:void(0)">验证模型</a></li>-->
-                    <!--<li><a th:id="'/analyse/analyzModelList/'+ ${questionList.modelid}" data-href="analyzModelList"-->
-                           <!--data-title="分析模型实例" href="javascript:void(0)">验证模型实例</a></li>-->
-                    <!--<li><a data-href="taskList" data-title="分析处理任务" href="javascript:void(0)">分析处理任务</a></li>-->
-                <!--</ul>-->
-            <!--</dd>-->
-        <!--</dl>-->
         <dl id="menu" th:each="TestnameModelList:${TestnameModelList}">
             <dt th:id="${TestnameModelList.id}" ><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${ TestnameModelList.testname}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>

@@ -110,7 +110,7 @@ public class AreaController {
 
         return map;
     }
-
+/*删除数据区*/
     @RequestMapping("/deleteArea")
     @ResponseBody
     public String deleteArea(@RequestBody String jsonData) {
