@@ -154,7 +154,7 @@
 				data: JSON.stringify(result),
 				dataType: 'json',
 				success: function (data) {
-					$.Huimodalalert('保存成功,请返回数据块', 1000);
+					// $.Huimodalalert('保存成功,请返回数据块', 1000);
 				}
 			});
             saveParameters(datablockresult)
@@ -225,9 +225,9 @@
 			url: '/data/saveBlockExample',
 			success: function (data) {
 				if (data.code == 1) {
-					$.Huimodalalert('保存成功', 1000);
-				} else {
-					$.Huimodalalert('已存在实例名，请重新保存', 1000);
+					$.Huimodalalert('运行成功，请返回数据块查看结果', 3000);
+				} else if(data.code == 2){
+					$.Huimodalalert('运行失败', 3000);
 				}
 			}
 		});
@@ -377,10 +377,10 @@ var count = {};
                 for (var i = 0; i < algorithmParams_Arr2.length; i++) {
                     var param2 = algorithmParams_Arr2[i];
                     if (param2 == "modelPath") {
-                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 + "' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 +"_for_" + value +"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
                     }
                     else {
-                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 + ".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 +"_for_" + value + ".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
 
                     }
                 }

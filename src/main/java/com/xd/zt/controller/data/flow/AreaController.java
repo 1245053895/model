@@ -68,44 +68,55 @@ public class AreaController {
 //        String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
 //        if(modelinstanceid==""||modelinstanceid==null){
             dataAreaService.insertExample(modelid,modelinstancename,analyzmodel,areaid.toString());
-            map.put("code",1);
+
 //            String modelinstanceid1 = dataAreaService.selectInstanceName(modelinstancename);
             JSONObject modelinstance = new JSONObject();
             modelinstance.put("username","data");
             modelinstance.put("modelInstanceId",modelid);
-            modelinstance.put("instantData",false);
+            modelinstance.put("instantData",true);
             modelinstance.put("analyzmodel",jsonArray);
 
             String jsonString= JSON.toJSONString(modelinstance);
+            System.out.printf(jsonString);
             HttpUtil httpUtil = new HttpUtil();
             try {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
                 String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
+                System.out.printf(result);
                 JSON resultjson = JSON.parseObject(result);
 
-                String taskId = ((JSONObject) resultjson).getString("taskId");
+                if(((JSONObject) resultjson).getBoolean("success")) {
 
-                JSONObject outputpath = params.getJSONObject("outputpath");
+                    String taskId = ((JSONObject) resultjson).getString("taskId");
 
-                String[] filenames = JsonKeyToStringList.translate(outputpath);
+                    JSONObject outputpath = params.getJSONObject("outputpath");
 
-                for (int i = 0 ; i < outputpath.size(); i++ ) {
+                    String[] filenames = JsonKeyToStringList.translate(outputpath);
 
-                    DatamodelInfo datamodelInfo = new DatamodelInfo();
-                    datamodelInfo.setDataresultname(filenames[i]);
-                    datamodelInfo.setDatalink(datalink);
-                    datamodelInfo.setDataarea(areaid);
-                    datamodelInfo.setModelid(Integer.parseInt(modelid));
+                    for (int i = 0; i < outputpath.size(); i++) {
 
-                    datamodelInfo.setDataaddr("/var/data/celery/output/"+taskId+"/output/"+filenames[i]);
+                        DatamodelInfo datamodelInfo = new DatamodelInfo();
+                        datamodelInfo.setDataresultname(filenames[i]);
+                        datamodelInfo.setDatalink(datalink);
+                        datamodelInfo.setDataarea(areaid);
+                        datamodelInfo.setModelid(Integer.parseInt(modelid));
 
-                    dataAreaService.processAreaInfo(datamodelInfo);
-                    String areaname = modelinstancename;
-                    dataAreaService.updateAreaByAreaId(areaname, areaid.toString());
+                        datamodelInfo.setDataaddr("/var/data/celery/output/" + taskId + "/output/" + filenames[i]);
+
+                        dataAreaService.processAreaInfo(datamodelInfo);
+                        String areaname = modelinstancename;
+                        dataAreaService.updateAreaByAreaId(areaname, areaid.toString());
+                        map.put("code",1);
+                    }
+                }
+                else {
+                    map.put("code",2);
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());
-                return null;
+                map.put("code",2);
+                return map;
+
             }
 
         return map;

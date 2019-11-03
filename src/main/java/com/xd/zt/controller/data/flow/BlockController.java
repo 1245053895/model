@@ -70,12 +70,12 @@ public class BlockController {
 //        String modelinstanceid = dataAreaService.selectInstanceName(modelinstancename);
 //        if(modelinstanceid==""||modelinstanceid==null){
             dataBlockService.BlockInstance(modelid,modelinstancename,analyzmodel,blockid.toString());
-            map.put("code",1);
+
 //            String modelinstanceid1 = dataAreaService.selectInstanceName(modelinstancename);
             JSONObject modelinstance = new JSONObject();
             modelinstance.put("username","data");
             modelinstance.put("modelInstanceId",modelid);
-            modelinstance.put("instantData",false);
+            modelinstance.put("instantData",true);
             modelinstance.put("analyzmodel",jsonArray);
 
             String jsonString= JSON.toJSONString(modelinstance);
@@ -84,28 +84,36 @@ public class BlockController {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
                 String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
                 JSON resultjson = JSON.parseObject(result);
-                String taskId = ((JSONObject) resultjson).getString("taskId");
+                System.out.printf(result);
+                if(((JSONObject) resultjson).getBoolean("success")) {
+                    String taskId = ((JSONObject) resultjson).getString("taskId");
 
-                JSONObject outputpath = params.getJSONObject("outputpath");
+                    JSONObject outputpath = params.getJSONObject("outputpath");
 
-                String[] filenames = JsonKeyToStringList.translate(outputpath);
+                    String[] filenames = JsonKeyToStringList.translate(outputpath);
 
-                for (int i = 0 ; i < outputpath.size(); i++ ) {
+                    for (int i = 0; i < outputpath.size(); i++) {
 
-                    DatamodelInfo datamodelInfo = new DatamodelInfo();
-                    datamodelInfo.setDataresultname(filenames[i]);
-                    datamodelInfo.setDataarea(areaid);
-                    datamodelInfo.setModelid(Integer.parseInt(modelid));
+                        DatamodelInfo datamodelInfo = new DatamodelInfo();
+                        datamodelInfo.setDataresultname(filenames[i]);
+                        datamodelInfo.setDataarea(areaid);
+                        datamodelInfo.setModelid(Integer.parseInt(modelid));
 
-                    datamodelInfo.setDataaddr("/var/data/celery/output/"+taskId+"/output/"+filenames[i]);
+                        datamodelInfo.setDataaddr("/var/data/celery/output/" + taskId + "/output/" + filenames[i]);
 
-                    datamodelInfo.setBlockid(blockid);
-                    dataBlockService.processBlockInfo(datamodelInfo);
+                        datamodelInfo.setBlockid(blockid);
+                        dataBlockService.processBlockInfo(datamodelInfo);
+                        map.put("code",1);
+                    }
+                }
+                else {
+                    map.put("code",2);
                 }
                 //System.out.println(analyzmodel);
             }catch (Exception e){
                 System.out.println(e.getMessage());
-                return null;
+                map.put("code",2);
+                return map;
             }
 //        }
 //        else {
