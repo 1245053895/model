@@ -134,9 +134,10 @@
         var selectCollection = $("#selectCollection").val();
         var divideName = $("#divideName").val();
         var obj = document.getElementsByName("objectname");
-        var baoid="";
+        var baoid=[];
+        var i=0;
         $('input[type=checkbox]:checked').each(function(){
-            baoid=this.id;
+            baoid[i++]=this.id;
         });
       console.log(baoid);
         if(document.getElementById('divideName').value == ""){

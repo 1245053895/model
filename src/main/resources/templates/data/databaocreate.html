@@ -64,12 +64,20 @@
 		</div>
 
 
-		<div class="panel-body" id="datasource" style="float: left; width: 92%;height: 80%;overflow-x:hidden;overflow-y:auto;display: none;">
-			<div th:each="datamodelInfo:${datamodelInfoList}" th:id="${datamodelInfo.getBlockid()+20}" >
-				<input class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelInfo.getBlockid()}"
+		<div class="panel-body" id="datasource" style="float: left; width: 92%;height: 80%;">
+			<div th:each="dataBlockToInfoList:${dataBlockToInfoList}" th:id="${dataBlockToInfoList.getBlockid()+'blockid'}" style="display: none;" class="dataresult">
+				<input class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;" th:each="datamodelInfo:${dataBlockToInfoList.getDatamodelInfoList()}" th:id="${datamodelInfo.getBlockid()}"
 				th:value="${datamodelInfo.getDataresultname()}" onclick="datasource(this.id,this.value)"/>
 			</div>
 		</div>
+		<!--<div th:each="datamodelInfo:${datamodelInfoList}" >-->
+			<!--<div class="panel-body" id="datasource" style="float: left; width: 92%;height: 80%;" style="display: none;">-->
+				<!--<div th:each="blockInfo:${datamodelInfo}" th:id="${blockInfo.getBlockid()+20}" >-->
+					<!--<input class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${blockInfo.getBlockid()}"-->
+						   <!--th:value="${blockInfo.getDataresultname()}" onclick="datasource(this.id,this.value)"/>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
 	</div>
 
 	<div class="panel panel-default" style="width: 67%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
@@ -185,6 +193,7 @@
 		var saveName =document.getElementById('saveName1').value;
 		var data = {
 			"modelid": modelid,
+			"blockid": bloak_id,
 			"saveName":saveName
 		};
 		$.ajax({
@@ -202,7 +211,6 @@
 
 			}
 		});
-		window.setTimeout("window.location.href = '/data/databaobuild/'+modelid",2000);
 	}
 	//清空已选数据
 	function dataFreshen() {
@@ -231,10 +239,11 @@
 
     //添加数据源
 	function showDataSource(id) {
-	   /* var ids = parseInt(id);
-		$("#"+(ids+20).toString()).show(300);*/
-		$("#datasource").show(300);
+	    // var ids = parseInt(id);
+	    $(".dataresult").hide(300);
+		$("#"+id+"blockid").show(300);
 		bloak_id=id;
+		//$("#datasource").show(300);
 	}
 
     function addData(value) {

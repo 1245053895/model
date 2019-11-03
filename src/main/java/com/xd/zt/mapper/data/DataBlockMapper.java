@@ -20,6 +20,7 @@ public interface DataBlockMapper {
     void deleteblock(@Param("blockid") String blockid);
 
     DatamodelInfo selectDataAreaResultByDatablock(@Param("blockid") String blockid);
+    List<DatamodelInfo> selectDataBloakById(@Param("blockid") Integer blockid);
 
     List<DatamodelBao> selectBaoById(@Param("modelid") Integer modelid);
 
