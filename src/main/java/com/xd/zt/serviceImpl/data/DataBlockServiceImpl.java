@@ -54,6 +54,10 @@ private DataBlockMapper dataBlockMapper;
         return datamodelInfoList;
     }
 
+    @Override
+    public List<DatamodelInfo> selectDataBloakById(Integer blockid) {
+        return dataBlockMapper.selectDataBloakById(blockid);
+    }
 
     @Override
     public String selectAreaName(Integer blockid) {

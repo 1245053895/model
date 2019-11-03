@@ -223,10 +223,15 @@ public class DataModelController {
         //数据模型数据集回显
         List<DatamodelJi> datamodelJi = dataModelService.selectDataCollect(modeid);
         for (DatamodelJi ji : datamodelJi) {
-            int baoid=ji.getBaoid();
+            String baoid_list=ji.getBaoid();
             // System.out.println(baoid);
-            DatamodelBao datamodelBao = dataAggregationService.selectDataBaoByBaoId(baoid);
-            ji.setBaoname(datamodelBao.getBaoname());
+            String[] baoids = baoid_list.split(";");
+            String baoName="";
+            for (int i = 0; i <baoids.length ; i++) {
+                DatamodelBao datamodelBao = dataAggregationService.selectDataBaoByBaoId(Integer.parseInt(baoids[i]));
+                baoName=baoName+datamodelBao.getBaoname()+" ";
+            }
+            ji.setBaoname(baoName);
         }
         model.addAttribute("datamodelJi", datamodelJi);
         model.addAttribute("modeid", modeid);

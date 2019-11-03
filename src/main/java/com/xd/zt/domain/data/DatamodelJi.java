@@ -11,7 +11,7 @@ public class DatamodelJi {
 
     private Date jitime;
 
-    private Integer baoid;
+    private String baoid;
 
     private Integer modelid;
 
@@ -65,11 +65,11 @@ public class DatamodelJi {
         this.jitime = jitime;
     }
 
-    public Integer getBaoid() {
+    public String getBaoid() {
         return baoid;
     }
 
-    public void setBaoid(Integer baoid) {
+    public void setBaoid(String baoid) {
         this.baoid = baoid;
     }
 }

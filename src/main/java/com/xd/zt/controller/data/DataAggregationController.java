@@ -2,6 +2,7 @@ package com.xd.zt.controller.data;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.xd.zt.domain.data.DatamodelBao;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +44,14 @@ public class DataAggregationController {
         String modelid = jsonObject.getString("modelid");
         String jitype = jsonObject.getString("selectCollection");
         String jiname = jsonObject.getString("divideName");
-        String baoid=jsonObject.getString("baoid");
+        JSONArray jsonArray = jsonObject.getJSONArray("baoid");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String baoid="";
         /// new Date()为获取当前系统时间
         String jitime=df.format(new Date());
-        System.out.println(baoid);
+        for (int i = 0; i < jsonArray.size(); i++) {
+            baoid=baoid+jsonArray.getString(i)+";";
+        }
         dataAggregationService.saveDataPack(jiname,jitype,jitime,baoid,modelid);
         return jsonData;
     }
@@ -75,12 +80,18 @@ public class DataAggregationController {
         /*得到处理后的数据包的表名和地址*/
         ModelAndView modelAndView=new ModelAndView();
         /*  DatamodelInfo datamodelInfo= sourceService.selectBlockName(blockid);*/
+        List<DatamodelBao> list = new ArrayList<>();
         DatamodelJi datamodelJi = dataAggregationService.selectDataCollect(jiid);
-        int baoid=datamodelJi.getBaoid();
-        DatamodelBao datamodelBao = dataAggregationService.selectDataBaoByBaoId(baoid);
+        String baoid_list=datamodelJi.getBaoid();
+        String[] baoids = baoid_list.split(";");
+        for (int i = 0; i <baoids.length ; i++) {
+            DatamodelBao datamodelBao = dataAggregationService.selectDataBaoByBaoId(Integer.parseInt(baoids[i]));
+            list.add(datamodelBao);
+        }
+
         modelAndView.setViewName("data/aggreShow");
         modelAndView.addObject("datamodelJi",datamodelJi);
-        modelAndView.addObject("datamodelBao",datamodelBao);
+        modelAndView.addObject("datamodelBao",list);
         return modelAndView;
     }
 
@@ -104,7 +115,6 @@ public class DataAggregationController {
         if (fileType.equals("csv")) {
             List<String> result = fileService.readCsvFile(filePath);
             map.put("result", result);
-            System.out.println(result.toString());
         }
         //不管是不是csv格式，都返回页面，如果不是在前端页面再处理
         return "data/dataReview";
@@ -115,8 +125,8 @@ public class DataAggregationController {
         //System.out.println(modelid);
         List<DatamodelJi> dataAggreList = dataAggregationService.selectDataCollec(modelid);
         for (DatamodelJi datamodelJi:dataAggreList) {
-            DatamodelBao datamodelBao = dataAggregationService.selectDataBaoByBaoId(datamodelJi.getBaoid());
-            datamodelJi.setBaoname(datamodelBao.getBaoname());
+           // DatamodelBao datamodelBao = dataAggregationService.selectDataBaoByBaoId(datamodelJi.getBaoid());
+           // datamodelJi.setBaoname(datamodelBao.getBaoname());
         }
         model.addAttribute("dataAggreList",dataAggreList);
         model.addAttribute("modelid",modelid);

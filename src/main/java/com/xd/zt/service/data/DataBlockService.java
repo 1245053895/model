@@ -21,6 +21,8 @@ public interface DataBlockService {
 
     DatamodelInfo selectDataAreaResultByDatablock(String blockid);
 
+    List<DatamodelInfo> selectDataBloakById(Integer blockid);
+
     List<DatamodelBao> selectBaoById(@Param("modelid") Integer modelid);
 
     List<DatamodelInfo> selectDataBlockResultById(@Param("modelid") Integer modelid);
