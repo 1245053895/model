@@ -121,12 +121,19 @@
                             </div>
 
                             <div class="modal-body">
-                                <strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;别：</strong><input type="text" placeholder="请输入算法类别" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="algorithmtype" name="algorithmtype">
+                                <strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;别：</strong>
+                                <!--<input type="text" placeholder="请输入算法类别" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="algorithmtype" name="algorithmtype">-->
+                                <select class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmtype">
+                                    <option style="font-size: 12px">请选择算法类别</option>
+                                    <option style="font-size: 12px" name="algorithmtype">预处理</option>
+                                    <option style="font-size: 12px" name="algorithmtype">特征工程</option>
+                                    <option style="font-size: 12px" name="algorithmtype">模型训练</option>
+                                </select>
                             </div>
                             <div class="modal-body">
                                 <strong style="margin-left: 5%">描&nbsp;&nbsp;&nbsp;&nbsp;述</strong><input type="text" placeholder="请输入算法描述" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 43%;" id="algorithmdescribe" name="algorithmdescribe">
                             </div>
-                            <div class="modal-body" style="margin-left: 3.5vh;">标&nbsp;&nbsp;&nbsp;&nbsp;签：</strong>
+                            <div class="modal-body" ><strong style="margin-left: 5%">标&nbsp;&nbsp;&nbsp;&nbsp;签：</strong>
                                 <!--<input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">-->
                                 <select class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmlabel">
                                     <option style="font-size: 12px">请选择算法类型</option>
@@ -135,7 +142,7 @@
                                     <option style="font-size: 12px" name="algorithmlabel">人工智能</option>
                                 </select>
                             </div>
-                            <div class="modal-body" style="margin-left: 3.5vh;">版&nbsp;&nbsp;&nbsp;&nbsp;本：</strong>
+                            <div class="modal-body" ><strong style="margin-left: 5%">版&nbsp;&nbsp;&nbsp;&nbsp;本：</strong>
                                 <!--<input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">-->
                                 <select class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmversion">
                                     <option style="font-size: 12px">请选择算法版本</option>
@@ -152,7 +159,16 @@
                                 <!--</select>-->
                             <!--</div>-->
                             <div class="modal-body">
-                                <strong style="margin-left: 5%">参&nbsp;&nbsp;&nbsp;&nbsp;数：</strong><input type="text" placeholder="请输入算法参数,以分号进行隔开" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmparams">
+                                <strong style="margin-left: 5%">数据源参数：</strong>
+                                <input type="text" placeholder="请输入数据源参数,以分号进行隔开" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmparamsinput">
+                            </div>
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">算法参数：</strong>
+                                <input type="text" placeholder="请输入算法参数,以分号进行隔开" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmparamscontent">
+                            </div>
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">输出参数：</strong>
+                                <input type="text" placeholder="请输出参数,以分号进行隔开" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmparamsoutput">
                             </div>
                             <div class="button_position">
                                 <!--<button class="btn btn-primary" data-dismiss="modal" onclick="object();">确定</button>-->

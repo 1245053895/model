@@ -62,8 +62,8 @@ public class BlockController {
         JSONArray jsonArray = JSON.parseArray(analyzmodel);
         JSONObject params = jsonArray.getJSONObject(0).getJSONObject("params");
 //        String dataaddr = params.getString("path");
-
-        Integer blockid=  dataBlockService.maxBlockId();
+        Integer blockid= Integer.parseInt(jsonObject.get("blockid").toString());
+//        Integer blockid=  dataBlockService.maxBlockId();
         Integer areaid= dataBlockService.getAreaIdByBlockId(blockid);
 
 

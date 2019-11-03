@@ -155,9 +155,10 @@
 				dataType: 'json',
 				success: function (data) {
 					// $.Huimodalalert('保存成功,请返回数据块', 1000);
+                    saveParameters(datablockresult,data.blockid);
 				}
 			});
-            saveParameters(datablockresult)
+            // saveParameters(datablockresult)
 		}
 	}
 
@@ -179,7 +180,7 @@
         }*/
 	}
 	//点击运行保存参数，运行算法
-	function saveParameters(datablockresult) {
+	function saveParameters(datablockresult,blockid) {
 		// if (document.getElementById('saveName1').value == "") {
 		// 	$.Huimodalalert('请输入保存名称', 2000);
 		// } else {
@@ -214,7 +215,8 @@
 		var example = {
 			"modelid": modelid,
 			"submitName": submitName,
-			"analyzmodel": analyzmodel
+			"analyzmodel": analyzmodel,
+			"blockid":blockid
 		};
 		$.ajax({
 			async: false,
