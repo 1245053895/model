@@ -30,6 +30,7 @@ public interface SourceService {
     public DatamodelBao selectBaoById(Integer baoid);
 
     public DatamodelInfo selectBaoName(int baoid);
+    public List<DatamodelInfo> selectBaoName1(Integer baoid);
 
     /*   public DatamodelInfo resultBaoName(Integer dataresultid);*/
     public void insertlinkModeid(@Param("modeid") Integer modeid, @Param("processid") Integer processid);
@@ -49,6 +50,7 @@ public interface SourceService {
     DatamodelArea modelIdByAreaid(@Param("areaid") Integer areaid);
 
     List<DatamodelSource> datamodelSourceByModeId(@Param("modeid") String modeid,@Param("status") String status);
+    //List<DatamodelSource> datamodelSourceByModeId(@Param("modeid") String modeid);
 
     public void insertAreaModeid(@Param("modeid") Integer modeid, @Param("processid") Integer processid);
 

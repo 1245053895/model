@@ -52,6 +52,10 @@
     <select id="selectBaoName" resultType="datamodelInfo" parameterType="Integer">
           SELECT datamodel_info.* FROM datamodel_info,datamodel_bao WHERE datamodel_bao.baoid=datamodel_info.databao AND baoid=#{baoid}
     </select>
+    <!--数据块-->
+    <select id="selectBaoName1" resultType="datamodelInfo" parameterType="Integer">
+          SELECT datamodel_info.* FROM datamodel_info,datamodel_bao WHERE datamodel_bao.baoid=datamodel_info.databao AND baoid=#{baoid}
+    </select>
 
     <select id="selectlastprocessid"  resultType="Integer">
         SELECT analyseprocess.id FROM analyseprocess WHERE id=(SELECT MAX(id) FROM analyseprocess)
@@ -100,6 +104,10 @@
     <select id="modelIdByAreaid" resultType="datamodelArea" parameterType="Integer">
         SELECT * FROM datamodel_area WHERE areaid=#{areaid}
     </select>
+
+    <!--<select id="datamodelSourceByModeId" resultType="datamodelSource" parameterType="String">
+        SELECT * FROM datamodel_source WHERE modeid=#{modeid}
+    </select>-->
 
     <select id="datamodelSourceByModeId" resultType="datamodelSource" parameterType="String">
         SELECT * FROM datamodel_source WHERE modeid=#{modeid} AND status=#{status}

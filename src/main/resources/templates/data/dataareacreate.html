@@ -52,12 +52,12 @@
         <div class="panel-body" id="datasource"
              style="float: left; width: 92%;height: 80%;overflow-x:hidden;overflow-y:auto;display: none;">
 
-
-
-            <input th:each="datamodelSourceList:${datamodelSourceList}" class="btn btn-success radius" type="button"
-                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelSourceList.getSourcepath()}"
-                   th:value="${datamodelSourceList.getSourcename()}"  onclick="selectData(this.id)"/>
-
+            <input th:each="datamodelSourceList0:${datamodelSourceList0}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelSourceList0.getSourcepath()}"
+                   th:value="${datamodelSourceList0.getSourcename()}"  onclick="selectData(this.id)"/>
+            <input th:each="datamodelSourceList1:${datamodelSourceList1}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelSourceList1.getSourcepath()}"
+                   th:value="${datamodelSourceList1.getSourcename()}"  onclick="selectData(this.id)"/>
             <!--onclick="datasource(this.value);datasourcePath(this.id)"-->
         </div>
     </div>

@@ -112,6 +112,12 @@ public class SourceServiceImpl implements SourceService {
         return datamodelSourceList;
     }
 
+    /*@Override
+    public List<DatamodelSource> datamodelSourceByModeId(String modeid) {
+        List<DatamodelSource> datamodelSourceList = sourceMapper.datamodelSourceByModeId(modeid);
+        return datamodelSourceList;
+    }*/
+
     @Override
     public void insertAreaModeid(Integer modeid, Integer processid) {
         sourceMapper.insertAreaModeid(modeid, processid);
@@ -142,6 +148,11 @@ public class SourceServiceImpl implements SourceService {
     @Override
     public DatamodelInfo selectBaoName(int baoid) {
         return sourceMapper.selectBaoName(baoid);
+    }
+
+    @Override
+    public List<DatamodelInfo> selectBaoName1(Integer baoid) {
+        return sourceMapper.selectBaoName1(baoid);
     }
 
     @Override
