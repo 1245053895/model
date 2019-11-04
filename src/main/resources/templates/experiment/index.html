@@ -89,15 +89,12 @@
             <dt th:id="${TestnameModelList.id}" ><i class="Hui-iconfont">&#xe620;</i><font color="white" th:text="${ TestnameModelList.testname}"> </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a th:id="'/experiment/xx/'+${TestnameModelList.id}" data-href="xx" data-title="数据导入" href="javascript:void(0)" >模型配置</a></li>
-                    <li><a th:id="'/experiment/reviewModelConfiguration/'+${TestnameModelList.id}" data-href="xxx" data-title="模型配置" href="javascript:void(0)">数据导入</a></li>
-                    <li><a th:id="'/experiment/resultShow/'+${TestnameModelList.id}" data-href="xxx" data-title="模型验证" href="javascript:void(0)">模型验证</a></li>
+                    <li><a th:id="'/experiment/datashow/'+${TestnameModelList.id}" data-href="xxx" data-title="数据导入" href="javascript:void(0)">数据导入</a></li>
+                    <li><a th:id="'/experiment/reviewModelConfiguration/'+${TestnameModelList.id}" data-href="xx" data-title="模型配置" href="javascript:void(0)" >模型配置</a></li>
+                  <li><a th:id="'/experiment/resultShow/'+${TestnameModelList.id}" data-href="xxx" data-title="模型验证" href="javascript:void(0)">模型验证</a></li>
                 </ul>
             </dd>
         </dl>
-
-
-
     </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
@@ -143,7 +140,7 @@
         for (var index = 0; index < modelid.length; index++) {
             modelid[index].onclick = function () {
                 var id = this.id;
-                var experimentData = "/experiment/datalead/" + id.toString();
+                var experimentData = "/experiment/datashow/" + id.toString();
                 var experimentmodel = document.getElementById(experimentData);
                 experimentmodel.setAttribute('data-href',experimentData);
 
