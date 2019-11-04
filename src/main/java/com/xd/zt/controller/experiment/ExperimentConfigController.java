@@ -6,6 +6,7 @@ import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.analyse.AlgorithmData;
 import com.xd.zt.domain.analyse.AnalyseModelProcess;
 import com.xd.zt.domain.business.BusinessQuestion;
+import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
 import com.xd.zt.service.experiment.ExperimentConfigService;
@@ -28,26 +29,28 @@ public class ExperimentConfigController {
 
 
 
-    @RequestMapping("/reviewModelConfiguration/{id}")
-    public ModelAndView datalead(Model model,@PathVariable("id") Integer id) {
-        model.addAttribute("experimentid",id);
+    @RequestMapping("/reviewModelConfiguration/{experimentid}")
+    public ModelAndView datalead(Model model,@PathVariable("experimentid") Integer experimentid) {
+    List<ExperimentConfig> experimentConfigList= experimentConfigService.findAllByExperimentId(experimentid);
+        model.addAttribute("experimentid",experimentid);
+        model.addAttribute("experimentConfigList",experimentConfigList);
         return new ModelAndView("experiment/reviewModelConfiguration", "modelModel", model);
     }
 
 
 
 
-    @RequestMapping("/modelConfiguration/{id}")
-    public ModelAndView modelConfiguration(Model model,@PathVariable("id") Integer id){
-//        通過id去查analysemodelid
-          ExperimentModel experimentModel =experimentConfigService.showExperiment(id);
-          int analysemodeid = experimentModel.getAnalysemodeid();
-//         通過analysemodelid去analyse_model_process查整條記錄
-          AnalyseModelProcess analyseModelProcess =experimentConfigService.showAnalyseModelProcess(analysemodeid);
-          String name =analyseModelProcess.getModelname();
-          Integer modelid = analyseModelProcess.getModelid();
-           model.addAttribute("name",name);
-           model.addAttribute("modelid",modelid);
+    @RequestMapping("/modelConfiguration/{experimentid}")
+    public ModelAndView modelConfiguration(Model model,@PathVariable("experimentid") Integer id){
+////        通過id去查analysemodelid
+//          ExperimentModel experimentModel =experimentConfigService.showExperiment(id);
+//          int analysemodeid = experimentModel.getAnalysemodeid();
+////         通過analysemodelid去analyse_model_process查整條記錄
+//          AnalyseModelProcess analyseModelProcess =experimentConfigService.showAnalyseModelProcess(analysemodeid);
+//          String name =analyseModelProcess.getModelname();
+//          Integer modelid = analyseModelProcess.getModelid();
+//           model.addAttribute("name",name);
+//           model.addAttribute("modelid",modelid);
         return new ModelAndView("experiment/modelConfiguration","Modelmodel",model) ;
     }
 

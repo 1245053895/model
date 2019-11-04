@@ -3,10 +3,13 @@ package com.xd.zt.service.experiment;
 import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.analyse.AnalyseFlowprocess;
 import com.xd.zt.domain.analyse.AnalyseModelProcess;
+import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface ExperimentConfigService {
@@ -15,4 +18,5 @@ public interface ExperimentConfigService {
     AnalyseModelProcess showAnalyseModelProcessx(@Param("modelid") int modelid);
     ExperimentTraintest showExperimentTaintest(@Param("trainname") String trainname);
     Algorithm showAlgorithm(@Param("algorithmname") String algorithmname);
+    public List<ExperimentConfig> findAllByExperimentId(@Param("experimentid") Integer experimentid);
 }

@@ -23,4 +23,9 @@
          select * FROM algorithm WHERE algorithmname = #{algorithmname}
     </select>
 
+
+    <select id="findAllByExperimentId" resultType="experimentConfig" parameterType="Integer">
+        SELECT * FROM experiment_config WHERE experimentid=#{experimentid}
+    </select>
+
 </mapper>

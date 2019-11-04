@@ -5,6 +5,42 @@ public class ExperimentConfig {
     private String param;
     private Integer analyprocessid;
     private Integer experimentid;
+    private String configname;
+    private String configflow;
+    private String dataid;
+    private String algorithmid;
+
+    public String getConfigname() {
+        return configname;
+    }
+
+    public void setConfigname(String configname) {
+        this.configname = configname;
+    }
+
+    public String getConfigflow() {
+        return configflow;
+    }
+
+    public void setConfigflow(String configflow) {
+        this.configflow = configflow;
+    }
+
+    public String getDataid() {
+        return dataid;
+    }
+
+    public void setDataid(String dataid) {
+        this.dataid = dataid;
+    }
+
+    public String getAlgorithmid() {
+        return algorithmid;
+    }
+
+    public void setAlgorithmid(String algorithmid) {
+        this.algorithmid = algorithmid;
+    }
 
     public Integer getId() {
         return id;
