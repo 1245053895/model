@@ -1,0 +1,464 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" th:src="@{/static/lib/html5shiv.js}"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}"/>
+    <!--[if IE 6]>
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>图片列表</title>
+</head>
+<body>
+<input type="hidden" th:value="${modelid}" id="modelid"/>
+<input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmname}"
+       th:id="${algorithmList.algorithmname}"/>
+
+<input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparamsinput}"
+       th:id="${algorithmList.algorithmname}+'/input'"/>
+
+<input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparamscontent}"
+       th:id="${algorithmList.algorithmname}+'/content'"/>
+
+<input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparamsoutput}"
+       th:id="${algorithmList.algorithmname}+'/output'"/>
+
+
+
+
+<input th:id="${datamodelSourceList.sourceid}" th:each="datamodelSourceList:${datamodelSourceList}" type="hidden"
+       th:value="${datamodelSourceList.sourcepath}"/>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>数据区 <span class="c-gray en">&gt;</span> 数据区构建 <a
+        class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px;display: none"
+        href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" style="position: absolute;width: 97%;height: 90%;">
+    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;">
+        <div class="panel-header">选择数据</div>
+        <div class="panel-body" id="datasource"
+             style="float: left; width: 92%;height: 80%;overflow-x:hidden;overflow-y:auto;display: none;">
+
+            <input th:each="datamodelSourceList0:${datamodelSourceList0}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelSourceList0.getSourcepath()}"
+                   th:value="${datamodelSourceList0.getSourcename()}"  onclick="selectData(this.id)"/>
+            <input th:each="datamodelSourceList1:${datamodelSourceList1}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelSourceList1.getSourcepath()}"
+                   th:value="${datamodelSourceList1.getSourcename()}"  onclick="selectData(this.id)"/>
+            <!--onclick="datasource(this.value);datasourcePath(this.id)"-->
+        </div>
+    </div>
+    <div class="panel panel-default"
+         style="width: 67%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
+        <div class="panel-header">数据区构建流程
+            <!--<input class="btn btn-primary radius" type="button"-->
+                                                <!--style="position: absolute;margin-top: -0.3%;right: 5%;" value="运行"-->
+                                                <!--onclick="jumpDialogSubmit()"/>-->
+        </div>
+        <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 11%;margin-top:  -2.1%;"
+                  value="运行" onclick="jumpDialog()"/></a>
+        <div class="panel-body" id="model_content">
+
+        </div>
+
+    </div>
+
+    <!--算法选择-->
+    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-top: 2%;">
+        <div class="panel-header">算法库</div>
+        <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"
+               onclick="add(this.value)"/>
+        <input id="algorithmName" th:each="algorithmList:${algorithmList}" class="btn btn-success radius" type="button"
+               style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}"
+               onclick="add(this.value);switchParam_form(this.value)"/>
+
+        <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"
+               onclick="add(this.value)"/>
+    </div>
+
+    <!--算法参数输入-->
+    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+        <div class="panel-header">数据源配置</div>
+        <div class="panel-body" id="param_form_area_input">
+        </div>
+    </div>
+
+    <!--日志输出-->
+    <div class="panel panel-default" style="width: 35%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+        <div class="panel-header">参数配置</div>
+        <div class="panel-body" id="param_form_area_content"
+             style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;"></div>
+    </div>
+    <div class="panel panel-default" style="display:none;width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+        <div class="panel-header">输出配置</div>
+        <!--<form method="post" class="loginForm" >-->
+        <div class="panel-body" id="param_form_area_output" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+        </div>
+    </div>
+
+
+</div>
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">数据区保存</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                <strong>名称：</strong><input type="text" placeholder="请输入数据区名称" class="input-text radius size-S"
+                                           style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName">
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div id="modal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+    <!--&lt;!&ndash; 弹出对话框 &ndash;&gt;-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content radius">-->
+            <!--<div class="modal-header">-->
+                <!--<h3 class="modal-title"></h3>-->
+                <!--<a class="close" data-dismiss="modal" aria-hidden="true">×</a>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<strong>名称：</strong><input type="text" placeholder="请输入名称" class="input-text radius size-S"-->
+                                           <!--style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName1">-->
+
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button class="btn btn-primary" data-dismiss="modal" onclick="saveParameters();">确定</button>-->
+                <!--<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    //保存页面数据，封装json，用ajax传递
+    function save() {
+        if (document.getElementById('saveName').value == "") {
+            $.Huimodalalert('请输入结果名称', 2000);
+        } else {
+            var flowchart = getModelAndData();
+            var dataarearesult = document.getElementById('saveName').value;
+            var modelid = [[${modelid}]];
+            var result = {
+                "modelid": modelid,
+                "flowchart": flowchart,
+                "dataarearesult": dataarearesult
+            }
+            $.ajax({
+                url: "/data/saveDataAreaResult",
+                type: "POST",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(result),
+                dataType: 'json',
+                success: function (data) {
+                    $.Huimodalalert('保存成功,请返回数据区', 1000);
+                }
+            });
+
+            saveParameters(dataarearesult);
+        }
+    }
+
+    //算法参数input赋数据地址
+    function datasourcePath(id) {
+        //alert(id);
+        let path = $("#" + id).val();
+        //alert(path);
+        localStorage.setItem("dataPath", path);
+        /*let param = localStorage.getItem("algorithm");
+        let paramId = "a" + param;
+        let div = document.getElementById(paramId);
+        let inputs = div.getElementsByTagName("input");
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].id == "input") {
+                inputs[i].value = path;
+            }
+        }*/
+    }
+    //点击运行保存参数，运行算法
+    function saveParameters(dataarearesult) {
+        // if (document.getElementById('saveName1').value == "") {
+        //     $.Huimodalalert('请输入保存名称', 2000);
+        // } else {
+            var modelid = document.getElementById('modelid').getAttribute('value');
+            //alert(modelid);
+            let algorithmname= getModelAndData();
+            //alert(algorithmname);
+            var algorithmnameArr = algorithmname.split(';');
+            var analyzmodelArr = "[]";
+            var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
+            for (var i = 1; i < algorithmnameArr.length-1; i++) {
+                var name = algorithmnameArr[i];
+                inputObj = $('.'+name+'input').serializeObject();
+                contentObj = $('.'+name+'content').serializeObject();
+                outputObj = $('.'+name+'output').serializeObject();
+
+                var params = {
+                    "inputpath": inputObj,
+                    "content":contentObj,
+                    "outputpath":outputObj
+                };
+                var instance = {
+                    "name": name,
+                    "params": params
+                };
+                analyzmodelJsonArr.push(instance);
+            }
+            var analyzmodel = JSON.stringify(analyzmodelJsonArr);
+           // alert(analyzmodel);
+        // }
+        var submitName = dataarearesult;
+        var example = {
+            "modelid": modelid,
+            "submitName": submitName,
+            "analyzmodel": analyzmodel
+        };
+        $.ajax({
+            async: false,
+            type: "post",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(example),
+            url: '/data/saveAreaExample',
+            success: function (data) {
+                if (data.code == 1) {
+                    $.Huimodalalert('运行成功，请返回数据包查看结果', 3000);
+                } else if(data.code == 2){
+                    $.Huimodalalert('运行失败', 3000);
+                }
+            }
+        });
+    }
+
+    //数据区构建流程保存框
+    function jumpDialog() {
+        $("#modal-demo").modal("show");
+    }
+
+    //算法运行弹框
+    function jumpDialogSubmit() {
+        let num_stop = countStop();
+        if(num_stop == 0){
+            $.Huimodalalert('请单击【结束】', 2000);
+        }else{
+            $("#modal-demo1").modal("show");
+        }
+    }
+
+    //获取模型数据，保存除模型名称以外的其他数据
+    function getModelAndData() {
+
+        //保存流程图
+        var flowchart = "";
+        $("#model_content input[type='button']").each(function () {
+
+            var v = $(this).val();
+            flowchart = flowchart + v + ";";
+        });
+        flowchart = flowchart.substr(0, flowchart.length - 1);
+        return flowchart;
+
+    }
+
+    //初始化删除按钮
+    function init() {
+        $(".algorithm_elements").mouseenter(function () {
+            $(this).find(".delete").show();
+
+        });
+
+        $(".algorithm_elements").mouseleave(function () {
+            $(this).find(".delete").hide();
+        });
+
+        //执行删除操作
+        $('.delete').click(function () {
+            $(this).parent().parent().remove();
+        });
+    }
+
+
+    //统计开始和结束个数，保证建模逻辑
+    function countStop() {
+        var inputs_stop = $("#model_content input[value='结束']");
+        return inputs_stop.length;
+
+    }
+
+
+    //添加数据图标及信息,逻辑判断信息
+    var clicknumber = 0;
+
+    function datasource(value) {
+        $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+            + value
+            + "' onclick='switchParam_form(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+        init();
+        clicknumber = clicknumber + 1;
+    }
+
+    //添加算法图标
+    function add(value) {
+        localStorage.setItem("algorithm", value);
+        var num_stop = countStop();
+        // if (clicknumber == 0) {
+        //     $.Huimodalalert('请先添加【数据源】', 2000);
+        // } else if (clicknumber > 1) {
+        //     $.Huimodalalert('已经有【数据源】，请先删除', 2000);
+        // } else {
+
+            if (num_stop > 0) {
+                $.Huimodalalert('【结束】后不能再添加元素', 2000);
+            } else {
+                if (value != '结束') {
+                    $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                        + value
+                        + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+                    init();
+                } else {
+                    $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                        + value
+                        + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "</div>");
+                    init();
+                }
+            }
+        // }
+    }
+
+
+    var count = {};
+
+    //切换算法配置信息
+    function switchParam_form(value) {
+        if (count.hasOwnProperty(value)) {
+            // alert(count)
+        }else {
+            count.newParam = value;
+            count[''+value+'']=0;
+
+            if (document.getElementById(value+"/input").getAttribute("value") != null && document.getElementById(value+"/input").getAttribute("value") != "") {
+                var paramsArr = new Array();
+                paramsArr.push("<div id='a" + value + "' style='display: none' class='paramsdiv'><form method='post' class='" + value + "input' >");
+                var algorithmParams = document.getElementById(value + "/input").getAttribute("value");
+                var algorithmParams_Arr = algorithmParams.split(';');
+                for (var i = 0; i < algorithmParams_Arr.length; i++) {
+                    var param = algorithmParams_Arr[i];
+                    paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='' id='"+value+ param +"path'autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>" +
+                        "<input id='"+param+"' class='btn btn-success radius' type='button' onclick='showBaoData(this.id)' value='配置' style='margin-top: -9%;margin-left: 6%;'/>");
+                }
+                // paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                paramsArr.push("</form></div>");
+                $("#param_form_area_input").append(paramsArr.join("\n"));
+            }
+            var a =document.getElementById(value+"/content").getAttribute("value");
+            if (document.getElementById(value+"/content").getAttribute("value") != null && document.getElementById(value+"/content").getAttribute("value") != "") {
+                var paramsArr1 = new Array();
+                paramsArr1.push("<div id='b" + value + "' style='display: none' class='paramsdiv'><form method='post' class='" + value + "content' >");
+                var algorithmParams1 = document.getElementById(value + "/content").getAttribute("value");
+                var algorithmParams_Arr1 = algorithmParams1.split(';');
+                for (var i = 0; i < algorithmParams_Arr1.length; i++) {
+                    var param1 = algorithmParams_Arr1[i];
+                    paramsArr1.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param1 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param1 + "' value='' id='" + param1 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                }
+                // paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                paramsArr1.push("</form></div>");
+                $("#param_form_area_content").append(paramsArr1.join("\n"));
+            }
+            if (document.getElementById(value+"/output").getAttribute("value") != null && document.getElementById(value+"/output").getAttribute("value") != "") {
+                var paramsArr2 = new Array();
+                paramsArr2.push("<div id='c" + value + "' style='display: none' class='paramsdiv1'><form method='post' class='" + value + "output' >");
+                var algorithmParams2 = document.getElementById(value + "/output").getAttribute("value");
+                var algorithmParams_Arr2 = algorithmParams2.split(';');
+                for (var i = 0; i < algorithmParams_Arr2.length; i++) {
+                    var param2 = algorithmParams_Arr2[i];
+                    if (param2 == "modelPath") {
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+param2 +"_for_" + value +"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                    }
+                    else {
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+param2 +"_for_" + value +".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+
+                    }
+                }
+                // paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                paramsArr2.push("</form></div>");
+                $("#param_form_area_output").append(paramsArr2.join("\n"));
+            }
+        }
+
+    }
+
+
+    function switchParam(value) {
+        $(".paramsdiv").hide(300);
+        $("#a" + value).show(300);
+        $("#b" + value).show(300);
+        name = value;
+    }
+    var name;
+    var data ;
+    function showBaoData(id) {
+        data = id;
+        $("#datasource").show(300);
+        $.Huimodalalert('请点击数据源进行选择',3000);
+    }
+    function selectData(id) {
+        document.getElementById(name+data+'path').setAttribute("value",id);
+        $("#datasource").hide(300);
+        $.Huimodalalert('数据源添加成功',3000);
+    }
+
+
+
+    //form表单生成jSON对象
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+</script>
+</body>
+</html>

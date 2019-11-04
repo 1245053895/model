@@ -31,6 +31,12 @@ public class ExperimentDataController {
         return new ModelAndView("experiment/datalead", "modelModel", model);
     }
 
+
+
+
+
+
+
     @PostMapping(value = "/saveData")
     @ResponseBody   /*,@RequestBody(required = false) String shebei,@RequestBody(required = false) String xianlu,@RequestBody(required = false) String test10*/
     public Map<String,Object> saveData(@RequestBody(required = false) String JsonData) {
