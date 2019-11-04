@@ -26,6 +26,17 @@ public class ExperimentConfigController {
     @Autowired
     private ExperimentConfigService experimentConfigService;
 
+
+
+    @RequestMapping("/reviewModelConfiguration/{id}")
+    public ModelAndView datalead(Model model,@PathVariable("id") Integer id) {
+        model.addAttribute("experimentid",id);
+        return new ModelAndView("experiment/reviewModelConfiguration", "modelModel", model);
+    }
+
+
+
+
     @RequestMapping("/modelConfiguration/{id}")
     public ModelAndView modelConfiguration(Model model,@PathVariable("id") Integer id){
 //        通過id去查analysemodelid

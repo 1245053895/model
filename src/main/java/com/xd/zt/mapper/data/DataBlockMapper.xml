@@ -29,6 +29,10 @@
     SELECT * FROM datamodel_bao WHERE modelid = #{modelid}
     </select>
 
+    <select id="selectDataBloakById" resultType="DatamodelInfo" parameterType="Integer">
+    SELECT * FROM datamodel_info WHERE datamodel_info.blockid = #{blockid}
+    </select>
+
     <select id="selectDataBlockResultById" resultType="DatamodelInfo" parameterType="Integer">
     SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.blockid is not null
     </select>

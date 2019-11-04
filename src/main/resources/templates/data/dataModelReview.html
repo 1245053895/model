@@ -159,9 +159,9 @@
                 <tr class="text-c" th:each="datamodelJi:${datamodelJi}">
                     <td><a th:href="@{'/data/dataJiReview/'+ ${datamodelJi.baoid}}" style="cursor:pointer" class="text-primary" th:text="${datamodelJi.jiname}"></a></td>
                     <td><p style="cursor:pointer" class="text-primary" th:text="${datamodelJi.jitype}"></p></td>
-                    <td><p style="cursor:pointer" class="text-primary" th:text="${datamodelJi.baoname}"></p></td>
+                    <td><p style="cursor:pointer" class="text-primary" th:text="${datamodelJi.baoname}" ></p></td>
                     <td>
-                        <a th:href="@{'/data/dataJi  Review/'+ ${datamodelJi.baoid}}">
+                        <a th:href="@{'/data/aggreShow/'+ ${datamodelJi.jiid}}">
                             <input class="btn btn-primary size-MINI radius" type="button" value="打开">
                         </a>
                     </td>

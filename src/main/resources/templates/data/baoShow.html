@@ -42,7 +42,7 @@
                     </thead>
 
                     <tbody>
-                        <tr class="text-c" >
+                        <tr class="text-c" th:each="datamodelInfo:${datamodelInfos}">
                             <td><a th:href="@{'/data/dataReview/'+ ${datamodelInfo.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${datamodelInfo.dataresultname}"></a></td>
                             <td><p style="cursor:pointer" class="text-primary" th:each="blockName:${blockNames}" th:text="${blockName}"></p></td>
 

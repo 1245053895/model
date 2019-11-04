@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import com.xd.zt.domain.data.DatamodelBao;
-import com.xd.zt.domain.data.DatamodelBlock;
-import com.xd.zt.domain.data.DatamodelInfo;
-import com.xd.zt.domain.data.DatamodelSource;
+import com.xd.zt.domain.data.*;
 import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.FileService;
 import com.xd.zt.service.data.SourceService;
@@ -21,10 +18,8 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @RequestMapping("/data")
 @Controller
 public class DataBaoController {
@@ -60,10 +55,20 @@ public class DataBaoController {
     @RequestMapping("/databaocreate/{id}")
     public ModelAndView databaocreate(Model model, @PathVariable("id") Integer modelid) {
         model.addAttribute("modelid", modelid);
+        //List<List<DatamodelInfo>> list = new ArrayList<>();
         List<DatamodelBlock> datamodelBlockList = dataBlockService.selectBlockById(modelid);  //查询数据块表
          model.addAttribute("datamodelBlockList", datamodelBlockList);
-        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBlockResultById(modelid);//根据modelid查出blockid不为空的数据块结果表
-        model.addAttribute("datamodelInfoList", datamodelInfoList);
+        List<DataBlockToInfoList> dataBlockToInfoList = new ArrayList<>();
+        for (int i = 0; i <datamodelBlockList.size() ; i++) {
+            DataBlockToInfoList dataBlockToInfoList1 = new DataBlockToInfoList();
+           Integer blockid=datamodelBlockList.get(i).getBlockid();
+           dataBlockToInfoList1.setBlockid(blockid);
+            List<DatamodelInfo> blocks = dataBlockService.selectDataBloakById(blockid);
+            dataBlockToInfoList1.setDatamodelInfoList(blocks);
+            dataBlockToInfoList.add(dataBlockToInfoList1);
+        }
+//        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBlockResultById(modelid);//根据modelid查出blockid不为空的数据块结果表
+        model.addAttribute("dataBlockToInfoList", dataBlockToInfoList);
         return new ModelAndView("data/databaocreate", "Modelmodel", model);
     }
 
@@ -110,6 +115,32 @@ public class DataBaoController {
         return json;
     }
 
+    @RequestMapping(value = "/dataSave1")
+    @ResponseBody
+    public JSONObject dataSave1(@RequestBody JSONObject jsonObject) {
+        String modelid=jsonObject.get("modelid").toString();
+        String blockid=jsonObject.get("blockid").toString();
+        String baoName=jsonObject.get("saveName").toString();
+
+        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBloakById(Integer.parseInt(blockid));
+        //List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBlockResultById(Integer.parseInt(modelid));//根据modelid查出blockid不为空的数据块结果表
+        //DatamodelInfo datamodelInfo1 = datamodelInfoList.get(0);
+        //String blockid = datamodelInfo1.getBlockid().toString();
+        dataBlockService.saveDataBaoResult(modelid, baoName, blockid); //对数据包插入数据
+        String[] csvFilePath = new String[10];
+        String[] fileName = new String[10];
+        for (int i = 0; i < datamodelInfoList.size(); i++) {
+            csvFilePath[i]=datamodelInfoList.get(i).getDataaddr();
+            fileName[i]=baoName+"_"+datamodelInfoList.get(i).getDataresultname();
+        }
+        Integer databao= dataBlockService.maxBaoId();
+        for (int i = 0; i < datamodelInfoList.size(); i++) {
+            // String baoid = dataBlockService.selectDataBaoByBaoName(baoName);
+            //数据库存储csv文件路径
+            dataBlockService.saveDataBaoCsvResult(fileName[i], databao.toString(), blockid, modelid, csvFilePath[i]);
+        }
+        return jsonObject;
+    }
 
     @RequestMapping("/dataReview")
     @ResponseBody
@@ -217,7 +248,7 @@ public class DataBaoController {
     public ModelAndView baoShow(Model model, @PathVariable("baoid") Integer baoid) {
         //得到处理后的数据包的表名和地址
         ModelAndView modelAndView = new ModelAndView();
-        DatamodelInfo datamodelInfo = sourceService.selectBaoName(baoid);
+        List<DatamodelInfo> datamodelInfos = sourceService.selectBaoName1(baoid);
         String[] blockids = sourceService.selectBaoById(baoid).getBlockid().split(",");
         String[] blockNames = new String[blockids.length];
         for (int i = 0; i < blockids.length; i++) {
@@ -228,7 +259,7 @@ public class DataBaoController {
            catch (Exception e){continue;}
         }
         modelAndView.setViewName("data/baoShow");
-        modelAndView.addObject("datamodelInfo", datamodelInfo);
+        modelAndView.addObject("datamodelInfos", datamodelInfos);
         modelAndView.addObject("baoid", baoid);
         modelAndView.addObject("blockNames", blockNames);
         return modelAndView;

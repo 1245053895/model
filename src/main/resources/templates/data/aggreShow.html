@@ -46,11 +46,11 @@
                     <tbody >
 
                     <tr class="text-c" th:each="datamodelBao:${datamodelBao}">
-                       <td  > <a th:text="${datamodelBao.baoname}" th:href="@{'/data/dataJiReview/'+ ${datamodelBao.baoid}}"></a></td>
+                       <td  > <a th:text="${datamodelBao.baoname}" th:href="@{'/data/baoShow/'+ ${datamodelBao.baoid}}"></a></td>
                         <td >.csv</td>
                         <td>
 
-                            <a th:href="@{'/data/dataJiReview/'+ ${datamodelBao.baoid}}">
+                            <a th:href="@{'/data/baoShow/'+ ${datamodelBao.baoid}}">
                                 <input class="btn btn-primary size-MINI radius" type="button" value="打开">
                             </a>
 
