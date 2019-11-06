@@ -7,5 +7,17 @@
        SELECT * FROM experiment_data WHERE experimentid=#{experimentid}
    </select>
 
+    <select id="selectFileByExperimetnId" parameterType="Integer" resultType="experimentData">
+        SELECT * FROM experiment_data where experimentid=#{experimentid}
+    </select>
+
+    <!--模糊查询-->
+    <select id="moHuDataFile" parameterType="String" resultType="experimentData">
+     SELECT * FROM experiment_data where dataname LIKE '%${res}%'
+    </select>
+
+    <select id="selectDataFileById" resultType="experimentData" parameterType="Integer">
+        SELECT * FROM experiment_data where id=#{id}
+    </select>
 
 </mapper>

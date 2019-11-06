@@ -11,5 +11,8 @@ import java.util.List;
 @Service
 public interface ExperimentDataService {
     public ExperimentData modelDataByExperimentId(Integer experimentid);
+    public List<ExperimentData> selectFileByExperimetnId(@Param("experimentid") Integer experimentid);
+    public List<ExperimentData> moHuDataFile(@Param("res") String res);
+    public ExperimentData selectDataFileById(@Param("id") Integer id);
 
 }

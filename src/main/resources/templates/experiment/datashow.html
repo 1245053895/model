@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+    <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<!--<input type="hidden" th:value="${businessid}" id="businessid"/>-->
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 未知 <span class="c-gray en">&gt;</span> 文档资料 <span class="c-gray en">&gt;</span> 数据管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">数据管理
+            <a ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增" onclick="jumpDialog()"/></a>
+        </div>
+        <div class="panel-body">
+            <div >
+                <!--实现模糊搜索-->
+                <form method="get" action="#" th:action="@{/experiment/dataFileSearch}">
+                    <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="dataname" value=""
+                           id="search_text" autocomplete="off" style="width:30%">
+                    <button type="submit" class="btn btn-default" id="search_button">
+                        搜索
+                    </button>
+                    &nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${experimentDataList.size()}"></a>&nbsp;&nbsp;条数据】
+                </form>
+            </div>
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >文件名称</th>
+                        <th >文件大小</th>
+                        <th >创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr class="text-c" th:if="${experimentDataList.size()} eq 0">
+                        <td colspan="4">当前未上传数据</td>
+                    </tr>
+
+                    <tr class="text-c" th:each="experimentData:${experimentDataList}">
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${experimentData.dataname}" th:href="@{'/experiment/dataFileReview/'+ ${experimentData.id}}"></a></td>
+                        <td th:text="${experimentData.datasize}"></td>
+                        <td th:text="${experimentData.datatime}"></td>
+
+
+                        <td>
+                            <input class="btn btn-primary size-MINI radius" type="button" value="删除" onclick="deleteLinkView(this.id)" th:id="${experimentData.id}">
+                            <a th:href="@{'/experiment/dataFileDown/'+ ${experimentData.id}}">
+                                <input class="btn btn-primary size-MINI radius" type="button" value="下载">
+                            </a>
+
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div id="upfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 弹出对话框 -->
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">文档资料上传</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="upfile-group">
+                        <!--通过onsubmit 去进行提交前其他操作-->
+                        <form id="upfileForm" action="#" th:action="@{/experiment/saveDataFile}" enctype="multipart/form-data" method="post"  onsubmit="return verify()">
+                            <div class="fileupload">
+                                <span id="dataname" style="margin-left: 33%">点击此处选择文件</span>
+                                <input type="file" id="file" onchange="getFilename();" name="dataname" style="opacity: 0;margin-left: -31%"/>
+                            </div>
+                            <input type="hidden" th:value="${experimentid}" name="experimentid" id="experimentid"/>
+                            <div class="button_position">
+                                <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 38%; margin-top: 3%;">
+                            </div>
+                        </form><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    function deleteLinkView(id) {
+        if (confirm("确定删除文件？")) {
+            var dataid = id;
+            var id = {
+                "dataid": dataid
+            };
+            $.ajax({
+                url: "/experiment/dataDelete",
+                type: "POST",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(id),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code==1) {
+                        $.Huimodalalert('删除成功',2000);
+                    }
+                },
+            });
+            window.setTimeout("window.location.reload(true)",1000);
+        }
+        else {
+        }
+    }
+</script>
+
+
+
+
+
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    //获取文件名，显示在上传文本框
+    function getFilename(){
+        var dataname=document.getElementById("file").value;
+        if(dataname==undefined||dataname==""){
+            document.getElementById("dataname").innerHTML="点击此处上传文件";
+        } else{
+            var fn=dataname.substring(dataname.lastIndexOf("\\")+1);
+            document.getElementById("dataname").innerHTML=fn; //将截取后的文件名填充到span中
+        }
+    }
+
+    //跳出模型保存框
+    function jumpDialog() {
+        $("#upfile").modal("show");
+    }
+
+    //关闭模型保存框
+    function hideDialog() {
+        setTimeout($("#upfile").modal("hide"),"3000");
+    }
+    function verify() {
+
+// jquery .ajaxSubmit表单提交，页面不刷新
+        $("#upfileForm").ajaxSubmit(function(message) {
+// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+            $.Huimodalalert('上传成功',2000);
+            //关闭弹框
+            hideDialog();
+            //延时后页面跳转
+            // var  businessid = document.getElementById('businessid').getAttribute('value');
+            window.setTimeout("window.location.reload(true)",1000);
+            // window.setTimeout("window.location.href=",1000);
+        });
+        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+</script>
+</body>
+</html>
+
