@@ -6,11 +6,13 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.data.DatamodelInfo;
+import com.xd.zt.service.analyse.AnalyseResultService;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
 import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpClientGet;
 import com.xd.zt.util.analyse.HttpUtil;
+import com.xd.zt.util.data.JsonKeyToStringList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,8 @@ public class AnalyseController {
     @Autowired
     private BusinessFlowService flowService;
 
+    @Autowired
+    private AnalyseResultService analyseResultService;
 //    @RequestMapping("index")
 //    public ModelAndView index(Model model){
 //        List<AnalyseModelProcess> analyseModelList = analyseService.selectAnalyseModel();
@@ -261,13 +265,46 @@ public class AnalyseController {
         modelinstance.put("analyzmodel",parameters);
 
         String jsonString= JSON.toJSONString(modelinstance);
-        HttpUtil httpUtil = new HttpUtil();
         try {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
             String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
              System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
-            return resultjson;
+
+            if (((JSONObject) resultjson).getBoolean("success")) {
+                String taskId = ((JSONObject) resultjson).getString("taskId");
+                JSONObject params = parameters.getJSONObject(0).getJSONObject("params");
+                JSONObject outputpath = params.getJSONObject("outputpath");
+                String modelPathname = new String();
+                String modelPath = new String();
+                if (outputpath.containsKey("modelPath")) {
+                     modelPathname = outputpath.getString("modelPath");
+                     modelPath = "/var/data/celery/output/"+taskId+"/"+modelPathname;
+                }
+                else if (outputpath.containsKey("modelPaths")){
+                     modelPathname = "models_for_"+parameters.getJSONObject(0).getString("name");
+                     modelPath = "/var/data/celery/output/"+taskId+"/";
+                }
+
+                AnalyseResult analyseResult = new AnalyseResult();
+                analyseResult.setInstanceid(Integer.parseInt(modelinstanceid));
+                analyseResult.setModelPathname(modelPathname);
+                analyseResult.setModelPath(modelPath);
+
+               AnalyseResult analyseResult1 = analyseResultService.selectInstanceid(Integer.parseInt(modelinstanceid));
+                if (analyseResult1 == null){
+                    analyseResultService.saveAnalyseResult(analyseResult);
+                }
+                else{
+                    analyseResultService.updateAnalyseResult(analyseResult);
+                }
+
+                return resultjson;
+            }
+            else {
+                return null;
+            }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
             return null;

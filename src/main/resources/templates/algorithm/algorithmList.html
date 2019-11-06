@@ -128,6 +128,7 @@
                                     <option style="font-size: 12px" name="algorithmtype">预处理</option>
                                     <option style="font-size: 12px" name="algorithmtype">特征工程</option>
                                     <option style="font-size: 12px" name="algorithmtype">模型训练</option>
+                                    <option style="font-size: 12px" name="algorithmtype">模型验证</option>
                                 </select>
                             </div>
                             <div class="modal-body">
@@ -283,15 +284,20 @@
     function verify() {
 
 // jquery .ajaxSubmit表单提交，页面不刷新
-        $("#upfileForm").ajaxSubmit(function(message) {
+        $("#upfileForm").ajaxSubmit(function(data) {
 // 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
-            $.Huimodalalert('上传成功',2000);
-            //关闭弹框
-            hideDialog();
-            //延时后页面跳转
-            // var  businessid = document.getElementById('businessid').getAttribute('value');
-            window.setTimeout("window.location.reload(true)",1000);
-            // window.setTimeout("window.location.href=",1000);
+            if (data.code == 0) {
+                $.Huimodalalert('上传成功', 2000);
+                //关闭弹框
+                hideDialog();
+                //延时后页面跳转
+                // var  businessid = document.getElementById('businessid').getAttribute('value');
+                window.setTimeout("window.location.reload(true)", 1000);
+                // window.setTimeout("window.location.href=",1000);
+            }
+            else {
+                $.Huimodalalert('已存在算法名，请重新上传', 2000);
+            }
         });
         return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
     }

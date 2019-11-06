@@ -6,7 +6,7 @@
     SELECT * FROM datamodel_block WHERE modelid = #{modelid}
     </select>
     <select id="selectDataAreaResultById" resultType="DatamodelInfo" parameterType="Integer">
-    SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.dataarea is not null and datamodel_info.datablock is Null
+    SELECT * FROM datamodel_info WHERE datamodel_info.modelid = #{modelid} AND datamodel_info.databao is  null and datamodel_info.dataji is Null
     </select>
 
     <insert id="saveDataBlockResult" parameterType="String" >

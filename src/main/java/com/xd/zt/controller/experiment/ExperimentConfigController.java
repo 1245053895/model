@@ -40,7 +40,7 @@ public class ExperimentConfigController {
 
     @RequestMapping("/modelConfigurationView/{experimentid}")
     public ModelAndView dataReview(Model model,@PathVariable("experimentid") Integer id) {
-        String algorithmtype = "模型训练";
+        String algorithmtype = "模型验证";
         List<Algorithm> typeAlgorithms =  experimentConfigService.showAlgorithmtype(algorithmtype);
         ExperimentConfig experimentConfig =experimentConfigService.showExperimentConfig(id);
         String configflow = experimentConfig.getConfigflow();
@@ -60,6 +60,7 @@ public class ExperimentConfigController {
         model.addAttribute("inputPath",inputPath);
         model.addAttribute("content",content);
         model.addAttribute("outputpath",outputpath);
+        model.addAttribute("experimentParams",params1);
         return new ModelAndView("experiment/modelConfigurationView", "modelModel", model);
     }
 
@@ -72,7 +73,7 @@ public class ExperimentConfigController {
     @RequestMapping("/modelConfiguration/{experimentid}")
     public ModelAndView modelConfiguration(Model model,@PathVariable("experimentid") Integer experimentid){
 //          查算法表中的算法
-        String algorithmtype = "模型训练";
+        String algorithmtype = "模型验证";
         List<Algorithm> typeAlgorithms =  experimentConfigService.showAlgorithmtype(algorithmtype);
         List<ExperimentData> experimentDatas = experimentConfigService.showExperimentData(experimentid);
         List<AnalyseResult> analyseResultList = new ArrayList<>();
@@ -99,6 +100,7 @@ public class ExperimentConfigController {
                 }
             }
         }
+
 
            model.addAttribute("experimentDatas",experimentDatas);
 //           model.addAttribute("datapaths",datapaths);

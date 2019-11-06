@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.analyse.AnalyseResultMapper">
+    <insert id="saveAnalyseResult" parameterType="AnalyseResult">
+        insert into analyse_result (instanceid,modelPathname,modelPath) values (#{instanceid},#{modelPathname},#{modelPath})
+    </insert>
+    <select id="selectInstanceid" parameterType="Integer" resultType="AnalyseResult">
+        select * from analyse_result where instanceid = #{instanceid}
+    </select>
+    <update id="updateAnalyseResult" parameterType="AnalyseResult">
+        update analyse_result set modelPathname = #{modelPathname},modelPath = #{modelPath} where instanceid = #{instanceid}
+    </update>
+</mapper>
