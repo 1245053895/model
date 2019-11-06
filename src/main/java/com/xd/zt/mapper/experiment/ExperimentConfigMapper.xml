@@ -11,6 +11,37 @@
         select * FROM analyse_model_process WHERE analysemodelid = #{analysemodeid}
     </select>
 
+    <select id="showExperimentConfig" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.experiment.ExperimentConfig">
+        select * FROM experiment_config WHERE id = #{id}
+    </select>
+
+
+
+
+
+
+
+
+    <select id="allAnalyseModelProcess" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.analyse.AnalyseModelProcess">
+        select * FROM analyse_model_process WHERE analysemodelid = #{analysemodeid}
+    </select>
+
+
+    <select id="allAnalyseInstance" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.analyse.AnalyseInstance">
+        select * FROM analyse_instance WHERE modelid = #{modelid}
+    </select>
+
+    <select id="showAnalyseResuit" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.analyse.AnalyseResult">
+        select * FROM analyse_result WHERE instanceid = #{instanceid}
+    </select>
+
+    <select id="showExperimentData" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.experiment.ExperimentData">
+         select * FROM experiment_data WHERE experimentid = #{experimentid}
+    </select>
+
+
+
+
     <select id="showAnalyseModelProcessx" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.analyse.AnalyseModelProcess">
         select * FROM analyse_model_process WHERE modelid = #{modelid}
     </select>
@@ -27,5 +58,14 @@
     <select id="findAllByExperimentId" resultType="experimentConfig" parameterType="Integer">
         SELECT * FROM experiment_config WHERE experimentid=#{experimentid}
     </select>
+
+
+    <select id="showAlgorithmtype" parameterType="java.lang.String" resultType="com.xd.zt.domain.analyse.Algorithm">
+         select * FROM algorithm WHERE algorithmtype = #{algorithmtype}
+    </select>
+
+    <insert id="insertExperimentConfig" parameterType="com.xd.zt.domain.experiment.ExperimentConfig" useGeneratedKeys="true" keyProperty="id">
+       insert into experiment_config values (null,#{configname},#{configflow},#{param},null,null,null,#{experimentid});
+    </insert>
 
 </mapper>

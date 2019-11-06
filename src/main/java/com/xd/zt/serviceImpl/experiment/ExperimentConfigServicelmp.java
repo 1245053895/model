@@ -1,9 +1,8 @@
 package com.xd.zt.serviceImpl.experiment;
 
-import com.xd.zt.domain.analyse.Algorithm;
-import com.xd.zt.domain.analyse.AnalyseFlowprocess;
-import com.xd.zt.domain.analyse.AnalyseModelProcess;
+import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.experiment.ExperimentConfig;
+import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
 import com.xd.zt.mapper.experiment.ExperimentConfigMapper;
@@ -50,5 +49,40 @@ public class ExperimentConfigServicelmp implements ExperimentConfigService {
     public List<ExperimentConfig> findAllByExperimentId(@Param("experimentid") Integer experimentid) {
         List<ExperimentConfig> experimentConfigList=  experimentConfigMapper.findAllByExperimentId(experimentid);
         return experimentConfigList;
+    }
+
+    @Override
+    public  List<Algorithm> showAlgorithmtype(String algorithmtype) {
+        return experimentConfigMapper.showAlgorithmtype(algorithmtype);
+    }
+
+    @Override
+    public List<AnalyseModelProcess> allAnalyseModelProcess(int analysemodeid) {
+        return experimentConfigMapper.allAnalyseModelProcess(analysemodeid);
+    }
+
+    @Override
+    public List<AnalyseInstance> allAnalyseInstance(int modelid) {
+        return experimentConfigMapper.allAnalyseInstance(modelid);
+    }
+
+    @Override
+    public List<AnalyseResult> showAnalyseResuit(int instanceid) {
+        return experimentConfigMapper.showAnalyseResuit(instanceid);
+    }
+
+    @Override
+    public List<ExperimentData> showExperimentData(int experimentid) {
+        return experimentConfigMapper.showExperimentData(experimentid);
+    }
+
+    @Override
+    public boolean insertExperimentConfig(ExperimentConfig experimentConfig) {
+        return experimentConfigMapper.insertExperimentConfig(experimentConfig);
+    }
+
+    @Override
+    public ExperimentConfig showExperimentConfig(int id) {
+        return experimentConfigMapper.showExperimentConfig(id);
     }
 }

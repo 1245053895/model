@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     &lt;!&ndash;[if lt IE 9]>
-    <script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
-    <script type="text/javascript" src="lib/respond.min.js"></script>
-    <![endif]&ndash;&gt;
+<script type="text/javascript"  th:src="@{/static/lib/html5shiv.js}"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]&ndash;&gt;
     <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
@@ -48,7 +48,7 @@
         </div>
 
 
-  
+
 
     </div>
     <div class="panel panel-default" style="width: 100%;height: 31vh;float: left;margin-top: 2%;overflow-x:hidden;overflow-y:auto">
@@ -237,30 +237,24 @@
         class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
         href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
-    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;">
-        <div class="panel-header">算法库</div>
-        <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"
-               onclick="add(this.value)"/>
-        <input id="algorithmName" th:each="typeAlgorithms:${typeAlgorithms}" class="btn btn-success radius" type="button"
-               style="margin-left: 2%;margin-top: 2%;" th:value="${typeAlgorithms.algorithmname}"
-               onclick="add(this.value);switchParam_form(this.value)"/>
 
-        <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"
-               onclick="add(this.value)"/>
-    </div>
     <div class="panel panel-default"
-         style="width: 35%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
+         style="width: 95%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
         <div class="panel-header">流程构建
             <!--	<input class="btn btn-primary radius" type="button"
                                                     style="position: absolute;margin-top: -0.3%;right: 5%;" value="运行"
                                                     onclick="jumpDialogSubmit()"/>-->
+
+
+
+
         </div>
-        <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 34%;margin-top:  -2.1%;"
-                  value="保存" onclick="jumpDialog()"/></a>
+        <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 7%;margin-top:  -2.1%;"
+                  value="运行" onclick="jumpDialog()"/></a>
         <div class="panel-body" id="model_content" style="border: 0px solid red;height: 34vh;"></div>
     </div>
 
-    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 0%;">
+    <div class="panel panel-default" style="width: 43%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
         <div class="panel-header">数据源配置</div>
         <div class="panel-body" id="dataConfig_area" style="float: left; width: 94%;height: 80%;overflow-x:hidden;overflow-y:auto;border: 0px solid red;">
 
@@ -269,19 +263,10 @@
 
 
 
-    <!--算法选择-->
-    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-top: 2%;">
-        <div class="panel-header">数据配置</div>
-        <div class="panel-body" id="csv_area" style="float: left; width: 94%;height: 80%;overflow-x:hidden;overflow-y:auto;display: none">
-            <input th:each="experimentDatas:${experimentDatas}" class="btn btn-success radius" type="button"
-                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${experimentDatas.getDatapath()}"
-                   th:value="${experimentDatas.getDataname()}"  onclick="selectData(this.id)"/>
-        </div>
-    </div>
 
 
     <!--<!-输入路径&ndash;&gt;-->
-    <div class="panel panel-default" style="width: 35%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
+    <div class="panel panel-default" style="width: 50%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
         <div class="panel-header">参数配置</div>
         <div class="panel-body" id="dataContent_area" style="height: 34vh">
 
@@ -289,21 +274,12 @@
         </div>
     </div>
 
-    <!--参数输入配置-->
-    <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
-        <div class="panel-header">模型配置</div>
-        <div class="panel-body" id="model_area" style="float: left; width: 94%;height: 80%;overflow-x:hidden;overflow-y:auto;display: none">
-            <input th:each="analyseResultList:${analyseResultList}" class="btn btn-success radius" type="button"
-                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${analyseResultList.getModelPath()}"
-                   th:value="${analyseResultList.getModelPathname()}"  onclick="selectData(this.id)"/>
-        </div>
-    </div>
 
     <div class="panel panel-default" style="display: none;width: 35%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
-    <div class="panel-header">输出配置</div>
-    <div class="panel-body" id="output_area" style="float: left; width: 94%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+        <div class="panel-header">输出配置</div>
+        <div class="panel-body" id="output_area" style="float: left; width: 94%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+        </div>
     </div>
-</div>
 
 
 </div>
@@ -373,7 +349,7 @@
             var example = {
                 "datablockname": datablockname,
                 "experimentid": experimentid,
-                 "experiment": experiment,
+                "experiment": experiment,
                 "analyzmodel": analyzmodel
             };
 
@@ -664,5 +640,96 @@
         $.Huimodalalert('数据源添加成功',3000);
     }
 </script>
+<script type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        var configflow =[[${configflow}]];
+        var inputPath =[[${inputPath}]];
+        var inputPathObject =  eval('(' + inputPath + ')');
+        var inputPathObjectKey =[];
+        for(var key in inputPathObject) {
+            inputPathObjectKey.push(key);
+        }
+        // alert(inputPathObjectKey);
+        var content =[[${content}]];
+        var contentObject =  eval('(' + content + ')');
+        var contentObjectKey =[];
+        for(var key in contentObject) {
+            contentObjectKey.push(key);
+        }
+
+        var outputpath =[[${outputpath}]];
+        var values = configflow.split(';');
+        // alert(values);
+        for(var i= 0 ;i<values.length;i++){
+            var value = values[i];
+            if (value != '结束') {
+                $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                    + value
+                    + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+            } else {
+                $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                    + value
+                    + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "</div>");
+            }
+        }
+
+
+        for(var i= 0 ;i<values.length;i++){
+            var value = values[i];
+            if (value != '开始' && value != '结束') {
+                if (inputPath != null && inputPath != "") {
+                    var paramsArr = new Array();
+                    paramsArr.push("<div id='a" + value + "' style='display: block' class='paramsdiv'><form method='post' class='" + value + "input' >");
+                    // var algorithmParams = inputPath;
+                    // var algorithmParams_Arr = algorithmParams.split(';');
+                    // alert(inputPathObjectKey.length);
+                    for (var i = 0; i < inputPathObjectKey.length; i++) {
+                        // var param = algorithmParams_Arr[i];
+                        paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + inputPathObjectKey[i] + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + inputPathObjectKey[i] + "' value='" + inputPathObject['' + inputPathObjectKey[i] + ''] + "' id='" + inputPathObjectKey[i] + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                    }
+                    paramsArr.push("</form></div>");
+                    $("#dataConfig_area").append(paramsArr.join("\n"));
+                }
+
+                if (content!= null && content != "") {
+                    var paramsArr = new Array();
+                    paramsArr.push("<div id='b" + value + "' style='display: block' class='paramsdiv'><form method='post' class='" + value + "content' >");
+                    // var algorithmParams =content;
+                    // var algorithmParams_Arr = algorithmParams.split(';');
+                    for (var i = 0; i < contentObjectKey.length; i++) {
+                        // var param = algorithmParams_Arr[i];
+                        paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + contentObjectKey[i] + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + contentObjectKey[i] + "' value='" + contentObject['' + contentObjectKey[i] + ''] + "' id='" + contentObjectKey[i] + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                    }
+                    paramsArr.push("</form></div>");
+                    $("#dataContent_area").append(paramsArr.join("\n"));
+                }
+
+                // if (outputpath != null && outputpath != "") {
+                //     var paramsArr = new Array();
+                //     paramsArr.push("<div id='c" + value + "' style='display: none' class='paramsdiv1'><form method='post' class='" + value + "output' >");
+                //     var algorithmParams = outputpath;
+                //     var algorithmParams_Arr = algorithmParams.split(';');
+                //     for (var i = 0; i < algorithmParams_Arr.length; i++) {
+                //         var param = algorithmParams_Arr[i];
+                //         paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='" + outputpath['' + param + ''] + "' id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                //     }
+                //     paramsArr.push("</form></div>");
+                //     $("#output_text").append(paramsArr.join("\n"));
+                // }
+            }
+
+        }
+
+        // if (proc_element != '开始' && proc_element != '结束') {
+        // 	switchParam_form(proc_element);
+        // }
+
+
+
+
+
+    })
+</script>
+
 </body>
 </html>

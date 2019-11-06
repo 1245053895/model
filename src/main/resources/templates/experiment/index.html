@@ -90,8 +90,8 @@
             <dd>
                 <ul>
                     <li><a th:id="'/experiment/datashow/'+${TestnameModelList.id}" data-href="xxx" data-title="数据导入" href="javascript:void(0)">数据导入</a></li>
-                    <li><a th:id="'/experiment/reviewModelConfiguration/'+${TestnameModelList.id}" data-href="xx" data-title="模型配置" href="javascript:void(0)" >模型配置</a></li>
-                  <li><a th:id="'/experiment/resultShow/'+${TestnameModelList.id}" data-href="xxx" data-title="模型验证" href="javascript:void(0)">模型验证</a></li>
+                    <li><a th:id="'/experiment/modelConfiguration/'+${TestnameModelList.id}" data-href="xx" data-title="模型配置" href="javascript:void(0)" >模型配置</a></li>
+                  <li><a th:id="'/experiment/reviewModelConfiguration/'+ ${TestnameModelList.id}" data-href="xxx" data-title="模型验证" href="javascript:void(0)">模型验证</a></li>
                 </ul>
             </dd>
         </dl>
@@ -144,11 +144,11 @@
                 var experimentmodel = document.getElementById(experimentData);
                 experimentmodel.setAttribute('data-href',experimentData);
 
-                var experimentConfig = "/experiment/reviewModelConfiguration/" + id.toString();
+                var experimentConfig = "/experiment/modelConfiguration/" + id.toString();
                 var modelConfig = document.getElementById(experimentConfig);
                 modelConfig.setAttribute('data-href',experimentConfig);
 
-                var modeltest="/experiment/resultShow/"+ id.toString();
+                var modeltest="/experiment/reviewModelConfiguration/"+ id.toString();
                 var test = document.getElementById(modeltest);
                 test.setAttribute('data-href',modeltest);
 
