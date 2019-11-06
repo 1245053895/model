@@ -82,6 +82,9 @@
             <input th:each="experimentDatas:${experimentDatas}" class="btn btn-success radius" type="button"
                    style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${experimentDatas.getDatapath()}"
                    th:value="${experimentDatas.getDataname()}"  onclick="selectData(this.id)"/>
+            <input th:each="datamodelInfoList:${datamodelInfoList}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelInfoList.getDataaddr()}"
+                   th:value="${datamodelInfoList.getDataresultname()}"  onclick="selectData(this.id)"/>
         </div>
     </div>
 
@@ -191,7 +194,10 @@
                 data: JSON.stringify(example),
                 dataType: 'json',
                 success: function (data) {
-                    $.Huimodalalert('保存成功,请返回数据块', 1000);
+                    $.Huimodalalert('保存成功', 1000);
+                },
+                error:function () {
+                    $.Huimodalalert('保存成功', 1000);
                 }
             });
         }

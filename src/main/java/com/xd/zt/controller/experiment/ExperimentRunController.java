@@ -16,10 +16,11 @@ import java.util.Map;
 @RequestMapping("/experiment")
 @Controller
 public class ExperimentRunController {
-
+    @ResponseBody
     @RequestMapping("/experimentRun")
     public Map<String,Object>  experimentRun(@RequestBody JSONObject jsonObject){
         Map map = new HashMap();
+
         String instantData = jsonObject.get("instantData").toString();
         boolean status = false;
         if (instantData == "false"){status = false;}
@@ -28,28 +29,24 @@ public class ExperimentRunController {
         String analyzmodelString = jsonObject.get("analyzmodel").toString();
         JSONArray analyzmodel = JSONArray.parseArray(analyzmodelString);
         jsonObject.put("analyzmodel",analyzmodel);
-
+        jsonObject.put("instantData",status);
         String jsonString= JSON.toJSONString(jsonObject);
         try {
             String result = HttpCientPost.restPost("http://10.101.201.174:8000/tasks/", jsonString);
             System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
             if (((JSONObject) resultjson).getBoolean("success")) {
-
-                String datas = ((JSONObject) resultjson).getString("datas");
-
-                map.put("datas",datas);
-                System.out.printf(datas);
-                map.put("code",0);
+                map.put("data",((JSONObject) resultjson).getString("datas"));
+               return  map;
             }else {
-                map.put("code",1);
+                map.put("data","运行失败");
+                return map;
             }
         }
         catch (Exception e){
-            map.put("code",1);
+            map.put("data","运行失败");
+            return map;
         }
-
-        return map;
     }
 
 }

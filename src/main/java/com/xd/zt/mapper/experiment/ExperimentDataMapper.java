@@ -1,6 +1,7 @@
 package com.xd.zt.mapper.experiment;
 
 
+import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.domain.experiment.ExperimentData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +17,6 @@ public interface ExperimentDataMapper {
 
     public List<ExperimentData> moHuDataFile(@Param("res") String res);
     public ExperimentData selectDataFileById(@Param("id") Integer id);
+
+    List<DatamodelInfo> selectDataBao(@Param("id") Integer id);
 }

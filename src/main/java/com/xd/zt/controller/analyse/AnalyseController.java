@@ -279,11 +279,11 @@ public class AnalyseController {
                 String modelPath = new String();
                 if (outputpath.containsKey("modelPath")) {
                      modelPathname = outputpath.getString("modelPath");
-                     modelPath = "/var/data/celery/output/"+taskId+"/"+modelPathname;
+                     modelPath = "/var/data/celery/output/"+taskId+"/output/"+modelPathname;
                 }
                 else if (outputpath.containsKey("modelPaths")){
                      modelPathname = "models_for_"+parameters.getJSONObject(0).getString("name");
-                     modelPath = "/var/data/celery/output/"+taskId+"/";
+                     modelPath = "/var/data/celery/output/"+taskId+"/output/";
                 }
 
                 AnalyseResult analyseResult = new AnalyseResult();

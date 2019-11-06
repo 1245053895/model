@@ -1,4 +1,5 @@
 package com.xd.zt.serviceImpl.experiment;
+import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.mapper.experiment.ExperimentDataMapper;
 import com.xd.zt.service.experiment.ExperimentDataService;
@@ -6,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @Service
@@ -35,5 +37,11 @@ private ExperimentDataMapper experimentDataMapper;
     public ExperimentData selectDataFileById(@Param("id") Integer id) {
       ExperimentData experimentData=  experimentDataMapper.selectDataFileById(id);
         return experimentData;
+    }
+
+    @Override
+    public List<DatamodelInfo> selectDataBao(@Param("id")Integer id) {
+        List<DatamodelInfo> datamodelInfoList = experimentDataMapper.selectDataBao(id);
+        return datamodelInfoList;
     }
 }

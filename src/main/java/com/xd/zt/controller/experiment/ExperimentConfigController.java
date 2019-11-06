@@ -6,11 +6,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.business.BusinessQuestion;
+import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
 import com.xd.zt.service.experiment.ExperimentConfigService;
+import com.xd.zt.service.experiment.ExperimentDataService;
 import com.xd.zt.service.experiment.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,8 @@ public class ExperimentConfigController {
 
     @Autowired
     private ExperimentConfigService experimentConfigService;
-
+@Autowired
+private ExperimentDataService experimentDataService;
 
 
     @RequestMapping("/reviewModelConfiguration/{experimentid}")
@@ -101,6 +104,7 @@ public class ExperimentConfigController {
             }
         }
 
+        List<DatamodelInfo> datamodelInfoList = experimentDataService.selectDataBao(experimentid);
 
            model.addAttribute("experimentDatas",experimentDatas);
 //           model.addAttribute("datapaths",datapaths);
@@ -108,6 +112,7 @@ public class ExperimentConfigController {
            model.addAttribute("typeAlgorithms",typeAlgorithms);
            model.addAttribute("analyseResultList",analyseResultList);
 
+           model.addAttribute("datamodelInfoList",datamodelInfoList);
 
         return new ModelAndView("experiment/modelConfiguration","Modelmodel",model) ;
     }
