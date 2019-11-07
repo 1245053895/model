@@ -11,6 +11,7 @@ import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
+import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.experiment.ExperimentConfigService;
 import com.xd.zt.service.experiment.ExperimentDataService;
 import com.xd.zt.service.experiment.ExperimentService;
@@ -29,8 +30,10 @@ public class ExperimentConfigController {
 
     @Autowired
     private ExperimentConfigService experimentConfigService;
-@Autowired
-private ExperimentDataService experimentDataService;
+    @Autowired
+    private ExperimentDataService experimentDataService;
+    @Autowired
+    private AnalyseService analyseService;
 
 
     @RequestMapping("/reviewModelConfiguration/{experimentid}")
@@ -80,6 +83,7 @@ private ExperimentDataService experimentDataService;
         List<Algorithm> typeAlgorithms =  experimentConfigService.showAlgorithmtype(algorithmtype);
         List<ExperimentData> experimentDatas = experimentConfigService.showExperimentData(experimentid);
         List<AnalyseResult> analyseResultList = new ArrayList<>();
+        List<AnalyseCsv> analyseCsvList = new ArrayList<>();
 //        List<String> datanames =new ArrayList<>();
 //        List<String> datapaths =new ArrayList<>();
 //        for(int m =0;m<experimentDatas.size();m++){
@@ -87,7 +91,7 @@ private ExperimentDataService experimentDataService;
 //            datapaths.add(experimentDatas.get(m).getDatapath());
 //        }
         ExperimentModel experimentModel =experimentConfigService.showExperiment(experimentid);
-        int analysemodeid =experimentModel.getAnalysemodeid();
+        Integer analysemodeid =experimentModel.getAnalysemodeid();
         List<AnalyseModelProcess> allAnalyseModelProcesses = experimentConfigService.allAnalyseModelProcess(analysemodeid);
 //        从analysemodeid到modelid(一对多)
         List<String> modelpaths = new ArrayList<>();
@@ -98,20 +102,24 @@ private ExperimentDataService experimentDataService;
             for (int j=0;j<analyseInstances.size();j++){
                 int instanceid =analyseInstances.get(j).getModelinstanceid();
                 List<AnalyseResult> analyseResults =  experimentConfigService.showAnalyseResuit(instanceid);
+                List<AnalyseCsv> analyseCsvList1 = analyseService.selectCsvExit(instanceid);
                 for (int k=0;k<analyseResults.size();k++){
                     analyseResultList.add(analyseResults.get(k));
+                }
+                for (int k=0;k<analyseCsvList1.size();k++){
+                    analyseCsvList.add(analyseCsvList1.get(k));
                 }
             }
         }
 
-        List<DatamodelInfo> datamodelInfoList = experimentDataService.selectDataBao(experimentid);
 
+        List<DatamodelInfo> datamodelInfoList = experimentDataService.selectDataBao(experimentid);
            model.addAttribute("experimentDatas",experimentDatas);
 //           model.addAttribute("datapaths",datapaths);
            model.addAttribute("experimentid",experimentid);
            model.addAttribute("typeAlgorithms",typeAlgorithms);
            model.addAttribute("analyseResultList",analyseResultList);
-
+            model.addAttribute("analyseCsvList",analyseCsvList);
            model.addAttribute("datamodelInfoList",datamodelInfoList);
 
         return new ModelAndView("experiment/modelConfiguration","Modelmodel",model) ;

@@ -1,10 +1,7 @@
 package com.xd.zt.service.analyse;
 
 
-import com.xd.zt.domain.analyse.Algorithm;
-import com.xd.zt.domain.analyse.AnalyseInstance;
-import com.xd.zt.domain.analyse.AnalyseModelProcess;
-import com.xd.zt.domain.analyse.AnalyticsTask;
+import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.data.DatamodelInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -51,5 +48,9 @@ public interface AnalyseService {
 
 
     List<DatamodelInfo> selectDataResult(@Param("modelid")Integer modelid);
+
+    void saveAnalyseCsv(AnalyseCsv analyseCsv);
+    List<AnalyseCsv> selectCsvExit(@Param("modelinstanceid")Integer modelinstanceid);
+    void deleteAnalyseCsv(@Param("modelinstanceid")Integer modelinstanceid);
 
 }

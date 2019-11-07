@@ -9,6 +9,7 @@ import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.service.analyse.AnalyseResultService;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
+import com.xd.zt.util.analyse.FindLinuxDirectory;
 import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpClientGet;
 import com.xd.zt.util.analyse.HttpUtil;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -285,7 +287,6 @@ public class AnalyseController {
                      modelPathname = "models_for_"+parameters.getJSONObject(0).getString("name");
                      modelPath = "/var/data/celery/output/"+taskId+"/output/";
                 }
-
                 AnalyseResult analyseResult = new AnalyseResult();
                 analyseResult.setInstanceid(Integer.parseInt(modelinstanceid));
                 analyseResult.setModelPathname(modelPathname);
@@ -299,7 +300,39 @@ public class AnalyseController {
                     analyseResultService.updateAnalyseResult(analyseResult);
                 }
 
-                return resultjson;
+                //遍历获得所有结果的csv路径
+                String Directory = FindLinuxDirectory.FindDirectory("10.101.201.174",22,"root","/zt/IA","find /var/data/celery/output/"+taskId+"/output/ -type f -name '*.csv'");
+                System.out.printf(Directory);
+                if (Directory == "" || Directory == null || Directory == "出现错误"){
+                }
+                else {
+                    String[] DirectoryList = Directory.split("\n");
+
+                    List<AnalyseCsv> analyseCsvList = analyseService.selectCsvExit(Integer.parseInt(modelinstanceid));
+                    if (analyseCsvList == null) {
+                        for (int i = 0; i < DirectoryList.length; i++) {
+                            String[] FileDirectory = DirectoryList[i].split("/");
+                            String fileName = FileDirectory[FileDirectory.length - 1];
+                            AnalyseCsv analyseCsv = new AnalyseCsv();
+                            analyseCsv.setCsvname(fileName);
+                            analyseCsv.setCsvpath(DirectoryList[i]);
+                            analyseCsv.setModelinstanceid(Integer.parseInt(modelinstanceid));
+                            analyseService.saveAnalyseCsv(analyseCsv);
+                        }
+                    } else {
+                        analyseService.deleteAnalyseCsv(Integer.parseInt(modelinstanceid));
+                        for (int i = 0; i < DirectoryList.length; i++) {
+                            String[] FileDirectory = DirectoryList[i].split("/");
+                            String fileName = FileDirectory[FileDirectory.length - 1];
+                            AnalyseCsv analyseCsv = new AnalyseCsv();
+                            analyseCsv.setCsvname(fileName);
+                            analyseCsv.setCsvpath(DirectoryList[i]);
+                            analyseCsv.setModelinstanceid(Integer.parseInt(modelinstanceid));
+                            analyseService.saveAnalyseCsv(analyseCsv);
+                        }
+                    }
+                }
+                    return resultjson;
             }
             else {
                 return null;
