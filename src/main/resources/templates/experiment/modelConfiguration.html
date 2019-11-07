@@ -165,6 +165,7 @@
                 inputObj = $('.'+name+'input').serializeObject();
                 contentObj = $('.'+name+'content').serializeObject();
                 outputObj = $('.'+name+'output').serializeObject();
+                // alert(JSON.stringify(inputObj));
 
                 var params = {
                     "inputpath": inputObj,
@@ -177,6 +178,7 @@
                 };
                 analyzmodelJsonArr.push(instance);
             }
+
             var analyzmodel = JSON.stringify(analyzmodelJsonArr);
             var experiment= flowchart;
             var example = {

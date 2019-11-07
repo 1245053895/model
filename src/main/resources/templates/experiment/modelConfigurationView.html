@@ -56,7 +56,11 @@
 
         </div>
         <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 7%;margin-top:  -2.1%;"
-                  value="运行" onclick="runExperiment()"/></a>
+                  value="存储" onclick="jumpDialogAddModel()" /></a>
+
+        <a><input class="btn btn-success radius" type="button" style="position: absolute;margin-top:  -2.1%;margin-left: 82%;"
+                  value="运行" onclick="runExperiment()" /></a>
+
         <div class="panel-body" id="model_content" style="border: 0px solid red;height: 34vh;"></div>
     </div>
 
@@ -235,27 +239,135 @@
                     $("#dataContent_area").append(paramsArr.join("\n"));
                 }
 
-                // if (outputpath != null && outputpath != "") {
-                //     var paramsArr = new Array();
-                //     paramsArr.push("<div id='c" + value + "' style='display: none' class='paramsdiv1'><form method='post' class='" + value + "output' >");
-                //     var algorithmParams = outputpath;
-                //     var algorithmParams_Arr = algorithmParams.split(';');
-                //     for (var i = 0; i < algorithmParams_Arr.length; i++) {
-                //         var param = algorithmParams_Arr[i];
-                //         paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "' value='" + outputpath['' + param + ''] + "' id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
-                //     }
-                //     paramsArr.push("</form></div>");
-                //     $("#output_text").append(paramsArr.join("\n"));
-                // }
             }
 
         }
-        // if (proc_element != '开始' && proc_element != '结束') {
-        // 	switchParam_form(proc_element);
-        // }
 
     })
 </script>
 
+<div id="upfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">算法上传</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="upfile-group">
+                    <!--通过onsubmit 去进行提交前其他操作-->
+                   <!-- <form id="upmodelForm"  onsubmit="return false" action="##" method="post">
+                        -->
+                    <form  id="form1" onsubmit="return false" action="##" method="post">
+                    <div class="modal-body">
+                            <strong style="margin-left: 5%">名&nbsp;&nbsp;&nbsp;&nbsp;字</strong><input type="text" placeholder="请输入模型名字" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 43%;" id="savemodelname" name="programmename">
+                        </div>
+
+                        <div class="modal-body">
+                            <strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;别：</strong>
+                            <!--<input type="text" placeholder="请输入算法类别" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="algorithmtype" name="algorithmtype">-->
+                            <select class="input-text radius size-S" style="margin:10px 15px 10px 8px;width: 43%;" name="algorithmtype">
+                                <option style="font-size: 12px" >请选择模型类别</option>
+                                <option style="font-size: 12px" value="勘察设计" >勘察设计</option>
+                                <option style="font-size: 12px" value="工程施工" >工程施工</option>
+                                <option style="font-size: 12px" value="运营维护" >运营维护</option>
+                                <option style="font-size: 12px" value="智慧城市">智慧城市</option>
+                            </select>
+                        </div>
+                        <div class="modal-body">
+                            <strong style="margin-left: 5%">描&nbsp;&nbsp;&nbsp;&nbsp;述</strong><input type="text" placeholder="请输入模型描述" class="input-text radius size-S" style="margin:10px 15px 10px 27px;;width: 43%;" id="savemodeldescribe" name="savemodeldescribe">
+                        </div>
+                        <div class="button_position">
+                            <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 80%; margin-top: 0%;" onclick="savemodel()">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                        </div>
+                    </form><br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" th:inline="javascript">
+    function jumpDialogAddModel() {
+        $("#upfile").modal("show");
+    }
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    function hideDialog() {
+        setTimeout($("#upfile").modal("hide"),"3000");
+    }
+
+    function savemodel() {
+        var savemodelname =  $("input[id='savemodelname']").val();
+        var options=$("#form1 option:selected");
+        var programmetype = options.val();
+        var programmedescribe =  $("input[id='savemodeldescribe']").val();
+        var experimentid = [[${id}]];
+        var algorithmname =[[${algorithmname}]];
+        var contentx =[[${content}]];
+        var output = [[${outputpath}]];
+        var input = [[${inputPath}]];
+        var configname =[[${configname}]];
+        var inputPath = eval('(' + input + ')');
+        var content = eval('(' + contentx + ')');
+        var outputpath = eval('(' + output + ')');
+        var b2 = new Boolean(true);
+        var instantData = b2;
+
+        $.Huimodalalert('上传成功', 2000);
+        hideDialog();
+        var analyzmodelArr1 = "[]";
+        var analyzmodelArr2 = "[]";
+        var analyzmodelJsonArr1 = JSON.parse(analyzmodelArr1);
+        var analyzmodelJsonArr2 = JSON.parse(analyzmodelArr2);
+        var params = {
+            "inputpath": inputPath,
+            "content":content,
+            "outputpath":outputpath
+        };
+        var instance = {
+            "name": algorithmname,
+            "params": params
+        };
+        analyzmodelJsonArr1.push(instance);
+
+        var xxxx = JSON.stringify(analyzmodelJsonArr1);
+        var analyzmodel = eval('(' + xxxx + ')');
+
+        var example = {
+            "configname": configname,
+            "experimentid":experimentid,
+            "instantData":instantData,
+            "analyzmodel": analyzmodel
+        };
+        analyzmodelJsonArr2.push(example);
+        var programmepath = JSON.stringify(analyzmodelJsonArr2);
+
+        var programme = {
+            "programmename": savemodelname,
+            "programmetype": programmetype,
+            "programmedescribe": programmedescribe,
+            "programmepath": programmepath
+        };
+
+        $.ajax({
+            async: false,
+            type: "post",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(programme),
+            url: '/experiment/saveprogramme',
+            success: function (data) {
+            }
+        });
+
+    }
+
+</script>
 </body>
 </html>

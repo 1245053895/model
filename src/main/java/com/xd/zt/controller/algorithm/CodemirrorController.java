@@ -52,6 +52,7 @@ public class CodemirrorController {
         return new ModelAndView( "algorithm/algorithmOnline","Modelmodel",model);
     }
 
+
     @ResponseBody
     @RequestMapping("/saveCodeController")
     public String saveCodeController(@RequestParam("name") String name, String type, String content){

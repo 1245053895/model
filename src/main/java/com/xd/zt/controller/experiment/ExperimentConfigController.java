@@ -11,9 +11,13 @@ import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
+import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.experiment.ExperimentConfigService;
 import com.xd.zt.service.experiment.ExperimentDataService;
 import com.xd.zt.service.experiment.ExperimentService;
+import com.xd.zt.util.analyse.HttpCientPost;
+import com.xd.zt.util.analyse.HttpUtil;
+import com.xd.zt.util.data.JsonKeyToStringList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,8 +50,10 @@ private ExperimentDataService experimentDataService;
         String algorithmtype = "模型验证";
         List<Algorithm> typeAlgorithms =  experimentConfigService.showAlgorithmtype(algorithmtype);
         ExperimentConfig experimentConfig =experimentConfigService.showExperimentConfig(id);
+
         String configflow = experimentConfig.getConfigflow();
         int experimentid = experimentConfig.getExperimentid();
+        String configname = experimentConfig.getConfigname();
         String params1 = experimentConfig.getParam();
         JSONArray paramsArray = JSON.parseArray(params1);
         String algorithmname = paramsArray.getJSONObject(0).getString("name");
@@ -64,7 +70,25 @@ private ExperimentDataService experimentDataService;
         model.addAttribute("content",content);
         model.addAttribute("outputpath",outputpath);
         model.addAttribute("experimentParams",params1);
+        model.addAttribute("algorithmname",algorithmname);
+        model.addAttribute("configname",configname);
         return new ModelAndView("experiment/modelConfigurationView", "modelModel", model);
+    }
+
+
+
+    @ResponseBody
+    @RequestMapping("/saveprogramme")
+    public Map<String,Object> saveBlockExample(@RequestBody JSONObject jsonObject){
+        Map<String,Object> map = new HashMap<>();
+        String programmename = jsonObject.get("programmename").toString();
+        String programmetype = jsonObject.get("programmetype").toString();
+        String programmedescribe = jsonObject.get("programmedescribe").toString();
+        String programmepath = jsonObject.get("programmepath").toString();
+        Programme programme = new Programme();
+
+
+        return map;
     }
 
 

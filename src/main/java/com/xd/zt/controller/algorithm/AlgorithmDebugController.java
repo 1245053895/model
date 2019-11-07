@@ -195,6 +195,7 @@ public class AlgorithmDebugController {
         return jsonData;
     }
 
+
     @ResponseBody
     @PostMapping("/updateAlgorithm")
     public Map<String, Object> upFile(@RequestParam(value = "filename", required = false) MultipartFile multipartFile, Algorithm algorithm) throws Exception {
@@ -242,51 +243,5 @@ public class AlgorithmDebugController {
     }
 }
 
-////模型
-//@RequestMapping("/algorithmModelDebug")
-//public ModelAndView algorithmModelDebug(Model model){
-//    //查询所有算法
-//    List<AlgorithmModel> algorithmModelList = algorithmDebugService.selectAlgorithmModel();
-//    model.addAttribute("algorithmModelList",algorithmModelList);
-//
-//    String algorithmModelName = "";
-//    for (int i = 0;i < algorithmModelList.size(); i++){
-//        algorithmModelName = algorithmModelName + algorithmModelList.get(i).getAlgorithmmodelname() +";";
-//    }
-//    model.addAttribute("algorithmModelName",algorithmModelName);
-//    return new ModelAndView("algorithmModelDebug","Modelmodel",model);
-//}
-//
-//    @RequestMapping("/deleteAlgorithmModel")
-//    public String deleteAlgorithmModel(@RequestBody String jsonData){
-//        JSONObject jsonObject = JSON.parseObject(jsonData);
-//        String algorithmmodelid = jsonObject.getString("algorithmmodelid");
-//        algorithmDebugService.deleteAlgorithmModel(algorithmmodelid);
-//        return jsonData;
-//    }
-//
-//    @RequestMapping("/algorithmModelView/{id}")
-//    public ModelAndView algorithmModelView(Model model, @PathVariable("id") Integer algorithmmodelid) throws IOException{
-//        AlgorithmModel algorithmModel = algorithmDebugService.selectAlgorithmModelById(algorithmmodelid);
-//        model.addAttribute("algorithm",algorithmModel);
-//        String algorithmpath = algorithmModel.getAlgorithmmodelpath();
-//        BufferedReader bfr = new BufferedReader(new FileReader(algorithmpath));
-//        String str = null;
-//        int lineNumber = 0;
-//        while ((str = bfr.readLine()) != null) {
-//            lineNumber++;
-//        }
-//
-//        List<String> algorithmStringList=new ArrayList<>();
-//        BufferedReader bfr1 = new BufferedReader(new FileReader(algorithmpath));
-//        String str1 = null;
-//        int lineNumber1 = 0;
-//        while ((str1 = bfr1.readLine()) != null) {
-//            algorithmStringList.add(String.valueOf(lineNumber1) + " " + str1);
-//            lineNumber1++;
-//        }
-//        String algorithmJsonString= JSON.toJSONString(algorithmStringList);
-//        model.addAttribute("algorithmJsonString",algorithmJsonString);
-//        return new ModelAndView("algorithmModelView","Modelmodel",model);
-//    }
+
 
