@@ -1,0 +1,51 @@
+
+
+import pandas as pd
+import xlrd
+
+data = xlrd.open_workbook('C:\\Users\\cvb\\Desktop\\yalitset.xlsx')
+table = data.sheets()[0]
+nrows = table.nrows # 行数
+ncols = table.ncols # 列数
+# c1 = np.arange(0, nrows, 1)
+
+# 输入步长
+apart = 3
+
+def  func1(colitem,num_apart):
+    list_apart = []
+    for i in range(1, nrows-1):
+        list_everyDis = []
+        collist = table.col_values(colitem)
+        row = collist[i]
+        list_apart.append(row)
+        rownext = collist[i+1]
+        disrow = rownext - row
+        disrow1 = disrow / num_apart
+        for k in range(1, num_apart):
+            list_everyDis.append(disrow1 * k)
+        for j in range(0, len(list_everyDis)):
+            rownew = row + list_everyDis[j]
+            list_apart.append(rownew)
+    return list_apart
+    print(list_apart)
+    print(len(list_apart))
+
+result = []
+for i in range(0,ncols):
+    result.append(func1(i, apart+1))
+
+resultF1 = []
+for x in range(0, nrows*(apart)):
+    resultF2 = []
+    for i in result:
+        resultF2.append(i[x])
+        pass
+    resultF1.append(resultF2)
+    pass
+
+# 字典中的key值即为csv中列名
+save = pd.DataFrame(resultF1,columns = ['上压力*3(X)', '上压力*3(Y)', '下压力*3(X)', '下压力*3(Y)', '压差(X)', '压差(Y)', '给定(X)', '给定(Y)'])
+# index=False,header=False表示不保存行索引和列标题
+# 将DataFrame存储为csv,index表示是否显示行名，default=True
+save.to_csv("C:\\Users\\cvb\\Desktop\\test.csv", index=False, sep=',', header=False)
