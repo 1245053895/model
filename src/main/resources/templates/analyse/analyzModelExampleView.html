@@ -276,8 +276,8 @@ var paramsdatas = document.getElementById(id).getAttribute("value");
 var paramsdatasobj =  eval('(' + paramsdatas + ')');
 
     var paramsinput =  paramsdatasobj['' + "inputpath" + ''];
-    var paramscontent =  paramsdatasobj['' + "inputpath" + ''];
-    var paramsoutput =  paramsdatasobj['' + "inputpath" + ''];
+    var paramscontent =  paramsdatasobj['' + "content" + ''];
+    var paramsoutput =  paramsdatasobj['' + "outputpath" + ''];
  if (document.getElementById(value+"/input").getAttribute("value") != null && document.getElementById(value+"/input").getAttribute("value") != "") {
      var paramsArr = new Array();
      paramsArr.push("<div id='a" + value + "' style='display: none' class='paramsdiv'><form method='post' class='" + value + "input' >");

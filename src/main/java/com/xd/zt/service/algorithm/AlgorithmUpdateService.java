@@ -2,6 +2,8 @@ package com.xd.zt.service.algorithm;
 
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.repository.business.BusinessFileRepository;
 import com.xd.zt.util.algorithm.AlgorithmUpUtil;
 import com.xd.zt.util.business.FileUpUtil;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /*
  * @Description:    上传文件返回上传路径
@@ -25,7 +28,8 @@ public class AlgorithmUpdateService {
 
     @Autowired
     private BusinessFileRepository fileRepository;
-
+    @Autowired
+    private AlgorithmDebugService algorithmDebugService;
 
     public String[] Upload(@RequestParam("filename") MultipartFile file) {
         /*
@@ -39,45 +43,61 @@ public class AlgorithmUpdateService {
             // 获取文件名称,包含后缀
             String filename = file.getOriginalFilename();
 
-            // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
-            // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
-            //获取项目类加载器下的资源路径
-           /* String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/";*/
-            String path = new String("src/main/resources/" + IMG_PATH_PREFIX);
-            File fileDir = new File(path);
-            if(!fileDir.exists()){
-                // 递归生成文件夹
-                fileDir.mkdirs();
+            boolean exit = false;
+            List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+            for (int i = 0; i < algorithmList.size(); i++) {
+                String algorithmname = algorithmList.get(i).getAlgorithmname();
+                if (algorithmname.equals(filename.split("\\.")[0])) {
+                    exit = true;
+                    break;
+                } else {
+                    exit = false;
+                }
             }
 
-            //String path = LOCAL_UPFILE_PATH;//尝试用参数启动，改为本地路径
-            System.out.println(path);
-           // path = path.substring(1,path.length());
-            try {
-                // 该方法是对文件写入的封装，在util类中，导入该包即可使用，后面会给出方法
-                AlgorithmUpUtil.algorithmUp(file.getBytes(), path, filename);
-            } catch (IOException e) {
+            if (exit == true) {
+                return null;
+            } else {
+                // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
+                // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
+                //获取项目类加载器下的资源路径
+                /* String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/";*/
+                String path = new String("src/main/resources/" + IMG_PATH_PREFIX);
+                File fileDir = new File(path);
+                if (!fileDir.exists()) {
+                    // 递归生成文件夹
+                    fileDir.mkdirs();
+                }
 
-                e.printStackTrace();
+                //String path = LOCAL_UPFILE_PATH;//尝试用参数启动，改为本地路径
+                System.out.println(path);
+                // path = path.substring(1,path.length());
+                try {
+                    // 该方法是对文件写入的封装，在util类中，导入该包即可使用，后面会给出方法
+                    AlgorithmUpUtil.algorithmUp(file.getBytes(), path, filename);
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+
+                // 接着创建对应的实体类，将以下路径进行添加，然后通过数据库操作方法写入
+                // FileAndUpload upSuccessFile = new FileAndUpload();
+
+                //将文件的大小进行数据格式转换，保留两位小数
+                String filesize = String.format("%1.2f", (float) file.getSize() / 1024) + "KB";
+
+
+                String filepath = path + filename;
+                fileInformation[0] = filename;
+                fileInformation[1] = filepath;
+                fileInformation[2] = filesize;
+                return fileInformation;
+                //upSuccessFile.setFliePath("http://localhost:8082/"+fileName);//服务器访问路径
+                //upSuccessFile.setFliePath(ACCESS_PATH);//尝试用参数启动，改为访问路径
+                //fileRepository.save(upSuccessFile);
             }
-
-            // 接着创建对应的实体类，将以下路径进行添加，然后通过数据库操作方法写入
-            // FileAndUpload upSuccessFile = new FileAndUpload();
-
-            //将文件的大小进行数据格式转换，保留两位小数
-            String filesize = String.format("%1.2f",(float)file.getSize()/1024 )+"KB";
-
-
-            String filepath = path + filename;
-            fileInformation[0] = filename;
-            fileInformation[1] = filepath;
-            fileInformation[2] = filesize;
-
-            //upSuccessFile.setFliePath("http://localhost:8082/"+fileName);//服务器访问路径
-            //upSuccessFile.setFliePath(ACCESS_PATH);//尝试用参数启动，改为访问路径
-            //fileRepository.save(upSuccessFile);
         }
-        return fileInformation;
+      return null;
 
     }
 

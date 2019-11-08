@@ -68,14 +68,17 @@ public class DataBlockController {
 
     @RequestMapping("/saveDataBlockResult")
     @ResponseBody
-    public String saveDataBlockResult(@RequestBody JSONObject jsonObject) {
+    public Map<String,Object> saveDataBlockResult(@RequestBody JSONObject jsonObject) {
         String blockname = jsonObject.get("datablockresult").toString();
         String modelid = jsonObject.get("modelid").toString();
         String flowchart = jsonObject.get("flowchart").toString();
         String dataresultid = jsonObject.get("dataresultid").toString();
         String dataarea = dataBlockService.selectAreaId(dataresultid);
-        dataBlockService.saveDataBlockResult(modelid, blockname, flowchart,dataarea);
-        return modelid;
+         dataBlockService.saveDataBlockResult(modelid, blockname, flowchart,dataarea);
+        Integer blockid=  dataBlockService.maxBlockId();
+        Map<String,Object> map = new HashMap<>();
+        map.put("blockid",blockid);
+        return map;
     }
 
     @RequestMapping("/deleteblock")

@@ -22,22 +22,22 @@
 
         <div class="panel-header"  th:text="${experimentConfig.configname}"  style="text-align: center"></div>
         <div style="height: 46%;width: 38%;float: left;margin-left: 32%;margin-top: 12%;">
-            <a id="review" th:href="@{'/data/areaViewx/'+${experimentConfig.id}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
+            <a id="review" th:href="@{'/experiment/modelConfigurationView/'+${experimentConfig.id}}"><image src="/image/question.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a>
             <div  style="width: 30%;height: 30%; margin-left: 140%;margin-top: -170%;"><a th:id="${experimentConfig.id}" style="cursor:pointer;"><image src="/image/delete.png" style="cursor:pointer;height: 100%;width: 100%" ></image></a></div>
 
         </div>
 
     </div>
-    <div class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" >
-        <div class="panel-header" style="text-align: center">新建</div>
-        <!-- <div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" ><a id="new" th:href="@{'/modelCreate/'+${businessid}}"><image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image></a></div>-->
-        <div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" >
-            <a id="new" th:href="@{'/experiment/modelConfiguration/'+${experimentid}}">
-                <image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image>
-            </a>
-        </div>
+    <!--<div class="panel panel-default" style="height: 17vh;width: 12%;float: left;margin-left: 1.5%;margin-top: 1%" >-->
+        <!--<div class="panel-header" style="text-align: center">新建</div>-->
+        <!--&lt;!&ndash; <div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" ><a id="new" th:href="@{'/modelCreate/'+${businessid}}"><image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image></a></div>&ndash;&gt;-->
+        <!--<div style="height: 46%;width: 38%;float: left;margin-left: 36%;margin-top: 17%;" >-->
+            <!--<a id="new" th:href="@{'/experiment/modelConfiguration/'+${experimentid}}">-->
+                <!--<image src="/image/build.png" style="cursor:pointer;height: 75%;width: 75%" ></image>-->
+            <!--</a>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
 
 </div>
