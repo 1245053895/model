@@ -85,6 +85,9 @@
             <input th:each="datamodelInfoList:${datamodelInfoList}" class="btn btn-success radius" type="button"
                    style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${datamodelInfoList.getDataaddr()}"
                    th:value="${datamodelInfoList.getDataresultname()}"  onclick="selectData(this.id)"/>
+            <input th:each="analyseCsvList:${analyseCsvList}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${analyseCsvList.getCsvpath()}"
+                   th:value="${analyseCsvList.getCsvname()}"  onclick="selectData(this.id)"/>
         </div>
     </div>
 
@@ -423,8 +426,11 @@
                     if (param2 == "modelPath") {
                         paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 +"_for_" + value +"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
                     }
+                    else if (param2 == "modelPaths") {
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                    }
                     else {
-                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 +"_for_" + value + ".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+param2+".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
 
                     }
                 }

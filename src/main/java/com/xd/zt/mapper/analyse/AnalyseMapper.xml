@@ -71,4 +71,15 @@
         and analyse_model.modelid = analyse_model_process.analysemodelid
         and analyse_model_process.modelid = #{modelid}
     </select>
+
+
+    <insert id="saveAnalyseCsv" parameterType="AnalyseCsv">
+        insert  analyse_csv (csvname,csvpath,modelinstanceid) value (#{csvname},#{csvpath},#{modelinstanceid})
+    </insert>
+    <select id="selectCsvExit" parameterType="Integer" resultType="AnalyseCsv">
+        select * from analyse_csv where modelinstanceid = #{modelinstanceid}
+    </select>
+    <delete id="deleteAnalyseCsv" parameterType="Integer">
+        delete  from analyse_csv  where modelinstanceid = #{modelinstanceid}
+    </delete>
 </mapper>

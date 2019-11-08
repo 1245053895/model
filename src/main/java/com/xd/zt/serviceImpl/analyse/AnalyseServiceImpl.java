@@ -1,10 +1,7 @@
 package com.xd.zt.serviceImpl.analyse;
 
 
-import com.xd.zt.domain.analyse.Algorithm;
-import com.xd.zt.domain.analyse.AnalyseInstance;
-import com.xd.zt.domain.analyse.AnalyseModelProcess;
-import com.xd.zt.domain.analyse.AnalyticsTask;
+import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.mapper.analyse.AnalyseMapper;
 import com.xd.zt.service.analyse.AnalyseService;
@@ -51,6 +48,23 @@ public class AnalyseServiceImpl implements AnalyseService {
         List<DatamodelInfo> datamodelInfoList = analyseMapper.selectDataResult(modelid);
         return datamodelInfoList;
     }
+
+    @Override
+    public void saveAnalyseCsv(AnalyseCsv analyseCsv) {
+        analyseMapper.saveAnalyseCsv(analyseCsv);
+    }
+
+    @Override
+    public List<AnalyseCsv> selectCsvExit(@Param("modelinstanceid") Integer modelinstanceid) {
+        List<AnalyseCsv> analyseCsvList = analyseMapper.selectCsvExit(modelinstanceid);
+        return analyseCsvList;
+    }
+
+    @Override
+    public void deleteAnalyseCsv(@Param("modelinstanceid") Integer modelinstanceid) {
+        analyseMapper.deleteAnalyseCsv(modelinstanceid);
+    }
+
 
     @Override
     public String selectAnalyseProcess(@Param("modelid") Integer modelid) {
