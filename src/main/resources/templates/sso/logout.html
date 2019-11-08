@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>写入session</title>
+    <script type="text/javascript" charset="utf-8" th:inline="javascript">
+        function logout() {
+            var idNumber=[[${idNumber}]];
+            var sessionId=[[${sessionId}]];
+            window.location.href="http://10.101.201.154:9092/sso/logout.html?idNumber="+idNumber+"&sessionId="+sessionId+"&ssoClientUrl=http://10.101.201.173:7008";
+        }
+    </script>
+
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+logout();
+</script>
+</body>
+</html>

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-   <!-- <meta http-equiv="refresh" content="3;URL=http://www.163.com" charset="UTF-8">-->
-    <meta http-equiv="refresh" content="2;URL=/ZT">
-    <title>ticket</title>
+    <meta charset="UTF-8">
+    <title>写入session</title>
+    <script type="text/javascript" src="/js/sso.js" charset="utf-8"></script>
 </head>
 <body>
-
+<script type="text/javascript" charset="utf-8">
+    var sessionId = getUrlParam("sessionId");
+    var sessionIdKey = getUrlParam("sessionIdKey");
+    setCookie(sessionIdKey, sessionId);
+</script>
 </body>
+<a href="/index.html">跳转到开始页面</a>
 </html>
