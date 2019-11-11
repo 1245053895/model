@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xd.zt.mapper.userinfo.SysUserMenuMapper">
+    <select id="selectMenuByUserId" parameterType="Integer" resultType="sysMenu">
+        SELECT sys_menu.`name` FROM sys_menu,sys_role_menu,sys_role_user WHERE sys_role_user.role_id=sys_role_menu.role_id AND sys_role_menu.menu_id=sys_menu.id
+AND sys_role_user.user_id=#{user_id}
+    </select>
+    <select id="getSysUserByIdNumber" parameterType="String" resultType="sysUser">
+        SELECT * FROM sys_user WHERE idnumber=#{idnumber}
+    </select>
+    <select id="getSysUserByName" resultType="sysUser" parameterType="String">
+        SELECT * FROM sys_user WHERE username=#{username}
+    </select>
+</mapper>
