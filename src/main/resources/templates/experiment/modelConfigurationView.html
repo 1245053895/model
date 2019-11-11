@@ -307,7 +307,8 @@
         var options=$("#form1 option:selected");
         var programmetype = options.val();
         var programmedescribe =  $("input[id='savemodeldescribe']").val();
-        var experimentid = [[${id}]];
+        var id = [[${id}]];
+        var experimentid = id.toString();
         var algorithmname =[[${algorithmname}]];
         var contentx =[[${content}]];
         var output = [[${outputpath}]];
@@ -349,6 +350,7 @@
         var programmepath = JSON.stringify(analyzmodelJsonArr2);
 
         var programme = {
+            "id":id,
             "programmename": savemodelname,
             "programmetype": programmetype,
             "programmedescribe": programmedescribe,

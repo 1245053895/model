@@ -1,10 +1,13 @@
 package com.xd.zt.serviceImpl.experiment;
 
 import com.xd.zt.domain.analyse.*;
+import com.xd.zt.domain.business.BusinessModel;
+import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
+import com.xd.zt.domain.model.Programme;
 import com.xd.zt.mapper.experiment.ExperimentConfigMapper;
 import com.xd.zt.mapper.experiment.ExperimentMapper;
 import com.xd.zt.service.experiment.ExperimentConfigService;
@@ -85,4 +88,41 @@ public class ExperimentConfigServicelmp implements ExperimentConfigService {
     public ExperimentConfig showExperimentConfig(int id) {
         return experimentConfigMapper.showExperimentConfig(id);
     }
+
+    @Override
+    public void insertProgrammence(Programme programme) {
+        experimentConfigMapper.insertProgrammence(programme);
+    }
+
+    @Override
+    public void updataExperimentmodel(Integer programmeid,Integer id) {
+        experimentConfigMapper.updataExperimentmodel(programmeid,id);
+    }
+
+    @Override
+    public void updataAnalysemodel(Integer programmeid, Integer modelid) {
+        experimentConfigMapper.updataAnalysemodel(programmeid,modelid);
+    }
+
+    @Override
+    public void updataBusinessmodel(Integer programmeid, Integer businessid) {
+        experimentConfigMapper.updataBusinessmodel(programmeid,businessid);
+    }
+
+    @Override
+    public AnalyseModel showAnalyseModel(Integer modelid) {
+        return experimentConfigMapper.showAnalyseModel(modelid);
+    }
+
+    @Override
+    public BusinessQuestion showBusinessQuestion(Integer questionid) {
+        return experimentConfigMapper.showBusinessQuestion(questionid);
+    }
+
+    @Override
+    public BusinessModel showBusinessModel(Integer businessid) {
+        return experimentConfigMapper.showBusinessModel(businessid);
+    }
+
+
 }

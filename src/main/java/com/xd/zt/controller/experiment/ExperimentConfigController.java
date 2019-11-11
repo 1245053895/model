@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xd.zt.domain.analyse.*;
+import com.xd.zt.domain.business.BusinessModel;
 import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.domain.experiment.ExperimentConfig;
@@ -24,7 +25,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
 import java.io.Console;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -79,16 +82,38 @@ private ExperimentDataService experimentDataService;
 
     @ResponseBody
     @RequestMapping("/saveprogramme")
-    public Map<String,Object> saveBlockExample(@RequestBody JSONObject jsonObject){
-        Map<String,Object> map = new HashMap<>();
+    @Transactional
+    public String saveBlockExample(@RequestBody JSONObject jsonObject){
         String programmename = jsonObject.get("programmename").toString();
         String programmetype = jsonObject.get("programmetype").toString();
         String programmedescribe = jsonObject.get("programmedescribe").toString();
         String programmepath = jsonObject.get("programmepath").toString();
+        String xxx = jsonObject.get("id").toString();
+        Integer id = Integer.parseInt(xxx);
+        String username ="username";
+        String editTime =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString();
         Programme programme = new Programme();
-
-
-        return map;
+            programme.setProgrammetime(editTime);
+            programme.setProgrammename(programmename);
+            programme.setProgrammedescribe(programmedescribe);
+            programme.setProgrammetype(programmetype);
+            programme.setProgrammepath(programmepath);
+            programme.setUsername(username);
+            experimentConfigService.insertProgrammence(programme);
+            Integer programmeid = programme.getProgrammeid();
+            experimentConfigService.updataExperimentmodel(programmeid,id);
+//            ExperimentModel experimentModel = experimentConfigService.showExperiment(id);
+//            Integer modeid = experimentModel.getAnalysemodeid();
+//            experimentConfigService.updataAnalysemodel(programmeid,modeid);
+//            AnalyseModel analyseModel = experimentConfigService.showAnalyseModel(modeid);
+//            Integer questionid = analyseModel.getQuestionid();
+//            BusinessQuestion businessQuestion =experimentConfigService.showBusinessQuestion(questionid);
+//            Integer businessid = businessQuestion.getBusinessid();
+//            experimentConfigService.updataBusinessmodel(programmeid,businessid);
+//            BusinessModel businessModel = experimentConfigService.showBusinessModel(businessid);
+//            Integer processid =businessModel.getProcessid();
+//            System.out.println(processid);
+               return "xxx";
     }
 
 

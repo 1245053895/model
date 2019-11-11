@@ -68,4 +68,38 @@
        insert into experiment_config values (null,#{configname},#{configflow},#{param},null,null,null,#{experimentid});
     </insert>
 
+    <insert id="insertProgrammence" parameterType="com.xd.zt.domain.model.Programme" useGeneratedKeys="true" keyProperty="programmeid">
+       insert into programme values (null,#{programmename},#{programmetype},#{programmedescribe},null,#{programmetime},#{username},#{programmepath});
+    </insert>
+
+    <update id="updataExperimentmodel" parameterType="java.lang.Integer">
+       UPDATE experiment_model SET programmeid=#{programmeid} WHERE id = #{id}
+    </update>
+
+
+    <update id="updataAnalysemodel" parameterType="java.lang.Integer">
+       UPDATE analyse_model SET programmeid=#{programmeid} WHERE modelid = #{modelid}
+    </update>
+
+    <update id="updataBusinessmodel" parameterType="java.lang.Integer">
+       UPDATE business_model SET programmeid=#{programmeid} WHERE businessid = #{businessid}
+    </update>
+
+
+
+
+
+    <select id="showAnalyseModel" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.analyse.AnalyseModel">
+        select * FROM analyse_model WHERE modelid = #{modelid}
+    </select>
+
+
+    <select id="showBusinessQuestion" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.business.BusinessQuestion">
+        select * FROM business_question WHERE questionid = #{questionid}
+    </select>
+
+    <select id="showBusinessModel" parameterType="java.lang.Integer" resultType="com.xd.zt.domain.business.BusinessModel">
+        select * FROM business_model WHERE businessid = #{businessid}
+    </select>
+
 </mapper>
