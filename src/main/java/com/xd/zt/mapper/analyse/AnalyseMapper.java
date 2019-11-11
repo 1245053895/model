@@ -6,6 +6,7 @@ import com.xd.zt.domain.data.DatamodelInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Mapper
@@ -42,4 +43,5 @@ public interface AnalyseMapper {
     void saveAnalyseCsv(AnalyseCsv analyseCsv);
     List<AnalyseCsv> selectCsvExit(@Param("modelinstanceid")Integer modelinstanceid);
     void deleteAnalyseCsv(@Param("modelinstanceid")Integer modelinstanceid);
+    Integer selectIdInModelAnalyseProcess(@Param("modelid")Integer modelid);
 }

@@ -70,6 +70,7 @@
         and datamodel_name.questionid = analyse_model.questionid
         and analyse_model.modelid = analyse_model_process.analysemodelid
         and analyse_model_process.modelid = #{modelid}
+        and datamodel_info.databao is not null
     </select>
 
 
@@ -82,4 +83,7 @@
     <delete id="deleteAnalyseCsv" parameterType="Integer">
         delete  from analyse_csv  where modelinstanceid = #{modelinstanceid}
     </delete>
+    <select id="selectIdInModelAnalyseProcess" parameterType="Integer" resultType="Integer">
+        SELECT analysemodelid FROM analyse_model_process WHERE modelid = #{modelid}
+    </select>
 </mapper>

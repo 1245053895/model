@@ -9,6 +9,7 @@ import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.service.analyse.AnalyseResultService;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
+import com.xd.zt.service.experiment.ExperimentConfigService;
 import com.xd.zt.util.analyse.FindLinuxDirectory;
 import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpClientGet;
@@ -41,6 +42,9 @@ public class AnalyseController {
 
     @Autowired
     private AnalyseResultService analyseResultService;
+
+    @Autowired
+    private ExperimentConfigService experimentConfigService;
 //    @RequestMapping("index")
 //    public ModelAndView index(Model model){
 //        List<AnalyseModelProcess> analyseModelList = analyseService.selectAnalyseModel();
@@ -168,7 +172,24 @@ public class AnalyseController {
         model.addAttribute("params",params);
 
         List<DatamodelInfo> datamodelInfoList = analyseService.selectDataResult(modelid);
+
+        Integer analysemodelid = analyseService.selectIdInModelAnalyseProcess(modelid);
+        List<AnalyseModelProcess> allAnalyseModelProcesses = experimentConfigService.allAnalyseModelProcess(analysemodelid);
+        List<AnalyseCsv> analyseCsvList = new ArrayList<>();
+        for(int i=0; i<allAnalyseModelProcesses.size(); i++) {
+            Integer modelid1 = allAnalyseModelProcesses.get(i).getModelid();
+            List<AnalyseInstance> analyseInstances = experimentConfigService.allAnalyseInstance(modelid1);
+            for (int j = 0; j < analyseInstances.size(); j++) {
+                int instanceid = analyseInstances.get(j).getModelinstanceid();
+                List<AnalyseCsv> analyseCsvList1 = analyseService.selectCsvExit(instanceid);
+                for (int k = 0; k < analyseCsvList1.size(); k++) {
+                    analyseCsvList.add(analyseCsvList1.get(k));
+                }
+            }
+        }
         model.addAttribute("datamodelInfoList",datamodelInfoList);
+        model.addAttribute("analyseCsvList",analyseCsvList);
+
         return new ModelAndView("analyse/analyzModelExample","Modelmodel",model);
     }
 
@@ -346,33 +367,33 @@ public class AnalyseController {
     }
 
 
-    @RequestMapping("/taskList")
-    public ModelAndView taskList(Model model){
-//        List<AnalyticsTask> analyticsTaskList = analyseService.selectTask();
-         List<AnalyticsTask> analyticsTaskList = new ArrayList<>();
-        String taskString = new String();
-        try {
-//        taskString =  HttpClientGet.restGet("http://120.24.157.214:8000/tasks/"+"name"+"/",null);
-        taskString =  HttpClientGet.restGet("http://10.101.201.174:8000/tasks/"+"name"+"/",null);
-        System.out.printf(taskString);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        JSONObject taskJson = JSON.parseObject(taskString);
-        JSONArray taskListArray = taskJson.getJSONArray("datas");
-        for (int i = 0 ; i < taskListArray.size(); i++){
-            AnalyticsTask analyticsTask = new AnalyticsTask();
-            analyticsTask.setTaskId(taskListArray.getJSONObject(i).getString("taskId"));
-            analyticsTask.setModelInstanceId(taskListArray.getJSONObject(i).getString("modelInstanceId"));
-            analyticsTask.setTimestamp(taskListArray.getJSONObject(i).getString("timestamp"));
-            analyticsTask.setStatus(taskListArray.getJSONObject(i).getString("status"));
-            analyticsTask.setCompleteTime(taskListArray.getJSONObject(i).getString("completeTime"));
-            analyticsTask.setResult(taskListArray.getJSONObject(i).getString("result"));
-            analyticsTaskList.add(i,analyticsTask);
-        }
-        model.addAttribute("analyticsTaskList",analyticsTaskList);
-        return new ModelAndView("analyse/taskList","modelModel",model);
-    }
+//    @RequestMapping("/taskList")
+//    public ModelAndView taskList(Model model){
+////        List<AnalyticsTask> analyticsTaskList = analyseService.selectTask();
+//         List<AnalyticsTask> analyticsTaskList = new ArrayList<>();
+//        String taskString = new String();
+//        try {
+////        taskString =  HttpClientGet.restGet("http://120.24.157.214:8000/tasks/"+"name"+"/",null);
+//        taskString =  HttpClientGet.restGet("http://10.101.201.174:8000/tasks/"+"name"+"/",null);
+//        System.out.printf(taskString);
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//        JSONObject taskJson = JSON.parseObject(taskString);
+//        JSONArray taskListArray = taskJson.getJSONArray("datas");
+//        for (int i = 0 ; i < taskListArray.size(); i++){
+//            AnalyticsTask analyticsTask = new AnalyticsTask();
+//            analyticsTask.setTaskId(taskListArray.getJSONObject(i).getString("taskId"));
+//            analyticsTask.setModelInstanceId(taskListArray.getJSONObject(i).getString("modelInstanceId"));
+//            analyticsTask.setTimestamp(taskListArray.getJSONObject(i).getString("timestamp"));
+//            analyticsTask.setStatus(taskListArray.getJSONObject(i).getString("status"));
+//            analyticsTask.setCompleteTime(taskListArray.getJSONObject(i).getString("completeTime"));
+//            analyticsTask.setResult(taskListArray.getJSONObject(i).getString("result"));
+//            analyticsTaskList.add(i,analyticsTask);
+//        }
+//        model.addAttribute("analyticsTaskList",analyticsTaskList);
+//        return new ModelAndView("analyse/taskList","modelModel",model);
+//    }
 
     
 }

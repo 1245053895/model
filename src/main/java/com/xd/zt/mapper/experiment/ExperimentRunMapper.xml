@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.zt.mapper.experiment.ExperimentRunMapper">
+
+    <delete id="deleteConfig" parameterType="Integer" >
+        delete from experiment_config where id = #{id}
+    </delete>
+    <select id="selectConfig" parameterType="String">
+        select * from experiment_config where id = #{id}
+    </select>
+    <select id="selectResult" parameterType="Integer">
+        select * from experiment_config where experimentcongfigid = #{experimentcongfigid}
+    </select>
+    <insert id="saveResult" parameterType="ExperimentResult">
+ insert into experiment_result (experiment_result.resultname,experiment_result.resultpath,experiment_result.datetime,experiment_result.experimentid,experiment_result.experimentcongfigid) values (#{resultname},#{resultpath},#{datetime},#{experimentid},#{experimentcongfigid})
+    </insert>
+    <delete id="deleteResult" parameterType="Integer">
+        delete from experiment_result where experimentcongfigid = #{experimentcongfigid}
+    </delete>
+</mapper>

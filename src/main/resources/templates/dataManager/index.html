@@ -103,27 +103,6 @@
 		<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
 		<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
 		<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
-		<!--/_footer 作为公共模版分离出去-->
-
-		<!--请在下方写此页面业务相关的脚本-->
-<!--		<script type="text/javascript" >
-                window.onload=function(){
-                    var modelid=document.getElementsByTagName("dt");
-                    for(var index=0;index<modelid.length;index++){
-						modelid[index].onclick=function(){
-                            var id =  this.id;
-                            var analyseProcesskshow ="/analyse/analyseProcessBuild/"+ id.toString();
-                            var analysemodel = document.getElementById(analyseProcesskshow);
-							analysemodel.setAttribute('data-href',analyseProcesskshow);
-
-							var analyzModelCreate ="/analyse/analyzModelCreate/"+ id.toString();
-							var analysemodel = document.getElementById(analyzModelCreate);
-							analysemodel.setAttribute('data-href',analyzModelCreate);
-                        }
-                    }
-                }
-
-		</script>-->
 <script type="text/javascript" >
     window.onload=function(){
         var modelid=document.getElementsByTagName("dt");

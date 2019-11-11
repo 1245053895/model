@@ -65,6 +65,12 @@ public class AnalyseServiceImpl implements AnalyseService {
         analyseMapper.deleteAnalyseCsv(modelinstanceid);
     }
 
+    @Override
+    public Integer selectIdInModelAnalyseProcess(@Param("modelid")Integer modelid) {
+        Integer analysemodelid = analyseMapper.selectIdInModelAnalyseProcess(modelid);
+        return analysemodelid;
+    }
+
 
     @Override
     public String selectAnalyseProcess(@Param("modelid") Integer modelid) {

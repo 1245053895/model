@@ -23,7 +23,7 @@
 	<title></title>
 </head>
 <body>
-<input type="hidden" th:value="${algorithmName}" id="algorithmName"/><input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparams}" th:id="${algorithmList.algorithmname}"/><input type="hidden" value="" id="selectedparams"/>
+<input type="hidden" th:value="${algorithmName}" id="algorithmName"/><input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparamscontent}" th:id="${algorithmList.algorithmname}"/><input type="hidden" value="" id="selectedparams"/>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 算法库 <span class="c-gray en">&gt;</span> 算法校验  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
 
@@ -116,9 +116,14 @@ var paramsArr = new Array();
        paramsArr.push("<div id='a"+ name[0] +"' style='display: none' class='paramsdiv'><form method='post' class='"+ value +"' >");
         var algorithmParams = document.getElementById(value).getAttribute("value");
         var algorithmParams_Arr = algorithmParams.split(';');
+        if (algorithmParams != null && algorithmParams != "") {
         for (var i=0; i<algorithmParams_Arr.length;i++) {
             var param = algorithmParams_Arr[i];
-           paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>"+param+"</div>"+ "<input type='text' placeholder='请输入..' class='input-text ac_input' name='"+param+"'  id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+            paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "'  id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+        }
+        }
+        else {
+            // paramsArr.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + 当前算法没有 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param + "'  id='" + param + "' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
         }
        paramsArr.push("</form></div>");
     $("#params_text").append(paramsArr.join("\n"));
@@ -133,8 +138,8 @@ function switchParam(value) {
     $(".paramsdiv").hide(300);
     var algorithmname = value.split(".");
     $('#a'+algorithmname[0]).show(300);
-    var algorithmParams = document.getElementById(value).getAttribute("value");
-    document.getElementById('selectedparams').setAttribute("value",algorithmParams);
+    var algorithmParamscontent = document.getElementById(value).getAttribute("value");
+    document.getElementById('selectedparams').setAttribute("value",algorithmParamscontent);
 }
 
 //参数校验

@@ -126,61 +126,6 @@
 <script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    // window.onload=function() {
-    //     var oLis = document.getElementsByTagName("input");
-    //     for (var index = 0; index < oLis.length; index++) {
-    //         oLis[index].onclick = function () {
-    //             var id = this.id;
-    //             var value = this.value;
-    //             if (value == "删除") {
-    //                 if (confirm("确定要删除此问题？")) {
-    //                     var exampleid = {
-    //                         "exampleid": id
-    //                     };
-    //                     $.ajax({
-    //                         async: false,
-    //                         type: "post",
-    //                         dataType: "json",
-    //                         contentType: 'application/json;charset=UTF-8',
-    //                         data: JSON.stringify(exampleid),
-    //                         url: '/exampleDelete',
-    //                         success: function () {
-    //                             $.Huimodalalert('删除成功', 1000);
-    //                             location.reload(true);
-    //                         }
-    //                     });
-    //                     location.reload(true);
-    //                 }
-    //                 else {
-    //                 }
-    //             }
-    //             if (value == "运行") {
-    //                 if (confirm("确定要运行？")) {
-    //                     var exampleid = {
-    //                         "exampleid": id
-    //                     };
-    //                     $.ajax({
-    //                         async: false,
-    //                         type: "post",
-    //                         dataType: "json",
-    //                         contentType: 'application/json;charset=UTF-8',
-    //                         data: JSON.stringify(exampleid),
-    //                         url: '/exampleRun',
-    //                         success: function () {
-    //                                 $.Huimodalalert('已添加运行任务', 1000);
-    //                         },
-    //                         error:function () {
-    //                             $.Huimodalalert('已添加运行任务', 1000);
-    //                         }
-    //                     });
-    //                         }
-    //                 }
-    //             else{
-    //             }
-    //         }
-    //     }
-    // }
-
 
 </script>
 </body>

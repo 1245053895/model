@@ -96,37 +96,6 @@
 </div>
 
 <script type="text/javascript" th:inline="javascript">
-    function confirmDelete(obj) {
-        var modelid=obj.id;
-     /*   alert(businessid)*/
-        if (confirm("确定删除吗？")){
-            $.ajax({
-                type:'POST',
-                url:"/analyse/analyseDelete",
-                dataType:"json",
-                traditional:true,
-                data:{
-                    'modelid':modelid,
-                },
-                async:false,
-                success:function (data) {
-                    alert("删除成功");
-                /*    $.Huimodalalert('删除成功', 2000);*/
-                 /*   location.href="/businessManage"*/
-                    location.reload(true);
-                    parent.location.reload();
-        }
-
-            });
-        }else {
-            location.href="/analyse/analyseManage"
-        }
-
-
-
-
-    }
-
 </script>
 
 

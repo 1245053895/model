@@ -122,29 +122,29 @@
                     else {
                     }
                 }
-                if (value == "运行") {
-                    if (confirm("确定要运行？")) {
-                        var exampleid = {
-                            "exampleid": id
-                        };
-                        $.ajax({
-                            async: false,
-                            type: "post",
-                            dataType: "json",
-                            contentType: 'application/json;charset=UTF-8',
-                            data: JSON.stringify(exampleid),
-                            url: '/exampleRun',
-                            success: function () {
-                                    $.Huimodalalert('已添加运行任务', 1000);
-                            },
-                            error:function () {
-                                $.Huimodalalert('已添加运行任务', 1000);
-                            }
-                        });
-                            }
-                    }
-                else{
-                }
+                // if (value == "运行") {
+                //     if (confirm("确定要运行？")) {
+                //         var exampleid = {
+                //             "exampleid": id
+                //         };
+                //         $.ajax({
+                //             async: false,
+                //             type: "post",
+                //             dataType: "json",
+                //             contentType: 'application/json;charset=UTF-8',
+                //             data: JSON.stringify(exampleid),
+                //             url: '/exampleRun',
+                //             success: function () {
+                //                     $.Huimodalalert('已添加运行任务', 1000);
+                //             },
+                //             error:function () {
+                //                 $.Huimodalalert('已添加运行任务', 1000);
+                //             }
+                //         });
+                //             }
+                //     }
+                // else{
+                // }
             }
         }
     }

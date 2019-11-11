@@ -52,5 +52,6 @@ public interface AnalyseService {
     void saveAnalyseCsv(AnalyseCsv analyseCsv);
     List<AnalyseCsv> selectCsvExit(@Param("modelinstanceid")Integer modelinstanceid);
     void deleteAnalyseCsv(@Param("modelinstanceid")Integer modelinstanceid);
+    Integer selectIdInModelAnalyseProcess(@Param("modelid")Integer modelid);
 
 }

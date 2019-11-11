@@ -189,24 +189,24 @@
 
 
 <script>
-    function getResult() {
-        $.ajax({
-            async: false,
-            cache: false,
-            type: "POST",
-            dataType:"json",
-            url: "/data/blocklinkinform",
-            data: {
-                parameter1: $("#parameter1").val(),
-                parameter2: $("#parameter2").val(),
-                uuid: $("#testval1").val()
-            },
-            success : function(data) {
-                alert("保存成功")
-            }
-        });
-        alert("保存成功")
-    }
+    // function getResult() {
+    //     $.ajax({
+    //         async: false,
+    //         cache: false,
+    //         type: "POST",
+    //         dataType:"json",
+    //         url: "/data/blocklinkinform",
+    //         data: {
+    //             parameter1: $("#parameter1").val(),
+    //             parameter2: $("#parameter2").val(),
+    //             uuid: $("#testval1").val()
+    //         },
+    //         success : function(data) {
+    //             alert("保存成功")
+    //         }
+    //     });
+    //     alert("保存成功")
+    // }
 </script>
 
 

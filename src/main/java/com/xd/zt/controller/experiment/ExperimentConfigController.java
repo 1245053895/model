@@ -12,6 +12,7 @@ import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.experiment.ExperimentData;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.domain.experiment.ExperimentTraintest;
+import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.experiment.ExperimentConfigService;
 import com.xd.zt.service.experiment.ExperimentDataService;

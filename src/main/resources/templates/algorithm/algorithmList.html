@@ -42,15 +42,6 @@
                         <th >算法名称</th>
                         <th >算法类别</th>
                         <th >算法标签</th>
-                        <!--<th >-->
-                            <!--<select style="background-color: #F5FAFE;border-right-style: none; border-top-style: none;border-left-style: none;border-bottom-style: none;">-->
-                                <!--<option>算法标签</option>-->
-                                <!--<option th:value="algorithmList1" th:text="行业专用">行业专用</option>-->
-                                <!--<option th:value="algorithmList2" th:text="行业通用">行业通用</option>-->
-                                <!--<option th:value="algorithmList3" th:text="人工智能">人工智能</option>-->
-                                <!--<option th:value="algorithmList" th:text="所有算法">所有算法</option>-->
-                            <!--</select>-->
-                        <!--</th>-->
                         <th >算法描述</th>
                         <th >添加时间</th>
                         <th >算法版本</th>
@@ -186,38 +177,6 @@
         </div>
     </div>
 
-
-    <!--<div id="dataAggreDivide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-        <!--&lt;!&ndash; 弹出对话框 &ndash;&gt;-->
-        <!--<div class="modal-dialog">-->
-            <!--<div class="modal-content radius">-->
-                <!--<div class="modal-header">-->
-                    <!--<h3 class="modal-title">添加业务对象</h3>-->
-                    <!--<a class="close" data-dismiss="modal" aria-hidden="true">×</a>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<strong style="margin-left: 5%">对&nbsp;&nbsp;&nbsp;&nbsp;象：</strong><input type="text" placeholder="请输入业务对象" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectname">-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<strong style="margin-left: 5%">类&nbsp;&nbsp;&nbsp;&nbsp;型</strong><input type="text" placeholder="请输入对象类型" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objecttype">-->
-                <!--</div>-->
-                <!--<div class="modal-body" style="margin-left: 3.5vh;">属&nbsp;&nbsp;&nbsp;&nbsp;性：</strong><input type="text" placeholder="请输入对象属性" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectattribute">-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<strong style="margin-left: 5%">说&nbsp;&nbsp;&nbsp;&nbsp;明：</strong><input type="text" placeholder="请输入对象说明" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="objectdescribe">-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button class="btn btn-primary" data-dismiss="modal" onclick="object();">确定</button>-->
-                    <!--<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-
-
-
-
 </div>
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
@@ -302,13 +261,7 @@
         return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
     }
 </script>
-<!--<script>-->
-    <!--var select = document.querySelector('select');-->
-    <!--select.onchange = function(){-->
-        <!--// alert(this.value);-->
-        <!--window.location=this.value;-->
-    <!--}-->
-<!--</script>-->
+
 </body>
 </html>
 
