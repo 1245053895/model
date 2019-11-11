@@ -63,16 +63,30 @@ public class DataAggregationController {
     @RequestMapping("/saveModelName")
     public String saveModelName(@RequestBody JSONObject jsonParam){
         String questionId = jsonParam.get("questionid").toString();
-        int questionid = Integer.parseInt(questionId);
-        String modelname = jsonParam.get("modelname").toString();
-        String modeltime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString();
-        DatamodelName datamodelName =new DatamodelName();
-        datamodelName.setModelname(modelname);
-        datamodelName.setModeltime(modeltime);
-        datamodelName.setQuestionid(questionid);
-        System.out.println(modeltime);
-        String info=dataAggregationService.addDatamoddelName(datamodelName);
-        return info;
+        String s1= "1x";
+        if(s1.equals(questionId)){
+            Integer questionid = null;
+            String modelname = jsonParam.get("modelname").toString();
+            String modeltime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString();
+            DatamodelName datamodelName =new DatamodelName();
+            datamodelName.setModelname(modelname);
+            datamodelName.setModeltime(modeltime);
+            datamodelName.setQuestionid(questionid);
+            String info=dataAggregationService.addDatamoddelName(datamodelName);
+            return info;
+        }else {
+            Integer questionid = Integer.parseInt(questionId);
+//            System.out.println(questionid);
+            String modelname = jsonParam.get("modelname").toString();
+            String modeltime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString();
+            DatamodelName datamodelName =new DatamodelName();
+            datamodelName.setModelname(modelname);
+            datamodelName.setModeltime(modeltime);
+            datamodelName.setQuestionid(questionid);
+//            System.out.println(modeltime);
+            String info=dataAggregationService.addDatamoddelName(datamodelName);
+            return info;
+        }
     }
 
     @GetMapping(value = "/aggreShow/{jiid}")  //得到数据块中id

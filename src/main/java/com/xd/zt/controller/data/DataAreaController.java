@@ -10,6 +10,7 @@ import com.xd.zt.domain.business.flow.JsPlumbBlock;
 import com.xd.zt.domain.business.flow.JsPlumbConnect;
 import com.xd.zt.domain.data.DatamodelArea;
 import com.xd.zt.domain.data.DatamodelInfo;
+import com.xd.zt.domain.data.DatamodelName;
 import com.xd.zt.domain.data.DatamodelSource;
 import com.xd.zt.repository.data.FileRepository;
 import com.xd.zt.service.data.DataAreaService;
@@ -51,14 +52,21 @@ public class DataAreaController {
     /*数据区*/
     @RequestMapping("/datalareashow/{modelid}")
     public ModelAndView datalareashow(Model model, @PathVariable("modelid") Integer modelid) {
-        List<DatamodelArea> datamodelAreaList = sourceService.selectModelArea(modelid);
-        for (DatamodelArea datamodelArea:datamodelAreaList){
-            String linkName = dataAreaService.selectLinkName(datamodelArea.getAreaid()+"");
-            datamodelArea.setLinkname(linkName);
+        DatamodelName datamodelName=sourceService.getQuestionId(modelid);
+        if(datamodelName.getQuestionid()!=null){
+            List<DatamodelArea> datamodelAreaList = sourceService.selectModelArea(modelid);
+            for (DatamodelArea datamodelArea:datamodelAreaList){
+                String linkName = dataAreaService.selectLinkName(datamodelArea.getAreaid()+"");
+                datamodelArea.setLinkname(linkName);
+            }
+            model.addAttribute("datamodelAreaList", datamodelAreaList);
+            model.addAttribute("modelid", modelid);
+            return new ModelAndView("data/datalareashow", "modelModel", model);
+        }else {
+            model.addAttribute("modeid", modelid);
+            return new ModelAndView("data/newdDatalareashow", "modelModel", model);
         }
-        model.addAttribute("datamodelAreaList", datamodelAreaList);
-        model.addAttribute("modelid", modelid);
-        return new ModelAndView("data/datalareashow", "modelModel", model);
+
     }
 
 //    @RequestMapping("/dataarea/{modelid}")
@@ -133,6 +141,7 @@ public class DataAreaController {
         model.addAttribute("datamodelSourceList", datamodelSourceList);
         return new ModelAndView("data/datahanding", "Modelmodel", model);
     }
+
     @RequestMapping("/datahandingReview")
     @ResponseBody
     public List<String> selectCsvHead(@RequestBody String jsonData, Map<String, Object> map)  {
