@@ -31,7 +31,7 @@
 </script>
 <input type="hidden" th:value="${modelid}" id="modelid"/>
 <input type="hidden" value="" id="unitid"/>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span>输入单元信息 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 
 <!-- <select id="dataFuseSelect2" class="select" size="1"  name="dataBagSelect" style="color: #277de2;">
 
@@ -72,10 +72,8 @@
     <div class="panel-body" id="viewdescribe" ></div>
 </div>
 <!--<a id="nextstep1" value="" onclick="save()" ><input class="btn btn-success radius" type="button" style="position: absolute;right: 10%;margin-top:  5%;" value="保存" /></a>-->
-<button onclick="jumpDialog()"   class="btn btn-success radius" style="position: absolute;right: 10%;margin-top:  5%;" >保存
-</button><!--th:href="@{'/unitflowPage/'+ ${unitid}}"-->
-<!--<a id="nextstep">-->
-    <!--<input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  5%;" value="下一步" onclick="selectUnitid()"/>-->
+<button onclick="jumpDialog()"   class="btn btn-success radius" style="position: absolute;right: 10%;margin-top:  5%;" >保存</button>
+<a th:href="'/analyse/analyseFileManage/'+${modelid}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;margin-top:  5%;" value="下一步"/></a>
 <!--</a>-->
 </div>
 

@@ -175,13 +175,13 @@ public class FileController {
         String sourcename = fileInformation[0];
         String sourcepath = fileInformation[1];
         String sourcesize = fileInformation[2];
-        ShellUtil.execCmd("mv /zt/"+sourcepath+" /var/data/celery/input/\n","root","/zt/IA","10.101.201.173",22);
+        ShellUtil.execCmd("mv /zt/"+sourcepath+" /var/data/celery/input/data/\n","root","/zt/IA","10.101.201.173",22);
         System.out.println(filename + "----" + sourcepath + "----" + sourcesize);
         DatamodelSource datamodelSource = new DatamodelSource();
         datamodelSource.setModeid(modeid);
         datamodelSource.setSourcename(sourcename);
 
-        String sourcepath1 = "/var/data/celery/input/"+sourcename;
+        String sourcepath1 = "/var/data/celery/input/data/"+sourcename;
         datamodelSource.setSourcepath(sourcepath1);
 
         datamodelSource.setSourcesize(sourcesize);

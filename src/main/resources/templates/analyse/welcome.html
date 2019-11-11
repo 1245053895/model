@@ -27,15 +27,21 @@
 
             <!--上传按钮区域-->
             <div class="logo_area">
-                <div class="logo_content" style="margin-left: 20%;" >
+                <div class="logo_content" style="margin-left: 10%;" >
                     <a onclick="jumpDialog() ">
                         <img   class="logo_image" src="/image/Newbusiness.png"/>
-                        <p class="logo_text" ><strong>新建分析模型</strong></p>
+                        <p class="logo_text" ><strong>基于业务问题新建分析模型</strong></p>
                     </a>
                 </div>
 
+                <div class="logo_content" style="margin-left: 8%;" >
+                    <a onclick="jumpDialogtwo() ">
+                        <img   class="logo_image" src="/image/Newbusiness.png"/>
+                        <p class="logo_text" ><strong>直接新建分析模型</strong></p>
+                    </a>
+                </div>
 
-                <div class="logo_content" style="margin-left: 20%;">
+                <div class="logo_content" style="margin-left: 10%;">
                     <a th:href="@{/analyse/analyseManage}">
                         <img  class="logo_image" src="/image/Openbusiness.png"/>
                         <p class="logo_text" ><strong>打开分析模型</strong></p>
@@ -88,42 +94,24 @@
     </div>
 </div>
 
-<!--<div class="page-container">-->
-    <!--<div class="panel panel-default" style="height: 90vh;">-->
-        <!--<div class="panel-header">分析新建</div>-->
-
-        <!--<div class="panel-body">-->
-            <!--<div class="logo1" >-->
-               <!--<H3 style="margin-left: 35%;margin-top: -2%;">分析建模</H3>-->
-            <!--</div>-->
-            <!--<div id="selectBuild" style="height: 34vh;width: 68vh;border: 1px solid rgba(0,0,0,0.25);margin-top: 15%;margin-left: 29%;border-radius: 12px;">-->
-            <!--<div class="selectScene" style="height: 50%;">-->
-                <!--<div style="float: left; font-size: 14px;font-weight: 700; padding-left: 25%;padding-top: 9vh;">请选择业务</div>-->
-                <!--<div class="select-box" style=" width: 27%;margin-left: 10%;margin-top: 8vh;float: left;">-->
-                    <!--<select  class="select" size="1"  name="sceneSelect" id="selectbusinessModel" onchange="selectQuestion()" >-->
-                        <!--<option  value="选择" selected>请选择业务...</option>-->
-                        <!--<option  th:each="businessModelList:${businessModelList}" th:value="${businessModelList.businessid}"  th:text="${businessModelList.businessname}"  ></option>-->
-                    <!--</select>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="selectScene" style="height: 50%;">-->
-                <!--<div style=" float: left;font-size: 14px;font-weight: 700;margin-left: 25.3%;">请选择业务问题</div>-->
-                <!--<div class="select-box" style="width: 27%;margin-left: 48%; margin-top: -3vh;float: left;">-->
-                    <!--<select class="select" size="1"  name="selectQuestion" id="selectQuestion">-->
-                        <!--<option  value="选择" selected>请选择业务问题...</option>-->
-                    <!--</select>-->
-                <!--</div>-->
-                <!--<button   style="float: left;font-size: 15px;margin-left: 64%;margin-top: 6%;width: 25%;height: 35px; border-radius: 6px;background-color: #4c72bf;color: white;" onclick="showLeftList()" >-->
-                   <!--点击构建分析模型-->
-                <!--</button>-->
-            <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-<!--</div>-->
-
+<div id="newAnalyseModel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">新建分析模型</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                <strong style="margin-left: 5%">分析模型名称：</strong><input type="text" placeholder="请输入分析模型名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="saveName1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="createAnalyseModel();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
@@ -131,7 +119,37 @@
 </body>
 <script>
 
+    function jumpDialogtwo() {
+        $("#newAnalyseModel").modal("show");
+    }
 
+
+    function createAnalyseModel() {
+        if(document.getElementById('saveName1').value == ""){
+            $.Huimodalalert('请输入模型名称',2000);
+        }
+        else {
+            var data = {};//定义一个数组
+            data["name"] = document.getElementById('saveName1').value;
+            var dataToJson = JSON.stringify(data);
+            //question = questionid;
+            //alert(questionid);
+            $.ajax({
+                async: false,
+                dataType: "json",
+                contentType : 'application/json;charset=UTF-8',
+                type : "post",
+                data:dataToJson,
+                url : '/analyse/quesListshow',
+                success : function() {
+                    $.Huimodalalert('保存成功',1000);
+                    //传输成功后延时500ms跳转到模型列表
+                    parent.location.reload();
+                }
+            });
+
+        }
+    }
 
 
     function jumpDialog() {

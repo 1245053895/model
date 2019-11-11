@@ -66,7 +66,25 @@
 </head>
 <body>
 <input type="hidden" th:value="${flowprocessid}" id="flowprocessid"/>
-<nav class="breadcrumb" style="text-align: left"><i class="Hui-iconfont">&#xe67f;</i> 分析流程  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><span class="c-gray en"><i class="Hui-iconfont">&#xe68f;</i></span></a></nav>
+<nav class="breadcrumb" style="text-align: left"><i class="Hui-iconfont">&#xe67f;</i> 分析流程  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><span class="c-gray en"><i class="Hui-iconfont">&#xe68f;</i></span></a>
+
+    <a id="nextstep" >
+        <input class="btn btn-success radius" type="button" style="position: absolute;right: 6%;;margin-top:  0.2%;" value="数据管理" onclick="RefineNext()"/>
+    </a>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function RefineNext() {
+            var href="/analyse/analyseFileManage/"+[[${flowprocessid}]];
+            document.getElementById("nextstep").setAttribute("href",href)
+
+        }
+
+    </script>
+
+</nav>
+
+
 <div class="page-container" >
 <div id="root">
     <!--<div id="left">-->

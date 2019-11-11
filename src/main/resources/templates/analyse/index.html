@@ -105,7 +105,9 @@
                            data-title="分析模型" href="javascript:void(0)">分析模型</a></li>
                     <li><a th:id="'/analyse/analyzModelList/'+ ${questionList.modelid}" data-href="analyzModelList"
                            data-title="分析模型实例" href="javascript:void(0)">分析模型实例</a></li>
-                    <li><a data-href="taskList" data-title="分析处理任务" href="javascript:void(0)">分析处理任务</a></li>
+                    <li><a th:id="'/analyse/analyseResult/'+ ${questionList.modelid}" data-href="analyseResult"
+                           data-title="分析结果" href="javascript:void(0)">分析结果</a></li>
+                    <!--<li><a data-href="taskList" data-title="分析处理任务" href="javascript:void(0)">分析处理任务</a></li>-->
                 </ul>
             </dd>
         </dl>
@@ -169,6 +171,10 @@
                 var analyzModelList = "/analyse/analyzModelList/" + id.toString();
                 var analysemodel = document.getElementById(analyzModelList);
                 analysemodel.setAttribute('data-href', analyzModelList);
+
+                var analyseResult = "/analyse/analyseResult/" + id.toString();
+                var analyseResult1 = document.getElementById(analyseResult);
+                analyseResult1.setAttribute('data-href', analyseResult);
             }
         }
         // var businessid=document.getElementsByTagName("a");

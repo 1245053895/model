@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>文件预览</title>
+    <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span> 分析结果预览 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh;">
+        <div class="panel-header">
+            数据预览&nbsp;&nbsp;&nbsp;&nbsp;
+            数据名称：<a th:text="${fileName}"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            修改时间：<a th:text="${fileTime}"></a>
+            <input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"  onclick="javascript:history.back(-1);"/>
+        </div>
+        <div class="panel-body" id="dataTable" style="height: 82vh;overflow:auto">
+            <div style="width:100%">
+                <p id="content" class="text-c"></p>
+                <table class="table table-border table-bordered table-hover">
+                    <thead id="table_head" class="text-c"></thead>
+                    <tbody id="table_body" class="text-c"></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<script th:inline="javascript">
+
+    var filetype = [[${fileType}]];
+    var filename = [[${fileName}]];
+
+    //展示表前做格式判断，如果不是csv，前端暂时不让显示，保证业务逻辑上的通畅
+    function show(){
+        if(filetype == "csv"){
+            showTable();
+        }
+        else if((filetype=="jpg") || (filetype=="png") || (filetype=="gif") || (filetype=="bmp")){
+            document.getElementById("content").innerHTML = filename;
+            document.getElementById("image").src = "/images/"+filename ;
+        }
+        else{
+            document.getElementById("content").innerHTML = "文件预览暂只支持标准csv文件！"
+        }
+    }
+
+    //页面载入时加载表格
+    $(document).ready(function(){
+        show();
+    })
+
+    //表格展示
+    function showTable(){
+        var thread_content = document.getElementById("table_head").innerHTML+"";
+        if (thread_content == ""){
+            var result = [[${result}]];
+            var col_count = result[0].split(",").length;
+            if(result.length > 51){
+                var record_count = 51;
+            }
+            else{
+                var record_count = result.length;
+            }
+            // 展示表格各个变量的名称
+            var headers = result[0].split(",");
+            row=document.createElement("tr"); //创建行
+            for(var i=0; i< col_count; i++){
+                th1=document.createElement("th"); //创建单元格
+                th1.appendChild(document.createTextNode(headers[i])); //为单元格添加内容
+                row.appendChild(th1); //将单元格添加到行内
+            }
+            document.getElementById("table_head").append(row); //将行添加到<thread>中
+            for(var i=1; i < record_count; i++){
+                row=document.createElement("tr"); //创建行
+                for(var j=0; j< col_count; j++){
+                    td1=document.createElement("td"); //创建单元格
+                    td1.appendChild(document.createTextNode(result[i].split(",")[j])); //为单元格添加内容
+                    row.appendChild(td1); //将单元格添加到行内
+                }
+                document.getElementById("table_body").append(row); //将行添加到<thread>中
+            }
+        }
+
+    }
+</script>
+</body>
+</html>
+
