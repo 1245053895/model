@@ -20,9 +20,8 @@ public class ShiroConfig {
         // 过滤链定义，从上向下顺序执行，一般将/*放在最下边
         //设置拦截器 认证登录
         Map<String,String> filterMap=new LinkedHashMap<>();
-   /*     filterMap.put("/doLogin","anon");  *//*无需认证(登录)即可访问*/
-        //授权拦截器
-        filterMap.put("/model/designList","perms[user:kancha]"); /*必须得到权限的资源才可访问*/
+//        filterMap.put("/login","anon"); /* 无需认证(登录)即可访问*/
+        filterMap.put("/model/designList","perms[user:kancha]");
         filterMap.put("/model/constructList","perms[user:gongcheng]");
         filterMap.put("/model/maintainList","perms[user:yunying]");
         filterMap.put("/model/cityList","perms[user:zhihui]");
@@ -31,7 +30,7 @@ public class ShiroConfig {
       /*  filterMap.put("/logout","logout");*/
         /*filterMap.put("/*","authc");  *//* 必须认证才可访问*/
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
-       /* shiroFilterFactoryBean.setLoginUrl("/login");*/
+        shiroFilterFactoryBean.setLoginUrl("/login");
         filterMap.put("/login","authc");  /* 必须认证才可访问*/
         shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008");
         shiroFilterFactoryBean.setUnauthorizedUrl("/permission");

@@ -2,6 +2,8 @@ package com.xd.zt.controller.sso;
 
 import com.xd.zt.controller.constant.InitConst;
 import com.xd.zt.domain.analyse.Algorithm;
+import com.xd.zt.domain.userlog.SysUser;
+import com.xd.zt.mapper.userinfo.SysUserMenuMapper;
 import com.xd.zt.service.SsoLoginService;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.business.BusinessModelService;
@@ -9,6 +11,9 @@ import com.ym.sso.supervisor.common.bean.SsoLogin;
 import com.ym.sso.supervisor.common.bean.SsoTicket;
 import com.ym.sso.supervisor.common.constant.TicketResultEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -30,6 +35,8 @@ public class SsoController {
     private BusinessModelService businessModelService;
     @Autowired
     private AlgorithmDebugService algorithmDebugService;
+    @Autowired
+    private SysUserMenuMapper sysUserMenuMapper;
 
     private SsoLoginService ssoLoginService;
 
@@ -48,38 +55,49 @@ public class SsoController {
      */
 
     @RequestMapping("/login")
-    public ModelAndView login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
-        String sessionId = request.getRequestedSessionId();
-        /*       if (sessionId==null){}*/
-        String ssoSupServerUrl = "http://10.101.201.154:9092";
-        ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
-        ssoTicket = ssoLoginService.checkTicket(ssoTicket);
-        ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
-        if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
-            HttpSession session = request.getSession();
-            ssoTicket.setSessionKey(sessionKey);
-            ssoTicket = ssoLoginService.login(session, ssoTicket);
-            // ssoTicket.getResult()
-        }
+    public String login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
+        String idnumber=ssoTicket.getIdNumber();
+      SysUser sysUser= sysUserMenuMapper.getSysUserByIdNumber(idnumber);
+      String username=sysUser.getUsername();
+      String password=sysUser.getPassword();
+        Subject subject= SecurityUtils.getSubject();
+        UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+        subject.login(token);
+      /*  String idnumber=ssoTicket.getIdNumber();
+      UserInfo userInfo= userInfoMapper.selectUserInfoByIdNumber(idnumber);
+      if (userInfo!=null){*/
+          String sessionId = request.getRequestedSessionId();
+          /*       if (sessionId==null){}*/
+          String ssoSupServerUrl = "http://10.101.201.154:9092";
+          ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+          ssoTicket = ssoLoginService.checkTicket(ssoTicket);
+          ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+          if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
+              HttpSession session = request.getSession();
+              ssoTicket.setSessionKey(sessionKey);
+              ssoTicket = ssoLoginService.login(session, ssoTicket);
+              // ssoTicket.getResult()
+          }
+          String algorithmlabel = "行业通用";
+          List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+          String algorithmlabel1 = "行业专用";
+          List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
 
+          String algorithmlabe2 = "人工智能";
+          List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+          List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+          model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+          model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+          model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+          model.addAttribute("algorithmListAll", algorithmListAll);
+          model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+          return "zthtml/pages/ZT";
+    /*      return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);*/
+  /*    }else {
+          return "redirect:http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008";
+      }*/
 
-
-        String algorithmlabel = "行业通用";
-        List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-        String algorithmlabel1 = "行业专用";
-        List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
-        String algorithmlabe2 = "人工智能";
-        List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-        List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
-        model.addAttribute("algorithmListGeneral", algorithmListGeneral);
-        model.addAttribute("algorithmListSpecial", algorithmListSpecial);
-        model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
-        model.addAttribute("algorithmListAll", algorithmListAll);
-        model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-        return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
     }
-
 
     /**
      * 登出接口
@@ -152,7 +170,10 @@ public class SsoController {
 
 
 
-
+    @RequestMapping("/permission")
+    public String permission(){
+        return "userlog/permission";
+    }
 
 
 

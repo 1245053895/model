@@ -1,9 +1,6 @@
-<!--<!DOCTYPE HTML>
-<html xmlns:th="http://www.springframework.org/schema/data/jaxb">-->
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-	<head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns:shiro="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
 		<meta charset="utf-8">
 		<meta name="renderer" content="webkit|ie-comp|ie-stand">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -72,8 +69,6 @@
 		<img th:src="@{/image/threepoint.png}"/>
 	</div>
 		</header>
-
-
 		<aside class="Hui-aside" style="background-color: rgba(0,0,0,0)">
 			<div class="menu_dropdown bk_2">
 	<dl id="menu-tongji">
@@ -84,10 +79,21 @@
 		<dt ><i class="Hui-iconfont" >&#xe620;</i><font color="white" size="3" >模型库 </font><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 		<dd>
 			<ul>
-				<li><a   data-href="designList" data-title="勘察设计" href="javascript:void(0)" >勘察设计</a></li>
-				<li><a   data-href="constructList" data-title="工程施工" href="javascript:void(0)" >工程施工</a></li>
-				<li><a   data-href="maintainList" data-title="运营维护" href="javascript:void(0)" >运营维护</a></li>
-				<li><a   data-href="cityList" data-title="智慧城市" href="javascript:void(0)" >智慧城市</a></li>
+				<shiro:hasPermission name="user:kancha">
+					<li><a   data-href="/model/designList" data-title="勘察设计" href="javascript:void(0)" >勘察设计</a></li>
+				</shiro:hasPermission>
+
+				<shiro:hasPermission name="user:gongcheng">
+					<li><a   data-href="/model/constructList" data-title="工程施工" href="javascript:void(0)" >工程施工</a></li>
+				</shiro:hasPermission>
+
+				<shiro:hasPermission name="user:yunying">
+					<li><a   data-href="/model/maintainList" data-title="运营维护" href="javascript:void(0)" >运营维护</a></li>
+				</shiro:hasPermission>
+
+				<shiro:hasPermission name="user:zhihui">
+					<li><a   data-href="/model/cityList" data-title="智慧城市" href="javascript:void(0)" >智慧城市</a></li>
+				</shiro:hasPermission>
 			</ul>
 		</dd>
 	</dl>
