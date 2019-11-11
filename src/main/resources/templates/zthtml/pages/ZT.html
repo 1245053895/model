@@ -392,10 +392,15 @@
 </div>
 
 </body>
-<script>
+<script type="text/javascript" th:inline="javascript">
     window.onload = function(){
         var loading = document.getElementById("loading");
         loading.style.display="none";
+
+        var token = {
+            "token":[[${token}]]
+        };
+        localStorage.setItem("easyweb",JSON.stringify(token));
     }
 </script>
 <script>

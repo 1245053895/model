@@ -1,5 +1,7 @@
 package com.xd.zt.controller.sso;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.controller.constant.InitConst;
 import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.userlog.SysUser;
@@ -7,6 +9,8 @@ import com.xd.zt.mapper.userinfo.SysUserMenuMapper;
 import com.xd.zt.service.SsoLoginService;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.business.BusinessModelService;
+import com.xd.zt.util.analyse.HttpCientPost;
+import com.xd.zt.util.analyse.HttpCientPostWithHeader;
 import com.ym.sso.supervisor.common.bean.SsoLogin;
 import com.ym.sso.supervisor.common.bean.SsoTicket;
 import com.ym.sso.supervisor.common.constant.TicketResultEnum;
@@ -55,9 +59,10 @@ public class SsoController {
      */
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
+    public ModelAndView login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
         String idnumber=ssoTicket.getIdNumber();
       SysUser sysUser= sysUserMenuMapper.getSysUserByIdNumber(idnumber);
+
       String username=sysUser.getUsername();
       String password=sysUser.getPassword();
         Subject subject= SecurityUtils.getSubject();
@@ -78,7 +83,21 @@ public class SsoController {
               ssoTicket = ssoLoginService.login(session, ssoTicket);
               // ssoTicket.getResult()
           }
-          String algorithmlabel = "行业通用";
+          String[] HeaderName = new String[]{"Content-Type","Authorization"};
+        String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8","Basic d2ViQXBwOndlYkFwcA=="};
+        try {
+            String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token","username="+username+"&password="+password,HeaderName,HeaderValue);
+            JSONObject resultJson = JSON.parseObject(result);
+            System.out.printf(resultJson.getString("datas"));
+            if (resultJson.getInteger("resp_code") == 0){
+
+                model.addAttribute("token",resultJson.getString("datas"));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        String algorithmlabel = "行业通用";
           List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
           String algorithmlabel1 = "行业专用";
           List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
@@ -91,8 +110,8 @@ public class SsoController {
           model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
           model.addAttribute("algorithmListAll", algorithmListAll);
           model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-          return "zthtml/pages/ZT";
-    /*      return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);*/
+//          return new ModelAndView("zthtml/pages/ZT","");
+          return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
   /*    }else {
           return "redirect:http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008";
       }*/
