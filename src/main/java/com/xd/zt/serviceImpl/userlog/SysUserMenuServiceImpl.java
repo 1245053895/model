@@ -9,7 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * Author:ykr
+ *
+ * Date:2019/11/11
+ *
+ * 授权方法
+ *
+ * @param
+ */
 @Service
 public class SysUserMenuServiceImpl implements SysUserMenuService {
     @Autowired
