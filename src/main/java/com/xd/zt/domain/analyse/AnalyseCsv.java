@@ -1,6 +1,14 @@
 package com.xd.zt.domain.analyse;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity   //该注解自动将实体类生成表
 public class AnalyseCsv {
+    @Id//主键
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//自增策略
     Integer id;
     String csvname;
     String csvpath;

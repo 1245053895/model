@@ -1,5 +1,4 @@
 package com.xd.zt.controller.sso;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.controller.constant.InitConst;
@@ -9,7 +8,6 @@ import com.xd.zt.mapper.userinfo.SysUserMenuMapper;
 import com.xd.zt.service.SsoLoginService;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.business.BusinessModelService;
-import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpCientPostWithHeader;
 import com.ym.sso.supervisor.common.bean.SsoLogin;
 import com.ym.sso.supervisor.common.bean.SsoTicket;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -68,7 +65,7 @@ public class SsoController {
         Subject subject= SecurityUtils.getSubject();
         UsernamePasswordToken token=new UsernamePasswordToken(username,password);
         subject.login(token);
-      /*  String idnumber=ssoTicket.getIdNumber();
+      /*  String idnumber=ssoTicket.getIdNumber();zx
       UserInfo userInfo= userInfoMapper.selectUserInfoByIdNumber(idnumber);
       if (userInfo!=null){*/
           String sessionId = request.getRequestedSessionId();
@@ -86,7 +83,7 @@ public class SsoController {
           String[] HeaderName = new String[]{"Content-Type","Authorization"};
         String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8","Basic d2ViQXBwOndlYkFwcA=="};
         try {
-            String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token","username="+username+"&password="+password,HeaderName,HeaderValue);
+            String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token","username="+"admin"+"&password="+"admin",HeaderName,HeaderValue);
             JSONObject resultJson = JSON.parseObject(result);
             System.out.printf(resultJson.getString("datas"));
             if (resultJson.getInteger("resp_code") == 0){
