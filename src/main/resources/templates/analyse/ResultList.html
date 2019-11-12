@@ -53,6 +53,9 @@
                                 <a  th:href="'/analyse/dataReview/'+${analyseCsvList.id}" >
                                     <input th:id="${analyseCsvList.id}"  class="btn btn-primary size-MINI radius" type="button" value="查看" >
                                 </a>
+                                <a th:href="@{'/analyse/fileResultDown/'+ ${analyseCsvList.id}}">
+                                    <input class="btn btn-primary size-MINI radius" type="button" value="下载">
+                                </a>
                                 <!--<a   >-->
                                     <!--<input th:id="${analyticsTaskList.taskId}+','+${analyticsTaskList.modelInstanceId}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >-->
                                 <!--</a>-->

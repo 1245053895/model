@@ -15,7 +15,13 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-
+/**
+ * Author:ykr
+ *
+ * Date:2019/11/11
+ *
+ * Description:认证授权
+ */
 public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private SysUserMenuService sysUserMenuService;

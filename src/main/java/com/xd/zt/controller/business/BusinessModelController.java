@@ -229,10 +229,17 @@ public class BusinessModelController {
         List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
         BusinessQuestion businessQuestion = businessQuestionList.get(0);
         String path=businessQuestion.getPicture();
-        File file=new File(path.trim());
-        String pictureName=file.getName();
-       String picture = "/uploadImage/"+pictureName;
-        businessQuestion.setPicture(picture);
+
+        try {
+            File file = new File(path.trim());
+            String pictureName = file.getName();
+            String picture = "/uploadImage/" + pictureName;
+            businessQuestion.setPicture(picture);
+        }
+        catch (Exception e){
+
+        }
+
         model.addAttribute("businessQuestion",businessQuestion);
         String scenename = modelCreateService.selectnamebysceneid(questionid);
 //        String sceneblock = modelCreateService.selectsceneblockbysceneid(questionid);

@@ -3,6 +3,7 @@ package com.xd.zt.controller.analyse;
 import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.data.DatamodelSource;
+import com.xd.zt.repository.analyse.AnalyseResultRepository;
 import com.xd.zt.repository.data.FileRepository;
 import com.xd.zt.service.analyse.AnalyseResultService;
 import com.xd.zt.service.analyse.AnalyseService;
@@ -16,7 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,6 +31,8 @@ public class AnalyseResultController {
     private AnalyseResultService analyseResultService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private AnalyseResultRepository analyseResultRepository;
 
     @RequestMapping("/analyseResult/{id}")
     public ModelAndView analyseResult(Model model, @PathVariable("id") Integer analysemodelid){
@@ -135,5 +139,39 @@ public class AnalyseResultController {
 
         map.put("code",1);
         return map;
+    }
+
+    @GetMapping("/fileResultDown/{id}")
+    public String fileDown(HttpServletResponse response, @PathVariable("id") Integer id) {
+       AnalyseCsv analyseCsv= analyseResultRepository.findById(id).orElse(null);
+      String csvpath=analyseCsv.getCsvpath();
+        System.out.println(csvpath);
+        try {
+            // path是指欲下载的文件的路径。
+            File file = new File(csvpath);
+            // 取得文件名。
+            String filename = file.getName();
+            // 取得文件的后缀名。
+            String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
+            // 以流的形式下载文件。
+            InputStream fis = new BufferedInputStream(new FileInputStream(csvpath));
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            fis.close();
+            // 清空response
+            response.reset();
+            // 设置response的Header
+            response.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes()));
+            response.addHeader("Content-Length", "" + file.length());
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            toClient.write(buffer);
+            toClient.flush();
+            toClient.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
     }
 }

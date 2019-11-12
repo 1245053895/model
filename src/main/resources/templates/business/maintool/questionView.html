@@ -111,7 +111,8 @@ alert(sceneblock);
     <div class="panel panel-default" style=" width: 50%;height: 67vh;overflow-x: hidden;  overflow-y: auto; margin-top: -67vh; margin-left: 49%;">
         <div class="panel-header" th:text="${businessQuestion.questioname}+ '   问题可视化描述：'"></div>
         <div id="headimg">   <!--image src="/image/question.png"-->
-            <img th:src="${businessQuestion.picture}" style="width: 100%;height: 100%;margin-left: 0vh;margin-top: 0vh;">
+            <div th:if="${businessQuestion.picture}==null" >暂无可视化描述</div>
+            <img th:if="${businessQuestion.picture}!=null" th:src="${businessQuestion.picture}" style="width: 100%;height: 100%;margin-left: 0vh;margin-top: 0vh;">
         </div>
     </div>
     </div>
