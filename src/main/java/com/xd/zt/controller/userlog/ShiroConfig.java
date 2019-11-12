@@ -21,10 +21,10 @@ public class ShiroConfig {
         //设置拦截器 认证登录
         Map<String,String> filterMap=new LinkedHashMap<>();
 //        filterMap.put("/login","anon"); /* 无需认证(登录)即可访问*/
-        filterMap.put("/model/designList","perms[user:kancha]");
+        /*filterMap.put("/model/designList","perms[user:kancha]");
         filterMap.put("/model/constructList","perms[user:gongcheng]");
         filterMap.put("/model/maintainList","perms[user:yunying]");
-        filterMap.put("/model/cityList","perms[user:zhihui]");
+        filterMap.put("/model/cityList","perms[user:zhihui]");*/
 
         //配置退出过滤器
       /*  filterMap.put("/logout","logout");*/
