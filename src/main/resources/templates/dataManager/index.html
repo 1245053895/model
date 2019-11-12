@@ -63,8 +63,9 @@
 							<li><a th:id="'/analyse/analyzModelCreate/'+ ${questionList.modelid}" data-href="analyzModelCreate" data-title="非结构化数据" href="javascript:void(0)" >非结构化数据</a></li>
 						</ul>-->
 						<ul>
-							<li><a data-href="structure" data-title="结构化数据" href="javascript:void(0)" >结构化数据</a></li>
-							<li><a data-href="unstructure" data-title="非结构化数据" href="javascript:void(0)" >非结构化数据</a></li>
+							<li><a data-href="structure" data-title="接入数据" href="javascript:void(0)" >接入数据</a></li>
+							<li><a data-href="unstructure" data-title="内部数据" href="javascript:void(0)" >过程数据</a></li>
+							<li><a  onclick= "window.location.href='http://localhost:7474/browser/';">知识图谱</a></li>
 
 						</ul>
 					</dd>

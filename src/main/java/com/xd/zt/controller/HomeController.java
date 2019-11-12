@@ -1,6 +1,7 @@
 package com.xd.zt.controller;
 
 import com.xd.zt.domain.analyse.Algorithm;
+import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.business.BusinessModelService;
 import com.xd.zt.service.model.ModelService;
@@ -90,6 +91,16 @@ public class HomeController {
 
         List<Algorithm> algorithmListAll= algorithmDebugService.selectAlgorithm();
 
+
+
+        List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+        model.addAttribute("programmeList",programmeList);
+        List<Programme> programmeList1= modelService.selectAllModelByType("工程施工");
+        model.addAttribute("programmeList1",programmeList1);
+        List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+        model.addAttribute("programmeList2",programmeList2);
+        List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+        model.addAttribute("programmeList3",programmeList3);
 
         model.addAttribute("algorithmListGeneral",algorithmListGeneral);
         model.addAttribute("algorithmListSpecial",algorithmListSpecial);
