@@ -153,14 +153,17 @@
                             data: JSON.stringify(exampleid),
                             url: '/analyse/exampleRun',
                             success: function (data) {
-                                    if(data.resp_msg == "模型分析实例任务添加成功"){
+                                    if(data.success == true){
                                         $.Huimodalalert(data.resp_msg, 1000);
+                                        // alert(data.datas);
+                                        if (data.datas != null) {
+                                            document.getElementById("showData").innerText = (data.datas).toString();
+                                            $("#modal-demo").modal("show");
+                                            $.Huimodalalert("成功返回结果", 1000);
+                                        }
                                     }
                                     else {
-                                        // alert("结果数据为："+data.resultData) ;
-                                        document.getElementById("showData").innerText = (data.datas).toString();
-                                        $("#modal-demo").modal("show");
-                                        $.Huimodalalert("成功返回结果", 1000);
+                                        $.Huimodalalert('任务运行失败', 1000);
                                     }
                             },
                             error:function (){

@@ -103,8 +103,12 @@ public class AnalyseResultController {
         String sourcename = fileInformation[0];
         String sourcepath = fileInformation[1];
         String sourcesize = fileInformation[2];
+        try{
         ShellUtil.execCmd("mv /zt/"+sourcepath+" /var/data/celery/input/analyse/\n","root","/zt/IA","10.101.201.173",22);
-        System.out.println(filename + "----" + sourcepath + "----" + sourcesize);
+        System.out.println(filename + "----" + sourcepath + "----" + sourcesize);}
+        catch (Exception e){
+            e.printStackTrace();
+        }
         AnalyseSource analyseSource = new AnalyseSource();
         analyseSource.setAnalysemodelid(modelid);
         analyseSource.setAnalysesourcename(sourcename);

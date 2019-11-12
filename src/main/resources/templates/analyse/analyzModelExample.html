@@ -49,6 +49,7 @@
 			<!--<input class="btn btn-primary radius" type="button" style="position: absolute;margin-left: 1%" th:each="datamodelInfoList:${datamodelInfoList}" th:value="${datamodelInfoList.dataresultname}" th:id="${datamodelInfoList.dataaddr}" onclick="chooseData(this.id)" />-->
 			<input th:each="datamodelInfoList:${datamodelInfoList}" class="btn btn-success radius" type="button" style="background-color: #0e90d2;margin-left: 2%;margin-top: 2%;"th:value="${datamodelInfoList.dataresultname}" th:id ="${datamodelInfoList.dataaddr}" onclick="selectData(this.id)" />
 			<input th:each="analyseCsvList:${analyseCsvList}" class="btn btn-success radius" type="button" style="background-color: #0e90d2;margin-left: 2%;margin-top: 2%;"th:value="${analyseCsvList.csvname}" th:id ="${analyseCsvList.csvpath}" onclick="selectData(this.id)" />
+			<input th:each="analyseSourceList:${analyseSourceList}" class="btn btn-success radius" type="button" style="background-color: #0e90d2;margin-left: 2%;margin-top: 2%;"th:value="${analyseSourceList.analysesourcename}" th:id ="${analyseSourceList.analysesourcepath}" onclick="selectData(this.id)" />
 		</div>
 	</div>
 
@@ -328,7 +329,7 @@ function switchParam_form(value) {
                 paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
             }
             else {
-                paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+param2+".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+param2+"_for_"+value+".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
 
             }
         }

@@ -187,9 +187,10 @@ public class AnalyseController {
                 }
             }
         }
+        List<AnalyseSource> analyseSourceList = analyseResultService.selectAnalyseSource(analysemodelid);
         model.addAttribute("datamodelInfoList",datamodelInfoList);
         model.addAttribute("analyseCsvList",analyseCsvList);
-
+        model.addAttribute("analyseSourceList",analyseSourceList);
         return new ModelAndView("analyse/analyzModelExample","Modelmodel",model);
     }
 
@@ -330,7 +331,7 @@ public class AnalyseController {
                     String[] DirectoryList = Directory.split("\n");
 
                     List<AnalyseCsv> analyseCsvList = analyseService.selectCsvExit(Integer.parseInt(modelinstanceid));
-                    if (analyseCsvList == null) {
+                    if (analyseCsvList.size() == 0) {
                         for (int i = 0; i < DirectoryList.length; i++) {
                             String[] FileDirectory = DirectoryList[i].split("/");
                             String fileName = FileDirectory[FileDirectory.length - 1];
@@ -356,7 +357,7 @@ public class AnalyseController {
                     return resultjson;
             }
             else {
-                return null;
+                return resultjson;
             }
 
         }catch (Exception e){

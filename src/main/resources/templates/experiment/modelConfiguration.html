@@ -45,6 +45,7 @@
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
     <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;">
         <div class="panel-header">算法库</div>
+        <div style="height: 80%;overflow-x:hidden;overflow-y:auto">
         <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"
                onclick="add(this.value)"/>
         <input id="algorithmName" th:each="typeAlgorithms:${typeAlgorithms}" class="btn btn-success radius" type="button"
@@ -53,6 +54,7 @@
 
         <input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"
                onclick="add(this.value)"/>
+        </div>
     </div>
     <div class="panel panel-default"
          style="width: 35%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
@@ -63,7 +65,9 @@
         </div>
         <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 34%;margin-top:  -2.1%;"
                   value="保存" onclick="jumpDialog()"/></a>
-        <div class="panel-body" id="model_content" style="border: 0px solid red;height: 34vh;"></div>
+        <div class="panel-body" id="model_content" style="border: 0px solid red;height: 34vh;">
+
+        </div>
     </div>
 
     <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 0%;">
@@ -95,7 +99,7 @@
     <!--<!-输入路径&ndash;&gt;-->
     <div class="panel panel-default" style="width: 35%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
         <div class="panel-header">参数配置</div>
-        <div class="panel-body" id="dataContent_area" style="height: 34vh">
+        <div class="panel-body" id="dataContent_area" style="height: 80%;overflow-x:hidden;overflow-y:auto">
 
 
         </div>
@@ -430,7 +434,7 @@
                         paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
                     }
                     else {
-                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+param2+".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                        paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2+ "' value='"+param2+"_for_"+ value +".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
 
                     }
                 }

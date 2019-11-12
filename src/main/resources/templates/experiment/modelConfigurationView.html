@@ -78,7 +78,7 @@
     <!--<!-输入路径&ndash;&gt;-->
     <div class="panel panel-default" style="width: 50%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
         <div class="panel-header">参数配置</div>
-        <div class="panel-body" id="dataContent_area" style="height: 34vh">
+        <div class="panel-body" id="dataContent_area" style="height: 34vh;overflow-x:hidden;overflow-y:auto">
         </div>
     </div>
 
@@ -212,7 +212,7 @@
         for(var i= 0 ;i<values.length;i++){
             var value = values[i];
             if (value != '开始' && value != '结束') {
-                if (inputPath != null && inputPath != "") {
+                if (inputPath != null && inputPath != "{}") {
                     var paramsArr = new Array();
                     paramsArr.push("<div id='a" + value + "' style='display: block' class='paramsdiv'><form method='post' class='" + value + "input' >");
                     // var algorithmParams = inputPath;
@@ -226,7 +226,7 @@
                     $("#dataConfig_area").append(paramsArr.join("\n"));
                 }
 
-                if (content!= null && content != "") {
+                if (content!= null && content != "{}") {
                     var paramsArr = new Array();
                     paramsArr.push("<div id='b" + value + "' style='display: block' class='paramsdiv'><form method='post' class='" + value + "content' >");
                     // var algorithmParams =content;
@@ -251,7 +251,7 @@
     <div class="modal-dialog">
         <div class="modal-content radius">
             <div class="modal-header">
-                <h3 class="modal-title">算法上传</h3>
+                <h3 class="modal-title">模型保存</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             </div>
             <div class="modal-body">

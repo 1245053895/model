@@ -60,14 +60,14 @@ public class ModelController {
     public ModelAndView maintainList(Model model){
         List<Programme> programmeList = modelService.selectAllModelByType("运营维护");
         model.addAttribute("programmeList",programmeList);
-        return new ModelAndView("model/maintainList","Modelmodel",model);
+        return new ModelAndView("model/modelList","Modelmodel",model);
     }
 
     @RequestMapping("/cityList")
     public ModelAndView cityList(Model model){
         List<Programme> programmeList = modelService.selectAllModelByType("智慧城市");
         model.addAttribute("programmeList",programmeList);
-        return new ModelAndView("model/cityList","Modelmodel",model);
+        return new ModelAndView("model/modelList","Modelmodel",model);
     }
 
     @RequestMapping("/modelView/{programmeid}")

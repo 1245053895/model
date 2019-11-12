@@ -57,7 +57,7 @@ public class AnalyseFlowList {
 
         AnalyseFlowprocess analyseFlowprocess = analyseModelService.selectProcessId(flowprocessid);
         Integer Id = analyseFlowprocess.getProcessid();
-
+        Integer modelid = analyseFlowprocess.getModelid();
 
         List<JsPlumbBlock> blocks = flowService.getBlocks(Id);
         List<JsPlumbConnect> connects = flowService.getConnects(Id);
@@ -66,7 +66,7 @@ public class AnalyseFlowList {
         model.addAttribute("myblocks", blocks);
         model.addAttribute("myconnects", connects);
         model.addAttribute("analyseFlowprocess",analyseFlowprocess);
-
+        model.addAttribute("modelid",modelid);
         return modelAndView1;
     }
 //    @RequestMapping("/reviseUnit/{processid}")

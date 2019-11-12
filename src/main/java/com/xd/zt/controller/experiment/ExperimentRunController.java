@@ -50,7 +50,7 @@ public class ExperimentRunController {
             String result = HttpCientPost.restPost("http://10.101.201.174:8000/tasks/", jsonString);
             System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
-            if (((JSONObject) resultjson).getBoolean("success")) {
+            if (((JSONObject) resultjson).getBoolean("success")==true) {
                 ExperimentConfig experimentConfig = experimentRunService.selectConfig(experimentconfigid);
                 Integer experimentid = experimentConfig.getExperimentid();
                 String taskId = ((JSONObject) resultjson).getString("taskId");
@@ -63,7 +63,7 @@ public class ExperimentRunController {
                 else {
                     String[] DirectoryList = Directory.split("\n");
                     List<ExperimentResult> experimentResultList = experimentRunService.selectResult(Integer.parseInt(experimentconfigid));
-                    if (experimentResultList == null) {
+                    if (experimentResultList.size() == 0) {
                         for (int i = 0; i < DirectoryList.length; i++) {
                             String[] FileDirectory = DirectoryList[i].split("/");
                             String fileName = FileDirectory[FileDirectory.length - 1];
