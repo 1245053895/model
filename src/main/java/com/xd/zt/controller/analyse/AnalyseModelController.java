@@ -69,11 +69,21 @@ public class AnalyseModelController {
     @RequestMapping("/quesListshow")
     @ResponseBody
     public AnalyseModel analyseModel(@RequestBody AnalyseModel analyseModel) {
-        int questionid = analyseModel.getQuestionid();
-        String name = analyseModel.getName();
-        String questioname=  analyseModelService.selectQuestionName(questionid);
-         analyseModelService.insertAnalyseModel(questionid,questioname,name);
-        return analyseModel;
+        if (analyseModel.getQuestionid() != null){
+            int questionid = analyseModel.getQuestionid();
+            String name = analyseModel.getName();
+            String questioname=  analyseModelService.selectQuestionName(questionid);
+            analyseModelService.insertAnalyseModel(questionid,questioname,name);
+            System.out.printf("基于业务问题新建");
+            return analyseModel;
+        }
+        else {
+            String name = analyseModel.getName();
+            analyseModelService.insertAnalyseModel(null,null,name);
+            System.out.printf("直接新建");
+            return analyseModel;
+        }
+
     }
 
 
@@ -153,33 +163,39 @@ public class AnalyseModelController {
         model.addAttribute("modelid",modelid);
 
         AnalyseModel analyseModel = analyseModelService.selectquestionid(modelid);
-        Integer questionid = analyseModel.getQuestionid();
-        List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
-        BusinessQuestion businessQuestion = businessQuestionList.get(0);
-        String path=businessQuestion.getPicture();
-        File file=new File(path.trim());
-        String pictureName=file.getName();
-        String picture = "/uploadImage/"+pictureName;
-        businessQuestion.setPicture(picture);
-        model.addAttribute("businessQuestion",businessQuestion);
 
-        String scenename = modelCreateService.selectnamebysceneid(questionid);
+        if (analyseModel.getQuestioname() != null) {
+            Integer questionid = analyseModel.getQuestionid();
+            List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
+            BusinessQuestion businessQuestion = businessQuestionList.get(0);
+            String path = businessQuestion.getPicture();
+            File file = new File(path.trim());
+            String pictureName = file.getName();
+            String picture = "/uploadImage/" + pictureName;
+            businessQuestion.setPicture(picture);
+            model.addAttribute("businessQuestion", businessQuestion);
+
+            String scenename = modelCreateService.selectnamebysceneid(questionid);
 //        String sceneblock = modelCreateService.selectsceneblockbysceneid(questionid);
-        String questionblock = modelCreateService.selectquestionblock(questionid);
-        model.addAttribute("scenename",scenename);
+            String questionblock = modelCreateService.selectquestionblock(questionid);
+            model.addAttribute("scenename", scenename);
 //        model.addAttribute("sceneblock",sceneblock);
-        model.addAttribute("questionblock",questionblock);
-        model.addAttribute("questionid",questionid);
+            model.addAttribute("questionblock", questionblock);
+            model.addAttribute("questionid", questionid);
 //        model.addAttribute("businessQuestionList",businessQuestionList);
 
-        ModelAndView modelAndView1 = new ModelAndView("analyse/questionView");
-        Integer sceneprocessid = modelCreateService.reviewsceneprocess(businessQuestion.getSceneid());
-        model.addAttribute("sceneprocessid",sceneprocessid);
-        List<JsPlumbBlock> blocks = flowService.getBlocks(sceneprocessid);
-        List<JsPlumbConnect> connects=flowService.getConnects(sceneprocessid);
-        modelAndView1.addObject("myblocks",blocks);
-        modelAndView1.addObject("myconnects",connects);
-        return modelAndView1;
+            ModelAndView modelAndView1 = new ModelAndView("analyse/questionView");
+            Integer sceneprocessid = modelCreateService.reviewsceneprocess(businessQuestion.getSceneid());
+            model.addAttribute("sceneprocessid", sceneprocessid);
+            List<JsPlumbBlock> blocks = flowService.getBlocks(sceneprocessid);
+            List<JsPlumbConnect> connects = flowService.getConnects(sceneprocessid);
+            modelAndView1.addObject("myblocks", blocks);
+            modelAndView1.addObject("myconnects", connects);
+            return modelAndView1;
+        }
+        else {
+            return new ModelAndView("analyse/newflowPage","model",model);
+        }
     }
 
 

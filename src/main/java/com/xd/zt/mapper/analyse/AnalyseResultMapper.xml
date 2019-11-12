@@ -12,4 +12,24 @@
     <update id="updateAnalyseResult" parameterType="AnalyseResult">
         update analyse_result set modelPathname = #{modelPathname},modelPath = #{modelPath} where instanceid = #{instanceid}
     </update>
+    <select id="selectAnalyseCsv" parameterType="Integer" resultType="AnalyseCsv">
+        select * from analyse_csv where modelinstanceid = #{modelinstanceid}
+    </select>
+    <select id="selectCsvByid" parameterType="Integer" resultType="AnalyseCsv">
+        select * from analyse_csv where id = #{id}
+    </select>
+
+    <select id="selectAnalyseSource" parameterType="Integer" resultType="AnalyseSource">
+        select * from analyse_source where analysemodelid = #{analysemodelid}
+    </select>
+    <insert id="saveAnalyseSource" parameterType="AnalyseSource">
+        insert into analyse_source (analyse_source.analysesourcename,analyse_source.analysesourcetime,analyse_source.analysesourcepath,analyse_source.analysesourcesize,analyse_source.analysemodelid)
+        values (#{analysesourcename},#{analysesourcetime},#{analysesourcepath},#{analysesourcesize},#{analysemodelid})
+    </insert>
+    <select id="selectAnalyseSourceById" parameterType="Integer" resultType="AnalyseSource">
+        select * from analyse_source where analysesourceid = #{analysesourceid}
+    </select>
+    <delete id="deleteAnalyseSource" parameterType="Integer">
+        delete from analyse_source where analysesourceid = #{analysesourceid}
+    </delete>
 </mapper>

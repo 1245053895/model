@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<!--<input type="hidden" th:value="${modelid}" id="modelid"/>-->
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分析建模 <span class="c-gray en">&gt;</span> 分析结果列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" style="height: 90vh">
+        <div class="panel-header">分析结果列表
+            <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
+        </div>
+        <div class="panel-body">
+            <div >
+                <!--实现模糊搜索-->
+                <!--<form method="get" action="#" th:action="@{/analyse/exampleListSearch}">-->
+                <!--<input type="text" placeholder="请输入关键词" class="input-text ac_input" name="name" value=""-->
+                       <!--id="search_text" autocomplete="off" style="width:30%">-->
+                <!--<button type="submit" class="btn btn-default" id="search_button">-->
+                    <!--搜索-->
+                <!--</button>-->
+                <!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${analyseFlowList.size()}"></a>&nbsp;&nbsp;个分析模型实例】&ndash;&gt;-->
+            <!--</form>-->
+
+            </div>
+            <div style="margin-top: 1% ;height: 77vh;overflow-x:hidden;overflow-y:auto;">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >分析实例ID</th>
+                        <th >分析结果名称</th>
+                        <th >操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="text-c" th:if="${analyseCsvList.size()} eq 0">
+                            <td colspan="6">当前没有分析结果</td>
+                        </tr>
+                        <tr class="text-c"  th:each="analyseCsvList:${analyseCsvList}">
+                            <td th:text="${analyseCsvList.modelinstanceid}"></td>
+                            <td th:text="${analyseCsvList.csvname}"></td>
+                            <td>
+                                <a  th:href="'/analyse/dataReview/'+${analyseCsvList.id}" >
+                                    <input th:id="${analyseCsvList.id}"  class="btn btn-primary size-MINI radius" type="button" value="查看" >
+                                </a>
+                                <!--<a   >-->
+                                    <!--<input th:id="${analyticsTaskList.taskId}+','+${analyticsTaskList.modelInstanceId}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >-->
+                                <!--</a>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{lib/laypage/1.2/laypage.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    // window.onload=function() {
+    //     var oLis = document.getElementsByTagName("input");
+    //     for (var index = 0; index < oLis.length; index++) {
+    //         oLis[index].onclick = function () {
+    //             var ids = this.id;
+    //             var id = ids.split(',');
+    //             var taskid = id[0];
+    //             var modelinstanceid = id[1];
+    //             var value = this.value;
+    //             if (value == "删除") {
+    //                 if (confirm("确定要删除此任务？")) {
+    //                     var taskId = {
+    //                         "taskId": taskid,
+    //                         "modelInstanceId":modelinstanceid
+    //                     };
+    //                     $.ajax({
+    //                         async: false,
+    //                         type: "post",
+    //                         dataType: "json",
+    //                         contentType: 'application/json;charset=UTF-8',
+    //                         data: JSON.stringify(taskId),
+    //                         url: '/analyse/taskDelete',
+    //                         success: function () {
+    //                             $.Huimodalalert('删除成功', 1000);
+    //                           // location.reload(true);
+    //                         }
+    //                     });
+    //                     window.setTimeout(window.location.reload(true));
+    //                 }
+    //                 else {
+    //                 }
+    //             }
+    //             if (value == "下载") {
+    //                 if (confirm("确定下载？")) {
+    //                     var taskId = {
+    //                         "taskId": taskid
+    //                     };
+    //                     $.ajax({
+    //                         async: false,
+    //                         type: "post",
+    //                         dataType: "json",
+    //                         contentType: 'application/json;charset=UTF-8',
+    //                         data: JSON.stringify(taskId),
+    //                         url: '/analyse/downloadLinuxFile',
+    //                         success: function () {
+    //                                 $.Huimodalalert('下载成功', 1000);
+    //                         },
+    //                         error:function () {
+    //                             $.Huimodalalert('下载成功', 1000);
+    //                         }
+    //                     });
+    //                         }
+    //                 }
+    //             else{
+    //             }
+    //         }
+    //     }
+    // }
+
+
+</script>
+</body>
+</html>
+

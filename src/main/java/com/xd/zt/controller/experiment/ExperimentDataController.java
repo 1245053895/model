@@ -57,14 +57,14 @@ public class ExperimentDataController {
         String dataname1 = fileInformation[0];
         String datapath = fileInformation[1];
         String datasize = fileInformation[2];
-        ShellUtil.execCmd("mv /zt/"+datapath+" /var/data/celery/input/\n","root","/zt/IA","10.101.201.173",22);
+        ShellUtil.execCmd("mv /zt/"+datapath+" /var/data/celery/input/experiment/\n","root","/zt/IA","10.101.201.173",22);
         System.out.println(dataname1 + "----" + datapath + "----" + datasize);
        ExperimentData experimentData=new ExperimentData();
        experimentData.setDataname(dataname1);
        experimentData.setExperimentid(experimentid);
        experimentData.setDatapath(datapath);
        experimentData.setDatasize(datasize);
-        String datapath1 = "/var/data/celery/input/"+dataname1;
+        String datapath1 = "/var/data/celery/input/experiment/"+dataname1;
         experimentData.setDatapath(datapath1);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = simpleDateFormat.format(new Date());
