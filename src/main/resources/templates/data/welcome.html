@@ -52,25 +52,53 @@
                    </button>
                  </div>-->
             <!--上传按钮区域-->
-            <div class="logo_area">
-                <div class="logo_content" >
+            <div class="logo_area" style="border: 0px solid red">
+                <!--<div class="logo_content" >-->
 
-                    <p class="logo_text" ><strong></strong></p>
-                </div>
+                    <!--<p class="logo_text" ><strong></strong></p>-->
+                <!--</div>-->
 
-                <div class="logo_content"  style="margin-left: 1.5%;" >
-                    <img  onclick="jumpDialog()" class="logo_image"  src="/image/NewDataModel.png"/>
-                    <p class="logo_text" ><strong>新建数据模型</strong></p>
-                </div>
-                <div class="logo_content" style="margin-left: 20%;">
-                    <a th:href="@{/data/dataModelManage}">
-                        <img class="logo_image" src="/image/Openbusiness.png"/>
-                        <p class="logo_text" ><strong>打开数据模型</strong></p>
-                    </a>
-                </div>
+                <!--<div class="logo_content"  style="margin-left: 1.5%;" >-->
+                    <!--<img  onclick="jumpDialog()" class="logo_image"  src="/image/NewDataModel.png"/>-->
+                    <!--<p class="logo_text" ><strong>新建数据模型</strong></p>-->
+                <!--</div>-->
+                <!--<div class="logo_content" style="margin-left: 20%;">-->
+                    <!--<a th:href="@{/data/dataModelManage}">-->
+                        <!--<img class="logo_image" src="/image/Openbusiness.png"/>-->
+                        <!--<p class="logo_text" ><strong>打开数据模型</strong></p>-->
+                    <!--</a>-->
+                <!--</div>-->
                 <!--<tr th:each="allbusinessmodle:${allbusinessmodle}">-->
                 <!--<td th:text="${allbusinessmodle.businessname}"></td>-->
                 <!--</tr>-->
+                <div class="container-fluid">
+                    <div class="col-md-2 col-sm-2" style="border: 0px solid blue;height: 32vh;">
+
+                    </div>
+                    <div class="col-md-2 col-sm-2" style="border: 0px solid blue;height: 32vh; padding-top: 4%;">
+                        <img  onclick="jumpDialog()" class="logo_image"  src="/image/NewDataModel.png"/>
+                        <p class="logo_text" ><strong>新建数据模型</strong></p>
+                    </div>
+                    <div class="col-md-1 col-sm-1" style="border: 0px solid blue;height: 32vh; padding-top: 4%;">
+
+                    </div>
+                    <div class="col-md-2 col-sm-2" style="border: 0px solid blue;height: 32vh; padding-top: 4%;">
+                        <img  onclick="dataNewPath()" class="logo_image"  src="/image/NewDataModel.png"/>
+                        <p class="logo_text" ><strong>数据模型路径</strong></p>
+                    </div>
+                    <div class="col-md-1 col-sm-1" style="border: 0px solid blue;height: 32vh; padding-top: 4%;">
+
+                    </div>
+                    <div class="col-md-2 col-sm-2" style="border: 0px solid blue;height: 32vh; padding-top: 4%;">
+                        <a th:href="@{/data/dataModelManage}">
+                            <img class="logo_image" src="/image/Openbusiness.png"/>
+                            <p class="logo_text" ><strong>打开数据模型</strong></p>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-2" style="border: 0px solid blue;height: 32vh; padding-top: 4%;">
+
+                    </div>
+                </div>
 
             </div>
             <div class="logo2"></div>
@@ -123,6 +151,29 @@
     </div>
 </div>
 
+<div id="newPathmodal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" ></h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+
+            <div class="modal-body">
+                <input type="text" placeholder="请输入数据模型名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect2" value="1x">
+                <strong>模型名：</strong><input type="text" placeholder="请输入数据模型名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="newsaveName">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
@@ -139,6 +190,16 @@
         $("#modal-demo").modal("show");
     }
 </script>
+
+<script>
+    function dataNewPath() {
+        $("#newPathmodal-demo").modal("show");
+    }
+</script>
+
+
+
+
 
 <script type="text/javascript" th:inline="javascript">
     function saveSceneName() {
@@ -174,6 +235,36 @@
     }
 
 </script>
+
+<script type="text/javascript" th:inline="javascript">
+    function newsaveSceneName() {
+        var data = {};
+        data["questionid"] = document.getElementById("newdataFuseSelect2").value;
+        data["modelname"] = document.getElementById("newsaveName").value;
+        // var  questionid = document.getElementById("newdataFuseSelect2").value;
+        // var modelname= document.getElementById("newsaveName").value;
+        if(document.getElementById('newsaveName').value == ""){
+            $.Huimodalalert('请输入保存名称',2000);
+        } else {
+
+            $.ajax({
+                async: false,
+                type: "post",
+                dataType: "json",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify(data),
+                url:  '/data/saveModelName',
+                success: function (data) {
+                }
+            });
+            parent.location.reload()
+        }
+    }
+
+</script>
+
+
+
 
 <script type="text/javascript" th:inline="javascript">
     function selectQues1() {
