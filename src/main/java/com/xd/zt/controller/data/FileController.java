@@ -63,28 +63,40 @@ public class FileController {
 
     @RequestMapping("/datalinkshow/{modeid}")
     public ModelAndView datalinkshow(Model model, @PathVariable("modeid") Integer modeid) {
+
+        DatamodelName datamodelName=sourceService.getQuestionId(modeid);
+        if(datamodelName.getQuestionid()!=null){
         List<DatamodelLink> datamodelLinkList = sourceService.dataModelLink(modeid);
         model.addAttribute("datamodelLinkList", datamodelLinkList);
         model.addAttribute("modeid", modeid);
         return new ModelAndView("data/datalinkshow", "modelModel", model);
+        }else {
+            model.addAttribute("modeid", modeid);
+            return new ModelAndView("data/newDatalinkshow", "modelModel", model);
+        }
+
     }
 
     @RequestMapping("/dataLinkFirst/{modeid}")
     public ModelAndView dataLinkFirst(Model model, @PathVariable("modeid") Integer modeid) {
         //根据modelid得到questionid
          DatamodelName datamodelName=sourceService.getQuestionId(modeid);
-        Integer questionid=datamodelName.getQuestionid();
-        List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
-        BusinessQuestion businessQuestion = businessQuestionList.get(0);
-        String path=businessQuestion.getPicture();
-        File file=new File(path.trim());
-        String pictureName=file.getName();
-        String picture = "/uploadImage/"+pictureName;
-        businessQuestion.setPicture(picture);
-        model.addAttribute("businessQuestion",businessQuestion);
-        ModelAndView modelAndView1 = new ModelAndView("data/dataLinkFirst");
-        model.addAttribute("modeid", modeid);
-        return modelAndView1;
+
+             Integer questionid=datamodelName.getQuestionid();
+             List<BusinessQuestion> businessQuestionList = modelCreateService.selectquestion(questionid);
+             BusinessQuestion businessQuestion = businessQuestionList.get(0);
+             String path=businessQuestion.getPicture();
+             File file=new File(path.trim());
+             String pictureName=file.getName();
+             String picture = "/uploadImage/"+pictureName;
+             businessQuestion.setPicture(picture);
+             model.addAttribute("businessQuestion",businessQuestion);
+             ModelAndView modelAndView1 = new ModelAndView("data/dataLinkFirst");
+             model.addAttribute("modeid", modeid);
+             return modelAndView1;
+
+
+
 /*
         model.addAttribute("modeid", modeid);
         model.addAttribute("businessQuestionList", sourceService.selectquesInfo());*/
