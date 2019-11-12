@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
@@ -85,14 +86,14 @@
         <div class="line6 line"></div>
 
         <!--主动效-->
-        <div class="maineffectoutbox circleeffectclass">
+        <div class="maineffectoutbox circleeffectclass" >
 
             <img class="effectposition maindataeffect" src="/zthtml/img/maindataeffect.png">
             <div class="effectposition acrossremindeffectout" style=" width: 76px; height: 76px; margin: 9px;">
                 <div class="acrossremindeffectin" style="width: 68px; height: 68px; margin: 4px;"></div>
             </div>
             <img class="effectposition maindataspecialeffect" src="/zthtml/img/maindataspecialeffect.png">
-            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/maindataicon.png">
+            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/maindataicon.png"   onclick= "window.location.href='/ZT';">
             <span class="stagetitle">大数据分析平台</span>
 
         </div>
@@ -167,7 +168,7 @@
 <!--侧边浮窗-->
 <div class="fltoutbox leftbox">
     <div style="height: 65px; padding-top: 25px;">
-        <span class="analyzedatashowtitle">【模块占比】</span>
+        <span class="analyzedatashowtitle">【内存占比】</span>
     </div>
     <!--左上分析内容放置框-->
     <div class="analyzemsgbgbox" style=" margin-left: 2px;">
@@ -179,12 +180,16 @@
     <div class="analyzemsgbgbox" style="margin-top: 20px; height: 350px;overflow: hidden;">
         <span class="analyzedatashowtitle" style="line-height: 66px;margin-left: 38px">【业务模型概览】</span>
         <div class="scrollbox">
+
             <div id="scrollDiv">
-                <ul>
-                    <li    th:each="businessModels:${businessModels}"   th:text="${businessModels.businessname}">
-                    <span style=""  ></span>
+
+                <ul    >
+
+                    <li      th:each="businessModels:${businessModels}"   th:text="${businessModels.businessname}"  >
+                        <span  ></span>
                     </li>
-                  <!--  <li>道具刀盘业务
+
+                 <!--   <li>道具刀盘业务
                         <span style="">1个文档</span>
                     </li>
                     <li>安全评价分析业务
@@ -224,50 +229,77 @@
             <div style="padding: 10px 0 0 16px">
             <div class="l_left"><span style="color: #dfdede;font-size: 10px;margin-right: 10px">行业通用：</span></div>
             <div class="progress l_left" id="vaderSize" style="width: 150px;padding: 0;margin-top: 6px;"></div>
-            <script>
-                var number = 30;
+
+
+
+
+            <script  th:inline="javascript">
+
+
+
+
                 $(function(){
-                    $("#vaderSize").ProgressBarWars({porcentaje:30,estilo:"vader",tiempo:5980,alto:"8px",flag:true});
-                    setInterval(function(){
-                        number = Math.floor(Math.random()*99 + 1);
-                        $("#vaderSize").ProgressBarWars({porcentaje:number,estilo:"vader",tiempo:5980,alto:"30px",flag:false});
-                    },5000);
-                });
+
+                    // var number =[];
+                    var number=document.getElementById("jsvalue").value;
+
+                 /*   var number ="${algorithmListGeneral.size()}/${algorithmListAll.size()}"*/
+                    $("#vaderSize").ProgressBarWars1({porcentaje:number,estilo:"vader",tiempo:5980,alto:"8px",flag:true});
+                    /* setInterval(function(){
+                         number = Math.floor(Math.random()*99 + 1);
+                         $("#vaderSize1").ProgressBarWars1({porcentaje:number,estilo:"vader1",tiempo:5980,alto:"30px",flag:false});
+                     },5000);
+               */  });
             </script>
             <div class="l_left"><span style="color: #dd9809;margin-left: 4px;font-size: 10px"  th:text="${algorithmListGeneral.size()}+'个'"></span></div>
                 <div class="clear"></div>
+                <input type="text" id="jsvalue"  th:value="(${algorithmListGeneral.size()}/${algorithmListAll.size()})*100"  style="display: none">
         </div>
             <div style="padding: 8px 0 0 16px">
                 <div class="l_left"><span style="color: #dfdede;font-size: 10px;margin-right: 10px">行业专用：</span></div>
                 <div class="progress l_left" id="vaderSize1" style="width: 150px;margin-top: 6px;"></div>
                 <script>
-                    var number = 90;
+
+
                     $(function(){
-                        $("#vaderSize1").ProgressBarWars1({porcentaje:30,estilo:"vader1",tiempo:5980,alto:"8px",flag:true});
-                        setInterval(function(){
+                        var number1=document.getElementById("jsvalue1").value;
+                        $("#vaderSize1").ProgressBarWars1({porcentaje:number1,estilo:"vader1",tiempo:5980,alto:"8px",flag:true});
+                       /* setInterval(function(){
                             number = Math.floor(Math.random()*99 + 1);
                             $("#vaderSize1").ProgressBarWars1({porcentaje:number,estilo:"vader1",tiempo:5980,alto:"30px",flag:false});
                         },5000);
-                    });
+                  */  });
                 </script>
-                <div class="l_left"><span style="color: #00d8ff;margin-left: 4px;font-size: 10px"  th:text="${algorithmListSpecial.size()}+'个'"></span></div>
+                <div class="l_left"><span style="color: #00d8ff;margin-left: 4px;font-size: 10px"   th:value="${algorithmListSpecial.size()}" th:text="${algorithmListSpecial.size()}+'个'"></span></div>
                 <div class="clear"></div>
+                <input type="text" id="jsvalue1"  th:value="(${algorithmListSpecial.size()}/${algorithmListAll.size()})*100"  style="display: none">
             </div>
             <div style="padding: 8px 0 0 16px">
                 <div class="l_left"><span style="color: #dfdede;font-size: 10px;margin-right: 10px">人工智能：</span></div>
                 <div class="progress l_left" id="vaderSize2" style="width: 150px;margin-top: 6px;"></div>
                 <script>
-                    var number = 60;
-                    $(function(){
-                        $("#vaderSize2").ProgressBarWars2({porcentaje:30,estilo:"vader2",tiempo:5980,alto:"8px",flag:true});
-                        setInterval(function(){
+
+                    $( function()  {
+                        var number2=document.getElementById("jsvalue2").value;
+                        $("#vaderSize2").ProgressBarWars2({porcentaje:number2,estilo:"vader2",tiempo:5980,alto:"8px",flag:true});})
+                 /*   $( function() {
+
+                        $("#vaderSize2").ProgressBarWars2({porcentaje:22,estilo:"vader2",tiempo:5980,alto:"8px",flag:true});
+                    })*/
+
+
+                 /*   $(function(){
+                        var number = document.getElementById("${algorithmListIntelligence.size()}");
+                        $("#vaderSize2").ProgressBarWars2({porcentaje:number,estilo:"vader2",tiempo:5980,alto:"8px",flag:true});
+                        /!*setInterval(function(){
                             number = Math.floor(Math.random()*99 + 1);
                             $("#vaderSize2").ProgressBarWars2({porcentaje:number,estilo:"vader2",tiempo:5980,alto:"30px",flag:false});
-                        },5000);
-                    });
+                        },5000);*!/
+                    })*/;
                 </script>
-                <div class="l_left"><span style="color: #56a4ff;margin-left: 4px;font-size: 10px"   th:text="${algorithmListIntelligence.size()}+'个'"></span></div>
+                <div class="l_left"><span style="color: #56a4ff;margin-left: 4px;font-size: 10px" th:id="${algorithmListIntelligence.size()}"  th:text="${algorithmListIntelligence.size()}+'个'"  onload="removeTitle(this.id)"></span></div>
                 <div class="clear"></div>
+                <input type="text" id="jsvalue2"  th:value="(${algorithmListIntelligence.size()}/${algorithmListAll.size()})*100"  style="display: none">
             </div>
             <!--<div style="padding: 8px 0 0 16px">
                 <div class="l_left"><span style="color: #dfdede;font-size: 10px;margin-right: 10px">人员四：</span></div>
@@ -290,21 +322,34 @@
         <div>
             <p style="color: #dfdede;font-size: 14px;margin: 22px 0 0 17px ">【总计算法】</p>
             <div class="progress l_left" id="vaderSize4" style="width: 200px;padding: 0;margin: 40px 0 0 18px;"></div>
-            <script>
-                var number = 60;
-                $(function(){
-                    $("#vaderSize4").ProgressBarWars4({porcentaje:number,estilo:"vader4",tiempo:5980,alto:"22px",flag:true});
-                    setInterval(function(){
-                        number = Math.floor(Math.random()*99 + 1);
-                        $("#vaderSize4").ProgressBarWars4({porcentaje:number,estilo:"vader4",tiempo:5980,alto:"22px",flag:false});
-                    },5000);
-                });
+
+                <!--<script>
+
+                $( function()  {
+                    var number3=document.getElementById("jsvalue3").value;
+                    $("#vaderSize4").ProgressBarWars2({porcentaje:number3,estilo:"vader4",tiempo:5980,alto:"15px",flag:true});})
+                /*   $( function() {
+
+                       $("#vaderSize2").ProgressBarWars2({porcentaje:22,estilo:"vader2",tiempo:5980,alto:"8px",flag:true});
+                   })*/
+
+
+                /*   $(function(){
+                       var number = document.getElementById("${algorithmListIntelligence.size()}");
+                       $("#vaderSize2").ProgressBarWars2({porcentaje:number,estilo:"vader2",tiempo:5980,alto:"8px",flag:true});
+                       /!*setInterval(function(){
+                           number = Math.floor(Math.random()*99 + 1);
+                           $("#vaderSize2").ProgressBarWars2({porcentaje:number,estilo:"vader2",tiempo:5980,alto:"30px",flag:false});
+                       },5000);*!/
+                   })*/;
             </script>
-            <div class="l_left" style="color: #ffea00;margin: 44px 0 0 4px;font-size: 14px" ><span   th:text="${algorithmListAll.size()}+'个'">></span></div>
+-->
+
+            <div class="l_left" style="color: #ffea00;margin: -18px 10px 10px 10px;font-size: 20px;margin-left: 35%" ><span   th:text="'共'+${algorithmListAll.size()}+'个算法'">></span></div>
         </div>
 
 
-
+        <input type="text" id="jsvalue3"  th:value="${algorithmListAll.size()}"  style="display: none">
 
 
         <div class="fltdecarround fltdecarroundleft fltdecarroundbottom"></div>
@@ -312,55 +357,68 @@
     </div>
     <!--右下分析内容放置框-->
     <div class="analyzemsgbgbox" style="margin-top: 20px; height: 350px;">
-        <span class="analyzedatashowtitle">【各模块数据接入量】</span>
+        <span class="analyzedatashowtitle">【模型库】</span>
         <div style="margin: 0 6px;background-color: #011c2f;opacity: 0.8;padding:8px 0 6px 0">
             <div>
-                <div><span class="down_span">【数据集成】</span><span style="color:#dfdede;font-size: 10px;margin-left: 118px; font-weight: lighter;">5002</span></div>
+                <div><span class="down_span">【勘察设计】</span><span style="color:#dfdede;font-size: 10px;margin-left: 140px; font-weight: lighter;"></span></div>
                 <div style="margin: 5px 0 4px 12px;">
                 <div class="progress l_left" id="vaderSize5" style="width: 190px;padding: 0;margin-top: 4px"></div>
                 <script>
-                        $("#vaderSize5").ProgressBarWars5({porcentaje:16,estilo:"vader5",tiempo:5980,alto:"8px",flag:true});
+                    $( function(){
+                    var number4=document.getElementById("jsvalue4").value;
+                        $("#vaderSize5").ProgressBarWars5({porcentaje:number4,estilo:"vader5",tiempo:5980,alto:"8px",flag:true});})
 
                 </script>
-                <div><span class=" l_left" style="margin-left: 12px;color:#40e315;font-size: 12px ">50.02%</span></div>
-                    <div class="clear"></div>
+                  <!--  th:text="(${algorithmListIntelligence.size()}/${algorithmListAll.size()})*100+'%'";-->
+                    <input type="text" id="jsvalue4"  th:value="${programmeList.size()}"  style="display: none">
+                <div><span class=" l_left" style="margin-left: 12px;color:#40e315;font-size: 12px "      th:text="${programmeList.size()}+'个模型'" ></span></div>
+                <div class="clear"></div>
                 </div>
-                <div><span class="down_span">【算法库】</span><span style="color:#dfdede;font-size: 10px;margin-left: 118px; font-weight: lighter;">809</span></div>
+                <div><span class="down_span">【工程施工】</span><span style="color:#dfdede;font-size: 10px;margin-left: 140px; font-weight: lighter;"  ></span></div>
                 <div style="margin: 5px 0 4px 12px;">
                 <div class="progress l_left" id="vaderSize6" style="width: 190px;padding: 0;margin-top: 4px"></div>
-                <script>
-                        $("#vaderSize6").ProgressBarWars6({porcentaje:16,estilo:"vader6",tiempo:5980,alto:"8px",flag:true});
+                <script> $( function(){
+                    var number5=document.getElementById("jsvalue5").value;
+                        $("#vaderSize6").ProgressBarWars6({porcentaje:number5,estilo:"vader6",tiempo:5980,alto:"8px",flag:true});})
                 </script>
-                <div><span class="l_left" style="margin-left: 12px;color:#15e3ac;font-size: 12px ">8.09%</span></div>
+                    <input type="text" id="jsvalue5"  th:value="${programmeList1.size()}"  style="display: none">
+                <div><span class="l_left" style="margin-left: 12px;color:#15e3ac;font-size: 12px "  th:text="${programmeList1.size()}+'个模型'"></span></div>
                     <div class="clear"></div>
                 </div>
-                <div><span class="down_span">【建模工具】</span><span style="color:#dfdede;font-size: 10px;margin-left: 131px; font-weight: lighter;">1189</span></div>
+                <div><span class="down_span">【运营维护】</span><span style="color:#dfdede;font-size: 10px;margin-left: 140px; font-weight: lighter;"></span></div>
                 <div style="margin: 5px 0 4px 12px;">
                     <div class="progress l_left" id="vaderSize7" style="width: 190px;padding: 0;margin-top: 4px"></div>
-                    <script>
-                        $("#vaderSize7").ProgressBarWars7({porcentaje:6,estilo:"vader7",tiempo:5980,alto:"8px",flag:true});
+                    <script> $( function(){
+                        var number6=document.getElementById("jsvalue6").value;
+                        $("#vaderSize7").ProgressBarWars7({porcentaje:number6,estilo:"vader7",tiempo:5980,alto:"8px",flag:true});})
                     </script>
-                    <div><span class="down_span l_left" style="margin-left: 12px;color:#1f9cff ;font-size: 12px">11.89%</span></div>
+                    <input type="text" id="jsvalue6"  th:value="${programmeList2.size()}"  style="display: none">
+                    <div><span class="down_span l_left" style="margin-left: 12px;color:#1f9cff ;font-size: 12px"  th:text="${programmeList2.size()}+'个模型'"></span></div>
                     <div class="clear"></div>
                 </div>
-                <div><span class="down_span">【模型库】</span><span style="color:#dfdede;font-size: 10px;margin-left: 143px; font-weight: lighter;">1735</span></div>
+                <div><span class="down_span">【智慧城市】</span><span style="color:#dfdede;font-size: 10px;margin-left: 140px; font-weight: lighter;font-color:#1f9cff ;"  ></span></div>
                 <div style="margin: 5px 0 4px 12px;">
                     <div class="progress l_left" id="vaderSize8" style="width: 190px;padding: 0;margin-top: 4px"></div>
                     <script>
-                        $("#vaderSize8").ProgressBarWars8({porcentaje:2,estilo:"vader8",tiempo:5980,alto:"8px",flag:true});
+                        $( function(){
+                        var number7=document.getElementById("jsvalue7").value;
+                        $("#vaderSize8").ProgressBarWars8({porcentaje:number7,estilo:"vader8",tiempo:5980,alto:"8px",flag:true});})
                     </script>
-                    <div><span class="down_span l_left" style="margin-left: 12px;color:#c97802;font-size: 12px ">17.35%</span></div>
+                    <input type="text" id="jsvalue7"  th:value="${programmeList3.size()}"  style="display: none">
+                    <div><span class="down_span l_left" style="margin-left: 12px;color:#c97802;font-size: 12px "  th:text="${programmeList3.size()}+'个模型'" >30.77%</span></div>
                     <div class="clear"></div>
                 </div>
-                <div><span class="down_span">【服务封装】</span><span style="color:#dfdede;font-size: 10px;margin-left: 108px; font-weight: lighter;">1365</span></div>
+
+
+                <!--<div><span class="down_span">【模型总数】</span><span style="color:#dfdede;font-size: 10px;margin-left: 108px; font-weight: lighter;">38个模型</span></div>
                 <div style="margin: 5px 0 4px 12px;">
                     <div class="progress l_left" id="vaderSize9" style="width: 190px;padding: 0;margin-top: 4px"></div>
                     <script>
                         $("#vaderSize9").ProgressBarWars9({porcentaje:83,estilo:"vader9",tiempo:5980,alto:"8px",flag:true});
                     </script>
-                    <div><span class=" l_left" style="margin-left: 12px;color:#72ff00;font-size: 12px ">13.65%</span></div>
+                    <div><span class=" l_left" style="margin-left: 12px;color:#72ff00;font-size: 12px ">11%</span></div>
                     <div class="clear"></div>
-                </div>
+                </div>-->
 
                <!-- <div><span class="down_span">【xxx系统六】</span><span style="color:#dfdede;font-size: 10px;margin-left: 119px; font-weight: lighter;">1235</span></div>
                 <div style="margin: 5px 0 4px 12px;">
@@ -387,9 +445,11 @@
 
 
 <!--版权-->
+<!--
 <div class="copyrigntoutbox">
-    <!--<span   style="color: white">版权所有 中铁一局 2019。 保留一切权利。00000ICP号</span>-->
+    <span   style="color: white">版权所有 中铁一局 2019。 保留一切权利。00000ICP号</span>
 </div>
+-->
 
 </body>
 <script type="text/javascript" th:inline="javascript">
@@ -429,16 +489,16 @@
         },
         series : [
             {
-                name:'数据传输量',
+                name:'内存占比',
                 type:'pie',
                 radius : '55%',
                 center: ['50%', '50%'],
                 data:[
-                    {value:335, name:'算法库'},
-                    {value:310, name:'建模工具'},
-                    {value:274, name:'模型库'},
-                    {value:235, name:'数据集成'},
-                    {value:400, name:'服务封装'}
+                    {value:21.56, name:'算法库'},
+                    {value:19.95, name:'建模工具'},
+                    {value:17.63, name:'模型库'},
+                    {value:15.12, name:'数据集成'},
+                    {value:25.74, name:'服务封装'}
                 ].sort(function (a, b) { return a.value - b.value; }),
                 roseType: 'radius',
                 label: {
@@ -477,4 +537,11 @@
     salesMyChart.setOption(option);
 
 </script>
+<!--<script type="text/javascript" th:inline="javascript">
+    window.onload=function () {
+        var a=document.getElementById("jsvalue").value;
+        alert(a);
+    }
+</script>-->
+
 </html>

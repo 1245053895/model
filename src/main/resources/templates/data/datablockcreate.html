@@ -69,8 +69,10 @@
 		<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"
 			   onclick="add(this.value)"/>
 		<input id="algorithmName" th:each="algorithmList:${algorithmList}" class="btn btn-success radius" type="button"
-			   style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}"
-			   onclick="add(this.value);switchParam_form(this.value);"/><!--switchContent_form-->
+			   style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}" th:name="${algorithmList.algorithmpath}"  onmouseout="removeTitle()" onmousemove="showTitle(this.value,this.name)"
+			   onclick="add(this.value);switchParam_form(this.value);"/>
+		<!--switchContent_form--> <div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;display: none">
+	</div>
 		<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"
 			   onclick="add(this.value)"/>
 	</div>
@@ -80,6 +82,8 @@
 		<div class="panel-header">数据源配置</div>
 		<div class="panel-body" id="input_area">
 		</div>
+
+
 	</div>
 
 	<!--参数输入配置-->
@@ -433,6 +437,33 @@ var count = {};
         $("#data").hide(300);
         $.Huimodalalert('数据源添加成功',3000);
     }
+
+
+
+
+
+    function showTitle(value,name) {
+        //alert(id);
+
+        var event=event||window.event;
+        var showDiv = document.getElementById("linkTitle");
+        showDiv.style.left=event.clientX+"px";
+        showDiv.style.top=event.clientY+"px";
+        showDiv.style.display = 'block';
+        showDiv.innerHTML =value + '：'+  name
+        ;
+    }
+
+    function removeTitle() {
+        var showDiv = document.getElementById("linkTitle");
+        showDiv.style.display = 'none';
+        showDiv.innerHTML = '';
+    }
+
+
 </script>
+
+
 </body>
+
 </html>

@@ -13,10 +13,10 @@
 </head>
 <body>
 <!--<input type="hidden" th:value="${modelid}" id="modelid"/>-->
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集成 <span class="c-gray en">&gt;</span> 结构化数据列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集成 <span class="c-gray en">&gt;</span> 接入数据列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" >
     <div class="panel panel-default" style="height: 90vh">
-        <div class="panel-header">结构化数据列表
+        <div class="panel-header">接入数据列表
             <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
         </div>
         <div class="panel-body">
@@ -106,11 +106,20 @@
                     </tbody>
                 </table>
             </div>
+            <div style="float: left;font-size:20px; font-weight:700;margin-left: 14%;margin-top: 8vh;">选择结构化数据</div>
+            <div class="select-box" style="width: 20%;margin-left: 41.8%;margin-top: 8vh;float: left;" >
+                <select id="dataFuseSelect" class="select" size="1"  name="dataBagSelect"  style="color: #277de2;">
+                    <option value="" selected>请选择结构化数据表</option>
+                    <!-- <option  th:each="data1:${dataListcon}" th:text="${data1}"></option>-->
 
+                </select>
+            </div>
         </div>
     </div>
 
 </div>
+
+
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>

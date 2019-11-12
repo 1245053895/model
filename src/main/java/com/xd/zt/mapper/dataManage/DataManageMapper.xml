@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.zt.mapper.dataManage.DataManageMapper">
+
+
+    <select id="selectDataList" resultType="DataManage" >
+        SELECT * FROM datamodel_source;
+    </select>
+
+
+    <select id="selectDataList1" resultType="DataManage" >
+        SELECT * FROM datamodel_info;
+    </select>
+    <select id="selectDataList2" resultType="DataManage" >
+        SELECT * FROM analyse_csv;
+    </select>
+</mapper>

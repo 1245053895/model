@@ -17,10 +17,10 @@
 
 <body>
 <!--<input type="hidden" th:value="${modelid}" id="modelid"/>-->
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集成 <span class="c-gray en">&gt;</span> 非结构化数据列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集成 <span class="c-gray en">&gt;</span> 过程数据列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" >
-    <div class="panel panel-default" style="height: 90vh">
-        <div class="panel-header">非结构化数据列表
+    <div class="panel panel-default" style="height: 100%">
+        <div class="panel-header">过程数据列表
             <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
         </div>
         <div class="panel-body">
@@ -39,10 +39,11 @@
                 <table class="table table-border table-bordered table-hover table-bg table-sort">
                     <thead>
                     <tr class="text-c">
-                        <th >数据来源</th>
                         <th >数据名称</th>
-                        <th >场景</th>
-                        <th >问题</th>
+                        <th >数据路径</th>
+
+                        <th >数据来源</th>
+                       <!-- <th >问题</th>-->
                         <th >操作</th>
                     </tr>
                     </thead>
@@ -64,25 +65,52 @@
 
 
                     <tbody>
-                    <tr class="text-c">
-                        <td>统一平台</td>
-                        <td>地面沉降.png</td>
-                        <td>地面沉降场景</td>
-                        <td>地面沉降问题</td>
+                    <tr class="text-c"   th:each="selectDataList:${selectDataList}">
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList.sourcename}"></a></td>
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList.sourcepath}"></a></td>
+                        <td><a style="cursor:pointer" class="text-primary">数据建模</a></td>
+
                         <td>
                             <a>
-                                <input class="btn btn-success radius" type="button"  value="配置" />
+                                <input class="btn btn-success radius" type="button"     value="配置" />
                             </a>
                             <a>
-                                <input class="btn btn-success radius" type="button"  value="删除" />
+                                <input class="btn btn-success radius" type="button" value="删除" />
                             </a>
                         </td>
                     </tr>
-                    <tr class="text-c">
+                    <tr class="text-c"   th:each="selectDataList1:${selectDataList1}">
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList1.dataresultname}"></a></td>
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList1.dataaddr}"></a></td>
+                        <td><a style="cursor:pointer" class="text-primary">数据建模</a></td>
+
+                        <td>
+                            <a>
+                                <input class="btn btn-success radius" type="button"     value="配置" />
+                            </a>
+                            <a>
+                                <input class="btn btn-success radius" type="button" value="删除" />
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="text-c"   th:each="selectDataList2:${selectDataList2}">
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList2.csvname}"></a></td>
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList2.csvpath}"></a></td>
+                        <td><a style="cursor:pointer" class="text-primary">分析建模</a></td>
+
+                        <td>
+                            <a>
+                                <input class="btn btn-success radius" type="button"     value="配置" />
+                            </a>
+                            <a>
+                                <input class="btn btn-success radius" type="button" value="删除" />
+                            </a>
+                        </td>
+                    </tr>
+                   <!-- <tr class="text-c">
                         <td>统一平台</td>
                         <td>轴线偏差.png</td>
-                        <td>轴线偏差场景</td>
-                        <td>轴线偏差问题</td>
+
                         <td>
                             <a>
                                 <input class="btn btn-success radius" type="button" value="配置" />
@@ -95,8 +123,7 @@
                     <tr class="text-c">
                         <td>统一平台</td>
                         <td>刀具刀盘.jpg</td>
-                        <td>刀具刀盘场景</td>
-                        <td>刀具刀盘问题</td>
+
                         <td>
                             <a>
                                 <input class="btn btn-success radius" type="button" value="配置" />
@@ -105,7 +132,7 @@
                                 <input class="btn btn-success radius" type="button" value="删除" />
                             </a>
                         </td>
-                    </tr>
+                    </tr>-->
 
                     </tbody>
                 </table>
