@@ -73,4 +73,7 @@ public interface SourceService {
     public DatamodelArea areaByAreaId(@Param("areaid") Integer areaid);
 
     DatamodelSource selectSourceById(@Param("sourceid") Integer sourceid);
+
+
+    List<DatamodelInfo> infoByAreaId(@Param("areaid")Integer areaid);
 }

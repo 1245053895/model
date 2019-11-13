@@ -8,7 +8,15 @@ public class ExperimentConfig {
     private String configname;
     private String configflow;
     private String dataid;
-    private String algorithmid;
+    private String programmeid;
+
+    public String getProgrammeid() {
+        return programmeid;
+    }
+
+    public void setProgrammeid(String programmeid) {
+        this.programmeid = programmeid;
+    }
 
     public String getConfigname() {
         return configname;
@@ -34,13 +42,7 @@ public class ExperimentConfig {
         this.dataid = dataid;
     }
 
-    public String getAlgorithmid() {
-        return algorithmid;
-    }
 
-    public void setAlgorithmid(String algorithmid) {
-        this.algorithmid = algorithmid;
-    }
 
     public Integer getId() {
         return id;

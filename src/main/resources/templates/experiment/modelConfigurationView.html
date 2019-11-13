@@ -251,7 +251,7 @@
     <div class="modal-dialog">
         <div class="modal-content radius">
             <div class="modal-header">
-                <h3 class="modal-title">模型保存</h3>
+                <h3 class="modal-title">保存到模型库</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             </div>
             <div class="modal-body">
@@ -320,8 +320,6 @@
         var b2 = new Boolean(true);
         var instantData = b2;
 
-        $.Huimodalalert('上传成功', 2000);
-        hideDialog();
         var analyzmodelArr1 = "[]";
         var analyzmodelArr2 = "[]";
         var analyzmodelJsonArr1 = JSON.parse(analyzmodelArr1);
@@ -341,13 +339,13 @@
         var analyzmodel = eval('(' + xxxx + ')');
 
         var example = {
-            "configname": configname,
-            "experimentid":experimentid,
+            "username": "experiment",
+            "modelInstanceId":experimentid,
             "instantData":instantData,
             "analyzmodel": analyzmodel
         };
-        analyzmodelJsonArr2.push(example);
-        var programmepath = JSON.stringify(analyzmodelJsonArr2);
+        // analyzmodelJsonArr2.push(example);
+        var programmepath = JSON.stringify(example);
 
         var programme = {
             "id":id,
@@ -365,6 +363,15 @@
             data: JSON.stringify(programme),
             url: '/experiment/saveprogramme',
             success: function (data) {
+                if (data.code == 0) {
+                    $.Huimodalalert('保存成功', 2000);
+                    hideDialog();
+                }
+                else {
+                    $.Huimodalalert('模型库已存在该模型', 2000);
+                    hideDialog();
+                }
+
             }
         });
 

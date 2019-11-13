@@ -66,6 +66,6 @@ public interface SourceMapper {
      DatamodelSource selectSourceById(@Param("sourceid") Integer sourceid);
 
 
-
+    List<DatamodelInfo> infoByAreaId(@Param("areaid")Integer areaid);
 
 }

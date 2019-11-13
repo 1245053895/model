@@ -223,15 +223,15 @@
                         <thead>
                         <tr class="text-c">
                             <th >文件名称</th>
-                            <th >构建流程</th>
+                            <!--<th >构建流程</th>-->
                             <th>操作</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr class="text-c" th:each="datamodelInfo:${datamodelArea}">
+                        <tr class="text-c" th:each="datamodelInfo:${datamodelInfoList}">
                             <td><a th:href="@{'/data/dataReview/'+ ${datamodelInfo.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${datamodelInfo.dataresultname}"></a></td>
-                            <td th:text="${datamodelInfo.areachuli}"></td>
+                            <!--<td th:text="${datamodelInfo.areachuli}"></td>-->
                             <td>
                                 <a th:href="@{'/data/dataReview/'+ ${datamodelInfo.dataresultid}}">
                                     <input class="btn btn-primary size-MINI radius" type="button" value="打开">

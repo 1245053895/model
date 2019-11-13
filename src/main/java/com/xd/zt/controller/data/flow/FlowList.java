@@ -92,14 +92,15 @@ public class FlowList {
         DatamodelArea xin = sourceService.darprocessidTomodeid(processid);
         Integer modelid =xin.getModeid();
         Integer areaid=xin.getAreaid();
-       Integer linkid= xin.getLinkid();
+        Integer linkid= xin.getLinkid();
 
         List<DatamodelSource> datamodelSourceList=sourceService.getSourcesByStatusAndMoelId(modelid);
-DatamodelArea datamodelArea=sourceService.areaByAreaId(areaid);
+        DatamodelArea datamodelArea=sourceService.areaByAreaId(areaid);
 
+        List<DatamodelInfo> datamodelInfoList = sourceService.infoByAreaId(areaid);
         modelAndView.addObject("datamodelSourceList", datamodelSourceList);
         modelAndView.addObject("datamodelArea", datamodelArea);
-
+        modelAndView.addObject("datamodelInfoList", datamodelInfoList);
         Integer arearid = xin.getAreaid();
         modelAndView.addObject("datalinkInfo",sourceService.dataModelLink(modelid));
         List<DarJsPlumbBlock> blocks = flowService.dargetBlocks(processid);

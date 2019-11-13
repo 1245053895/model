@@ -15,4 +15,5 @@ public interface ExperimentRunService {
     List<ExperimentResult> selectResult(@Param("experimentcongfigid")Integer experimentcongfigid);
     void saveResult(ExperimentResult experimentResult);
     void deleteResult(@Param("experimentcongfigid")Integer experimentcongfigid);
+    void updateProgrammeId(@Param("programmeid")Integer programmeid,@Param("id")Integer id);
 }

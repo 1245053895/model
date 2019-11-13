@@ -227,4 +227,10 @@ public class SourceServiceImpl implements SourceService {
         DatamodelSource datamodelSource = sourceMapper.selectSourceById(sourceid);
         return datamodelSource;
     }
+
+    @Override
+    public List<DatamodelInfo> infoByAreaId(Integer areaid) {
+        List<DatamodelInfo> datamodelInfoList = sourceMapper.infoByAreaId(areaid);
+        return datamodelInfoList;
+    }
 }

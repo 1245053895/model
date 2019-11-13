@@ -16,6 +16,7 @@ import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.experiment.ExperimentConfigService;
 import com.xd.zt.service.experiment.ExperimentDataService;
+import com.xd.zt.service.experiment.ExperimentRunService;
 import com.xd.zt.service.experiment.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,8 @@ public class ExperimentConfigController {
     private ExperimentDataService experimentDataService;
     @Autowired
     private AnalyseService analyseService;
-
+    @Autowired
+    private ExperimentRunService experimentRunService;
 
     @RequestMapping("/reviewModelConfiguration/{experimentid}")
     public ModelAndView datalead(Model model,@PathVariable("experimentid") Integer experimentid) {
@@ -71,6 +73,7 @@ public class ExperimentConfigController {
         model.addAttribute("content",content);
         model.addAttribute("outputpath",outputpath);
         model.addAttribute("experimentParams",params1);
+        model.addAttribute("algorithmname",algorithmname);
         return new ModelAndView("experiment/modelConfigurationView", "modelModel", model);
     }
 
@@ -79,7 +82,9 @@ public class ExperimentConfigController {
     @ResponseBody
     @RequestMapping("/saveprogramme")
     @Transactional
-    public String saveBlockExample(@RequestBody JSONObject jsonObject){
+    public Map<String,Object> saveBlockExample(@RequestBody JSONObject jsonObject){
+        Map map = new HashMap();
+
         String programmename = jsonObject.get("programmename").toString();
         String programmetype = jsonObject.get("programmetype").toString();
         String programmedescribe = jsonObject.get("programmedescribe").toString();
@@ -95,9 +100,19 @@ public class ExperimentConfigController {
             programme.setProgrammetype(programmetype);
             programme.setProgrammepath(programmepath);
             programme.setUsername(username);
-            experimentConfigService.insertProgrammence(programme);
-            Integer programmeid = programme.getProgrammeid();
-            experimentConfigService.updataExperimentmodel(programmeid,id);
+            ExperimentConfig experimentConfig = experimentConfigService.showExperimentConfig(id);
+            if (experimentConfig.getProgrammeid() == null){
+                experimentConfigService.insertProgrammence(programme);
+                map.put("code",0);
+                Integer programmeid = programme.getProgrammeid();
+                experimentRunService.updateProgrammeId(programmeid,id);
+            }
+            else {
+                map.put("code",1);
+            }
+
+
+//            experimentConfigService.updataExperimentmodel(programmeid,id);
 //            ExperimentModel experimentModel = experimentConfigService.showExperiment(id);
 //            Integer modeid = experimentModel.getAnalysemodeid();
 //            experimentConfigService.updataAnalysemodel(programmeid,modeid);
@@ -109,7 +124,7 @@ public class ExperimentConfigController {
 //            BusinessModel businessModel = experimentConfigService.showBusinessModel(businessid);
 //            Integer processid =businessModel.getProcessid();
 //            System.out.println(processid);
-               return "xxx";
+               return map;
     }
 
 

@@ -18,4 +18,9 @@
     <delete id="deleteResult" parameterType="Integer">
         delete from experiment_result where experimentcongfigid = #{experimentcongfigid}
     </delete>
+
+
+    <update id="updateProgrammeId" parameterType="Integer">
+        update experiment_config set programmeid = #{programmeid} where id = #{id}
+    </update>
 </mapper>

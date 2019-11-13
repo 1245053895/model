@@ -40,4 +40,9 @@ public class ExperimentRunServiceImpl implements ExperimentRunService {
     public void deleteResult(Integer experimentcongfigid) {
         experimentRunMapper.deleteResult(experimentcongfigid);
     }
+
+    @Override
+    public void updateProgrammeId(Integer programmeid, Integer id) {
+        experimentRunMapper.updateProgrammeId(programmeid,id);
+    }
 }
