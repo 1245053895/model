@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xd.zt.mapper.model.ModelEditorMapper">
+    <select id="getModelFlowByProgrammeId" resultType="ExperimentConfig" parameterType="Integer">
+        SELECT experiment_config.* FROM programme,experiment_config WHERE programme.programmeid=experiment_config.programmeid AND programme.programmeid=#{programmeid}
+    </select>
+    <select id="queryExperimentIdByProgrammeId" resultType="Integer" parameterType="Integer">
+        SELECT experimentid FROM experiment_config WHERE programmeid=#{programmeid}
+    </select>
+    <select id="getAllByProgrammeId" resultType="programme" parameterType="Integer">
+        SELECT * FROM programme WHERE programmeid=#{programmeid}
+    </select>
+    <update id="updateProgrammeByProgrammeId" parameterType="String">
+        UPDATE programme SET programmepath=#{programmepath} WHERE programmeid=#{programmeid}
+    </update>
+
+</mapper>

@@ -61,7 +61,6 @@ public class ExperimentConfigController {
         JSONArray paramsArray = JSON.parseArray(params1);
         String algorithmname = paramsArray.getJSONObject(0).getString("name");
         JSONObject params = paramsArray.getJSONObject(0).getJSONObject("params");
-
         String inputPath = params.getString("inputpath");
         String content = params.getString("content");
         String outputpath = params.getString("outputpath");
@@ -77,14 +76,11 @@ public class ExperimentConfigController {
         return new ModelAndView("experiment/modelConfigurationView", "modelModel", model);
     }
 
-
-
     @ResponseBody
     @RequestMapping("/saveprogramme")
     @Transactional
     public Map<String,Object> saveBlockExample(@RequestBody JSONObject jsonObject){
         Map map = new HashMap();
-
         String programmename = jsonObject.get("programmename").toString();
         String programmetype = jsonObject.get("programmetype").toString();
         String programmedescribe = jsonObject.get("programmedescribe").toString();
@@ -220,7 +216,7 @@ public class ExperimentConfigController {
         return map;
     }
 
-    @RequestMapping("/saveBlockResult")
+    @RequestMapping("/saveModelResult")
     @ResponseBody
     public String saveDataAreaResult(@RequestBody JSONObject jsonObject){
         String analyzmodel = jsonObject.get("analyzmodel").toString();

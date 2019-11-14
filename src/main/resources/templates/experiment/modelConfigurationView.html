@@ -27,33 +27,25 @@
 <input type="hidden" th:value="${id}" id="modelid"/>
 <!--输入参数配置-->
 <input th:each="typeAlgorithms:${typeAlgorithms}" type="hidden" th:value="${typeAlgorithms.algorithmparamsinput}"
-       th:id="${typeAlgorithms.algorithmname}+'/input'"/>   <!--th:value="${algorithmList.algorithmparams}"-->
+       th:id="${typeAlgorithms.algorithmname}+'/input'"/>
 <!--参数配置-->
 <input th:each="typeAlgorithms:${typeAlgorithms}" type="hidden" th:value="${typeAlgorithms.algorithmparamscontent}"
        th:id="${typeAlgorithms.algorithmname}+'/content'"/>
 <!--输出配置-->
 <input th:each="typeAlgorithms:${typeAlgorithms}" type="hidden" th:value="${typeAlgorithms.algorithmparamsoutput}"
        th:id="${typeAlgorithms.algorithmname}+'/output'"/>
-
 <!--<input th:id="${datamodelInfoList.getDataaddr()}" th:each="datamodelInfoList:${datamodelInfoList}" type="hidden"-->
        <!--th:value="${datamodelInfoList.getDataresultid()}"/>-->
-
-
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>验证模型 <span class="c-gray en">&gt;</span> 模型运行 <a
         class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
         href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
-
     <div class="panel panel-default"
          style="width: 95%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
         <div class="panel-header">模型流程
             <!--	<input class="btn btn-primary radius" type="button"
                                                     style="position: absolute;margin-top: -0.3%;right: 5%;" value="运行"
                                                     onclick="jumpDialogSubmit()"/>-->
-
-
-
-
         </div>
         <a><input class="btn btn-success radius" type="button" style="position: absolute;right: 7%;margin-top:  -2.1%;"
                   value="存储" onclick="jumpDialogAddModel()" /></a>
@@ -70,8 +62,6 @@
 
         </div>
     </div>
-
-
 
 
 
@@ -171,7 +161,6 @@
 <script type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
         var configflow =[[${configflow}]];
-
         var inputPath = [[${inputPath}]];
         if(inputPath != null && inputPath != "{}") {
             var inputPathObject = eval('(' + inputPath + ')');
@@ -191,7 +180,6 @@
         }
         var outputpath = [[${outputpath}]];
         if(outputpath != null && outputpath != "{}") {
-
         }
         var values = configflow.split(';');
         // alert(values);

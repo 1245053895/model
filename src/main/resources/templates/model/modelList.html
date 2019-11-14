@@ -59,13 +59,18 @@
                             <td  th:text="${programmeList.programmetime}" ></td>
                             <td  th:text="${programmeList.username}" ></td>
                             <td>
-                                <a  >
+                                <a>
+                                    <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="运行"  >
+                                </a>
+                                <a>
                                     <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="发布"  >
                                 </a>
-                                <a  th:href="@{'/model/modelView/'+${programmeList.programmeid}}">
+                                <!--<a  th:href="@{'/model/modelView/'+${programmeList.programmeid}}">-->
+                                <a  th:href="@{'/model/modeleditor/'+${programmeList.programmeid}}">
                                     <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="编辑"  >
                                 </a>
-                                <a   >
+                                <!--</a>-->
+                                <a>
                                     <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >
                                 </a>
 
@@ -101,7 +106,7 @@
                 var id = this.id;
                 var value = this.value;
                 if (value == "删除") {
-                    if (confirm("确定要删除此问题？")) {
+                    if (confirm("确定要删除此模型？")) {
                         var programmeid = {
                             "programmeid": id
                         };

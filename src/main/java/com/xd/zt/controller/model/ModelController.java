@@ -42,28 +42,28 @@ public class ModelController {
         return "model/modelWelcome";
     }
 
-    @RequestMapping("/designList")
+    @RequestMapping("/designList")  //勘察设计
     public ModelAndView designList(Model model){
         List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
         model.addAttribute("programmeList",programmeList);
         return new ModelAndView("model/modelList","Modelmodel",model);
     }
 
-    @RequestMapping("/constructList")
+    @RequestMapping("/constructList")  //工程施工
     public ModelAndView constructList(Model model){
         List<Programme> programmeList = modelService.selectAllModelByType("工程施工");
         model.addAttribute("programmeList",programmeList);
         return new ModelAndView("model/modelList","Modelmodel",model);
     }
 
-    @RequestMapping("/maintainList")
+    @RequestMapping("/maintainList")  //运营维护
     public ModelAndView maintainList(Model model){
         List<Programme> programmeList = modelService.selectAllModelByType("运营维护");
         model.addAttribute("programmeList",programmeList);
         return new ModelAndView("model/modelList","Modelmodel",model);
     }
 
-    @RequestMapping("/cityList")
+    @RequestMapping("/cityList") //智慧城市
     public ModelAndView cityList(Model model){
         List<Programme> programmeList = modelService.selectAllModelByType("智慧城市");
         model.addAttribute("programmeList",programmeList);
