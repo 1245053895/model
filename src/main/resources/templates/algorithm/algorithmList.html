@@ -79,6 +79,11 @@
                                     <input th:id="${algorithmList.algorithmid}" class="btn btn-primary size-MINI radius" type="button" value="删除"  >
                                 </a>
 
+                                <a th:href="'/algorithm/algorithmEdit/'+${algorithmList.algorithmid}">
+                                    <input th:id="${algorithmList.algorithmid}" class="btn btn-primary size-MINI radius" type="button" value="编辑"  >
+                                </a>
+
+
                             </td>
                         </tr>
 
@@ -162,6 +167,12 @@
                                 <strong style="margin-left: 5%">输出参数：</strong>
                                 <input type="text" placeholder="请输出参数,以分号进行隔开" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmparamsoutput">
                             </div>
+
+                            <div class="modal-body">
+                                <strong style="margin-left: 5%">算法描述：</strong>
+                                <input type="text" placeholder="请输出算法描述" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmmiaoshu">
+                            </div>
+
                             <div class="button_position">
                                 <!--<button class="btn btn-primary" data-dismiss="modal" onclick="object();">确定</button>-->
                                 <input type="submit" class="btn btn-primary radius" value="提交" style="margin-left: 80%; margin-top: 0%;">
@@ -226,8 +237,8 @@
         if(filename==undefined||filename==""){
             document.getElementById("filename").innerHTML="点击此处上传文件";
         } else{
-            var fn=filename.substring(filename.lastIndexOf("\\")+1);
-            document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
+             var fn =filename.substring(filename.lastIndexOf("\\")+1);
+             document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
         }
     }
 
@@ -261,6 +272,8 @@
         return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
     }
 </script>
+
+
 
 </body>
 </html>

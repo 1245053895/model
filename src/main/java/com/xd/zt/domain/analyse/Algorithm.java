@@ -9,9 +9,19 @@ public class Algorithm {
     private String algorithmtime;
     private String algorithmversion;
     private String algorithmparamsinput;
+
+    public String getAlgorithmmiaoshu() {
+        return algorithmmiaoshu;
+    }
+
+    public void setAlgorithmmiaoshu(String algorithmmiaoshu) {
+        this.algorithmmiaoshu = algorithmmiaoshu;
+    }
+
     private String algorithmparamscontent;
     private String algorithmparamsoutput;
     private String algorithmman;
+    private String algorithmmiaoshu;
 
     public String getAlgorithmparamsinput() {
         return algorithmparamsinput;
