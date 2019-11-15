@@ -137,6 +137,7 @@ public class AlgorithmDebugController {
     public ModelAndView analyzModelExample(Model model) {
         //查询所有算法
         List<Algorithm> algorithmList = algorithmDebugService.selectAlgorithm();
+
         model.addAttribute("algorithmList", algorithmList);
 
         String algorithmName = "";
@@ -175,6 +176,38 @@ public class AlgorithmDebugController {
     }
 
 
+
+
+    @RequestMapping("/algorithmEdit/{id}")
+    public ModelAndView algorithmEdit(Model model, @PathVariable("id") Integer algorithmid) throws IOException {
+        List<String> algorithmStringList=new ArrayList<>();
+        Algorithm algorithm = algorithmDebugService.selectAlgorithmById(algorithmid);
+        String algorithmpath = algorithm.getAlgorithmpath();
+        BufferedReader bfr = new BufferedReader(new FileReader(algorithmpath));
+        String str1 = null;
+        int lineNumber1 = 0;
+        while ((str1 = bfr.readLine()) != null) {
+            algorithmStringList.add(str1);
+            lineNumber1++;
+        }
+        String algorithmJsonString= JSON.toJSONString(algorithmStringList);
+        model.addAttribute("algorithmJsonString",algorithmJsonString);
+        return new ModelAndView( "algorithm/algorithmOnlineEdit","Modelmodel",model);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @RequestMapping("/deleteAlgorithm")
     public String deleteAlgorithm(@RequestBody String jsonData) {
         JSONObject jsonObject = JSON.parseObject(jsonData);
@@ -200,6 +233,9 @@ public class AlgorithmDebugController {
     @PostMapping("/updateAlgorithm")
     public Map<String, Object> upFile(@RequestParam(value = "filename", required = false) MultipartFile multipartFile, Algorithm algorithm) throws Exception {
         /*      String sqlPath=null;*/
+
+        String xx =algorithm.getAlgorithmmiaoshu();
+
         String[] fileInformation = algorithmUpdateService.Upload(multipartFile);
         Map map = new HashMap();
         if (fileInformation != null) {
@@ -232,6 +268,7 @@ public class AlgorithmDebugController {
             algorithm1.setAlgorithmparamsoutput(algorithm.getAlgorithmparamsoutput());
             algorithm1.setAlgorithmpath(fileInformation[1]);
             algorithm1.setAlgorithmman("xidian");
+            algorithm1.setAlgorithmmiaoshu(algorithm.getAlgorithmmiaoshu());
 
             algorithmDebugService.saveAlgorithm(algorithm1);
 //        algorithmDebugService.saveAlgorithm(algorithmname,algorithmtype,algorithmdescribe,algorithmlabel,algorithmtime,algorithmversion,algorithmparams,algorithmpath,algorithmman);
@@ -241,6 +278,11 @@ public class AlgorithmDebugController {
         }
         return map;
     }
+
+
+
+
+
 }
 
 

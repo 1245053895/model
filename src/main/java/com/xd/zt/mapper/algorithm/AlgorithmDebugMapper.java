@@ -31,7 +31,6 @@ public interface AlgorithmDebugMapper {
 
     void insertAlgorithm(Algorithm algorithm);
 
-//    void saveAlgorithm(@Param("algorithmname")String algorithmname,@Param("algorithmtype")String algorithmtype,@Param("algorithmdescribe")String algorithmdescribe, @Param("algorithmlabel")String algorithmlabel,@Param("algorithmtime")String algorithmtime,@Param("algorithmversion")String algorithmversion, @Param("algorithmparams")String algorithmparams,@Param("algorithmpath")String algorithmpath,@Param("algorithmman")String algorithmman);
         void saveAlgorithm(Algorithm algorithm);
 ////模型
 //    //查询所有模型
