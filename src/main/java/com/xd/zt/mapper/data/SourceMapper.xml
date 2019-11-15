@@ -162,7 +162,7 @@
     </select>
 
     <select id="infoByAreaId" parameterType="Integer" resultType="datamodelInfo">
-          SELECT * FROM datamodel_info WHERE dataarea=#{areaid}
+          SELECT * FROM datamodel_info WHERE dataarea=#{areaid} and datalink is not null
     </select>
 
     <select id="selectSourceById" resultType="datamodelSource" parameterType="Integer">

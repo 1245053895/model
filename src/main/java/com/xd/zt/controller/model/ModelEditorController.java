@@ -46,6 +46,7 @@ public class ModelEditorController {
     private AnalyseService analyseService;
     @RequestMapping("/modeleditor/{programmeid}")
     public ModelAndView modeleditor(Model model, @PathVariable("programmeid") Integer programmeid){
+
         /*根据programmeid查询流程*/
         ModelAndView modelAndView=new ModelAndView();
         String algorithmtype = "模型验证";
@@ -53,7 +54,7 @@ public class ModelEditorController {
        Integer experimentid= modelEditorService.queryExperimentIdByProgrammeId(programmeid);
       ExperimentConfig experimentConfig= modelEditorService.getModelFlowByProgrammeId(programmeid);
       String configflow=experimentConfig.getConfigflow();
-
+        modelAndView.addObject("configflow",configflow);
             String params1 = experimentConfig.getParam();
         JSONArray paramsArray = JSON.parseArray(params1);
         String algorithmname = paramsArray.getJSONObject(0).getString("name");
@@ -69,7 +70,7 @@ public class ModelEditorController {
         model.addAttribute("algorithmname",algorithmname);
         model.addAttribute("programmeid",programmeid);
       modelAndView.addObject("experimentConfig",experimentConfig);
-        modelAndView.addObject("configflow",configflow);
+
 
         List<ExperimentData> experimentDatas = experimentConfigService.showExperimentData(experimentid);
         List<AnalyseResult> analyseResultList = new ArrayList<>();

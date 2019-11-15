@@ -48,5 +48,5 @@ public interface DataBlockService {
     void BlockInstance(@Param("modelid") String modelid, @Param("modelinstancename") String modelinstancename, @Param("analyzmodel") String analyzmodel,@Param("blockid") String blockid);
     Integer maxBaoId();
 
-
+    DatamodelInfo selectInfoByResultid(@Param("dataresultid")Integer dataresultid);
 }

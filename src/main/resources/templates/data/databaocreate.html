@@ -62,11 +62,9 @@
 		<div class="panel-header">数据块结果
 			<button style="position: absolute;left: 24%;margin-top: -0.3%;"  onclick="jumpDialog1()" class="btn btn-primary radius">跳过合并	</button>
 		</div>
-
-
 		<div class="panel-body" id="datasource" style="float: left; width: 92%;height: 80%;">
 			<div th:each="dataBlockToInfoList:${dataBlockToInfoList}" th:id="${dataBlockToInfoList.getBlockid()+'blockid'}" style="display: none;" class="dataresult">
-				<input class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;" th:each="datamodelInfo:${dataBlockToInfoList.getDatamodelInfoList()}" th:id="${datamodelInfo.getBlockid()}"
+				<input class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;" th:each="datamodelInfo:${dataBlockToInfoList.getDatamodelInfoList()}" th:id="${datamodelInfo.getDataresultid()}"
 				th:value="${datamodelInfo.getDataresultname()}" onclick="datasource(this.id,this.value)"/>
 			</div>
 		</div>
@@ -329,7 +327,7 @@
 		$.ajax({
 			url : "/data/dataReview",
 			type : "POST",
-			async : true,
+			async : false,
 			contentType: "application/json; charset=utf-8",
 			data : JSON.stringify(result),
 			dataType : 'json',

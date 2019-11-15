@@ -21,9 +21,8 @@
     </select>
 
     <select id="selectDataBao" parameterType="Integer" resultType="DatamodelInfo">
-        select * from datamodel_info,datamodel_name,analyse_model,experiment_model
-where datamodel_info.databao is not null
-and datamodel_info.modelid = datamodel_name.modelid
+        select datamodel_info.* from datamodel_info,datamodel_name,analyse_model,experiment_model
+where datamodel_info.modelid = datamodel_name.modelid
 and datamodel_name.questionid = analyse_model.questionid
 and analyse_model.modelid = experiment_model.analysemodeid
 and experiment_model.id = #{id}

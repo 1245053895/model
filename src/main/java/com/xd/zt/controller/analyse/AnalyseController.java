@@ -171,7 +171,15 @@ public class AnalyseController {
         }
         model.addAttribute("params",params);
 
-        List<DatamodelInfo> datamodelInfoList = analyseService.selectDataResult(modelid);
+        List<DatamodelInfo> datamodelInfoList1 = analyseService.selectDataResult(modelid);
+        List<DatamodelInfo> datamodelInfoList = new ArrayList<>();
+        for (int i = 0 ; i < datamodelInfoList1.size(); i++){
+            if (datamodelInfoList1.get(i).getDatalink() != null || datamodelInfoList1.get(i).getDatablock() != null){
+                datamodelInfoList.add(datamodelInfoList1.get(i));
+            }
+            else {
+            }
+        }
 
         Integer analysemodelid = analyseService.selectIdInModelAnalyseProcess(modelid);
         List<AnalyseModelProcess> allAnalyseModelProcesses = experimentConfigService.allAnalyseModelProcess(analysemodelid);

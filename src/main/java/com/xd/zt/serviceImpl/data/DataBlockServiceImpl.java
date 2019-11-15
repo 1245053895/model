@@ -129,6 +129,12 @@ private DataBlockMapper dataBlockMapper;
     }
 
     @Override
+    public DatamodelInfo selectInfoByResultid(Integer dataresultid) {
+        DatamodelInfo datamodelInfo = dataBlockMapper.selectInfoByResultid(dataresultid);
+        return datamodelInfo;
+    }
+
+    @Override
     public DatamodelInfo selectDataAreaResultByDatablock(String blockid) {
         DatamodelInfo datamodelInfo = dataBlockMapper.selectDataAreaResultByDatablock(blockid);
         return datamodelInfo;

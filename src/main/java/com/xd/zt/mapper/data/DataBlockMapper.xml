@@ -86,5 +86,7 @@ VALUES(#{dataresultname},#{dataarea},#{modelid},#{dataaddr},#{blockid})
         INSERT INTO datamodel_instance (modelid,instancename,parameters,blockid) VALUES (#{modelid},#{modelinstancename},#{analyzmodel},#{blockid})
     </insert>
 
-
+    <select id="selectInfoByResultid" parameterType="Integer" resultType="DatamodelInfo">
+        select * from datamodel_info where dataresultid = #{dataresultid}
+    </select>
 </mapper>

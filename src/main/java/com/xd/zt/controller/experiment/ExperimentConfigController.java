@@ -165,10 +165,17 @@ public class ExperimentConfigController {
             }
         }
 
+        List<DatamodelInfo> datamodelInfoList1 = experimentDataService.selectDataBao(experimentid);
+        List<DatamodelInfo> datamodelInfoList = new ArrayList<>();
+        for (int i = 0 ; i < datamodelInfoList1.size(); i++){
+            if (datamodelInfoList1.get(i).getDatalink() != null || datamodelInfoList1.get(i).getDatablock() != null){
+                datamodelInfoList.add(datamodelInfoList1.get(i));
+            }
+            else {
+            }
+        }
 
-        List<DatamodelInfo> datamodelInfoList = experimentDataService.selectDataBao(experimentid);
            model.addAttribute("experimentDatas",experimentDatas);
-//           model.addAttribute("datapaths",datapaths);
            model.addAttribute("experimentid",experimentid);
            model.addAttribute("typeAlgorithms",typeAlgorithms);
            model.addAttribute("analyseResultList",analyseResultList);
