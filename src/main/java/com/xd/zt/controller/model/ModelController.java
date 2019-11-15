@@ -249,4 +249,12 @@ public class ModelController {
             return map;
         }
     }
+
+
+    @GetMapping("/dataSearch")
+        public ModelAndView getlistNameBill(Model model,@RequestParam("programmename") String programmename){
+            List<Programme> programmeList = modelService.getAllList(programmename);
+            model.addAttribute("programmeList",programmeList);
+            return new ModelAndView("model/modelList","Modelmodel",model);
+        }
 }

@@ -48,6 +48,11 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public List<Programme> getAllList(String programmename) {
+        return modelMapper.getAllList(programmename);
+    }
+
+    @Override
     public List<BusinessModel> selectBusinessModelByProgramme(Integer programmeid) {
         List<BusinessModel> businessModelList= modelMapper.selectBusinessModelByProgramme(programmeid);
         return businessModelList;

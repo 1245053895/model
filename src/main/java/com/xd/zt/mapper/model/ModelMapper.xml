@@ -35,4 +35,10 @@
     <select id="selectProgrammeById" parameterType="Integer" resultType="Programme">
         select * from programme where programmeid = #{programmeid}
     </select>
+
+
+    <select id="getAllList" parameterType="java.lang.String" resultType="com.xd.zt.domain.model.Programme">
+     select * FROM programme WHERE programmename LIKE '%${programmename}%'
+    </select>
+
 </mapper>

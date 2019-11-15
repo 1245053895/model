@@ -24,4 +24,5 @@ public interface ModelService {
     void deleteModel(@Param("programmeid")Integer programmeid);
     void saveProgramme(Programme programme);
     Programme selectProgrammeById(@Param("programmeid")Integer programmeid);
+    List<Programme> getAllList (@Param("programmename") String programmename);
 }

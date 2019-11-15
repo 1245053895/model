@@ -25,4 +25,6 @@ public interface ModelMapper {
     void saveProgramme(Programme programme);
 
     Programme selectProgrammeById(@Param("programmeid")Integer programmeid);
+
+    List<Programme> getAllList (@Param("programmename") String programmename);
 }
