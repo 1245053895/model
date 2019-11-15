@@ -32,7 +32,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         shiroFilterFactoryBean.setLoginUrl("/login");
         filterMap.put("/login","authc");  /* 必须认证才可访问*/
-        shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008");
+        shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173");
         shiroFilterFactoryBean.setUnauthorizedUrl("/permission");
         return shiroFilterFactoryBean;
     }
