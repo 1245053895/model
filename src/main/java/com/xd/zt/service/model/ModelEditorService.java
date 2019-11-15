@@ -23,4 +23,5 @@ public interface ModelEditorService {
     List<ProgrammeResult> selectProgrammeResult(@Param("programmeid")Integer programmeid);
     void saveProgrammeResult(ProgrammeResult programmeResult);
     void deleteProgrammeResult(@Param("programmeid")Integer programmeid);
+
 }
