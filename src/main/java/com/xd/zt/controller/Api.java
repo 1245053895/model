@@ -34,7 +34,7 @@ public class Api {
             JSONObject programmeJson = new JSONObject();
             programmeJson.put("programmeId",programmeList.get(i).getProgrammeid());
             programmeJson.put("programmeName",programmeList.get(i).getProgrammename());
-            programmeJson.put("username",programmeList.get(i).getUsername());
+//            programmeJson.put("username",programmeList.get(i).getUsername());
             programmeJsonArray.add(i,programmeJson);
         }
         ApiResult apiResult = new ApiResult();
@@ -53,7 +53,7 @@ public class Api {
         JSONObject programmeJson = new JSONObject();
         programmeJson.put("programmeId",programmeList.get(i).getProgrammeid());
         programmeJson.put("programmeName",programmeList.get(i).getProgrammename());
-        programmeJson.put("username",programmeList.get(i).getUsername());
+//        programmeJson.put("username",programmeList.get(i).getUsername());
         programmeJsonArray.add(i,programmeJson);
         }
         ApiResult apiResult = new ApiResult();
@@ -68,14 +68,15 @@ public class Api {
     public ApiResult getProgrammeById(@PathVariable("programmeId") Integer programmeId) {
         ApiResult apiResult = new ApiResult();
         try {
-        List<AnalyseInstance> analyseInstanceList = apiService.findInstanceByProgrammeId(programmeId);
+        Programme programme = modelService.selectProgrammeById(programmeId);
         JSONArray instanceArray = new JSONArray();
-        for (int i = 0 ; i < analyseInstanceList.size(); i++){
             JSONObject instanceJson = new JSONObject();
-            instanceJson.put("instanceId",analyseInstanceList.get(i).getModelinstanceid());
-            instanceJson.put("instanceName",analyseInstanceList.get(i).getModelinstancename());
-            instanceArray.add(i,instanceJson);
-        }
+            instanceJson.put("programmeId",programme.getProgrammeid());
+//            instanceJson.put("username",programme.getUsername());
+            instanceJson.put("programmeName",programme.getProgrammename());
+            instanceJson.put("programmePath",programme.getProgrammepath());
+            instanceArray.add(instanceJson);
+
         apiResult.setDatas(instanceArray);
         apiResult.setResp_code(0);
         apiResult.setResp_msg("返回成功");
@@ -88,28 +89,28 @@ public class Api {
         return apiResult;
     }
 
-    @RequestMapping(value = "/getInstanceById/{instanceId}", method = GET, produces = "application/json")
-    public ApiResult getInstanceById(@PathVariable("instanceId") Integer instanceId) {
-        ApiResult apiResult = new ApiResult();
-        try {
-            AnalyseInstance analyseInstance = apiService.selectInstanceById(instanceId);
-            JSONArray parameters = JSONArray.parseArray(analyseInstance.getParameters());
-            JSONObject modelinstance = new JSONObject();
-            modelinstance.put("username", "name");
-            modelinstance.put("modelInstanceId", instanceId);
-            modelinstance.put("instantData", false);
-            modelinstance.put("analyzmodel", parameters);
-
-            apiResult.setDatas(modelinstance);
-            apiResult.setResp_code(0);
-            apiResult.setResp_msg("返回成功");
-        }
-        catch (Exception e){
-            apiResult.setResp_code(1);
-            apiResult.setResp_msg("模型不存在");
-            apiResult.setDatas(null);
-        }
-        return apiResult;
-    }
+//    @RequestMapping(value = "/getInstanceById/{instanceId}", method = GET, produces = "application/json")
+//    public ApiResult getInstanceById(@PathVariable("instanceId") Integer instanceId) {
+//        ApiResult apiResult = new ApiResult();
+//        try {
+//            AnalyseInstance analyseInstance = apiService.selectInstanceById(instanceId);
+//            JSONArray parameters = JSONArray.parseArray(analyseInstance.getParameters());
+//            JSONObject modelinstance = new JSONObject();
+//            modelinstance.put("username", "name");
+//            modelinstance.put("modelInstanceId", instanceId);
+//            modelinstance.put("instantData", false);
+//            modelinstance.put("analyzmodel", parameters);
+//
+//            apiResult.setDatas(modelinstance);
+//            apiResult.setResp_code(0);
+//            apiResult.setResp_msg("返回成功");
+//        }
+//        catch (Exception e){
+//            apiResult.setResp_code(1);
+//            apiResult.setResp_msg("模型不存在");
+//            apiResult.setDatas(null);
+//        }
+//        return apiResult;
+//    }
 
 }

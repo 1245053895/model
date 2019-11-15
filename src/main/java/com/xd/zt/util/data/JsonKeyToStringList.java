@@ -16,4 +16,18 @@ public class JsonKeyToStringList {
         }
         return StringList;
     }
+
+    public static String[] translateKey(JSONObject jsonObject) {
+        String[] StringList = new String[jsonObject.size()];
+        String jsonString = jsonObject.toJSONString();
+        jsonString = jsonString.replace("{","");
+        jsonString = jsonString.replace("}","");
+        String[] keyAndValue = jsonString.split(",");
+        for (int i = 0 ; i < keyAndValue.length; i++){
+            String[] keys = keyAndValue[i].split(":");
+            String key = keys[0].replace("\"","");
+            StringList[i] = key;
+        }
+        return StringList;
+    }
 }
