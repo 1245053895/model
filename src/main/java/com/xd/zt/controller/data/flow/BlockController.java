@@ -9,6 +9,7 @@ import com.xd.zt.domain.data.DatamodelInfo;
 import com.xd.zt.service.data.DataAreaService;
 import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.SourceService;
+import com.xd.zt.util.analyse.FindLinuxDirectory;
 import com.xd.zt.util.analyse.HttpCientPost;
 import com.xd.zt.util.analyse.HttpUtil;
 import com.xd.zt.util.data.JsonKeyToStringList;
@@ -93,17 +94,39 @@ public class BlockController {
                     String[] filenames = JsonKeyToStringList.translate(outputpath);
 
                     for (int i = 0; i < outputpath.size(); i++) {
+                        if (filenames[i] != "modelPaths") {
+                            DatamodelInfo datamodelInfo = new DatamodelInfo();
+                            datamodelInfo.setDataresultname(filenames[i]);
+                            datamodelInfo.setDataarea(areaid);
+                            datamodelInfo.setModelid(Integer.parseInt(modelid));
 
-                        DatamodelInfo datamodelInfo = new DatamodelInfo();
-                        datamodelInfo.setDataresultname(filenames[i]);
-                        datamodelInfo.setDataarea(areaid);
-                        datamodelInfo.setModelid(Integer.parseInt(modelid));
+                            datamodelInfo.setDataaddr("/var/data/celery/output/" + taskId + "/output/" + filenames[i]);
 
-                        datamodelInfo.setDataaddr("/var/data/celery/output/" + taskId + "/output/" + filenames[i]);
-
-                        datamodelInfo.setBlockid(blockid);
-                        dataBlockService.processBlockInfo(datamodelInfo);
-                        map.put("code",1);
+                            datamodelInfo.setBlockid(blockid);
+                            dataBlockService.processBlockInfo(datamodelInfo);
+                            map.put("code", 1);
+                        }
+                        else {
+                            String Directory = FindLinuxDirectory.FindDirectory("10.101.201.174",22,"root","/zt/IA","find /var/data/celery/output/"+taskId+"/output/ -type f -name '*.csv'");
+                            System.out.printf(Directory);
+                            if (Directory == "" || Directory == null || Directory == "出现错误"){
+                            }
+                            else {
+                                String[] DirectoryList = Directory.split("\n");
+                                for (int j = 0; j < DirectoryList.length; j++) {
+                                    String[] FileDirectory = DirectoryList[i].split("/");
+                                    String fileName = FileDirectory[FileDirectory.length - 1];
+                                    DatamodelInfo datamodelInfo = new DatamodelInfo();
+                                    datamodelInfo.setDataresultname(fileName);
+                                    datamodelInfo.setDataarea(areaid);
+                                    datamodelInfo.setModelid(Integer.parseInt(modelid));
+                                    datamodelInfo.setDataaddr(DirectoryList[j]);
+                                    datamodelInfo.setBlockid(blockid);
+                                    dataBlockService.processBlockInfo(datamodelInfo);
+                                    map.put("code", 1);
+                            }
+                            }
+                        }
                     }
                 }
                 else {

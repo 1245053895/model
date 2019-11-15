@@ -64,13 +64,12 @@
 
     <!-- where datamodel_info.databao is not null-->
     <select id="selectDataResult" parameterType="Integer" resultType="DatamodelInfo">
-        select datamodel_info.dataresultname,datamodel_info.dataresultid,datamodel_info.dataaddr
+        select datamodel_info.*
         from datamodel_info,datamodel_name,analyse_model,analyse_model_process
         where datamodel_info.modelid = datamodel_name.modelid
         and datamodel_name.questionid = analyse_model.questionid
         and analyse_model.modelid = analyse_model_process.analysemodelid
         and analyse_model_process.modelid = #{modelid}
-        and datamodel_info.databao is not null
     </select>
 
 

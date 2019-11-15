@@ -149,7 +149,7 @@ public class DataBaoController {
         String blockid = jsonObject.getString("blockid");
         //int id = Integer.parseInt(datablock);
         System.out.println(blockid);
-        DatamodelInfo datamodelInfo = dataBlockService.selectDataAreaResultByDatablock(blockid);
+        DatamodelInfo datamodelInfo = dataBlockService.selectInfoByResultid(Integer.parseInt(blockid));
 
         String dataName = datamodelInfo.getDataresultname();
         String dataPath = datamodelInfo.getDataaddr();
@@ -158,8 +158,8 @@ public class DataBaoController {
 
         File file=new File(dataPath);
         String name=file.getName();
-        String type=  name.substring(name.lastIndexOf("."));
-        type= type.replace(".","");
+        String type= name.split("\\.")[1];
+//        type= type.replace("\\.","");
 
       //  String dataType = dataName.split("\\.")[1];
         // System.out.println(dataName + "-----" + dataType + "-----" + dataPath);

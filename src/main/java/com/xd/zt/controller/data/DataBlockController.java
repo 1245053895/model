@@ -86,6 +86,18 @@ public class DataBlockController {
     public String deleteblock(@RequestBody String jsonData) {
         JSONObject jsonObject = JSON.parseObject(jsonData);
         String blockid = jsonObject.getString("blockid");
+        List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataBloakById(Integer.parseInt(blockid));
+        for (int i = 0 ; i < datamodelInfoList.size() ; i++) {
+            String[] path = datamodelInfoList.get(i).getDataaddr().split("/");
+            try {
+             String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/" + path[path.length - 2] + "/delete/", null);
+             System.out.printf(result);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
         dataBlockService.deleteblock(blockid);
         return blockid;
     }

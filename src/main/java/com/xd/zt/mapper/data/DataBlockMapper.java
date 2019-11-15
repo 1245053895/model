@@ -45,4 +45,6 @@ public interface DataBlockMapper {
 
 Integer maxBaoId();
 
+DatamodelInfo selectInfoByResultid(@Param("dataresultid")Integer dataresultid);
+
 }
