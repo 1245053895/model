@@ -1,6 +1,7 @@
 package com.xd.zt.service.dataManager;
 
 import com.xd.zt.domain.dataManage.DataManage;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,4 +11,8 @@ public interface DataManagerService {
     List<DataManage> selectDataList();
     List<DataManage> selectDataList1();
     List<DataManage> selectDataList2();
+
+    public List<DataManage> moHuDataList(@Param("res") String res);
+    public List<DataManage> moHuDataList1(@Param("res") String res);
+    public List<DataManage> moHuDataList2(@Param("res") String res);
 }

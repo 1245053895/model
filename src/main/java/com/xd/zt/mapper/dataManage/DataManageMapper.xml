@@ -15,4 +15,19 @@
     <select id="selectDataList2" resultType="DataManage" >
         SELECT * FROM analyse_csv;
     </select>
+
+
+    <!--模糊查询-->
+    <select id="moHuDataList" parameterType="String" resultType="DataManage">
+     SELECT * FROM datamodel_source WHERE sourcename LIKE '%${res}%'
+    </select>
+
+    <select id="moHuDataList1" parameterType="String" resultType="DataManage">
+     SELECT * FROM datamodel_info WHERE dataresultname LIKE '%${res}%'
+    </select>
+
+    <select id="moHuDataList2" parameterType="String" resultType="DataManage">
+     SELECT * FROM analyse_csv WHERE csvname LIKE '%${res}%'
+    </select>
+
 </mapper>

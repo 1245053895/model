@@ -32,7 +32,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         shiroFilterFactoryBean.setLoginUrl("/login");
         filterMap.put("/login","authc");  /* 必须认证才可访问*/
-        shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008");
+        shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173");
         shiroFilterFactoryBean.setUnauthorizedUrl("/permission");
         return shiroFilterFactoryBean;
     }
@@ -43,7 +43,6 @@ public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("shiroR
         DefaultWebSecurityManager securityManager=new DefaultWebSecurityManager();
         securityManager.setRealm(shiroRealm);    // 关联Realm
         return securityManager;
-
 }
     // 3、创建Realm
 @Bean(name = "shiroRealm") //Bean的作用将返回值放入spring的环境中，以便使上面的方法能得到该函数的返回值
@@ -55,6 +54,5 @@ public ShiroRealm getShiroRealm(){
     public ShiroDialect shiroDialect(){
         return new ShiroDialect();
     }
-
 
 }

@@ -26,13 +26,22 @@
         <div class="panel-body">
             <div >
                 <!--实现模糊搜索-->
-                <form method="get" action="#">
-                    <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="name" value=""
+                <!--<form method="get" action="#">-->
+                    <!--<input type="text" placeholder="请输入关键词" class="input-text ac_input" name="name" value=""-->
+                           <!--id="search_text" autocomplete="off" style="width:30%">-->
+                    <!--<button type="submit" class="btn btn-default" id="search_button">-->
+                        <!--搜索-->
+                    <!--</button>-->
+                <!--</form>-->
+                <form method="get" action="#" th:action="@{/dataManager/dataManagerSearch}">
+                    <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="search_text" value=""
                            id="search_text" autocomplete="off" style="width:30%">
                     <button type="submit" class="btn btn-default" id="search_button">
                         搜索
                     </button>
                 </form>
+
+
 
             </div>
             <div style="margin-top: 1%">
@@ -83,7 +92,6 @@
                         <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList1.dataresultname}"></a></td>
                         <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList1.dataaddr}"></a></td>
                         <td><a style="cursor:pointer" class="text-primary">数据建模</a></td>
-
                         <td>
                             <a>
                                 <input class="btn btn-success radius" type="button"     value="配置" />
