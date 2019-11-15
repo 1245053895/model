@@ -76,14 +76,29 @@
 
                             </td>
                         </tr>
-
-
-
-
                     </tbody>
                 </table>
             </div>
 
+        </div>
+    </div>
+    <div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 弹出对话框 -->
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">返回的结果</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                </div>
+                <div class="modal-body">
+                   <pre id="showData" >
+                   </pre>
+                </div>
+                <div class="modal-footer">
+                    <!--<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>-->
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -127,29 +142,37 @@
                     else {
                     }
                 }
-                // if (value == "运行") {
-                //     if (confirm("确定要运行？")) {
-                //         var exampleid = {
-                //             "exampleid": id
-                //         };
-                //         $.ajax({
-                //             async: false,
-                //             type: "post",
-                //             dataType: "json",
-                //             contentType: 'application/json;charset=UTF-8',
-                //             data: JSON.stringify(exampleid),
-                //             url: '/exampleRun',
-                //             success: function () {
-                //                     $.Huimodalalert('已添加运行任务', 1000);
-                //             },
-                //             error:function () {
-                //                 $.Huimodalalert('已添加运行任务', 1000);
-                //             }
-                //         });
-                //             }
-                //     }
-                // else{
-                // }
+                else if (value == "运行") {
+                    if (confirm("确定要运行？")) {
+                        var programmeid = {
+                            "programmeid": id
+                        };
+                        $.ajax({
+                            async: false,
+                            type: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(programmeid),
+                            url: '/model/programmeRun',
+                            success: function (data) {
+                                if(data.data != "运行失败"){
+                                    $.Huimodalalert("运行成功", 1000);
+                                    document.getElementById("showData").innerText = data.data;
+                                    $("#modal-demo").modal("show");
+                                    $.Huimodalalert("成功返回结果", 1000);
+                                }
+                                else {
+                                    $.Huimodalalert("运行失败", 1000);
+                                }
+                            },
+                            error:function () {
+                                $.Huimodalalert('运行失败', 1000);
+                            }
+                        });
+                            }
+                    }
+                else{
+                }
             }
         }
     }

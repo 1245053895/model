@@ -376,33 +376,33 @@ public class AnalyseController {
     }
 
 
-//    @RequestMapping("/taskList")
-//    public ModelAndView taskList(Model model){
-////        List<AnalyticsTask> analyticsTaskList = analyseService.selectTask();
-//         List<AnalyticsTask> analyticsTaskList = new ArrayList<>();
-//        String taskString = new String();
-//        try {
-////        taskString =  HttpClientGet.restGet("http://120.24.157.214:8000/tasks/"+"name"+"/",null);
-//        taskString =  HttpClientGet.restGet("http://10.101.201.174:8000/tasks/"+"name"+"/",null);
-//        System.out.printf(taskString);
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
-//        JSONObject taskJson = JSON.parseObject(taskString);
-//        JSONArray taskListArray = taskJson.getJSONArray("datas");
-//        for (int i = 0 ; i < taskListArray.size(); i++){
-//            AnalyticsTask analyticsTask = new AnalyticsTask();
-//            analyticsTask.setTaskId(taskListArray.getJSONObject(i).getString("taskId"));
-//            analyticsTask.setModelInstanceId(taskListArray.getJSONObject(i).getString("modelInstanceId"));
-//            analyticsTask.setTimestamp(taskListArray.getJSONObject(i).getString("timestamp"));
-//            analyticsTask.setStatus(taskListArray.getJSONObject(i).getString("status"));
-//            analyticsTask.setCompleteTime(taskListArray.getJSONObject(i).getString("completeTime"));
-//            analyticsTask.setResult(taskListArray.getJSONObject(i).getString("result"));
-//            analyticsTaskList.add(i,analyticsTask);
-//        }
-//        model.addAttribute("analyticsTaskList",analyticsTaskList);
-//        return new ModelAndView("analyse/taskList","modelModel",model);
-//    }
+    @RequestMapping("/taskList")
+    public ModelAndView taskList(Model model){
+//        List<AnalyticsTask> analyticsTaskList = analyseService.selectTask();
+         List<AnalyticsTask> analyticsTaskList = new ArrayList<>();
+        String taskString = new String();
+        try {
+//        taskString =  HttpClientGet.restGet("http://120.24.157.214:8000/tasks/"+"name"+"/",null);
+        taskString =  HttpClientGet.restGet("http://10.101.201.174:8000/tasks/"+"name"+"/",null);
+        System.out.printf(taskString);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        JSONObject taskJson = JSON.parseObject(taskString);
+        JSONArray taskListArray = taskJson.getJSONArray("datas");
+        for (int i = 0 ; i < taskListArray.size(); i++){
+            AnalyticsTask analyticsTask = new AnalyticsTask();
+            analyticsTask.setTaskId(taskListArray.getJSONObject(i).getString("taskId"));
+            analyticsTask.setModelInstanceId(taskListArray.getJSONObject(i).getString("modelInstanceId"));
+            analyticsTask.setTimestamp(taskListArray.getJSONObject(i).getString("timestamp"));
+            analyticsTask.setStatus(taskListArray.getJSONObject(i).getString("status"));
+            analyticsTask.setCompleteTime(taskListArray.getJSONObject(i).getString("completeTime"));
+            analyticsTask.setResult(taskListArray.getJSONObject(i).getString("result"));
+            analyticsTaskList.add(i,analyticsTask);
+        }
+        model.addAttribute("analyticsTaskList",analyticsTaskList);
+        return new ModelAndView("analyse/taskList","modelModel",model);
+    }
 
     
 }

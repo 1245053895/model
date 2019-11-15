@@ -64,17 +64,22 @@
                         $.ajax({
                             url: "/data/deleteblock",
                             type: "POST",
-                            async: true,
+                            async: false,
                             contentType: "application/json; charset=utf-8",
                             data: JSON.stringify(id),
                             dataType: 'json',
                             success: function (data) {
                                 // $.Huimodalalert('删除成功',2000);
+                                location.reload(true);
+                            },
+                            error:function (data) {
+                                location.reload(true);
                             }
                         });
                         location.reload(true);
                     }
                     else {
+
                     }
                 }
             }

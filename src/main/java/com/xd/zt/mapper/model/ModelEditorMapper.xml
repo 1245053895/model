@@ -16,4 +16,15 @@
         UPDATE programme SET programmepath=#{programmepath} WHERE programmeid=#{programmeid}
     </update>
 
+    <select id="selectProgrammeResult" resultType="ProgrammeResult" parameterType="Integer">
+        select * from programme_result where programmeid = #{programmeid}
+    </select>
+
+    <insert id="saveProgrammeResult" parameterType="ProgrammeResult">
+        insert into programme_result (programmeresultname,programmeresultpath,programmeresulttime,programmeid) values (#{programmeresultname},#{programmeresultpath},#{programmeresulttime},#{programmeid})
+    </insert>
+
+    <delete id="deleteProgrammeResult" parameterType="Integer">
+        delete from programme_result where programmeid = #{programmeid}
+    </delete>
 </mapper>

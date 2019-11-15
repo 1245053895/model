@@ -94,7 +94,7 @@ public class BlockController {
                     String[] filenames = JsonKeyToStringList.translate(outputpath);
 
                     for (int i = 0; i < outputpath.size(); i++) {
-                        if (filenames[i] != "modelPaths") {
+                        if (!filenames[i].equals("modelPaths") ) {
                             DatamodelInfo datamodelInfo = new DatamodelInfo();
                             datamodelInfo.setDataresultname(filenames[i]);
                             datamodelInfo.setDataarea(areaid);
@@ -114,8 +114,8 @@ public class BlockController {
                             else {
                                 String[] DirectoryList = Directory.split("\n");
                                 for (int j = 0; j < DirectoryList.length; j++) {
-                                    String[] FileDirectory = DirectoryList[i].split("/");
-                                    String fileName = FileDirectory[FileDirectory.length - 1];
+                                    String[] FileDirectory = DirectoryList[j].split("/");
+                                    String fileName = FileDirectory[FileDirectory.length-1];
                                     DatamodelInfo datamodelInfo = new DatamodelInfo();
                                     datamodelInfo.setDataresultname(fileName);
                                     datamodelInfo.setDataarea(areaid);

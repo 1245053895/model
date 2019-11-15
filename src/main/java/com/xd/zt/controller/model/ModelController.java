@@ -1,14 +1,21 @@
 package com.xd.zt.controller.model;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.analyse.AnalyseModel;
 import com.xd.zt.domain.business.BusinessModel;
 import com.xd.zt.domain.data.DatamodelName;
+import com.xd.zt.domain.experiment.ExperimentConfig;
+import com.xd.zt.domain.experiment.ExperimentResult;
 import com.xd.zt.domain.model.Programme;
+import com.xd.zt.domain.model.ProgrammeResult;
+import com.xd.zt.service.model.ModelEditorService;
 import com.xd.zt.service.model.ModelService;
 import com.xd.zt.service.model.ProgrammeUpdateService;
+import com.xd.zt.util.analyse.FindLinuxDirectory;
+import com.xd.zt.util.analyse.HttpCientPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +28,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/model")
 @Controller
@@ -32,6 +37,8 @@ public class ModelController {
     private ModelService modelService;
     @Autowired
     private ProgrammeUpdateService programmeUpdateService;
+    @Autowired
+    private ModelEditorService modelEditorService;
     @RequestMapping("/index")
     public String index(){
         return "model/index";
@@ -177,5 +184,69 @@ public class ModelController {
         bfr.close();
         bfr1.close();
         return new ModelAndView("model/codeView","Modelmodel",model);
+    }
+
+    @ResponseBody
+    @RequestMapping("/programmeRun")
+    public Map<String,Object> programmeRun(@RequestBody String jsonObject1) {
+        Map<String, Object> map = new HashMap<>();
+        JSONObject jsonObject = JSON.parseObject(jsonObject1);
+        Integer programmeid = jsonObject.getInteger("programmeid");
+        Programme programme = modelEditorService.getAllByProgrammeId(programmeid);
+        JSONObject instance = JSON.parseObject(programme.getProgrammepath());
+        String jsonString = JSON.toJSONString(instance);
+        try {
+            String result = HttpCientPost.restPost("http://10.101.201.174:8000/tasks/", jsonString);
+            System.out.printf(result);
+            JSON resultjson = JSON.parseObject(result);
+            if (((JSONObject) resultjson).getBoolean("success") == true) {
+                String taskId = ((JSONObject) resultjson).getString("taskId");
+
+                //遍历获得所有结果的csv路径
+                String Directory = FindLinuxDirectory.FindDirectory("10.101.201.174", 22, "root", "/zt/IA", "find /var/data/celery/output/" + taskId + "/output/ -type f -name '*.csv'");
+                System.out.printf(Directory);
+                if (Directory == "" || Directory == null || Directory == "出现错误") {
+                } else {
+                    String[] DirectoryList = Directory.split("\n");
+                    List<ProgrammeResult> programmeResultList = modelEditorService.selectProgrammeResult(programmeid);
+                    if (programmeResultList.size() == 0) {
+                        for (int i = 0; i < DirectoryList.length; i++) {
+                            String[] FileDirectory = DirectoryList[i].split("/");
+                            String fileName = FileDirectory[FileDirectory.length - 1];
+                            ProgrammeResult programmeResult = new ProgrammeResult();
+                            programmeResult.setProgrammeid(programmeid);
+                            programmeResult.setProgrammeresultname(fileName);
+                            programmeResult.setProgrammeresultpath(DirectoryList[i]);
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            programmeResult.setProgrammeresulttime(df.format(new Date()));
+                            modelEditorService.saveProgrammeResult(programmeResult);
+                            System.out.printf("保存成功");
+                        }
+                    } else {
+                        modelEditorService.deleteProgrammeResult(programmeid);
+                        for (int i = 0; i < DirectoryList.length; i++) {
+                            String[] FileDirectory = DirectoryList[i].split("/");
+                            String fileName = FileDirectory[FileDirectory.length - 1];
+                            ProgrammeResult programmeResult = new ProgrammeResult();
+                            programmeResult.setProgrammeid(programmeid);
+                            programmeResult.setProgrammeresultname(fileName);
+                            programmeResult.setProgrammeresultpath(DirectoryList[i]);
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            programmeResult.setProgrammeresulttime(df.format(new Date()));
+                            modelEditorService.saveProgrammeResult(programmeResult);
+                            System.out.printf("保存成功");
+                        }
+                    }
+                }
+                map.put("data", ((JSONObject) resultjson).getString("datas"));
+                return map;
+            } else {
+                map.put("data", "运行失败");
+                return map;
+            }
+        } catch (Exception e) {
+            map.put("data", "运行失败");
+            return map;
+        }
     }
 }

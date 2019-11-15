@@ -30,12 +30,12 @@
     </delete>
 
     <insert id="saveAlgorithm" parameterType="Algorithm">
-    INSERT INTO algorithm(algorithmname,algorithmtype,algorithmdescribe,algorithmlabel,algorithmtime,algorithmversion,algorithmparamsinput,algorithmparamscontent,algorithmparamsoutput,algorithmpath,algorithmman)
-    VALUES(#{algorithmname},#{algorithmtype},#{algorithmdescribe},#{algorithmlabel},#{algorithmtime},#{algorithmversion},#{algorithmparamsinput},#{algorithmparamscontent},#{algorithmparamsoutput},#{algorithmpath},#{algorithmman})
+    INSERT INTO algorithm(algorithmname,algorithmtype,algorithmdescribe,algorithmlabel,algorithmtime,algorithmversion,algorithmparamsinput,algorithmparamscontent,algorithmparamsoutput,algorithmpath,algorithmman,algorithmmiaoshu)
+    VALUES(#{algorithmname},#{algorithmtype},#{algorithmdescribe},#{algorithmlabel},#{algorithmtime},#{algorithmversion},#{algorithmparamsinput},#{algorithmparamscontent},#{algorithmparamsoutput},#{algorithmpath},#{algorithmman},#{algorithmmiaoshu})
     </insert>
     <!--在线代码编辑-->
     <insert id="insertAlgorithm" parameterType="Algorithm" useGeneratedKeys="true" keyProperty="id">
-       insert into Algorithm values (null,#{algorithmname},null,null,null,null,null,null,null,null,#{algorithmpath},null);
+       insert into Algorithm values (null,#{algorithmname},#{algorithmtype},#{algorithmdescribe},#{algorithmlabel},#{algorithmtime},#{algorithmversion},#{algorithmparamsinput},#{algorithmpath},#{algorithmman},#{algorithmparamscontent},#{algorithmparamsoutput},#{algorithmmiaoshu});
     </insert>
     <!--&lt;!&ndash;查询所有模型&ndash;&gt;-->
     <!--<select id="selectAlgorithmModel" resultType="AlgorithmModel">-->

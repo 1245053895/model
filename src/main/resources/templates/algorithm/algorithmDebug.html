@@ -23,7 +23,13 @@
 	<title></title>
 </head>
 <body>
-<input type="hidden" th:value="${algorithmName}" id="algorithmName"/><input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparamscontent}" th:id="${algorithmList.algorithmname}"/><input type="hidden" value="" id="selectedparams"/>
+<input type="hidden" th:value="${algorithmName}" id="algorithmName"/>
+<input th:each="algorithmList:${algorithmList}" type="hidden" th:value="${algorithmList.algorithmparamscontent}"   th:id="${algorithmList.algorithmname}"/>
+<input th:each="algorithmListx:${algorithmList}" type="hidden" th:value="${algorithmListx.algorithmmiaoshu}" th:id="${algorithmListx.algorithmname}+miaoshu">
+
+
+
+<input type="hidden" value="" id="selectedparams"/>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 算法库 <span class="c-gray en">&gt;</span> 算法校验  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
 
@@ -70,9 +76,16 @@
 	</div>
 
 	<div class="panel panel-default" style="width: 52%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
-		<div class="panel-header"><div  id="resultname" >运行结果：</div>
-			<a ><input class="btn btn-success radius" type="button" style="position: relative;float: left;margin-left: 92%;margin-top: -3.3%;" value="运行" onclick="algorithmrun()"/></a>
+		<div class="panel-header"><div  id="resultname" >算法描述：</div>
+			<!--<a ><input class="btn btn-success radius" type="button" style="position: relative;float: left;margin-left: 92%;margin-top: -3.3%;" value="描述" onclick="algorithmrun()"/></a>-->
 		</div>
+
+		<div class="panel-body" id="params_textx" style="float: left; width: 98%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+
+		</div>
+
+
+
 	</div>
 
 
@@ -103,7 +116,7 @@
         var algorithmNameArr = algorithmName.split(';');
         for (var i = 0; i < algorithmNameArr.length - 1; i++) {
             var name = algorithmNameArr[i];
-                switchParam_form(name);
+                // switchParam_form(name);
 
         }
     }
@@ -127,11 +140,26 @@ var paramsArr = new Array();
         }
        paramsArr.push("</form></div>");
     $("#params_text").append(paramsArr.join("\n"));
+	 switchParam_formx(value)
 }
+
+	function switchParam_formx(value) {
+		$("#params_textx").empty()
+		var paramsArrx = new Array();
+		var algorithmParams = document.getElementById(value+"miaoshu").getAttribute("value");
+		paramsArrx.push("<textarea name='algorithmParams' style='border: 0px solid red'>"+algorithmParams);
+		paramsArrx.push("</textarea>")
+		$("#params_textx").append(paramsArrx.join("\n"));
+	}
+
+
+
+
+
 //显示参数
 function switchParam(value) {
     var name = "参数设置："+value;
-    var resultname = "运行结果："+value;
+    var resultname = "算法描述："+value;
     document.getElementById('paramsname').innerText=name;
     document.getElementById('resultname').innerText=resultname;
 
@@ -140,6 +168,7 @@ function switchParam(value) {
     $('#a'+algorithmname[0]).show(300);
     var algorithmParamscontent = document.getElementById(value).getAttribute("value");
     document.getElementById('selectedparams').setAttribute("value",algorithmParamscontent);
+	switchParam_form(value)
 }
 
 //参数校验
@@ -195,20 +224,20 @@ function switchParam(value) {
     }
 
 
-    function algorithmrun() {
-		if(debug == null){
-            $.Huimodalalert('请先进行参数校验', 1000);
-		}
-		else if(debug == false){
-            $.Huimodalalert('参数校验未通过，请修改参数', 1000);
-		}
-		else if(debug == true){
-
-		}
-		else {
-
-		}
-    }
+    // function algorithmrun() {
+	// 	if(debug == null){
+    //         $.Huimodalalert('请先进行参数校验', 1000);
+	// 	}
+	// 	else if(debug == false){
+    //         $.Huimodalalert('参数校验未通过，请修改参数', 1000);
+	// 	}
+	// 	else if(debug == true){
+	//
+	// 	}
+	// 	else {
+	//
+	// 	}
+    // }
 </script>
 </body>
 </html>
