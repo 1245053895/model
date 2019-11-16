@@ -144,4 +144,11 @@ public class BlockController {
 //        }
         return map;
     }
+
+    @RequestMapping("/databaselist/{id}")
+    public ModelAndView databaselist(Model model,@PathVariable("id")Integer datamodelid){
+
+
+        return new ModelAndView("/data/databaselist","",model);
+    }
 }

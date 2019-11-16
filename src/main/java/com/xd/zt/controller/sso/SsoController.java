@@ -24,9 +24,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -61,74 +65,77 @@ public class SsoController {
 
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
-        String idnumber=ssoTicket.getIdNumber();
-      SysUser sysUser= sysUserMenuMapper.getSysUserByIdNumber(idnumber);
 
-      String username=sysUser.getUsername();
-      String password=sysUser.getPassword();
-        Subject subject= SecurityUtils.getSubject();
-        UsernamePasswordToken token=new UsernamePasswordToken(username,password);
-        subject.login(token);
+    String idnumber = ssoTicket.getIdNumber();
+    SysUser sysUser = sysUserMenuMapper.getSysUserByIdNumber(idnumber);
+
+    String username = sysUser.getUsername();
+    String password = sysUser.getPassword();
+//    Subject subject = SecurityUtils.getSubject();
+//    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//    subject.login(token);
       /*  String idnumber=ssoTicket.getIdNumber();zx
       UserInfo userInfo= userInfoMapper.selectUserInfoByIdNumber(idnumber);
       if (userInfo!=null){*/
-          String sessionId = request.getRequestedSessionId();
-          /*       if (sessionId==null){}*/
-          String ssoSupServerUrl = "http://10.101.201.154:9092";
-          ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
-          ssoTicket = ssoLoginService.checkTicket(ssoTicket);
-          ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
-          if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
-              HttpSession session = request.getSession();
-              ssoTicket.setSessionKey(sessionKey);
-              ssoTicket = ssoLoginService.login(session, ssoTicket);
-              // ssoTicket.getResult()
-          }
-          String[] HeaderName = new String[]{"Content-Type","Authorization"};
-        String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8","Basic d2ViQXBwOndlYkFwcA=="};
-        try {
-            String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token","username="+"admin"+"&password="+"admin",HeaderName,HeaderValue);
-            JSONObject resultJson = JSON.parseObject(result);
-            System.out.printf(resultJson.getString("datas"));
-            if (resultJson.getInteger("resp_code") == 0){
+    String sessionId = request.getRequestedSessionId();
+    /*       if (sessionId==null){}*/
+    String ssoSupServerUrl = "http://10.101.201.154:9092";
+    ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+    ssoTicket = ssoLoginService.checkTicket(ssoTicket);
+    ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+    HttpSession session = request.getSession();
+    if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
+        ssoTicket.setSessionKey(sessionKey);
+        ssoTicket = ssoLoginService.login(session, ssoTicket);
+        // ssoTicket.getResult()
+    }
+    String[] HeaderName = new String[]{"Content-Type", "Authorization"};
+    String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
+    try {
+        String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token", "username=" + "admin" + "&password=" + "admin", HeaderName, HeaderValue);
+        JSONObject resultJson = JSON.parseObject(result);
+        System.out.printf(resultJson.getString("datas"));
 
-                model.addAttribute("token",resultJson.getString("datas"));
-            }
+        session.setAttribute("token",resultJson.getString("datas"));
+
+
+        if (resultJson.getInteger("resp_code") == 0) {
+
+            model.addAttribute("token", resultJson.getString("datas"));
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        String algorithmlabel="行业通用";
-        List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    String algorithmlabel = "行业通用";
+    List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
 
 
-        String algorithmlabel1="行业专用";
-        List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+    String algorithmlabel1 = "行业专用";
+    List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
 
-        String algorithmlabe2="人工智能";
-        List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+    String algorithmlabe2 = "人工智能";
+    List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
 
 
-        List<Algorithm> algorithmListAll= algorithmDebugService.selectAlgorithm();
-        List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
-        model.addAttribute("programmeList",programmeList);
-        List<Programme> programmeList1= modelService.selectAllModelByType("工程施工");
-        model.addAttribute("programmeList1",programmeList1);
-        List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
-        model.addAttribute("programmeList2",programmeList2);
-        List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
-        model.addAttribute("programmeList3",programmeList3);
+    List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+    List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+    model.addAttribute("programmeList", programmeList);
+    List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+    model.addAttribute("programmeList1", programmeList1);
+    List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+    model.addAttribute("programmeList2", programmeList2);
+    List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+    model.addAttribute("programmeList3", programmeList3);
 
-        model.addAttribute("algorithmListGeneral",algorithmListGeneral);
-        model.addAttribute("algorithmListSpecial",algorithmListSpecial);
-        model.addAttribute("algorithmListIntelligence",algorithmListIntelligence);
-        model.addAttribute("algorithmListAll",algorithmListAll);
-        model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-          return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+    model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+    model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+    model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+    model.addAttribute("algorithmListAll", algorithmListAll);
+    model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+    return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
   /*    }else {
           return "redirect:http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008";
       }*/
-
     }
 
     /**
@@ -160,7 +167,7 @@ public class SsoController {
     {
        /* log.debug("getLogParam");*/
         String ssoSupServerUrl="http://10.101.201.154:9092";
-        String localUrl="http://10.101.201.173:7008";
+        String localUrl="http://10.101.201.173";
         String sessionId = request.getRequestedSessionId();
         SsoLogin ssoLogin = ssoLoginService.getLogParam(sessionId);
         ssoLogin.setSsoClientUrl(localUrl);
@@ -171,12 +178,56 @@ public class SsoController {
         modelAndView.setViewName("sso/logout");
        return modelAndView;
     }
+    @GetMapping(value = "/session")
+    public ModelAndView session(Model model,@RequestParam("sessionId") String sessionId, HttpServletResponse response) {
+//        log.info("session={}:{}", sessionKey, sessionId);
+        System.out.printf(sessionId);
+        MySessionContext myc= MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(sessionId);
+        System.out.printf("\n\n\n\n\n\n\n\n\n");
+        System.out.printf(sess.getAttribute("token").toString());
+        Cookie name = new Cookie(sessionKey, sessionId);
+        name.setPath("/");
+        name.setMaxAge(2592000);
+        response.addCookie(name);
+        System.out.printf(response.toString());
 
 
-    @RequestMapping("/session")
-    public String session(){
-        return "sso/session";
+        String algorithmlabel = "行业通用";
+        List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+
+
+        String algorithmlabel1 = "行业专用";
+        List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+
+        String algorithmlabe2 = "人工智能";
+        List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+
+
+        List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+        List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+        model.addAttribute("programmeList", programmeList);
+        List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+        model.addAttribute("programmeList1", programmeList1);
+        List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+        model.addAttribute("programmeList2", programmeList2);
+        List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+        model.addAttribute("programmeList3", programmeList3);
+
+        model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+        model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+        model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+        model.addAttribute("algorithmListAll", algorithmListAll);
+        model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+
+        model.addAttribute("token",sess.getAttribute("token").toString());
+        return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
     }
+
+//    @RequestMapping("/session")
+//    public String session(){
+//        return "sso/session";
+//    }
     /**
      * 检查session的是否存在
      *
@@ -189,7 +240,7 @@ public class SsoController {
     public SsoLogin checkSession(HttpServletRequest request)
     {
         String ssoSupServerUrl="http://10.101.201.154:9092";
-        String localUrl="http://10.101.201.173:7008";
+        String localUrl="http://10.101.201.173/ZT";
         /*log.debug("checkSession");*/
         String sessionId = request.getRequestedSessionId();
         SsoLogin ssoLogin = ssoLoginService.checkSession(sessionId);

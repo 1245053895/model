@@ -71,10 +71,10 @@
 <div class="Hometitlebox">
     <a style=" color: #00e4ff;" href="/ZT">城市地下空间工程大数据智能分析平台</a>
 </div>
-<a href="/sso/getLogParam"><input class="btn btn-success radius" type="button" style="position: absolute;
+<a id="getLogParam" href="/sso/getLogParam"><input class="btn btn-success radius" type="button" style="position: absolute;
     margin-top: -2.1%;
     margin-left: 89%;
-    width: 5%;" value="注销"/><input type="hidden" onclick="cleanToken()"/></a>
+    width: 5%;" value="注销" onclick="cleanToken()"/></a>
 <!--动效显示-->
 <div class="flasheffectoutbox">
 
@@ -461,9 +461,20 @@
             "token":[[${token}]]
         };
         localStorage.setItem("easyweb",JSON.stringify(token));
-    };
+
+
+    }
     function cleanToken() {
         localStorage.clear();
+        DelCookie("ZNFX-SESSION-ID");
+        window.location.href = "/sso/getLogParam";
+
+    }
+    function DelCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = GetCookie(name);
+        document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
     }
 </script>
 <script>
