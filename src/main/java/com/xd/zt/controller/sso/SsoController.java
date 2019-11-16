@@ -68,74 +68,79 @@ public class SsoController {
 
     String idnumber = ssoTicket.getIdNumber();
     SysUser sysUser = sysUserMenuMapper.getSysUserByIdNumber(idnumber);
+/*    SecurityUtils.getSubject().getSession().setAttribute("sysUser", sysUser); //将用户信息存入session中*/
+ /*   Subject subject = SecurityUtils.getSubject();
+    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+    subject.login(token);*/
+ if (sysUser!=null){
+     String username = sysUser.getUsername();
+     String password = sysUser.getPassword();
+     Integer id=sysUser.getId();
+     String sessionId = request.getRequestedSessionId();
+     /*       if (sessionId==null){}*/
+     String ssoSupServerUrl = "http://10.101.201.154:9092";
+     ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+     ssoTicket = ssoLoginService.checkTicket(ssoTicket);
+     ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+     HttpSession session = request.getSession();
 
-    String username = sysUser.getUsername();
-    String password = sysUser.getPassword();
-//    Subject subject = SecurityUtils.getSubject();
-//    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//    subject.login(token);
-      /*  String idnumber=ssoTicket.getIdNumber();zx
-      UserInfo userInfo= userInfoMapper.selectUserInfoByIdNumber(idnumber);
-      if (userInfo!=null){*/
-    String sessionId = request.getRequestedSessionId();
-    /*       if (sessionId==null){}*/
-    String ssoSupServerUrl = "http://10.101.201.154:9092";
-    ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
-    ssoTicket = ssoLoginService.checkTicket(ssoTicket);
-    ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
-    HttpSession session = request.getSession();
-    if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
-        ssoTicket.setSessionKey(sessionKey);
-        ssoTicket = ssoLoginService.login(session, ssoTicket);
-        // ssoTicket.getResult()
-    }
-    String[] HeaderName = new String[]{"Content-Type", "Authorization"};
-    String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
-    try {
-        String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token", "username=" + "admin" + "&password=" + "admin", HeaderName, HeaderValue);
-        JSONObject resultJson = JSON.parseObject(result);
-        System.out.printf(resultJson.getString("datas"));
-
-        session.setAttribute("token",resultJson.getString("datas"));
+     session.setAttribute("id",id);
+     System.out.println("session sysuser为: "+ id);
 
 
-        if (resultJson.getInteger("resp_code") == 0) {
 
-            model.addAttribute("token", resultJson.getString("datas"));
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    String algorithmlabel = "行业通用";
-    List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+     if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
+         ssoTicket.setSessionKey(sessionKey);
+         ssoTicket = ssoLoginService.login(session, ssoTicket);
+         // ssoTicket.getResult()
+     }
+     String[] HeaderName = new String[]{"Content-Type", "Authorization"};
+     String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
+     try {
+         String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token", "username=" + "admin" + "&password=" + "admin", HeaderName, HeaderValue);
+         JSONObject resultJson = JSON.parseObject(result);
+         System.out.printf(resultJson.getString("datas"));
 
-
-    String algorithmlabel1 = "行业专用";
-    List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
-    String algorithmlabe2 = "人工智能";
-    List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+         session.setAttribute("token",resultJson.getString("datas"));
 
 
-    List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
-    List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
-    model.addAttribute("programmeList", programmeList);
-    List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
-    model.addAttribute("programmeList1", programmeList1);
-    List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
-    model.addAttribute("programmeList2", programmeList2);
-    List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
-    model.addAttribute("programmeList3", programmeList3);
+         if (resultJson.getInteger("resp_code") == 0) {
 
-    model.addAttribute("algorithmListGeneral", algorithmListGeneral);
-    model.addAttribute("algorithmListSpecial", algorithmListSpecial);
-    model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
-    model.addAttribute("algorithmListAll", algorithmListAll);
-    model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-    return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
-  /*    }else {
-          return "redirect:http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008";
-      }*/
+             model.addAttribute("token", resultJson.getString("datas"));
+         }
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     String algorithmlabel = "行业通用";
+     List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+
+
+     String algorithmlabel1 = "行业专用";
+     List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+
+     String algorithmlabe2 = "人工智能";
+     List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+
+
+     List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+     List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+     model.addAttribute("programmeList", programmeList);
+     List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+     model.addAttribute("programmeList1", programmeList1);
+     List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+     model.addAttribute("programmeList2", programmeList2);
+     List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+     model.addAttribute("programmeList3", programmeList3);
+
+     model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+     model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+     model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+     model.addAttribute("algorithmListAll", algorithmListAll);
+     model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+     return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+ }else {
+     return new ModelAndView("userlog/permission", "Modelmodel", model);
+ }
     }
 
     /**

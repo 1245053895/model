@@ -29,8 +29,11 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         //获得当前登录的用户及用户权限
-        Subject subject= SecurityUtils.getSubject();
-      SysUser sysUser=  (SysUser) subject.getPrincipal();
+        Integer id= (Integer) SecurityUtils.getSubject().getSession().getAttribute("id");
+        System.out.println("..........: "+id);
+     SysUser sysUser= (SysUser) SecurityUtils.getSubject().getSession().getAttribute("id");
+/*        Subject subject= SecurityUtils.getSubject();*/
+    /*  SysUser sysUser=  (SysUser) subject.getPrincipal();*/
       Integer user_id=sysUser.getId();
      List<SysMenu> sysMenuList= sysUserMenuService.selectMenuByUserId(user_id);
     for (SysMenu sysMenu:sysMenuList)

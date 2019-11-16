@@ -21,10 +21,10 @@ public class ShiroConfig {
         //设置拦截器 认证登录
         Map<String,String> filterMap=new LinkedHashMap<>();
 //        filterMap.put("/login","anon"); /* 无需认证(登录)即可访问*/
-        /*filterMap.put("/model/designList","perms[user:kancha]");
+        filterMap.put("/model/designList","perms[user:kancha]");
         filterMap.put("/model/constructList","perms[user:gongcheng]");
         filterMap.put("/model/maintainList","perms[user:yunying]");
-        filterMap.put("/model/cityList","perms[user:zhihui]");*/
+        filterMap.put("/model/cityList","perms[user:zhihui]");
 
         //配置退出过滤器
       /*  filterMap.put("/logout","logout");*/
@@ -32,8 +32,8 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         shiroFilterFactoryBean.setLoginUrl("/login");
         filterMap.put("/login","authc");  /* 必须认证才可访问*/
-        shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/permission");
+        shiroFilterFactoryBean.setLoginUrl("http://10.101.201.154:9092/sso/login.html?ssoClientUrl=http://10.101.201.173:7008");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/ss0/permission");
         return shiroFilterFactoryBean;
     }
     // 2、创建DefaultWebSecurityManager  管理realm，去连接外部数据。
