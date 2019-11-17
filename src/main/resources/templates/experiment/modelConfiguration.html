@@ -96,6 +96,9 @@
             <input th:each="analyseCsvList:${analyseCsvList}" class="btn btn-success radius" type="button"
                    style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${analyseCsvList.getCsvpath()}"
                    th:value="${analyseCsvList.getCsvname()}"  onclick="selectData(this.id)"/>
+            <input th:each="experimentResultList:${experimentResultList}" class="btn btn-success radius" type="button"
+                   style="float:left;margin-left: 2%;margin-top: 2%;" th:id="${experimentResultList.resultpath}"
+                   th:value="${experimentResultList.resultname}"  onclick="selectData(this.id)"/>
         </div>
     </div>
 

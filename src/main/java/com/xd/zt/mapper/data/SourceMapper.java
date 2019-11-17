@@ -6,6 +6,7 @@ import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.data.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -68,4 +69,5 @@ public interface SourceMapper {
 
     List<DatamodelInfo> infoByAreaId(@Param("areaid")Integer areaid);
 
+    List<DatamodelInfo> selectInfoList(@Param("modelid")Integer modelid);
 }

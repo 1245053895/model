@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>检索排序管理模块</title>
+   <!-- <link rel="stylesheet" href="css/threeTwo.css" type="text/css"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据建模 <span class="c-gray en">&gt;</span> 数据库模块<!-- <span class="c-gray en">&gt;</span> 数据管理 --><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" >
+    <div class="panel panel-default" >
+        <div class="panel-header">源数据列表
+            <!--<input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"  onclick="javascript:history.back(-1);"/>-->
+            <!--<a th:href="@{/upFile}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
+        </div>
+        <div class="panel-body">
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >数据名</th>
+                        <th >数据类型</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-c" th:each="datamodelSourceList:${datamodelSourceList}">
+                            <td><a th:href="@{'/data/fileReview/'+ ${datamodelSourceList.sourceid}}" style="cursor:pointer" class="text-primary" th:text="${datamodelSourceList.sourcename}"></a></td>
+                            <td>上传数据</td>
+                            <td>
+                                <a th:href="@{'/data/fileReview/'+ ${datamodelSourceList.sourceid}}">
+                                    <input class="btn btn-primary size-MINI radius" type="button" value="打开">
+                                </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        </div>
+
+    <div class="panel panel-default" style="margin-top: 1%">
+        <div class="panel-header">过程数据列表
+            <!--<input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="返回"  onclick="javascript:history.back(-1);"/>-->
+            <!--<a th:href="@{/upFile}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
+        </div>
+        <div class="panel-body">
+            <div style="margin-top: 1%">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th >数据名</th>
+                        <th >数据类型</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-c" th:each="datamodelInfoList:${datamodelInfoList}">
+                        <td><a th:href="@{'/data/dataReview/'+ ${datamodelInfoList.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${datamodelInfoList.dataresultname}"></a></td>
+                        <td>过程数据</td>
+                        <td>
+                            <a th:href="@{'/data/dataReview/'+ ${datamodelInfoList.dataresultid}}">
+                                <input class="btn btn-primary size-MINI radius" type="button" value="打开">
+                            </a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+

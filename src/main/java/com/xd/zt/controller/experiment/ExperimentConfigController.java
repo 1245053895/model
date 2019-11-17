@@ -8,10 +8,7 @@ import com.xd.zt.domain.analyse.*;
 import com.xd.zt.domain.business.BusinessModel;
 import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.data.DatamodelInfo;
-import com.xd.zt.domain.experiment.ExperimentConfig;
-import com.xd.zt.domain.experiment.ExperimentData;
-import com.xd.zt.domain.experiment.ExperimentModel;
-import com.xd.zt.domain.experiment.ExperimentTraintest;
+import com.xd.zt.domain.experiment.*;
 import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.experiment.ExperimentConfigService;
@@ -45,8 +42,10 @@ public class ExperimentConfigController {
     @RequestMapping("/reviewModelConfiguration/{experimentid}")
     public ModelAndView datalead(Model model,@PathVariable("experimentid") Integer experimentid) {
         List<ExperimentConfig> experimentConfigList= experimentConfigService.findAllByExperimentId(experimentid);
+
         model.addAttribute("experimentid",experimentid);
         model.addAttribute("experimentConfigList",experimentConfigList);
+
         return new ModelAndView("experiment/reviewModelConfiguration", "modelModel", model);
     }
 
@@ -174,7 +173,8 @@ public class ExperimentConfigController {
             else {
             }
         }
-
+        List<ExperimentResult> experimentResultList =experimentRunService.selectResultById(experimentid);
+        model.addAttribute("experimentResultList",experimentResultList);
            model.addAttribute("experimentDatas",experimentDatas);
            model.addAttribute("experimentid",experimentid);
            model.addAttribute("typeAlgorithms",typeAlgorithms);

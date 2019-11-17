@@ -23,4 +23,8 @@
     <update id="updateProgrammeId" parameterType="Integer">
         update experiment_config set programmeid = #{programmeid} where id = #{id}
     </update>
+
+    <select id="selectResultById" parameterType="Integer" resultType="ExperimentResult">
+                select * from experiment_result where experimentid = #{experimentid}
+    </select>
 </mapper>

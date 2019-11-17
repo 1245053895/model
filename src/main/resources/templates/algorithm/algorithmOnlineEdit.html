@@ -40,7 +40,7 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>  <span class="c-gray en"></span> 算法库<span class="c-gray en">&gt;</span> 算法在线编辑  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="margin-top: -2%" >
 
-    <input class="btn btn-primary radius" type="button" style="    position: absolute; margin-top: 42%;right: 30%; z-index: 100;"  value="保存" onclick="jumpDialog()" />
+    <input class="btn btn-primary radius" type="button" style="    position: absolute; margin-top: 42%;right: 7%; z-index: 100;"  value="保存" onclick="jumpDialog()" />
 
     <div class="container-fluid row allBorder">
 
@@ -60,7 +60,7 @@
         <div id="myTabContent" class="tab-content" style="margin-top: 7%">
             <div class="tab-pane active" id="codePython" >
                     <input type="hidden" name="_method" value="put">
-                    <div class="form-group formLine2Border">
+                    <div class="form-group formLine2Border" style="margin-left: 7%;">
                         <textarea class="form-control formLine2TextareaBorder "  rows="35" cols="20" id="pythonInput" name="codeContent"></textarea>
                     </div>
 
@@ -75,32 +75,32 @@
         </div>
     </div>
 
-    <div class="col-sm-4 col-lg-4 col-md-4 rightBorder" id="workSpace2">
-        <div class="leftBorder2_top">
-            <span class="leftBorder2_top_text">代码模板:</span>
-            <span class="leftBorder2_top_option">
-                <select id="selectCollection" class="input-text radius size-S" style=" margin-left: 11%;margin-top: 1.5%;font-size: 15px"  onchange="moban()" >
-                    <option value="" disabled selected hidden>请选择代码模板</option>
-                    <!--<option value="模板一" >模板一</option>-->
-                    </select>
-            </span>
-        </div>
-        <div class="leftBorder2_mid">
-            <span class="leftBorder2_mid_text">程序输入:</span>
-            <textarea id="inputarea" class="inputarea"></textarea>
-            <span class="leftBorder2_mid_button">
-             	<button type="button" class="btn btn-default">运行</button>
-            </span>
-        </div>
-        <div class="leftBorder2_but">
-            <span class="leftBorder2_but_text">结果输出:</span>
-            <textarea id="outputarea" class="outputarea"></textarea>
-            <span class="leftBorder2_but_button">
-             	<button type="button" class="btn btn-default">返回</button>
-            </span>
+    <!--<div class="col-sm-4 col-lg-4 col-md-4 rightBorder" id="workSpace2">-->
+        <!--<div class="leftBorder2_top" style="margin-left: -100%;">-->
+            <!--<span class="leftBorder2_top_text">代码模板:</span>-->
+            <!--<span class="leftBorder2_top_option">-->
+                <!--<select id="selectCollection" class="input-text radius size-S" style=" margin-left: 11%;margin-top: 1.5%;font-size: 15px"  onchange="moban()" >-->
+                    <!--<option value="" disabled selected hidden>请选择代码模板</option>-->
+                    <!--&lt;!&ndash;<option value="模板一" >模板一</option>&ndash;&gt;-->
+                    <!--</select>-->
+            <!--</span>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="leftBorder2_mid">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="leftBorder2_mid_text">程序输入:</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<textarea id="inputarea" class="inputarea"></textarea>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="leftBorder2_mid_button">&ndash;&gt;-->
+             	<!--&lt;!&ndash;<button type="button" class="btn btn-default">运行</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="leftBorder2_but">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="leftBorder2_but_text">结果输出:</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<textarea id="outputarea" class="outputarea"></textarea>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="leftBorder2_but_button">&ndash;&gt;-->
+             	<!--&lt;!&ndash;<button type="button" class="btn btn-default">返回</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</span>&ndash;&gt;-->
 
-        </div>
-    </div>
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
     </div>
 </div>
 
@@ -110,7 +110,7 @@
     <div class="modal-dialog">
         <div class="modal-content radius">
             <div class="modal-header">
-                <h3 class="modal-title">算法上传</h3>
+                <h3 class="modal-title">算法保存</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             </div>
             <div class="modal-body">

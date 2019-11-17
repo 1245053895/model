@@ -169,4 +169,7 @@
         SELECT * FROM datamodel_source WHERE sourceid=#{sourceid}
     </select>
 
+    <select id="selectInfoList" parameterType="Integer" resultType="DatamodelInfo">
+         SELECT * FROM datamodel_info WHERE modelid = #{modelid}
+    </select>
 </mapper>

@@ -76,4 +76,6 @@ public interface SourceService {
 
 
     List<DatamodelInfo> infoByAreaId(@Param("areaid")Integer areaid);
+
+    List<DatamodelInfo> selectInfoList(@Param("modelid")Integer modelid);
 }

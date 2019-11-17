@@ -47,6 +47,9 @@
 			<input th:each="datamodelInfoList:${datamodelInfoList}" class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;"
 				   th:id="${datamodelInfoList.dataaddr}" th:value="${datamodelInfoList.getDataresultname()}"
 				   onclick="selectData(this.id)"/>
+			<input th:each="datamodelSourceList:${datamodelSourceList}" class="btn btn-success radius" type="button" style="float:left;margin-left: 2%;margin-top: 2%;"
+				   th:id="${datamodelSourceList.sourcepath}" th:value="${datamodelSourceList.sourcename}"
+				   onclick="selectData(this.id)"/>
 		</div>
 	</div>
 	<div class="panel panel-default"

@@ -87,8 +87,7 @@
                 <li><a th:id="'/data/datablockbuild/'+ ${dataModelList.modelid}" data-href="datablockbuild" data-title="数据块" href="javascript:void(0)">数据块</a></li>
 				<li><a th:id="'/data/databaobuild/'+ ${dataModelList.modelid}" data-href="databaobuild" data-title="数据包" href="javascript:void(0)" >数据包</a></li>
 				<li><a th:id="'/data/dataAggrebuild/'+ ${dataModelList.modelid}" data-href="dataAggrebuild" data-title="数据集" href="javascript:void(0)">数据集</a></li>
-				<!--<li><a th:id="'/data/databaselist/'+ ${dataModelList.modelid}" data-href="databaselist" data-title="数据库" href="javascript:void(0)">数据库</a></li>-->
-
+				<li><a th:id="'/data/databaselist/'+ ${dataModelList.modelid}" data-href="databaselist" data-title="数据库" href="javascript:void(0)">数据库</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -162,9 +161,9 @@
 							var question = document.getElementById(questionhref);
 							question.setAttribute('data-href',questionhref);
 
-                            // var questionhref="/data/databaselist/"+ id.toString();
-                            // var question = document.getElementById(questionhref);
-                            // question.setAttribute('data-href',questionhref);
+                            var questionhref="/data/databaselist/"+ id.toString();
+                            var question = document.getElementById(questionhref);
+                            question.setAttribute('data-href',questionhref);
                         }
                     }
                 }

@@ -233,4 +233,10 @@ public class SourceServiceImpl implements SourceService {
         List<DatamodelInfo> datamodelInfoList = sourceMapper.infoByAreaId(areaid);
         return datamodelInfoList;
     }
+
+    @Override
+    public List<DatamodelInfo> selectInfoList(Integer modelid) {
+        List<DatamodelInfo> datamodelInfoList = sourceMapper.selectInfoList(modelid);
+        return datamodelInfoList;
+    }
 }

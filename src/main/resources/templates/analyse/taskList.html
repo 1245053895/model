@@ -20,28 +20,6 @@
             <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
         </div>
         <div class="panel-body">
-            <div >
-                <!--实现模糊搜索-->
-                <form method="get" action="#" th:action="@{/analyse/exampleListSearch}">
-                <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="name" value=""
-                       id="search_text" autocomplete="off" style="width:30%">
-                <button type="submit" class="btn btn-default" id="search_button">
-                    搜索
-                </button>
-                <!--&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${analyseFlowList.size()}"></a>&nbsp;&nbsp;个分析模型实例】-->
-            </form>
-
-                <!--<form method="get" action="#" th:action="@{/exampleListSearch}" id="searchForm">-->
-                    <!--<input type="text" placeholder="请输入关键词" class="input-text ac_input"   name="name" th:value="${name}"-->
-                           <!--id="search_text" autocomplete="off" style="width:30%">-->
-                    <!--&lt;!&ndash;<input type="hidden"  name="modelid" th:value="${modelid}"&ndash;&gt;-->
-                           <!--&lt;!&ndash;autocomplete="off" style="width:30%">&ndash;&gt;-->
-                    <!--<button type="submit" class="btn btn-default" id="search_button" onclick="$('#searchForm').submit()">-->
-                        <!--搜索-->
-                    <!--</button>-->
-                    <!--&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${analyticsTaskList.size()}"></a>&nbsp;&nbsp;个分析模型实例】-->
-                <!--</form>-->
-            </div>
             <div style="margin-top: 1% ;height: 77vh;overflow-x:hidden;overflow-y:auto;">
                 <table class="table table-border table-bordered table-hover table-bg table-sort">
                     <thead>

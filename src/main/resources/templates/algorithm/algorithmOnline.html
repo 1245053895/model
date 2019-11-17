@@ -56,13 +56,13 @@
         <div id="myTabContent" class="tab-content" style="margin-top: 7%">
             <div class="tab-pane active" id="codePython" >
                     <input type="hidden" name="_method" value="put">
-                    <div class="form-group formLine2Border">
+                    <div class="form-group formLine2Border" style="margin-left: 7%;width: 136%;">
                         <textarea class="form-control formLine2TextareaBorder "  rows="35" cols="20" id="pythonInput" name="codeContent"></textarea>
                     </div>
 
 
 <div class="panel-header">
-    <input class="btn btn-primary radius" type="button" style="position: absolute;margin-top: 2%;right: 3%;"  value="保存" onclick="jumpDialog()" />
+    <input class="btn btn-primary radius" type="button" style=" margin-top: 8%; margin-left: 140%;"  value="保存" onclick="jumpDialog()" />
 </div>
 
 
@@ -73,33 +73,33 @@
         </div>
     </div>
 
-    <div class="col-sm-4 col-lg-4 col-md-4 rightBorder" id="workSpace2">
-        <div class="leftBorder2_top">
+    <div class="col-sm-4 col-lg-4 col-md-4 rightBorder" id="workSpace2"      >
+        <div class="leftBorder2_top" style="margin-left: -100%;">
             <span class="leftBorder2_top_text">代码模板:</span>
             <span class="leftBorder2_top_option">
                 <select id="selectCollection" class="input-text radius size-S" style=" margin-left: 11%;margin-top: 1.5%;font-size: 15px"  onchange="moban()" >
                     <option value="" disabled selected hidden>请选择代码模板</option>
-                    <option value="模板一" >模板一</option>
+                    <option value="模板一" >python模板</option>
 
 
                     </select>
             </span>
         </div>
-        <div class="leftBorder2_mid">
-            <span class="leftBorder2_mid_text">程序输入:</span>
-            <textarea id="inputarea" class="inputarea"></textarea>
-            <span class="leftBorder2_mid_button">
-             	<button type="button" class="btn btn-default">运行</button>
-            </span>
-        </div>
-        <div class="leftBorder2_but">
-            <span class="leftBorder2_but_text">结果输出:</span>
-            <textarea id="outputarea" class="outputarea"></textarea>
-            <span class="leftBorder2_but_button">
-             	<button type="button" class="btn btn-default">返回</button>
-            </span>
+        <!--<div class="leftBorder2_mid">-->
+            <!--<span class="leftBorder2_mid_text">程序输入:</span>-->
+            <!--<textarea id="inputarea" class="inputarea"></textarea>-->
+            <!--<span class="leftBorder2_mid_button">-->
+             	<!--<button type="button" class="btn btn-default">运行</button>-->
+            <!--</span>-->
+        <!--</div>-->
+        <!--<div class="leftBorder2_but">-->
+            <!--<span class="leftBorder2_but_text">结果输出:</span>-->
+            <!--<textarea id="outputarea" class="outputarea"></textarea>-->
+            <!--<span class="leftBorder2_but_button">-->
+             	<!--<button type="button" class="btn btn-default">返回</button>-->
+            <!--</span>-->
 
-        </div>
+        <!--</div>-->
     </div>
     </div>
 </div>

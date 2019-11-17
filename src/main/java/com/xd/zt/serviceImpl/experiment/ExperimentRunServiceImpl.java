@@ -45,4 +45,10 @@ public class ExperimentRunServiceImpl implements ExperimentRunService {
     public void updateProgrammeId(Integer programmeid, Integer id) {
         experimentRunMapper.updateProgrammeId(programmeid,id);
     }
+
+    @Override
+    public List<ExperimentResult> selectResultById(Integer experimentid) {
+        List<ExperimentResult> experimentResultList = experimentRunMapper.selectResultById(experimentid);
+        return experimentResultList;
+    }
 }

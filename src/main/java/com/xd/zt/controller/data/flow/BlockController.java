@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.Algorithm;
 import com.xd.zt.domain.data.DatamodelInfo;
+import com.xd.zt.domain.data.DatamodelSource;
 import com.xd.zt.service.data.DataAreaService;
 import com.xd.zt.service.data.DataBlockService;
 import com.xd.zt.service.data.SourceService;
@@ -38,6 +39,7 @@ public class BlockController {
     public ModelAndView datablockcreate(Model model, @PathVariable("id") Integer modelid) {
         model.addAttribute("modelid", modelid);
         List<DatamodelInfo> datamodelInfoList = dataBlockService.selectDataAreaResultById(modelid);
+        List<DatamodelSource> datamodelSourceList = sourceService.datamodelSourceByModeId(modelid.toString(),"0");
         model.addAttribute("datamodelInfoList", datamodelInfoList);
         List<Algorithm> algorithmList = sourceService.selectAlgorithm();
         List<Algorithm> algorithmList1 = new ArrayList<>();
@@ -49,6 +51,7 @@ public class BlockController {
                 j++;
             }
         }
+        model.addAttribute("datamodelSourceList",datamodelSourceList);
         model.addAttribute("algorithmList", algorithmList1);
         return new ModelAndView("data/datablockcreate", "Modelmodel", model);
     }
@@ -148,7 +151,12 @@ public class BlockController {
     @RequestMapping("/databaselist/{id}")
     public ModelAndView databaselist(Model model,@PathVariable("id")Integer datamodelid){
 
+        List<DatamodelSource> datamodelSourceList = sourceService.datamodelSourceByModeId(datamodelid.toString(),"0");
+        List<DatamodelInfo> datamodelInfoList = sourceService.selectInfoList(datamodelid);
 
-        return new ModelAndView("/data/databaselist","",model);
+        model.addAttribute("datamodelSourceList",datamodelSourceList);
+        model.addAttribute("datamodelInfoList",datamodelInfoList);
+
+        return new ModelAndView("data/databaselist","Modelmodel",model);
     }
 }
