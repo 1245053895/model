@@ -69,6 +69,7 @@
     <div class="panel panel-default" style="width: 50%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
         <div class="panel-header">参数配置</div>
         <div class="panel-body" id="dataContent_area" style="height: 34vh;overflow-x:hidden;overflow-y:auto">
+
         </div>
     </div>
 
@@ -81,7 +82,7 @@
 
 
 </div>
-<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-demo" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <!-- 弹出对话框 -->
     <div class="modal-dialog">
         <div class="modal-content radius">
@@ -92,6 +93,7 @@
             <div class="modal-body">
                    <pre id="showData" >
                    </pre>
+                <div id="container" style="height: 40vh;margin-left: 5%"></div>
             </div>
             <div class="modal-footer">
                 <!--<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>-->
@@ -100,6 +102,7 @@
         </div>
     </div>
 </div>
+
 
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
@@ -113,8 +116,6 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     //保存页面数据，封装json，用ajax传递
-
-
     //数据区构建流程保存框
     function runExperiment() {
         if (confirm("确定要运行？")) {
@@ -141,7 +142,14 @@
                         if(data.data != "运行失败"){
                             $.Huimodalalert("运行成功", 1000);
                             document.getElementById("showData").innerText = data.data;
+
                             $("#modal-demo").modal("show");
+                            // Echarts图
+                          var  configflow =[[${configflow}]];
+                         var algorithmname = configflow.split(";")[1];
+                            showEcharts(algorithmname,data.data);
+
+
                             $.Huimodalalert("成功返回结果", 1000);
                         }
                         else {
@@ -233,7 +241,6 @@
 
     })
 </script>
-
 <div id="upfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <!-- 弹出对话框 -->
     <div class="modal-dialog">
@@ -276,8 +283,6 @@
         </div>
     </div>
 </div>
-
-
 
 <script type="text/javascript" th:inline="javascript">
     function jumpDialogAddModel() {
@@ -365,6 +370,51 @@
 
     }
 
+</script>
+
+
+<!--Echarts图-->
+<script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    function showEcharts(algorithmname,data) {
+        if (algorithmname.indexOf("Tzgs") != -1) {
+            TzgsEcharts(algorithmname,data);
+        }
+
+    }
+    function TzgsEcharts(algorithmname,data) {
+            dataJson = JSON.parse(data);
+            var Keys = [];
+            var Values = [];
+            var i = 0;
+            for (var key in dataJson) {
+                Keys[i] = key;
+                Values[i] = dataJson[key];
+                i++;
+            }
+            alert(Keys);
+            alert(Values);
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: Keys
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: Values,
+                    type: 'bar'
+                }]
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+    }
 </script>
 </body>
 </html>
