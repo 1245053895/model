@@ -177,8 +177,9 @@
                         </div>
 
                         <div class="modal-body">
-                            <strong style="margin-left: 5%">算法描述：</strong>
-                            <input type="text" placeholder="请输出算法描述" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" name="algorithmmiaoshu" id="algorithmmiaoshu">
+                            <strong style="margin-left: 5%;position: absolute ">算法说明：</strong>
+                            <textarea name="textarea" id="textarea" style="border: 1px solid #DDDDDD;margin-left: 20%;width: 46%;height: 7vh;"></textarea>
+                            <input type="text" placeholder="请输出算法描述" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" name="algorithmmiaoshu"  id="algorithmmiaoshu">
                         </div>
 
                         <div class="button_position">
@@ -220,8 +221,8 @@
         var algorithmparamsinput =  $("input[id='algorithmparamsinput']").val();
         var algorithmparamscontent =  $("input[id='algorithmparamscontent']").val();
         var algorithmparamsoutput =  $("input[id='algorithmparamsoutput']").val();
-
-        var algorithmmiaoshu =  $("input[id='algorithmmiaoshu']").val();
+        var algorithmmiaoshu =$("#textarea").val();
+        // var algorithmmiaoshu =  $("input[id='algorithmmiaoshu']").val();
 
 
         $.ajax({
