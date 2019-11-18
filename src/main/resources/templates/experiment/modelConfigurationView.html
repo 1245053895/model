@@ -82,18 +82,18 @@
 
 
 </div>
-<div id="modal-demo" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div id="modal-demo" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <!-- 弹出对话框 -->
-    <div class="modal-dialog">
+    <div class="modal-dialog"  style="width: 95%;height: 90%">
         <div class="modal-content radius">
             <div class="modal-header">
                 <h3 class="modal-title">返回的结果</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             </div>
             <div class="modal-body">
-                   <pre id="showData" >
-                   </pre>
-                <div id="container" style="height: 40vh;margin-left: 5%"></div>
+                   <!--<pre id="showData" >-->
+                   <!--</pre>-->
+                <div id="container" style="height: 75vh"></div>
             </div>
             <div class="modal-footer">
                 <!--<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>-->
@@ -141,7 +141,7 @@
                     success: function (data) {
                         if(data.data != "运行失败"){
                             $.Huimodalalert("运行成功", 1000);
-                            document.getElementById("showData").innerText = data.data;
+                            // document.getElementById("showData").innerText = data.data;
 
                             $("#modal-demo").modal("show");
                             // Echarts图
@@ -375,46 +375,22 @@
 
 <!--Echarts图-->
 <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Nhyh.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Tzgs.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Ghxx.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     function showEcharts(algorithmname,data) {
         if (algorithmname.indexOf("Tzgs") != -1) {
             TzgsEcharts(algorithmname,data);
         }
+        if (algorithmname.indexOf("Nhyh") != -1) {
+           NhyhEcharts(algorithmname,data);
+        }
+        if(algorithmname.indexOf("Ghxx") != -1){
+            GhxxEcharts(algorithmname,data);
+        }
+    }
 
-    }
-    function TzgsEcharts(algorithmname,data) {
-            dataJson = JSON.parse(data);
-            var Keys = [];
-            var Values = [];
-            var i = 0;
-            for (var key in dataJson) {
-                Keys[i] = key;
-                Values[i] = dataJson[key];
-                i++;
-            }
-            alert(Keys);
-            alert(Values);
-            var dom = document.getElementById("container");
-            var myChart = echarts.init(dom);
-            var app = {};
-            option = null;
-            option = {
-                xAxis: {
-                    type: 'category',
-                    data: Keys
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: Values,
-                    type: 'bar'
-                }]
-            };
-            if (option && typeof option === "object") {
-                myChart.setOption(option, true);
-            }
-    }
 </script>
 </body>
 </html>
