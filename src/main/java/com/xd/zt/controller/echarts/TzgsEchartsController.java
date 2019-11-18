@@ -11,4 +11,5 @@ public class TzgsEchartsController {
     public String Tzgs(){
         return "echarts/Tzgs";
     }
+
 }
