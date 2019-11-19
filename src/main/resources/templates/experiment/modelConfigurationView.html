@@ -93,7 +93,8 @@
             <div class="modal-body">
                    <!--<pre id="showData" >-->
                    <!--</pre>-->
-                <div id="container" style="height: 75vh"></div>
+                <div id="createtable" style="height: 75vh;overflow-y: auto"></div>
+                <div id="container" style="height: 75vh;overflow-y: auto" ></div>
             </div>
             <div class="modal-footer">
                 <!--<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>-->
@@ -378,6 +379,10 @@
 <script type="text/javascript" th:src="@{/EchartsZlj/Nhyh.js}"></script>
 <script type="text/javascript" th:src="@{/EchartsZlj/Tzgs.js}"></script>
 <script type="text/javascript" th:src="@{/EchartsZlj/Ghxx.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Aqpj.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Djdp.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Dmcj.js}"></script>
+
 <script type="text/javascript" th:inline="javascript">
     function showEcharts(algorithmname,data) {
         if (algorithmname.indexOf("Tzgs") != -1) {
@@ -388,6 +393,15 @@
         }
         if(algorithmname.indexOf("Ghxx") != -1){
             GhxxEcharts(algorithmname,data);
+        }
+        if (algorithmname.indexOf("CZ") != -1 || algorithmname.indexOf("QJ") != -1) {
+            AqpjEcharts(algorithmname,data);
+        }
+        if (algorithmname.indexOf("djdp") != -1){
+            DjdpEcharts(algorithmname,data);
+        }
+        if (algorithmname.indexOf("Dmcj") != -1) {
+            DmcjEcharts(algorithmname,data);
         }
     }
 

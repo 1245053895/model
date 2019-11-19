@@ -5,6 +5,7 @@ function NhyhEcharts(algorithmname,data) {
 }
 
 function NhyhLoadPredictEcharts(algorithmname,data) {
+    document.getElementById("createtable").setAttribute("style","");
     dataJson = JSON.parse(data);
     var Keys = [];
     var Values = [];

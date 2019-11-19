@@ -97,7 +97,7 @@ public class SsoController {
      String[] HeaderName = new String[]{"Content-Type", "Authorization"};
      String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
      try {
-         String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token", "username=" + "admin" + "&password=" + "admin", HeaderName, HeaderValue);
+         String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/openId/token?openId="+idnumber, null, HeaderName, HeaderValue);
          JSONObject resultJson = JSON.parseObject(result);
          System.out.printf(resultJson.getString("datas"));
 
