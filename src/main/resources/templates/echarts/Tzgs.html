@@ -10,32 +10,29 @@
 
        <div id="container" style="height: 81vh"></div>
            <script type="text/javascript">
+
+               var dataArray = eval("("+data+")");
+               var Values = [];
+               var Keys = [];
+               for (var i = 0 ; i < dataArray.length ; i++){
+                   var datas = dataArray[i];
+                   Values[i] = datas[0];
+                   Keys[i] = datas[1];
+               }
                var dom = document.getElementById("container");
                var myChart = echarts.init(dom);
-               var app = {};
-               option = null;
                option = {
                    xAxis: {
                        type: 'category',
-                       data: ["选线得分"]
+                       data: Keys
                    },
                    yAxis: {
-                       type: 'value',
+                       type: 'value'
                    },
                    series: [{
-                       itemStyle : {
-                           normal : {
-                               label: {
-                                   show: true,
-                                   position: 'top',
-                                   textStyle: {
-                                       color: 'black'
-                                   }
-                               }
-                           },
-                       },
-                       data: [17.08/20],
-                       type: 'bar'
+                       data: Values,
+                       type: 'line',
+                       smooth: true
                    }]
                };
                if (option && typeof option === "object") {

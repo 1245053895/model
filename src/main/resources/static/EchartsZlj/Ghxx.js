@@ -5,6 +5,7 @@ function GhxxEcharts(algorithmname,data) {
 }
 
 function GhxxInterStationScoreEcharts(algorithmname,data) {
+    document.getElementById("createtable").setAttribute("style","");
     var Values = data.split(",");
     var values = Values[1].split("]");
     var value = values[0];
