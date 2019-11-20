@@ -86,9 +86,6 @@ public class SsoController {
 
      session.setAttribute("id",id);
      System.out.println("session sysuser为: "+ id);
-
-
-
      if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
          ssoTicket.setSessionKey(sessionKey);
          ssoTicket = ssoLoginService.login(session, ssoTicket);

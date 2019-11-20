@@ -66,6 +66,10 @@ public class HomeController {
         return "wel";
     }
 
+/*    @GetMapping("/wel1")
+    public String wel1(){
+        return "wel1";
+    }*/
 //    @GetMapping("/wel1")
 //    public String wel1(){
 //        return "wel1";
