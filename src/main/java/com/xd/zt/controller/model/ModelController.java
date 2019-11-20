@@ -92,19 +92,20 @@ public class ModelController {
     @RequestMapping("/deleteModel")
     public String deleteModel(@RequestBody JSONObject jsonObject){
         Integer programmeid = jsonObject.getInteger("programmeid");
-        Programme programme = modelService.selectProgrammeById(programmeid);
-        if (programme.getProgrammepath() != null) {
-            File file = new File(programme.getProgrammepath());
-            file.delete();
-            //清除进程
-            boolean result = file.delete();
-            if (!result) {
-                System.gc();
-                file.delete();
-            }
-        }
+//        Programme programme = modelService.selectProgrammeById(programmeid);
+//        if (programme.getProgrammepath() != null) {
+//            File file = new File(programme.getProgrammepath());
+//            file.delete();
+//            //清除进程
+//            boolean result = file.delete();
+//            if (!result) {
+//                System.gc();
+//                file.delete();
+//            }
+//        }
         modelService.deleteModel(programmeid);
-
+        ExperimentConfig experimentConfig = modelService.selectFromExperiment(programmeid);
+        modelService.updateFromExperiment(experimentConfig.getId());
         return programmeid.toString();
     }
 
@@ -199,7 +200,11 @@ public class ModelController {
             String result = HttpCientPost.restPost("http://10.101.201.174:8000/tasks/", jsonString);
             System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
-            if (((JSONObject) resultjson).getBoolean("success") == true) {
+            map.put("resp_code",((JSONObject) resultjson).getInteger("resp_code"));
+            map.put("resp_msg",((JSONObject) resultjson).getString("resp_msg"));
+
+
+            if (((JSONObject) resultjson).getInteger("resp_code") == 0) {
                 String taskId = ((JSONObject) resultjson).getString("taskId");
 
                 //遍历获得所有结果的csv路径
@@ -238,14 +243,18 @@ public class ModelController {
                         }
                     }
                 }
-                map.put("data", ((JSONObject) resultjson).getString("datas"));
+                JSONArray analyzmodel = instance.getJSONArray("analyzmodel");
+                JSONObject programmemodel = analyzmodel.getJSONObject(0);
+                String algorithmname = programmemodel.getString("name");
+                map.put("algorithmname",algorithmname);
+                map.put("datas", ((JSONObject) resultjson).getString("datas"));
                 return map;
             } else {
-                map.put("data", "运行失败");
+//                map.put("data", "运行失败");
                 return map;
             }
         } catch (Exception e) {
-            map.put("data", "运行失败");
+            map.put("resp_msg", e.toString());
             return map;
         }
     }

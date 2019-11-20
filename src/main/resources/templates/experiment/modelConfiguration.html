@@ -165,9 +165,16 @@
     /*<![CDATA[*/
     //保存页面数据，封装json，用ajax传递
     function save() {
+        var num_start=countStart();
+        var num_stop = countStop();
+        var num_algorithm = countAlgorithm();
         if (document.getElementById('saveName').value == "") {
             $.Huimodalalert('请输入结果名称', 2000);
-        } else {
+        }
+        else if (num_stop !=1 || num_start !=1 || num_algorithm != 1){
+            $.Huimodalalert('流程不完整，请检查流程', 2000);
+        }
+        else {
             var flowchart = getModelAndData();
             var datablockname = document.getElementById('saveName').value;
             var experimentid = [[${experimentid}]];
@@ -236,60 +243,60 @@
             }
         }*/
     }
-    //点击运行保存参数，运行算法
-    function saveParameters(datablockresult) {
-        // if (document.getElementById('saveName1').value == "") {
-        // 	$.Huimodalalert('请输入保存名称', 2000);
-        // } else {
-        var modelid = [[${modelid}]];
-        //alert(modelid);
-        var algorithmname= getModelAndData();
-        //alert(algorithmname);
-        var algorithmnameArr = algorithmname.split(';');
-        var analyzmodelArr = "[]";
-        var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
-        for (var i = 1; i < algorithmnameArr.length-1; i++) {
-            var name = algorithmnameArr[i];
-            inputObj = $('.'+name+'input').serializeObject();
-            contentObj = $('.'+name+'content').serializeObject();
-            outputObj = $('.'+name+'output').serializeObject();
-
-            var params = {
-                "inputpath": inputObj,
-                "content":contentObj,
-                "outputpath":outputObj
-            }
-            var instance = {
-                "name": name,
-                "params": params
-            };
-            analyzmodelJsonArr.push(instance);
-        }
-        var analyzmodel = JSON.stringify(analyzmodelJsonArr);
-        // alert(analyzmodel);
-        // }
-        var submitName = datablockresult;
-        var example = {
-            "modelid": modelid,
-            "submitName": submitName,
-            "analyzmodel": analyzmodel
-        };
-        $.ajax({
-            async: false,
-            type: "post",
-            dataType: "json",
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify(example),
-            url: '/data/saveBlockExample',
-            success: function (data) {
-                if (data.code == 1) {
-                    $.Huimodalalert('运行成功，请返回数据块查看结果', 3000);
-                } else if(data.code == 2){
-                    $.Huimodalalert('运行失败', 3000);
-                }
-            }
-        });
-    }
+    // //点击运行保存参数，运行算法
+    // function saveParameters(datablockresult) {
+    //     // if (document.getElementById('saveName1').value == "") {
+    //     // 	$.Huimodalalert('请输入保存名称', 2000);
+    //     // } else {
+    //     var modelid = [[${modelid}]];
+    //     //alert(modelid);
+    //     var algorithmname= getModelAndData();
+    //     //alert(algorithmname);
+    //     var algorithmnameArr = algorithmname.split(';');
+    //     var analyzmodelArr = "[]";
+    //     var analyzmodelJsonArr = JSON.parse(analyzmodelArr);
+    //     for (var i = 1; i < algorithmnameArr.length-1; i++) {
+    //         var name = algorithmnameArr[i];
+    //         inputObj = $('.'+name+'input').serializeObject();
+    //         contentObj = $('.'+name+'content').serializeObject();
+    //         outputObj = $('.'+name+'output').serializeObject();
+    //
+    //         var params = {
+    //             "inputpath": inputObj,
+    //             "content":contentObj,
+    //             "outputpath":outputObj
+    //         }
+    //         var instance = {
+    //             "name": name,
+    //             "params": params
+    //         };
+    //         analyzmodelJsonArr.push(instance);
+    //     }
+    //     var analyzmodel = JSON.stringify(analyzmodelJsonArr);
+    //     // alert(analyzmodel);
+    //     // }
+    //     var submitName = datablockresult;
+    //     var example = {
+    //         "modelid": modelid,
+    //         "submitName": submitName,
+    //         "analyzmodel": analyzmodel
+    //     };
+    //     $.ajax({
+    //         async: false,
+    //         type: "post",
+    //         dataType: "json",
+    //         contentType: 'application/json;charset=UTF-8',
+    //         data: JSON.stringify(example),
+    //         url: '/data/saveBlockExample',
+    //         success: function (data) {
+    //             if (data.code == 1) {
+    //                 $.Huimodalalert('运行成功，请返回数据块查看结果', 3000);
+    //             } else if(data.code == 2){
+    //                 $.Huimodalalert('运行失败', 3000);
+    //             }
+    //         }
+    //     });
+    // }
 
     //数据区构建流程保存框
     function jumpDialog() {
@@ -350,7 +357,13 @@
         return inputs_stop.length;
 
     }
-
+    function countAlgorithm() {
+        var num_start=countStart();
+        var num_stop = countStop();
+        var inputs_algorithm = $("#model_content input");
+        var num_algorithm = inputs_algorithm.length-num_start-num_stop;
+        return num_algorithm;
+    }
     //添加数据图标及信息,逻辑判断信息
     // var clicknumber = 0;
 
@@ -367,6 +380,7 @@
         // localStorage.setItem("algorithm", value);
         var num_start=countStart();
         var num_stop = countStop();
+        var num_algorithm = countAlgorithm();
         if (num_start==0 && value != '开始') {
             $.Huimodalalert('请先添加【开始】', 2000);
         } else if (num_start > 0 && value =='开始') {
@@ -377,10 +391,15 @@
                 $.Huimodalalert('【结束】后不能再添加元素', 2000);
             } else {
                 if (value != '结束') {
-                    $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
-                        + value
-                        + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
-                    init();
+                    if (num_algorithm >0) {
+                        $.Huimodalalert('已经添加一个算法，请先删除', 2000);
+                    }
+                    else {
+                        $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                            + value
+                            + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+                        init();
+                    }
                 } else {
                     $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
                         + value

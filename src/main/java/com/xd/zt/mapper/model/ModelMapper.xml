@@ -41,4 +41,11 @@
      select * FROM programme WHERE programmename LIKE '%${programmename}%'
     </select>
 
+    <select id="selectFromExperiment" parameterType="Integer" resultType="ExperimentConfig">
+        select * from experiment_config where programmeid = #{programmeid}
+    </select>
+
+    <update id="updateFromExperiment" parameterType="Integer">
+        update experiment_config set programmeid = null where id = #{id}
+    </update>
 </mapper>

@@ -16,6 +16,7 @@ function AqpjEcharts(algorithmname,data) {
 }
 function AqpjShiguEcharts(algorithmname,data){
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     dataJson = JSON.parse(data);
     var Keys = [];
     var Values = [];
@@ -68,6 +69,7 @@ function AqpjShiguEcharts(algorithmname,data){
 }
 function AqpjPingjiaEcharts(algorithmname,data){
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     dataJson = JSON.parse(data);
     var Keys = [];
     var Values = [];
@@ -120,6 +122,7 @@ function AqpjPingjiaEcharts(algorithmname,data){
 }
 function AqpjXiangEcharts(algorithmname,data){
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     dataJson = JSON.parse(data);
     var Keys = [];
     var Values = [];

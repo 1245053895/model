@@ -145,7 +145,7 @@
                     data: JSON.stringify(experiment),
                     url: '/experiment/experimentRun',
                     success: function (data) {
-                        if(data.data != "运行失败"){
+                        if(data.resp_code == 0){
                             $.Huimodalalert("运行成功", 1000);
                             // document.getElementById("showData").innerText = data.data;
 
@@ -153,18 +153,17 @@
                             // Echarts图
                           var  configflow =[[${configflow}]];
                          var algorithmname = configflow.split(";")[1];
-                            showEcharts(algorithmname,data.data);
-
+                            showEcharts(algorithmname,data.datas);
 
                             $.Huimodalalert("成功返回结果", 1000);
                         }
                         else {
-                            $.Huimodalalert("运行失败", 1000);
+                            $.Huimodalalert(data.resp_msg, 1000);
 
                         }
                     },
                     error:function (){
-                        $.Huimodalalert("运行失败", 1000);
+                        $.Huimodalalert(data.resp_msg, 1000);
                     }
                 });
             }

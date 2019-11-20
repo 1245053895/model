@@ -88,8 +88,12 @@ public class BlockController {
 //              String result =  HttpCientPost.restPost("http://120.24.157.214:8000/tasks/",jsonString);
                 String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
                 JSON resultjson = JSON.parseObject(result);
+                map.put("resp_code",((JSONObject) resultjson).getInteger("resp_code"));
+                map.put("resp_msg",((JSONObject) resultjson).getString("resp_msg"));
+
+
                 System.out.printf(result);
-                if(((JSONObject) resultjson).getBoolean("success")) {
+                if(((JSONObject) resultjson).getInteger("resp_code") == 0) {
                     String taskId = ((JSONObject) resultjson).getString("taskId");
 
                     JSONObject outputpath = params.getJSONObject("outputpath");
@@ -107,7 +111,6 @@ public class BlockController {
 
                             datamodelInfo.setBlockid(blockid);
                             dataBlockService.processBlockInfo(datamodelInfo);
-                            map.put("code", 1);
                         }
                         else {
                             String Directory = FindLinuxDirectory.FindDirectory("10.101.201.174",22,"root","/zt/IA","find /var/data/celery/output/"+taskId+"/output/ -type f -name '*.csv'");
@@ -126,26 +129,22 @@ public class BlockController {
                                     datamodelInfo.setDataaddr(DirectoryList[j]);
                                     datamodelInfo.setBlockid(blockid);
                                     dataBlockService.processBlockInfo(datamodelInfo);
-                                    map.put("code", 1);
+
                             }
                             }
                         }
                     }
+                    return map;
                 }
                 else {
-                    map.put("code",2);
+                    return map;
                 }
                 //System.out.println(analyzmodel);
             }catch (Exception e){
                 System.out.println(e.getMessage());
-                map.put("code",2);
+                map.put("resp_msg",e.toString());
                 return map;
             }
-//        }
-//        else {
-//            map.put("code",1);
-//        }
-        return map;
     }
 
     @RequestMapping("/databaselist/{id}")

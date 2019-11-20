@@ -17,6 +17,7 @@
  }
 function DmcjPredictEcharts(algorithmname,data) {
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
      dataJson = eval("("+data+")");
     var Values = [];
     var Keys = [];

@@ -1,6 +1,7 @@
 /*轴线纠偏与决定参数的关联规则--csv可视化*/
 /*轴线纠偏预测模型*/
 function zxpcPredict(algorithmname,data) {
+    document.getElementById("createtable").innerHTML = "";
     dataJson=JSON.parse(data); //字符串转json
     //获得key为QcPredValue的value值
     var Qc=[];
@@ -80,6 +81,7 @@ function zxpcPredict(algorithmname,data) {
 
 /*轴线纠偏最大位移预测*/
 function zxpcClassfier(algorithmname,data) {
+    document.getElementById("createtable").innerHTML = "";
     dataJson=JSON.parse(data); //字符串转json
     //获得key为QcPredValue的value值
     var ring=[];

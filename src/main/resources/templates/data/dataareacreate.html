@@ -170,9 +170,16 @@
     /*<![CDATA[*/
     //保存页面数据，封装json，用ajax传递
     function save() {
+        var num_start=countStart();
+        var num_stop = countStop();
+        var num_algorithm = countAlgorithm();
         if (document.getElementById('saveName').value == "") {
             $.Huimodalalert('请输入结果名称', 2000);
-        } else {
+        }
+        else if (num_stop !=1 || num_start !=1 || num_algorithm != 1){
+            $.Huimodalalert('流程不完整，请检查流程', 2000);
+        }
+        else {
             var flowchart = getModelAndData();
             var dataarearesult = document.getElementById('saveName').value;
             var modelid = [[${modelid}]];
@@ -259,10 +266,10 @@
             data: JSON.stringify(example),
             url: '/data/saveAreaExample',
             success: function (data) {
-                if (data.code == 1) {
+                if (data.resp_code == 0) {
                     $.Huimodalalert('运行成功，请返回数据包查看结果', 3000);
-                } else if(data.code == 2){
-                    $.Huimodalalert('运行失败', 3000);
+                } else {
+                    $.Huimodalalert(data.resp_msg, 3000);
                 }
             }
         });
@@ -326,7 +333,13 @@
         var inputs_start = $("#model_content input[value='开始']");
         return inputs_start.length;
     }
-
+    function countAlgorithm() {
+        var num_start=countStart();
+        var num_stop = countStop();
+        var inputs_algorithm = $("#model_content input");
+        var num_algorithm = inputs_algorithm.length-num_start-num_stop;
+        return num_algorithm;
+    }
     //添加数据图标及信息,逻辑判断信息
     var clicknumber = 0;
 
@@ -343,6 +356,7 @@
         localStorage.setItem("algorithm", value);
         var num_stop = countStop();
         var num_start = countStart();
+        var num_algorithm = countAlgorithm();
         // if (clicknumber == 0) {
         //     $.Huimodalalert('请先添加【数据源】', 2000);
         // } else if (clicknumber > 1) {
@@ -357,10 +371,15 @@
                 $.Huimodalalert('【结束】后不能再添加元素', 2000);
             } else {
                 if (value != '结束') {
-                    $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
-                        + value
-                        + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
-                    init();
+                    if (num_algorithm >0) {
+                        $.Huimodalalert('已经添加一个算法，请先删除', 2000);
+                    }
+                    else {
+                        $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
+                            + value
+                            + "' onclick='switchParam(value);'/>" + "<a href='#'><img src='/temp/button-cross.png' class='delete' style='width: 20px;height: 20px;display: none;'/></a>" + "<i class='Hui-iconfont' style='padding-left: 20px;'>&#xe67a;</i></div>");
+                        init();
+                    }
                 } else {
                     $("#model_content").append("<div style = 'margin-right: 2%;margin-top: 10%;float:left' class = 'algorithm_elements'><input class='btn btn-success radius' type='button' value='"
                         + value

@@ -3,6 +3,7 @@ package com.xd.zt.service.model;
 import com.xd.zt.domain.analyse.AnalyseModel;
 import com.xd.zt.domain.business.BusinessModel;
 import com.xd.zt.domain.data.DatamodelName;
+import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.model.Programme;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
@@ -25,4 +26,8 @@ public interface ModelService {
     void saveProgramme(Programme programme);
     Programme selectProgrammeById(@Param("programmeid")Integer programmeid);
     List<Programme> getAllList (@Param("programmename") String programmename);
+
+    ExperimentConfig selectFromExperiment(@Param("programmeid")Integer programmeid);
+
+    void updateFromExperiment(@Param("id") Integer id);
 }

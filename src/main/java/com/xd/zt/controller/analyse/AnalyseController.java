@@ -281,7 +281,8 @@ public class AnalyseController {
 
     @ResponseBody
     @RequestMapping("/exampleRun")
-    public JSON exampleRun(@RequestBody JSONObject jsonObject) throws Exception{
+    public Map<String,Object> exampleRun(@RequestBody JSONObject jsonObject) throws Exception{
+        Map map = new HashMap();
         String modelinstanceid = jsonObject.get("exampleid").toString();
         String instantData = jsonObject.get("instantData").toString();
         String parameterss = analyseService.selectParams(modelinstanceid);
@@ -302,8 +303,11 @@ public class AnalyseController {
             String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
              System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
+            map.put("resp_code",((JSONObject) resultjson).getInteger("resp_code"));
+            map.put("resp_msg",((JSONObject) resultjson).getString("resp_msg"));
 
-            if (((JSONObject) resultjson).getBoolean("success")) {
+
+            if (((JSONObject) resultjson).getInteger("resp_code") == 0) {
                 String taskId = ((JSONObject) resultjson).getString("taskId");
                 JSONObject params = parameters.getJSONObject(0).getJSONObject("params");
                 JSONObject outputpath = params.getJSONObject("outputpath");
@@ -362,15 +366,17 @@ public class AnalyseController {
                         }
                     }
                 }
-                    return resultjson;
+                map.put("datas",((JSONObject) resultjson).getString("datas"));
+                    return map;
             }
             else {
-                return resultjson;
+                return map;
             }
 
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return null;
+            map.put("resp_msg",e.toString());
+            return map;
         }
 
     }

@@ -50,7 +50,11 @@ public class ExperimentRunController {
             String result = HttpCientPost.restPost("http://192.168.6.134:8000/tasks/", jsonString);
             System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
-            if (((JSONObject) resultjson).getBoolean("success")==true) {
+            map.put("resp_code",((JSONObject) resultjson).getInteger("resp_code"));
+            map.put("resp_msg",((JSONObject) resultjson).getString("resp_msg"));
+            System.out.printf(result);
+
+            if (((JSONObject) resultjson).getInteger("resp_code") == 0) {
                 ExperimentConfig experimentConfig = experimentRunService.selectConfig(experimentconfigid);
                 Integer experimentid = experimentConfig.getExperimentid();
                 String taskId = ((JSONObject) resultjson).getString("taskId");
@@ -95,16 +99,15 @@ public class ExperimentRunController {
                         }
                     }
                 }
-
-                map.put("data",((JSONObject) resultjson).getString("datas"));
+                map.put("datas",((JSONObject) resultjson).getString("datas"));
                return  map;
             }else {
-                map.put("data","运行失败");
+//                map.put("data","运行失败");
                 return map;
             }
         }
         catch (Exception e){
-            map.put("data","运行失败");
+            map.put("resp_msg",e.toString());
             return map;
         }
     }

@@ -8,6 +8,7 @@ function TzgsEcharts(algorithmname,data) {
 }
 function TzgsRfEcharts(algorithmname,data){
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     dataJson = JSON.parse(data);
     var Keys = [];
     var Values = [];
@@ -60,6 +61,7 @@ function TzgsRfEcharts(algorithmname,data){
 }
 function TzgsCzEcharts(algorithmname,data){
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     dataJson = JSON.parse(data);
     var Keys = [];
     var Values = [];

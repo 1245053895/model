@@ -8,6 +8,7 @@ function DjdpEcharts(algorithmname,data) {
 }
 function DjdpSomEcharts(algorithmname,data) {
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     var dataArray = eval("("+data+")");
     var Values = [];
     var Keys = [];
@@ -38,6 +39,7 @@ function DjdpSomEcharts(algorithmname,data) {
 }
 function DjdpLstmEcharts(algorithmname,data) {
     document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     var dataArray = eval("("+data+")");
     var datas = dataArray["data"];
     var Values = datas;
