@@ -25,6 +25,12 @@ function TzgsRfEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'投资估算人防预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys
@@ -78,6 +84,12 @@ function TzgsCzEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'投资估算车站预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys

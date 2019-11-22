@@ -20,6 +20,12 @@ function DjdpSomEcharts(algorithmname,data) {
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     option = {
+        title: {
+            text:'刀具刀盘健康评估',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys
@@ -50,6 +56,12 @@ function DjdpLstmEcharts(algorithmname,data) {
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     option = {
+        title: {
+            text:'刀具刀盘磨损预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys

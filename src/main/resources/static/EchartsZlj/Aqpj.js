@@ -33,6 +33,12 @@ function AqpjShiguEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'安全评价事故分类预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys
@@ -86,6 +92,12 @@ function AqpjPingjiaEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'安全评价沉降等级预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Values
@@ -145,6 +157,12 @@ function AqpjXiangEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'安全评价变形等级预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         title:{
             text:Keys1[0]+":"+Values1[0],
             left:'center'

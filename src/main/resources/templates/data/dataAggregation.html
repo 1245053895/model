@@ -73,7 +73,10 @@
                     <td th:text="${dataPackList.baotime}"></td>
                     <td>
 
-                        <a th:href="@{'/data/dataReview/'+ ${dataPackList.baoid}}">
+                        <!--<a th:href="@{'/data/dataReview/'+ ${dataPackList.baoid}}">-->
+                            <!--<input class="btn btn-primary size-MINI radius" type="button" value="打开">-->
+                        <!--</a>-->
+                        <a th:href="@{'/data/baoShow/'+ ${dataPackList.baoid}}">
                             <input class="btn btn-primary size-MINI radius" type="button" value="打开">
                         </a>
 

@@ -47,7 +47,7 @@ public class ExperimentRunController {
         jsonObject.put("instantData",status);
         String jsonString= JSON.toJSONString(jsonObject);
         try {
-            String result = HttpCientPost.restPost("http://192.168.6.134:8000/tasks/", jsonString);
+            String result = HttpCientPost.restPost("http://10.101.201.174:8000/tasks/", jsonString);
             System.out.printf(result);
             JSON resultjson = JSON.parseObject(result);
             map.put("resp_code",((JSONObject) resultjson).getInteger("resp_code"));

@@ -52,7 +52,7 @@
                      <!--</tr>-->
 
                         <tr class="text-c"  th:each="programmeList:${programmeList}">
-                            <td ><a th:text="${programmeList.programmename}" th:href="@{'/model/modelView/'+${programmeList.programmeid}}"></a></td>
+                            <td ><a th:text="${programmeList.programmename}" th:href="@{'/model/modeleditor/'+${programmeList.programmeid}}"></a></td>
                             <td  th:text="${programmeList.programmedescribe}" ></td>
                             <td  th:text="${programmeList.programmetime}" ></td>
                             <td  th:text="${programmeList.username}" ></td>
