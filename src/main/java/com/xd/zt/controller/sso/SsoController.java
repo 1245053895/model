@@ -69,17 +69,17 @@ public class SsoController {
     public ModelAndView login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
     String idnumber = ssoTicket.getIdNumber();
     SysUser sysUser = sysUserMenuMapper.getSysUserByIdNumber(idnumber);
-
 /*    SecurityUtils.getSubject().getSession().setAttribute("sysUser", sysUser); //将用户信息存入session中*/
  /*   Subject subject = SecurityUtils.getSubject();
     UsernamePasswordToken token = new UsernamePasswordToken(username, password);
     subject.login(token);*/
+    String UserName = new String();
  if (sysUser!=null ){
+     UserName = sysUser.getUsername();
      System.out.printf("存在用户");
      List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(sysUser.getId());
     if (sysRoleUserList.size() != 0) {
         System.out.printf("存在用户,有权限");
-        String username = sysUser.getUsername();
         String password = sysUser.getPassword();
         Integer id = sysUser.getId();
         String sessionId = request.getRequestedSessionId();
@@ -140,7 +140,7 @@ public class SsoController {
         model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
         model.addAttribute("algorithmListAll", algorithmListAll);
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-        model.addAttribute("sysUser", sysUser);
+        model.addAttribute("UserName", UserName);
         return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
     }
     else {
@@ -171,7 +171,7 @@ public class SsoController {
         model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
         model.addAttribute("algorithmListAll", algorithmListAll);
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-        model.addAttribute("sysUser",sysUser);
+        model.addAttribute("UserName",UserName);
         return new ModelAndView("userlog/permission", "Modelmodel", model);
     }
  }else {
@@ -202,7 +202,7 @@ public class SsoController {
      model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
      model.addAttribute("algorithmListAll", algorithmListAll);
      model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-     model.addAttribute("sysUser",sysUser);
+     model.addAttribute("UserName",UserName);
      return new ModelAndView("userlog/permission", "Modelmodel", model);
  }
     }
@@ -255,12 +255,14 @@ public class SsoController {
         HttpSession sess = myc.getSession(sessionId);
         System.out.printf("\n\n");
         System.out.printf(sess.getAttribute("token").toString());
+
+        String UserName = sess.getAttribute("UserName").toString();
+
         Cookie name = new Cookie(sessionKey, sessionId);
         name.setPath("/");
         name.setMaxAge(2592000);
         response.addCookie(name);
         System.out.printf(response.toString());
-
 
         String algorithmlabel = "行业通用";
         List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
@@ -288,7 +290,7 @@ public class SsoController {
         model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
         model.addAttribute("algorithmListAll", algorithmListAll);
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-
+        model.addAttribute("UserName",UserName);
         model.addAttribute("token",sess.getAttribute("token").toString());
         return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
     }

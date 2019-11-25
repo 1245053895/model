@@ -75,8 +75,8 @@
 <div class="Hometitlebox">
     <a style=" color: #00e4ff;" href="/sso/permission">城市地下空间工程大数据智能分析平台</a>
 </div>
-<div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${sysUser} != null" th:text="'欢迎您：'+${sysUser.getUsername()}+'    当前身份：游客'+'\n请联系管理员分配功能权限'"></div>
-<div style="color: white; margin-top: -2%; margin-left: 83%;" th:if="${sysUser} == null" th:text="'子系统还未同步当前用户,请稍后'"></div>
+<div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${UserName} != null" th:text="'欢迎您：'+${UserName}+'    当前身份：游客'+'\n请联系管理员分配功能权限'"></div>
+<div style="color: white; margin-top: -2%; margin-left: 83%;" th:if="${UserName} == null" th:text="'子系统还未同步当前用户,请稍后'"></div>
 <!--<a id="getLogParam" href="/sso/getLogParam"><input class="btn btn-success radius" type="button" style="position: absolute;-->
     <!--margin-top: -2.1%;-->
     <!--margin-left: 89%;-->
@@ -462,6 +462,10 @@
         var loading = document.getElementById("loading");
         loading.style.display="none";
 
+        var token = {
+            "username":[[${UserName}]]
+        };
+        localStorage.setItem("easyweb",JSON.stringify(token));
     }
 
 
