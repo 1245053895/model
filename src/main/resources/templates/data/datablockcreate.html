@@ -77,10 +77,10 @@
 		<!--<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"-->
 			   <!--onclick="add(this.value)"/>-->
 		<input id="algorithmName" th:each="algorithmList:${algorithmList}" class="btn btn-success radius" type="button"
-			   style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}" th:name="${algorithmList.algorithmpath}"  onmouseout="removeTitle()" onmousemove="showTitle(this.value,this.name)"
+			   style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}" th:name="${algorithmList.algorithmmiaoshu}"  onmouseout="removeTitle()" onmousemove="showTitle(this.value,this.name)"
 			   onclick="add(this.value);switchParam_form(this.value);"/>
-		<!--switchContent_form--> <div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;display: none">
-	</div>
+		<!--switchContent_form-->
+			<div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;display: none">	</div>
 		<!--<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"-->
 			   <!--onclick="add(this.value)"/>-->
 		</div>
@@ -482,8 +482,7 @@ var count = {};
         showDiv.style.left=event.clientX+"px";
         showDiv.style.top=event.clientY+"px";
         showDiv.style.display = 'block';
-        showDiv.innerHTML =value + '：'+  name
-        ;
+        showDiv.innerHTML =value + '：'+  name;
     }
 
     function removeTitle() {

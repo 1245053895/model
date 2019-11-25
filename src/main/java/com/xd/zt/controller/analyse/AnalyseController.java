@@ -63,7 +63,7 @@ public class AnalyseController {
                 algorithmList1.add(j,algorithmList.get(i));
                 j++;
             }
-        }
+    }
         model.addAttribute("algorithmList",algorithmList1);
         model.addAttribute("analysemodelid",analysemodelid);
         return new ModelAndView("analyse/analyzModelCreate","Modelmoddel",model);

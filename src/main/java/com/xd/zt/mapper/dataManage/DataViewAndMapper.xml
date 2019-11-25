@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.zt.mapper.dataManage.DataViewAndMapper">
+
+    <select id="selectDatamanageById" resultType="DataManage" parameterType="java.lang.Integer">
+        SELECT * FROM datamodel_source WHERE sourceid = #{sourceid};
+    </select>
+
+    <select id="selectDatamodelInfo" resultType="DataManage" parameterType="java.lang.Integer">
+        SELECT * FROM datamodel_info WHERE dataresultid = #{dataresultid};
+    </select>
+
+    <select id="selectAnalyseCsv" resultType="DataManage" parameterType="java.lang.Integer">
+        SELECT * FROM analyse_csv WHERE id = #{id};
+    </select>
+
+</mapper>

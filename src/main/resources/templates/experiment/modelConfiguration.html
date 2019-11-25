@@ -46,23 +46,18 @@
     <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;">
         <div class="panel-header">算法库</div>
         <div style="height: 80%;overflow-x:hidden;overflow-y:auto">
-        <!--<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"-->
-               <!--onclick="add(this.value)"/>-->
-        <input id="algorithmName" th:each="typeAlgorithms:${typeAlgorithms}" class="btn btn-success radius" type="button"
-               style="margin-left: 2%;margin-top: 2%;" th:value="${typeAlgorithms.algorithmname}"
-               onclick="add(this.value);switchParam_form(this.value)"/>
 
-        <!--<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"-->
-               <!--onclick="add(this.value)"/>-->
+            <input id="algorithmName" th:each="typeAlgorithms:${typeAlgorithms}" class="btn btn-success radius" type="button"
+                   style="margin-left: 2%;margin-top: 2%;" th:value="${typeAlgorithms.algorithmname}" th:name="${typeAlgorithms.algorithmmiaoshu}"  onmouseout="removeTitle()" onmousemove="showTitle(this.value,this.name)"
+                   onclick="add(this.value);switchParam_form(this.value);"/>
+            <div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;display: none">	</div>
+
+
         </div>
     </div>
     <div class="panel panel-default"
          style="width: 35%;height: 43vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
-        <div class="panel-header">流程构建
-            <!--	<input class="btn btn-primary radius" type="button"
-                                                    style="position: absolute;margin-top: -0.3%;right: 5%;" value="运行"
-                                                    onclick="jumpDialogSubmit()"/>-->
-        </div>
+        <div class="panel-header">流程构建</div>
         <input class="btn btn-success radius" type="button" style="float: left;margin-left: 16%;margin-top: -6%" value="开始"
                onclick="add(this.value)"/>
         <input class="btn btn-success radius" type="button" style="float: left;margin-left: 28%;margin-top: -6%" value="结束"
@@ -514,5 +509,25 @@
         $.Huimodalalert('数据源添加成功',3000);
     }
 </script>
+
+<script type="text/javascript" th:inline="javascript">
+    function showTitle(value,name) {
+        //alert(id);
+
+        var event=event||window.event;
+        var showDiv = document.getElementById("linkTitle");
+        showDiv.style.left=event.clientX+"px";
+        showDiv.style.top=event.clientY+"px";
+        showDiv.style.display = 'block';
+        showDiv.innerHTML =value + '：'+  name;
+    }
+
+    function removeTitle() {
+        var showDiv = document.getElementById("linkTitle");
+        showDiv.style.display = 'none';
+        showDiv.innerHTML = '';
+    }
+</script>
+
 </body>
 </html>

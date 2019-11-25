@@ -20,9 +20,7 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集成 <span class="c-gray en">&gt;</span> 过程数据列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" >
     <div class="panel panel-default" style="height: 100%">
-        <div class="panel-header">过程数据列表
-            <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
-        </div>
+        <div class="panel-header">过程数据列表</div>
         <div class="panel-body">
             <div >
                 <!--实现模糊搜索-->
@@ -80,11 +78,14 @@
                         <td><a style="cursor:pointer" class="text-primary">数据建模</a></td>
 
                         <td>
-                            <a>
-                                <input class="btn btn-success radius" type="button"     value="配置" />
+
+                            <a  th:href="'/dataManager/dataReview/'+${selectDataList.sourceid}" >
+                                <input th:id="${selectDataList.sourceid}"  class="btn btn-success radius" type="button" value="查看" >
                             </a>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="删除" />
+
+                            <!--<a th:href="@{'/dataManager/fileResultDown/'+ ${selectDataList.sourceid}}">-->
+                            <a th:href="@{'/data/fileDown/'+ ${selectDataList.sourceid}}">
+                                <input class="btn btn-success radius" type="button" value="下载" />
                             </a>
                         </td>
                     </tr>
@@ -93,12 +94,20 @@
                         <td><a style="cursor:pointer" class="text-primary" th:text="${selectDataList1.dataaddr}"></a></td>
                         <td><a style="cursor:pointer" class="text-primary">数据建模</a></td>
                         <td>
-                            <a>
-                                <input class="btn btn-success radius" type="button"     value="配置" />
+
+                            <!--<a>-->
+                                <!--<input class="btn btn-success radius" type="button"    value="查看" />-->
+                            <!--</a>-->
+
+                            <a  th:href="'/dataManager/dataReviewx/'+${selectDataList1.dataresultid}" >
+                                <input th:id="${selectDataList1.dataresultid}"  class="btn btn-success radius" type="button" value="查看" >
                             </a>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="删除" />
+
+
+                            <a th:href="@{'/dataManager/fileResultDownx/'+ ${selectDataList1.dataresultid}}">
+                                <input class="btn btn-success radius" type="button" value="下载" />
                             </a>
+
                         </td>
                     </tr>
                     <tr class="text-c"   th:each="selectDataList2:${selectDataList2}">
@@ -107,41 +116,17 @@
                         <td><a style="cursor:pointer" class="text-primary">分析建模</a></td>
 
                         <td>
-                            <a>
-                                <input class="btn btn-success radius" type="button"     value="配置" />
+
+                            <a  th:href="'/dataManager/dataReviewxx/'+${selectDataList2.id}" >
+                                <input th:id="${selectDataList2.id}"  class="btn btn-success radius" type="button" value="查看" >
                             </a>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="删除" />
+
+
+                            <a th:href="@{'/dataManager/fileResultDownxx/'+ ${selectDataList2.id}}">
+                                <input class="btn btn-success radius" type="button" value="下载" />
                             </a>
                         </td>
                     </tr>
-                   <!-- <tr class="text-c">
-                        <td>统一平台</td>
-                        <td>轴线偏差.png</td>
-
-                        <td>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="配置" />
-                            </a>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="删除" />
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="text-c">
-                        <td>统一平台</td>
-                        <td>刀具刀盘.jpg</td>
-
-                        <td>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="配置" />
-                            </a>
-                            <a>
-                                <input class="btn btn-success radius" type="button" value="删除" />
-                            </a>
-                        </td>
-                    </tr>-->
-
                     </tbody>
                 </table>
             </div>

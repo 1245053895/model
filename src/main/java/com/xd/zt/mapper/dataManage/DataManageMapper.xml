@@ -4,10 +4,10 @@
 <mapper namespace="com.xd.zt.mapper.dataManage.DataManageMapper">
 
 
+
     <select id="selectDataList" resultType="DataManage" >
         SELECT * FROM datamodel_source;
     </select>
-
 
     <select id="selectDataList1" resultType="DataManage" >
         SELECT * FROM datamodel_info;

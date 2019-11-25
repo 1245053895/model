@@ -40,7 +40,7 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>  <span class="c-gray en"></span> 算法库<span class="c-gray en">&gt;</span> 算法在线编辑  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="margin-top: -2%" >
 
-    <input class="btn btn-primary radius" type="button" style="    position: absolute; margin-top: 42%;right: 7%; z-index: 100;"  value="保存" onclick="jumpDialog()" />
+    <input class="btn btn-primary radius" type="button" style="position: absolute; margin-top: 42%;right: 3%; z-index: 100;"  value="保存" onclick="jumpDialog()" />
 
     <div class="container-fluid row allBorder">
 
@@ -60,14 +60,9 @@
         <div id="myTabContent" class="tab-content" style="margin-top: 7%">
             <div class="tab-pane active" id="codePython" >
                     <input type="hidden" name="_method" value="put">
-                    <div class="form-group formLine2Border" style="margin-left: 7%;">
+                    <div class="form-group formLine2Border" style="margin-left: 7%;width: 136%;">
                         <textarea class="form-control formLine2TextareaBorder "  rows="35" cols="20" id="pythonInput" name="codeContent"></textarea>
                     </div>
-
-
-
-
-
             </div>
             <div class="tab-pane" id="codeR">
 
@@ -116,7 +111,7 @@
             <div class="modal-body">
                 <div class="upfile-group">
                     <!--通过onsubmit 去进行提交前其他操作-->
-                    <form  id="form1" onsubmit="return false" action="##" method="post">
+                    <form  id="form1" onsubmit="return false" action="#" method="post">
 
                         <div class="modal-body">
                             <strong style="margin-left: 5%">算法名称：</strong><input type="text" name="pythonName" placeholder="请输入算法名称" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" id="pythonName">
@@ -327,22 +322,6 @@
                 }
             })
         }
-        // function moban() {
-        //
-        //     var algorithmJsonString = [[${algorithmJsonString}]];
-        //     var algorithmJson = eval('('+algorithmJsonString+')');
-        //     var length = Object.keys(algorithmJson).length;
-        //     var textarea = document.getElementById('pythonInput');
-        //     var algorithmArray = new Array();
-        //     // algorithmArray.push("<pre>");
-        //     for (var i = 0; i < length; i++ ){
-        //         // $("#textarea").val(algorithmJson[''+i+''])  ;
-        //         algorithmArray.push(algorithmJson[''+i+'']);
-        //
-        //     }
-        //     // algorithmArray.push("</pre>");
-        //     pythonEditor.setValue(algorithmArray.join("\n"));
-        // }
     </script>
 
     <script type="text/javascript" th:inline="javascript">
