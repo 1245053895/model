@@ -93,14 +93,14 @@ function AqpjPingjiaEcharts(algorithmname,data){
     option = null;
     option = {
         title: {
-            text:'安全评价沉降等级预测',
-            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            text:'安全评价沉降等级预测\n\n'+Keys[1]+':'+Values[1],
+            // subtext:Keys[1]+':'+Values[1],
             x:'center',
             y:'top',
         },
         xAxis: {
             type: 'category',
-            data: Values
+            data: [Keys[0]]
         },
         yAxis: {
             type: 'value',
@@ -113,14 +113,14 @@ function AqpjPingjiaEcharts(algorithmname,data){
                 normal : {
                     label: {
                         show: true,
-                        position: 'top',
+                        position: 'bottom',
                         textStyle: {
                             color: 'black'
                         }
                     }
                 },
             },
-            data: Keys,
+            data: [Values[0]],
             type: 'bar'
         }]
     };

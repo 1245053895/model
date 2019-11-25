@@ -1,10 +1,13 @@
 package com.xd.zt.controller;
 
 import com.xd.zt.domain.analyse.Algorithm;
+import com.xd.zt.domain.dataManage.UploadData;
 import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.business.BusinessModelService;
+import com.xd.zt.service.dataManager.OpenTsdbDataService;
 import com.xd.zt.service.model.ModelService;
+import com.xd.zt.util.dataManager.GetOpenTsdb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,8 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private OpenTsdbDataService openTsdbDataService;
 
     @Autowired
     private AlgorithmDebugService algorithmDebugService;
@@ -82,6 +87,7 @@ public class HomeController {
 
     @RequestMapping("/ZT")
     public ModelAndView algorithmList(Model model){
+
         String algorithmlabel="行业通用";
         List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
 
