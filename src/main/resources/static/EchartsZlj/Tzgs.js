@@ -7,7 +7,10 @@ function TzgsEcharts(algorithmname,data) {
     }
 }
 function TzgsRfEcharts(algorithmname,data){
-    dataJson = JSON.parse(data);
+    document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
+    dataJsons = JSON.parse(data);
+    dataJson = dataJsons["prediction"];
     var Keys = [];
     var Values = [];
     var i = 0;
@@ -23,6 +26,12 @@ function TzgsRfEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'投资估算人防预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys
@@ -58,7 +67,10 @@ function TzgsRfEcharts(algorithmname,data){
     });
 }
 function TzgsCzEcharts(algorithmname,data){
-    dataJson = JSON.parse(data);
+    document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
+    dataJsons = JSON.parse(data);
+    dataJson = dataJsons["prediction"];
     var Keys = [];
     var Values = [];
     var i = 0;
@@ -74,6 +86,12 @@ function TzgsCzEcharts(algorithmname,data){
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'投资估算车站预测',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: Keys

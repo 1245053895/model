@@ -3,6 +3,7 @@ package com.xd.zt.serviceImpl.model;
 import com.xd.zt.domain.analyse.AnalyseModel;
 import com.xd.zt.domain.business.BusinessModel;
 import com.xd.zt.domain.data.DatamodelName;
+import com.xd.zt.domain.experiment.ExperimentConfig;
 import com.xd.zt.domain.model.Programme;
 import com.xd.zt.mapper.model.ModelMapper;
 import com.xd.zt.service.model.ModelService;
@@ -50,6 +51,17 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<Programme> getAllList(String programmename) {
         return modelMapper.getAllList(programmename);
+    }
+
+    @Override
+    public ExperimentConfig selectFromExperiment(Integer programmeid) {
+        ExperimentConfig experimentConfig = modelMapper.selectFromExperiment(programmeid);
+        return experimentConfig;
+    }
+
+    @Override
+    public void updateFromExperiment(Integer id) {
+        modelMapper.updateFromExperiment(id);
     }
 
     @Override

@@ -5,6 +5,8 @@ function GhxxEcharts(algorithmname,data) {
 }
 
 function GhxxInterStationScoreEcharts(algorithmname,data) {
+    document.getElementById("createtable").setAttribute("style","");
+    document.getElementById("createtable").innerHTML = "";
     var Values = data.split(",");
     var values = Values[1].split("]");
     var value = values[0];
@@ -15,6 +17,12 @@ function GhxxInterStationScoreEcharts(algorithmname,data) {
     var app = {};
     option = null;
     option = {
+        title: {
+            text:'规划选线得分',
+            // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
+            x:'center',
+            y:'top',
+        },
         xAxis: {
             type: 'category',
             data: ["选线得分"],

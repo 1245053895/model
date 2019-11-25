@@ -6,7 +6,7 @@
 AND sys_role_user.user_id=#{user_id}
     </select>
     <select id="getSysUserByIdNumber" parameterType="String" resultType="sysUser">
-        SELECT * FROM sys_user WHERE idnumber=#{idnumber}
+        SELECT * FROM sys_user WHERE open_id=#{idnumber}
     </select>
     <select id="getSysUserByName" resultType="sysUser" parameterType="String">
         SELECT * FROM sys_user WHERE username=#{username}

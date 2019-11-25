@@ -93,7 +93,13 @@
             <div class="modal-body">
                    <!--<pre id="showData" >-->
                    <!--</pre>-->
-                <div id="container" style="height: 75vh"></div>
+                <div id="createtable" style="height: 75vh;overflow-y: auto">
+                    <div id="createtable1" style="height: 75vh;overflow-y: auto;margin-top: 8vh"></div>
+                    <div id="createtable2" style="height: 75vh;overflow-y: auto;margin-top: 8vh"></div>
+                    <div id="createtable3" style="height: 75vh;overflow-y: auto;margin-top: 8vh"></div>
+                    <div id="createtable4" style="height: 75vh;overflow-y: auto;margin-top: 8vh"></div>
+                </div>
+                <div id="container" style="height: 75vh;overflow-y: auto" ></div>
             </div>
             <div class="modal-footer">
                 <!--<button class="btn btn-primary" data-dismiss="modal" onclick="save();">确定</button>-->
@@ -139,7 +145,7 @@
                     data: JSON.stringify(experiment),
                     url: '/experiment/experimentRun',
                     success: function (data) {
-                        if(data.data != "运行失败"){
+                        if(data.resp_code == 0){
                             $.Huimodalalert("运行成功", 1000);
                             // document.getElementById("showData").innerText = data.data;
 
@@ -147,18 +153,17 @@
                             // Echarts图
                           var  configflow =[[${configflow}]];
                          var algorithmname = configflow.split(";")[1];
-                            showEcharts(algorithmname,data.data);
-
+                            showEcharts(algorithmname,data.datas);
 
                             $.Huimodalalert("成功返回结果", 1000);
                         }
                         else {
-                            $.Huimodalalert("运行失败", 1000);
+                            $.Huimodalalert(data.resp_msg, 5000);
 
                         }
                     },
                     error:function (){
-                        $.Huimodalalert("运行失败", 1000);
+                        $.Huimodalalert(data.resp_msg, 5000);
                     }
                 });
             }
@@ -378,6 +383,11 @@
 <script type="text/javascript" th:src="@{/EchartsZlj/Nhyh.js}"></script>
 <script type="text/javascript" th:src="@{/EchartsZlj/Tzgs.js}"></script>
 <script type="text/javascript" th:src="@{/EchartsZlj/Ghxx.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Aqpj.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Djdp.js}"></script>
+<script type="text/javascript" th:src="@{/EchartsZlj/Dmcj.js}"></script>
+
+<script type="text/javascript" th:src="@{/EchartsZlj/zxpc.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     function showEcharts(algorithmname,data) {
         if (algorithmname.indexOf("Tzgs") != -1) {
@@ -388,6 +398,33 @@
         }
         if(algorithmname.indexOf("Ghxx") != -1){
             GhxxEcharts(algorithmname,data);
+        }
+        if (algorithmname.indexOf("CZ") != -1 || algorithmname.indexOf("QJ") != -1) {
+            AqpjEcharts(algorithmname,data);
+        }
+        if (algorithmname.indexOf("djdp") != -1){
+            DjdpEcharts(algorithmname,data);
+        }
+        if (algorithmname.indexOf("Dmcj") != -1) {
+            DmcjEcharts(algorithmname,data);
+        }
+        if(algorithmname.indexOf("DmcjSuggest") != -1){
+            DmcjSuggest(algorithmname,data);
+        }
+        if (algorithmname.indexOf("zxpcPredict") != -1){     //轴线纠偏预测
+            zxpcPredict(algorithmname,data);
+        }
+        if (algorithmname.indexOf("zxpcClassfier") != -1){    //轴线最大位移预测
+            zxpcClassfier(algorithmname,data);
+        }
+        if (algorithmname.indexOf("zxpcRecitify") !=-1) { //轴线多环纠偏
+            zxpcRecitify(algorithmname,data);
+        }
+        if (algorithmname.indexOf("zxpcWarning")!=-1) { //轴线报警预测
+            zxpcWarning(algorithmname,data);
+        }
+        if (algorithmname.indexOf("zxpcrules")!=-1 || algorithmname.indexOf("Spark_Zxjpcrules")!=-1) {
+            zxpcrules(algorithmname,data);            //非并行化关联规则
         }
     }
 

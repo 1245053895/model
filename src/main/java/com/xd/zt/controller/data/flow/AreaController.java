@@ -84,8 +84,10 @@ public class AreaController {
                 String result =  HttpCientPost.restPost("http://10.101.201.174:8000/tasks/",jsonString);
                 System.out.printf(result);
                 JSON resultjson = JSON.parseObject(result);
+                map.put("resp_code",((JSONObject) resultjson).getInteger("resp_code"));
+                map.put("resp_msg",((JSONObject) resultjson).getString("resp_msg"));
 
-                if(((JSONObject) resultjson).getBoolean("success")) {
+                if(((JSONObject) resultjson).getInteger("resp_code") == 0) {
 
                     String taskId = ((JSONObject) resultjson).getString("taskId");
 
@@ -106,20 +108,17 @@ public class AreaController {
                         dataAreaService.processAreaInfo(datamodelInfo);
                         String areaname = modelinstancename;
                         dataAreaService.updateAreaByAreaId(areaname, areaid.toString());
-                        map.put("code",1);
                     }
+                    return  map;
                 }
                 else {
-                    map.put("code",2);
+                    return map;
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());
-                map.put("code",2);
+                map.put("resp_msg",e.toString());
                 return map;
-
             }
-
-        return map;
     }
 /*删除数据区*/
     @RequestMapping("/deleteArea")

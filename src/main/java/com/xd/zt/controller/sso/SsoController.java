@@ -9,6 +9,7 @@ import com.xd.zt.mapper.userinfo.SysUserMenuMapper;
 import com.xd.zt.service.SsoLoginService;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.business.BusinessModelService;
+import com.xd.zt.service.dataManager.OpenTsdbDataService;
 import com.xd.zt.service.model.ModelService;
 import com.xd.zt.util.analyse.HttpCientPostWithHeader;
 import com.ym.sso.supervisor.common.bean.SsoLogin;
@@ -65,7 +66,6 @@ public class SsoController {
 
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
-
     String idnumber = ssoTicket.getIdNumber();
     SysUser sysUser = sysUserMenuMapper.getSysUserByIdNumber(idnumber);
 /*    SecurityUtils.getSubject().getSession().setAttribute("sysUser", sysUser); //将用户信息存入session中*/
@@ -86,9 +86,6 @@ public class SsoController {
 
      session.setAttribute("id",id);
      System.out.println("session sysuser为: "+ id);
-
-
-
      if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
          ssoTicket.setSessionKey(sessionKey);
          ssoTicket = ssoLoginService.login(session, ssoTicket);
@@ -97,7 +94,7 @@ public class SsoController {
      String[] HeaderName = new String[]{"Content-Type", "Authorization"};
      String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
      try {
-         String result = HttpCientPostWithHeader.restPost("http://xduyj-gateway-server:9900/api-uaa/oauth/user/token", "username=" + "admin" + "&password=" + "admin", HeaderName, HeaderValue);
+         String result = HttpCientPostWithHeader.restPost("http://10.101.201.173:9900/api-uaa/oauth/openId/token?openId="+idnumber, null, HeaderName, HeaderValue);
          JSONObject resultJson = JSON.parseObject(result);
          System.out.printf(resultJson.getString("datas"));
 
