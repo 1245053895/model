@@ -5,4 +5,8 @@
     <insert id="insertOpenTsdbData" parameterType="UploadData">
         insert into znfxfw.uploaddata (DeviceNumber,DeviceType,PointName,CurrentValue,Unit,ChangeTime) VALUES (#{DeviceNumber},#{DeviceType},#{PointName},#{CurrentValue},#{Unit},#{ChangeTime})
     </insert>
+
+    <insert id="insertMysqlData" parameterType="MysqlData">
+        insert into mysqldata (mysqldataname,mysqldatapath,mysqldatatime) values (#{mysqldataname},#{mysqldatapath},#{mysqldatatime})
+    </insert>
 </mapper>

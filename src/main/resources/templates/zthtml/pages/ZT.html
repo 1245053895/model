@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <link href="/zthtml/css/Datacages_Homeindex.css" rel="stylesheet" type="text/css"/>
@@ -71,8 +71,10 @@
 <div class="Hometitlebox">
     <a style=" color: #00e4ff;" href="/ZT">城市地下空间工程大数据智能分析平台</a>
 </div>
+<div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${sysUser} != null" th:text="'欢迎您：'+${sysUser.getUsername()}"></div>
+<!--<div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${sysUser} == null" th:text="'欢迎您：'"></div>-->
 <a id="getLogParam" href="/sso/getLogParam"><input class="btn btn-success radius" type="button" style="position: absolute;
-    margin-top: -2.1%;
+    margin-top: -1.1%;
     margin-left: 89%;
     width: 5%;" value="注销" onclick="cleanToken()"/></a>
 <!--动效显示-->

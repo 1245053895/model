@@ -1,6 +1,7 @@
 package com.xd.zt.serviceImpl.userlog;
 
 import com.xd.zt.domain.userlog.SysMenu;
+import com.xd.zt.domain.userlog.SysRoleUser;
 import com.xd.zt.domain.userlog.SysUser;
 import com.xd.zt.mapper.userinfo.SysUserMenuMapper;
 import com.xd.zt.service.userlog.SysUserMenuService;
@@ -40,5 +41,11 @@ public class SysUserMenuServiceImpl implements SysUserMenuService {
     public SysUser getSysUserByName(@Param("username") String username) {
      SysUser sysUser= sysUserMenuMapper.getSysUserByName(username);
         return sysUser;
+    }
+
+    @Override
+    public List<SysRoleUser> selectRoleUserByUserId(@Param("userid") Integer userid) {
+        List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(userid);
+        return sysRoleUserList;
     }
 }

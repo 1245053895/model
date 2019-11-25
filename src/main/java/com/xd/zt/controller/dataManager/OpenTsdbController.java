@@ -33,7 +33,7 @@ public class OpenTsdbController {
         for (int i = 0 ; i < uploadDataList.size(); i++){
             openTsdbDataService.insertOpenTsdbData(uploadDataList.get(i));
         }
-        map.put("resp_msg","加载成功");
+        map.put("resp_msg","接入成功");
         return map;
     }
 

@@ -1,5 +1,6 @@
 package com.xd.zt.serviceImpl.dataManager;
 
+import com.xd.zt.domain.dataManage.MysqlData;
 import com.xd.zt.domain.dataManage.UploadData;
 import com.xd.zt.mapper.dataManage.OpenTsdbDataMapper;
 import com.xd.zt.service.dataManager.OpenTsdbDataService;
@@ -13,5 +14,10 @@ public class OpenTsdbDataServiceImpl implements OpenTsdbDataService {
     @Override
     public void insertOpenTsdbData(UploadData uploadData) {
         openTsdbDataMapper.insertOpenTsdbData(uploadData);
+    }
+
+    @Override
+    public void insertMysqlData(MysqlData mysqlData) {
+        openTsdbDataMapper.insertMysqlData(mysqlData);
     }
 }

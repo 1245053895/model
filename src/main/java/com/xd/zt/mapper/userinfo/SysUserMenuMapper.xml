@@ -11,4 +11,8 @@ AND sys_role_user.user_id=#{user_id}
     <select id="getSysUserByName" resultType="sysUser" parameterType="String">
         SELECT * FROM sys_user WHERE username=#{username}
     </select>
+    
+    <select id="selectRoleUserByUserId" parameterType="Integer" resultType="SysRoleUser">
+        select * from sys_role_user where user_id = #{userid}
+    </select>
 </mapper>

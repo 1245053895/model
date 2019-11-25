@@ -35,6 +35,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.ym.sso.supervisor</groupId>
             <artifactId>sso-supervisor-client</artifactId>
             <version>1.01.01</version>
