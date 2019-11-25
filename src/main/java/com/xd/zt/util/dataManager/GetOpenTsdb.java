@@ -23,6 +23,7 @@ public class GetOpenTsdb {
            for (int i = 0 ; i < DataArray.size(); i++) {
                JSONObject dataJson = DataArray.getJSONObject(i);
 
+               //设置参数
                String PointName = dataJson.getJSONObject("tags").getString("PointName");
                String DeviceType = dataJson.getJSONArray("aggregateTags").getString(0);
                String unit = dataJson.getJSONArray("aggregateTags").getString(2);
