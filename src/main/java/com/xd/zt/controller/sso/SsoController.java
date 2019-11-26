@@ -73,30 +73,46 @@ public class SsoController {
  /*   Subject subject = SecurityUtils.getSubject();
     UsernamePasswordToken token = new UsernamePasswordToken(username, password);
     subject.login(token);*/
-    String UserName = new String();
- if (sysUser!=null ){
-     UserName = sysUser.getUsername();
-     System.out.printf("\n\n存在用户");
-     List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(sysUser.getId());
-    if (sysRoleUserList.size() != 0) {
-        System.out.printf("\n\n存在用户,有权限");
-        String password = sysUser.getPassword();
-        Integer id = sysUser.getId();
-        String sessionId = request.getRequestedSessionId();
-        /*       if (sessionId==null){}*/
-        String ssoSupServerUrl = "http://10.101.201.154:9092";
+        String ssoSupServerUrl = "http://10.101.201.184:9092";
         ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
         ssoTicket = ssoLoginService.checkTicket(ssoTicket);
         ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
         HttpSession session = request.getSession();
 
-        session.setAttribute("id", id);
-        System.out.println("session sysuser为: " + id);
         if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
             ssoTicket.setSessionKey(sessionKey);
             ssoTicket = ssoLoginService.login(session, ssoTicket);
             // ssoTicket.getResult()
         }
+    String UserName = new String();
+ if (sysUser!=null ){
+     UserName = sysUser.getUsername();
+     System.out.printf("\n\n存在用户");
+     session.setAttribute("UserName", UserName);
+     List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(sysUser.getId());
+    if (sysRoleUserList.size() != 0) {
+        System.out.printf("\n\n存在用户,有权限");
+        session.setAttribute("Status","true");
+
+        String password = sysUser.getPassword();
+        Integer id = sysUser.getId();
+        String sessionId = request.getRequestedSessionId();
+        /*       if (sessionId==null){}*/
+//        String ssoSupServerUrl = "http://10.101.201.184:9092";
+//        ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+//        ssoTicket = ssoLoginService.checkTicket(ssoTicket);
+//        ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
+//        HttpSession session = request.getSession();
+//
+//        session.setAttribute("id", id);
+//        System.out.println("session sysuser为: " + id);
+//        if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
+//            ssoTicket.setSessionKey(sessionKey);
+//            ssoTicket = ssoLoginService.login(session, ssoTicket);
+//            // ssoTicket.getResult()
+//        }
+        session.setAttribute("id", id);
+        System.out.println("session sysuser为: " + id);
         String[] HeaderName = new String[]{"Content-Type", "Authorization"};
         String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
         try {
@@ -146,6 +162,8 @@ public class SsoController {
     }
     else {
         System.out.printf("\n\n存在用户,没有权限");
+        session.setAttribute("Status","false");
+
         String algorithmlabel = "行业通用";
         List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
 
@@ -174,10 +192,13 @@ public class SsoController {
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
         model.addAttribute("UserName",UserName);
         model.addAttribute("Status","false");
+        model.addAttribute("token", "null");
         return new ModelAndView("userlog/permission", "Modelmodel", model);
     }
  }else {
      System.out.printf("\n\n不存在用户");
+     session.setAttribute("UserName","");
+     session.setAttribute("Status","false");
      String algorithmlabel = "行业通用";
      List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
 
@@ -204,6 +225,7 @@ public class SsoController {
      model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
      model.addAttribute("algorithmListAll", algorithmListAll);
      model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+     model.addAttribute("token", "null");
      model.addAttribute("UserName",UserName);
      model.addAttribute("Status","false");
      return new ModelAndView("userlog/permission", "Modelmodel", model);
@@ -238,7 +260,7 @@ public class SsoController {
     public ModelAndView getLogParam(HttpServletRequest request)
     {
        /* log.debug("getLogParam");*/
-        String ssoSupServerUrl="http://10.101.201.154:9092";
+        String ssoSupServerUrl="http://10.101.201.184:9092";
         String localUrl="http://10.101.201.173";
         String sessionId = request.getRequestedSessionId();
         SsoLogin ssoLogin = ssoLoginService.getLogParam(sessionId);
@@ -253,16 +275,16 @@ public class SsoController {
     @GetMapping(value = "/session")
     public ModelAndView session(Model model,@RequestParam("sessionId") String sessionId, HttpServletResponse response) {
 //        log.info("session={}:{}", sessionKey, sessionId);
-        System.out.printf(sessionId);
+        System.out.printf("\n\nsessionId:"+sessionId);
         MySessionContext myc= MySessionContext.getInstance();
         HttpSession sess = myc.getSession(sessionId);
         System.out.printf("\n\n");
-        System.out.printf(sess.getAttribute("token").toString());
+        System.out.printf("token:"+sess.getAttribute("token").toString());
 
         String UserName = sess.getAttribute("UserName").toString();
-        System.out.printf("\n\n"+UserName);
+        System.out.printf("\n\nusername:"+UserName);
         String Status = sess.getAttribute("Status").toString();
-        System.out.printf("\n\n"+Status);
+        System.out.printf("\n\nstatus:"+Status);
 
         Cookie name = new Cookie(sessionKey, sessionId);
         name.setPath("/");
@@ -325,7 +347,7 @@ public class SsoController {
     @ResponseBody
     public SsoLogin checkSession(HttpServletRequest request)
     {
-        String ssoSupServerUrl="http://10.101.201.154:9092";
+        String ssoSupServerUrl="http://10.101.201.184:9092";
         String localUrl="http://10.101.201.173/ZT";
         /*log.debug("checkSession");*/
         String sessionId = request.getRequestedSessionId();

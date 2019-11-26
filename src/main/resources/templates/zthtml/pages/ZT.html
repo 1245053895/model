@@ -465,19 +465,16 @@
             "Status":[[${Status}]]
         };
         localStorage.setItem("easyweb",JSON.stringify(token));
-
-
     }
     function cleanToken() {
         localStorage.clear();
         DelCookie("ZNFX-SESSION-ID");
         window.location.href = "/sso/getLogParam";
-
     }
     function DelCookie(name) {
         var exp = new Date();
         exp.setTime(exp.getTime() - 1);
-        var cval = GetCookie(name);
+        // var cval = GetCookie(name);
         document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
     }
 </script>

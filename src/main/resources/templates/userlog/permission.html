@@ -75,12 +75,12 @@
 <div class="Hometitlebox">
     <a style=" color: #00e4ff;" href="/sso/permission">城市地下空间工程大数据智能分析平台</a>
 </div>
-<div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${UserName} != ''" th:text="'欢迎您：'+${UserName}+'    当前身份：游客'+'\n请联系管理员分配功能权限'"></div>
-<div style="color: white; margin-top: -2%; margin-left: 83%;" th:if="${UserName} == ''" th:text="'子系统还未同步当前用户,请稍后'"></div>
-<!--<a id="getLogParam" href="/sso/getLogParam"><input class="btn btn-success radius" type="button" style="position: absolute;-->
-    <!--margin-top: -2.1%;-->
-    <!--margin-left: 89%;-->
-    <!--width: 5%;" value="注销" onclick="cleanToken()"/></a>-->
+<div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${UserName} != ''" th:text="'欢迎您：'+${UserName}+'    请联系管理员分配功能权限'"></div>
+<div style="color: white; margin-top: -2%; margin-left: 83%;" th:if="${UserName} == ''" th:text="'子系统还未同步当前用户'"></div>
+<a id="getLogParam" href="/sso/getLogParam"><input class="btn btn-success radius" type="button" style="position: absolute;
+    margin-top: -1.1%;
+    margin-left: 94%;
+    width: 5%;" value="注销" onclick="cleanToken()"/></a>
 <!--动效显示-->
 <div class="flasheffectoutbox">
 
@@ -99,7 +99,7 @@
                 <div class="acrossremindeffectin" style="width: 68px; height: 68px; margin: 4px;"></div>
             </div>
             <img class="effectposition maindataspecialeffect" src="/zthtml/img/maindataspecialeffect.png">
-            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/maindataicon.png"   onclick= "window.location.href='/sso/permission';">
+            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/maindataicon.png" >
             <span class="stagetitle">大数据分析平台</span>
 
         </div>
@@ -463,12 +463,23 @@
         loading.style.display="none";
 
         var token = {
+            "token":[[${token}]],
             "username":[[${UserName}]],
             "Status":[[${Status}]]
         };
         localStorage.setItem("easyweb",JSON.stringify(token));
     }
-
+    function cleanToken() {
+        localStorage.clear();
+        DelCookie("ZNFX-SESSION-ID");
+        window.location.href = "/sso/getLogParam";
+    }
+    function DelCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        // var cval = GetCookie(name);
+        document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
+    }
 
 </script>
 <script>
