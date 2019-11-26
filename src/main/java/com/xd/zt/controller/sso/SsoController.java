@@ -76,10 +76,10 @@ public class SsoController {
     String UserName = new String();
  if (sysUser!=null ){
      UserName = sysUser.getUsername();
-     System.out.printf("存在用户");
+     System.out.printf("\n\n存在用户");
      List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(sysUser.getId());
     if (sysRoleUserList.size() != 0) {
-        System.out.printf("存在用户,有权限");
+        System.out.printf("\n\n存在用户,有权限");
         String password = sysUser.getPassword();
         Integer id = sysUser.getId();
         String sessionId = request.getRequestedSessionId();
@@ -141,10 +141,11 @@ public class SsoController {
         model.addAttribute("algorithmListAll", algorithmListAll);
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
         model.addAttribute("UserName", UserName);
+        model.addAttribute("Status","true");
         return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
     }
     else {
-        System.out.printf("存在用户,没有权限");
+        System.out.printf("\n\n存在用户,没有权限");
         String algorithmlabel = "行业通用";
         List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
 
@@ -172,10 +173,11 @@ public class SsoController {
         model.addAttribute("algorithmListAll", algorithmListAll);
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
         model.addAttribute("UserName",UserName);
+        model.addAttribute("Status","false");
         return new ModelAndView("userlog/permission", "Modelmodel", model);
     }
  }else {
-     System.out.printf("不存在用户");
+     System.out.printf("\n\n不存在用户");
      String algorithmlabel = "行业通用";
      List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
 
@@ -203,6 +205,7 @@ public class SsoController {
      model.addAttribute("algorithmListAll", algorithmListAll);
      model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
      model.addAttribute("UserName",UserName);
+     model.addAttribute("Status","false");
      return new ModelAndView("userlog/permission", "Modelmodel", model);
  }
     }
@@ -257,6 +260,9 @@ public class SsoController {
         System.out.printf(sess.getAttribute("token").toString());
 
         String UserName = sess.getAttribute("UserName").toString();
+        System.out.printf("\n\n"+UserName);
+        String Status = sess.getAttribute("Status").toString();
+        System.out.printf("\n\n"+Status);
 
         Cookie name = new Cookie(sessionKey, sessionId);
         name.setPath("/");
@@ -292,7 +298,16 @@ public class SsoController {
         model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
         model.addAttribute("UserName",UserName);
         model.addAttribute("token",sess.getAttribute("token").toString());
-        return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+        if (Status.equals("true")){
+            model.addAttribute("Status","true");
+            System.out.printf("\n\n"+Status);
+            return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+        }
+        else {
+            model.addAttribute("Status","false");
+            System.out.printf("\n\n"+Status);
+            return new ModelAndView("userlog/permission", "Modelmodel", model);
+        }
     }
 
 //    @RequestMapping("/session")
