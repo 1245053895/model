@@ -98,7 +98,7 @@ public class AreaController {
                     for (int i = 0; i < outputpath.size(); i++) {
 
                         DatamodelInfo datamodelInfo = new DatamodelInfo();
-                        datamodelInfo.setDataresultname(filenames[i]);
+                        datamodelInfo.setDataresultname(modelinstancename+filenames[i]);
                         datamodelInfo.setDatalink(datalink);
                         datamodelInfo.setDataarea(areaid);
                         datamodelInfo.setModelid(Integer.parseInt(modelid));
