@@ -462,10 +462,14 @@
         var loading = document.getElementById("loading");
         loading.style.display="none";
 
+        if ([[${SessionId}]] == null || [[${SessionId}]].length == 0 || [[${SessionId}]] == undefined) {
+            window.location.href = "http://10.101.201.173:80/login";
+        }
         var token = {
             "token":[[${token}]],
             "username":[[${UserName}]],
-            "Status":[[${Status}]]
+            "Status":[[${Status}]],
+            "SessionId":[[${SessionId}]]
         };
         localStorage.setItem("easyweb",JSON.stringify(token));
     }

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -67,12 +68,8 @@ public class SsoController {
 
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request, SsoTicket ssoTicket, Model model) {
-    String idnumber = ssoTicket.getIdNumber();
-    SysUser sysUser = sysUserMenuMapper.getSysUserByIdNumber(idnumber);
-/*    SecurityUtils.getSubject().getSession().setAttribute("sysUser", sysUser); //将用户信息存入session中*/
- /*   Subject subject = SecurityUtils.getSubject();
-    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-    subject.login(token);*/
+        String idnumber = ssoTicket.getIdNumber();
+        SysUser sysUser = sysUserMenuMapper.getSysUserByIdNumber(idnumber);
         String ssoSupServerUrl = "http://10.101.201.184:9092";
         ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
         ssoTicket = ssoLoginService.checkTicket(ssoTicket);
@@ -83,21 +80,34 @@ public class SsoController {
             ssoTicket.setSessionKey(sessionKey);
             ssoTicket = ssoLoginService.login(session, ssoTicket);
             // ssoTicket.getResult()
+            //测试
+            String sessionId = request.getRequestedSessionId();
+            System.out.printf("\n\nLoginSessionId:"+sessionId);
+            session.setAttribute("SessionId",sessionId);
+            model.addAttribute("SessionId",sessionId);
         }
-    String UserName = new String();
- if (sysUser!=null ){
-     UserName = sysUser.getUsername();
-     System.out.printf("\n\n存在用户");
-     session.setAttribute("UserName", UserName);
-     List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(sysUser.getId());
-    if (sysRoleUserList.size() != 0) {
-        System.out.printf("\n\n存在用户,有权限");
-        session.setAttribute("Status","true");
 
-        String password = sysUser.getPassword();
-        Integer id = sysUser.getId();
-        String sessionId = request.getRequestedSessionId();
-        /*       if (sessionId==null){}*/
+        String UserName = new String();
+        if (sysUser != null) {
+            UserName = sysUser.getUsername();
+            System.out.printf("\n\n存在用户");
+            session.setAttribute("UserName", UserName);
+            List<SysRoleUser> sysRoleUserList = sysUserMenuMapper.selectRoleUserByUserId(sysUser.getId());
+            if (sysRoleUserList.size() != 0) {
+//
+//        //将用户信息存入session中
+//        SecurityUtils.getSubject().getSession().setAttribute("sysUser", sysUser);
+//        Subject subject = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(UserName, sysUser.getPassword());
+//        subject.login(token);
+
+                System.out.printf("\n\n存在用户,有权限");
+                session.setAttribute("Status", "true");
+
+                String password = sysUser.getPassword();
+                Integer id = sysUser.getId();
+                String sessionId = request.getRequestedSessionId();
+                /*       if (sessionId==null){}*/
 //        String ssoSupServerUrl = "http://10.101.201.184:9092";
 //        ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
 //        ssoTicket = ssoLoginService.checkTicket(ssoTicket);
@@ -111,125 +121,128 @@ public class SsoController {
 //            ssoTicket = ssoLoginService.login(session, ssoTicket);
 //            // ssoTicket.getResult()
 //        }
-        session.setAttribute("id", id);
-        System.out.println("session sysuser为: " + id);
-        String[] HeaderName = new String[]{"Content-Type", "Authorization"};
-        String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
-        try {
-            String result = HttpCientPostWithHeader.restPost("http://10.101.201.173:9900/api-uaa/oauth/openId/token?openId=" + idnumber, "", HeaderName, HeaderValue);
-            JSONObject resultJson = JSON.parseObject(result);
-            System.out.printf(resultJson.getString("datas"));
+                session.setAttribute("id", id);
+                System.out.println("session sysuser为: " + id);
+                String[] HeaderName = new String[]{"Content-Type", "Authorization"};
+                String[] HeaderValue = new String[]{"application/x-www-form-urlencoded; charset=UTF-8", "Basic d2ViQXBwOndlYkFwcA=="};
+                try {
+                    String result = HttpCientPostWithHeader.restPost("http://10.101.201.173:9900/api-uaa/oauth/openId/token?openId=" + idnumber, "", HeaderName, HeaderValue);
+                    JSONObject resultJson = JSON.parseObject(result);
+                    System.out.printf(resultJson.getString("datas"));
 
-            session.setAttribute("token", resultJson.getString("datas"));
+                    session.setAttribute("token", resultJson.getString("datas"));
 
 
-            if (resultJson.getInteger("resp_code") == 0) {
+                    if (resultJson.getInteger("resp_code") == 0) {
 
-                model.addAttribute("token", resultJson.getString("datas"));
+                        model.addAttribute("token", resultJson.getString("datas"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String algorithmlabel = "行业通用";
+                List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+
+
+                String algorithmlabel1 = "行业专用";
+                List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+
+                String algorithmlabe2 = "人工智能";
+                List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+
+
+                List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+                List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+                model.addAttribute("programmeList", programmeList);
+                List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+                model.addAttribute("programmeList1", programmeList1);
+                List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+                model.addAttribute("programmeList2", programmeList2);
+                List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+                model.addAttribute("programmeList3", programmeList3);
+
+                model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+                model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+                model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+                model.addAttribute("algorithmListAll", algorithmListAll);
+                model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+                model.addAttribute("UserName", UserName);
+                model.addAttribute("Status", "true");
+                return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+            } else {
+                System.out.printf("\n\n存在用户,没有权限");
+                session.setAttribute("Status", "false");
+
+                String algorithmlabel = "行业通用";
+                List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+
+
+                String algorithmlabel1 = "行业专用";
+                List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+
+                String algorithmlabe2 = "人工智能";
+                List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+
+
+                List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+                List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+                model.addAttribute("programmeList", programmeList);
+                List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+                model.addAttribute("programmeList1", programmeList1);
+                List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+                model.addAttribute("programmeList2", programmeList2);
+                List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+                model.addAttribute("programmeList3", programmeList3);
+
+                model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+                model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+                model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+                model.addAttribute("algorithmListAll", algorithmListAll);
+                model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+                model.addAttribute("UserName", UserName);
+                model.addAttribute("Status", "false");
+                model.addAttribute("token", "null");
+
+                session.setAttribute("token", "null");
+                return new ModelAndView("userlog/permission", "Modelmodel", model);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            System.out.printf("\n\n不存在用户");
+            session.setAttribute("UserName", "");
+            session.setAttribute("Status", "false");
+            String algorithmlabel = "行业通用";
+            List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+
+
+            String algorithmlabel1 = "行业专用";
+            List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+
+            String algorithmlabe2 = "人工智能";
+            List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+
+
+            List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+            List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+            model.addAttribute("programmeList", programmeList);
+            List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+            model.addAttribute("programmeList1", programmeList1);
+            List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+            model.addAttribute("programmeList2", programmeList2);
+            List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+            model.addAttribute("programmeList3", programmeList3);
+
+            model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+            model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+            model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+            model.addAttribute("algorithmListAll", algorithmListAll);
+            model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+            model.addAttribute("token", "null");
+            model.addAttribute("UserName", UserName);
+            model.addAttribute("Status", "false");
+
+            session.setAttribute("token", "null");
+            return new ModelAndView("userlog/permission", "Modelmodel", model);
         }
-        String algorithmlabel = "行业通用";
-        List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
-        String algorithmlabel1 = "行业专用";
-        List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
-        String algorithmlabe2 = "人工智能";
-        List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
-        List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
-        List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
-        model.addAttribute("programmeList", programmeList);
-        List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
-        model.addAttribute("programmeList1", programmeList1);
-        List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
-        model.addAttribute("programmeList2", programmeList2);
-        List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
-        model.addAttribute("programmeList3", programmeList3);
-
-        model.addAttribute("algorithmListGeneral", algorithmListGeneral);
-        model.addAttribute("algorithmListSpecial", algorithmListSpecial);
-        model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
-        model.addAttribute("algorithmListAll", algorithmListAll);
-        model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-        model.addAttribute("UserName", UserName);
-        model.addAttribute("Status","true");
-        return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
-    }
-    else {
-        System.out.printf("\n\n存在用户,没有权限");
-        session.setAttribute("Status","false");
-
-        String algorithmlabel = "行业通用";
-        List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
-        String algorithmlabel1 = "行业专用";
-        List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
-        String algorithmlabe2 = "人工智能";
-        List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
-        List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
-        List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
-        model.addAttribute("programmeList", programmeList);
-        List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
-        model.addAttribute("programmeList1", programmeList1);
-        List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
-        model.addAttribute("programmeList2", programmeList2);
-        List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
-        model.addAttribute("programmeList3", programmeList3);
-
-        model.addAttribute("algorithmListGeneral", algorithmListGeneral);
-        model.addAttribute("algorithmListSpecial", algorithmListSpecial);
-        model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
-        model.addAttribute("algorithmListAll", algorithmListAll);
-        model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-        model.addAttribute("UserName",UserName);
-        model.addAttribute("Status","false");
-        model.addAttribute("token", "null");
-        return new ModelAndView("userlog/permission", "Modelmodel", model);
-    }
- }else {
-     System.out.printf("\n\n不存在用户");
-     session.setAttribute("UserName","");
-     session.setAttribute("Status","false");
-     String algorithmlabel = "行业通用";
-     List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
-     String algorithmlabel1 = "行业专用";
-     List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
-     String algorithmlabe2 = "人工智能";
-     List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
-     List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
-     List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
-     model.addAttribute("programmeList", programmeList);
-     List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
-     model.addAttribute("programmeList1", programmeList1);
-     List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
-     model.addAttribute("programmeList2", programmeList2);
-     List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
-     model.addAttribute("programmeList3", programmeList3);
-
-     model.addAttribute("algorithmListGeneral", algorithmListGeneral);
-     model.addAttribute("algorithmListSpecial", algorithmListSpecial);
-     model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
-     model.addAttribute("algorithmListAll", algorithmListAll);
-     model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-     model.addAttribute("token", "null");
-     model.addAttribute("UserName",UserName);
-     model.addAttribute("Status","false");
-     return new ModelAndView("userlog/permission", "Modelmodel", model);
- }
     }
 
     /**
@@ -245,6 +258,12 @@ public class SsoController {
     {
         String sessionId = request.getRequestedSessionId();
 /*        log.debug("logout:sessionId={}",sessionId);*/
+        System.out.printf("\n\nLogout:"+sessionId);
+
+        //测试
+        HttpSession session = request.getSession();
+        session.setAttribute("SessionId","Logout");//
+
         return ssoLoginService.logout(sessionId);
     }
 
@@ -274,62 +293,76 @@ public class SsoController {
     }
     @GetMapping(value = "/session")
     public ModelAndView session(Model model,@RequestParam("sessionId") String sessionId, HttpServletResponse response) {
-//        log.info("session={}:{}", sessionKey, sessionId);
-        System.out.printf("\n\nsessionId:"+sessionId);
-        MySessionContext myc= MySessionContext.getInstance();
+        //测试
+        System.out.printf("\n\nsessionId:" + sessionId);
+        model.addAttribute("SessionId",sessionId);
+        //
+        MySessionContext myc = MySessionContext.getInstance();
         HttpSession sess = myc.getSession(sessionId);
-        System.out.printf("\n\n");
-        System.out.printf("token:"+sess.getAttribute("token").toString());
-
-        String UserName = sess.getAttribute("UserName").toString();
-        System.out.printf("\n\nusername:"+UserName);
-        String Status = sess.getAttribute("Status").toString();
-        System.out.printf("\n\nstatus:"+Status);
-
-        Cookie name = new Cookie(sessionKey, sessionId);
-        name.setPath("/");
-        name.setMaxAge(2592000);
-        response.addCookie(name);
-        System.out.printf(response.toString());
-
-        String algorithmlabel = "行业通用";
-        List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
-        String algorithmlabel1 = "行业专用";
-        List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
-        String algorithmlabe2 = "人工智能";
-        List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
-        List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
-        List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
-        model.addAttribute("programmeList", programmeList);
-        List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
-        model.addAttribute("programmeList1", programmeList1);
-        List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
-        model.addAttribute("programmeList2", programmeList2);
-        List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
-        model.addAttribute("programmeList3", programmeList3);
-
-        model.addAttribute("algorithmListGeneral", algorithmListGeneral);
-        model.addAttribute("algorithmListSpecial", algorithmListSpecial);
-        model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
-        model.addAttribute("algorithmListAll", algorithmListAll);
-        model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
-        model.addAttribute("UserName",UserName);
-        model.addAttribute("token",sess.getAttribute("token").toString());
-        if (Status.equals("true")){
-            model.addAttribute("Status","true");
-            System.out.printf("\n\n"+Status);
-            return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+//        log.info("session={}:{}", sessionKey, sessionId);
+        //测试
+        try{
+            String SessionId = sess.getAttribute("SessionId").toString();
         }
-        else {
-            model.addAttribute("Status","false");
-            System.out.printf("\n\n"+Status);
-            return new ModelAndView("userlog/permission", "Modelmodel", model);
+        catch (Exception e){
+//            return "redirect:http://10.101.201.154:8080/#/home/index";
+            return new ModelAndView(new RedirectView("http://10.101.201.173:80/login"));
         }
+
+            System.out.printf("\n\n");
+            System.out.printf("token:" + sess.getAttribute("token").toString());
+
+            String UserName = sess.getAttribute("UserName").toString();
+            System.out.printf("\n\nusername:" + UserName);
+            String Status = sess.getAttribute("Status").toString();
+            System.out.printf("\n\nstatus:" + Status);
+
+            Cookie name = new Cookie(sessionKey, sessionId);
+            name.setPath("/");
+            name.setMaxAge(2592000);
+            response.addCookie(name);
+            System.out.printf(response.toString());
+
+            String algorithmlabel = "行业通用";
+            List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
+
+
+            String algorithmlabel1 = "行业专用";
+            List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
+
+            String algorithmlabe2 = "人工智能";
+            List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
+
+
+            List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
+            List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
+            model.addAttribute("programmeList", programmeList);
+            List<Programme> programmeList1 = modelService.selectAllModelByType("工程施工");
+            model.addAttribute("programmeList1", programmeList1);
+            List<Programme> programmeList2 = modelService.selectAllModelByType("运营维护");
+            model.addAttribute("programmeList2", programmeList2);
+            List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
+            model.addAttribute("programmeList3", programmeList3);
+
+            model.addAttribute("algorithmListGeneral", algorithmListGeneral);
+            model.addAttribute("algorithmListSpecial", algorithmListSpecial);
+            model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
+            model.addAttribute("algorithmListAll", algorithmListAll);
+            model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
+            model.addAttribute("UserName", UserName);
+            model.addAttribute("token", sess.getAttribute("token").toString());
+            if (Status.equals("true")) {
+                model.addAttribute("Status", "true");
+                System.out.printf("\n\n" + Status);
+                return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+//                return "zthtml/pages/ZT";
+            } else {
+                model.addAttribute("Status", "false");
+                System.out.printf("\n\n" + Status);
+                return new ModelAndView("userlog/permission", "Modelmodel", model);
+//                return "userlog/permission";
+            }
+
     }
 
 //    @RequestMapping("/session")
@@ -351,6 +384,7 @@ public class SsoController {
         String localUrl="http://10.101.201.173/ZT";
         /*log.debug("checkSession");*/
         String sessionId = request.getRequestedSessionId();
+        System.out.printf("\n\nCheckssion:"+sessionId);
         SsoLogin ssoLogin = ssoLoginService.checkSession(sessionId);
         ssoLogin.setSsoSupServerUrl(ssoSupServerUrl);
         ssoLogin.setSsoClientUrl(localUrl);

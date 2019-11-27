@@ -4,6 +4,7 @@ package com.xd.zt.serviceImpl;
 import com.xd.zt.controller.constant.InitConst;
 import com.xd.zt.controller.constant.LoginConst;
 import com.xd.zt.domain.bean.User;
+import com.xd.zt.domain.userlog.SysUser;
 import com.xd.zt.service.SsoLoginService;
 import com.ym.sso.supervisor.client.dao.SsoLoginDao;
 import com.ym.sso.supervisor.client.dao.impl.SsoLoginDaoImpl;
@@ -12,6 +13,8 @@ import com.ym.sso.supervisor.common.bean.SsoTicket;
 import com.ym.sso.supervisor.common.constant.LoginResultEnum;
 import com.ym.sso.supervisor.common.constant.TicketResultEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -97,68 +100,90 @@ public class SsoLoginSerImpl implements SsoLoginService
      *
      * @return 注销的结果
      */
-    public SsoLogin logout(String sessionId)
-    {
-  /*      log.debug("logout:sessionId={}", sessionId);*/
+//    public SsoLogin logout(String sessionId)
+//    {
+//  /*      log.debug("logout:sessionId={}", sessionId);*/
+//        Long time = new Date().getTime();
+//        SsoLogin ssoLogin = new SsoLogin();
+//        if (sessionId == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_MISS_PARAM.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_MISS_PARAM.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        Map<String, HttpSession> sessionMap = initConst.getSessionMap();
+//        if (sessionMap == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        HttpSession session = sessionMap.get(sessionId);
+//        if (session == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        Object userSession;
+//        try
+//        {
+//            userSession = session.getAttribute(LoginConst.SESSION_USER_KEY);
+//        }
+//        catch (IllegalStateException ex)
+//        {
+//      /*      log.error("logout={}", ex.toString());*/
+//            sessionMap.remove(sessionId);
+//            initConst.setSessionMap(sessionMap);
+//            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        if (userSession == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        if (sessionMap.get(session.getId()) != null)
+//        {
+//          /*  log.info("logout:session.removeAttribute:sessionId={},session={}", sessionId,*/
+//                    sessionMap.get(session.getId()).getAttribute(LoginConst.SESSION_USER_KEY)/*)*/;
+//        }
+//        session.removeAttribute(LoginConst.SESSION_USER_KEY);
+//        ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
+//        ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
+//        ssoLogin.setTime(time);
+//        return ssoLogin;
+//    }
+
+
+    public SsoLogin logout(String sessionId) {
+//        log.info("logout:sessionId={}", sessionId);
         Long time = new Date().getTime();
         SsoLogin ssoLogin = new SsoLogin();
-        if (sessionId == null)
-        {
+        if (sessionId == null) {
             ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_MISS_PARAM.getNo());
             ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_MISS_PARAM.getMessage());
             ssoLogin.setTime(time);
             return ssoLogin;
         }
-        Map<String, HttpSession> sessionMap = initConst.getSessionMap();
-        if (sessionMap == null)
-        {
-            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
-            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
-            ssoLogin.setTime(time);
-            return ssoLogin;
-        }
-        HttpSession session = sessionMap.get(sessionId);
-        if (session == null)
-        {
-            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
-            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
-            ssoLogin.setTime(time);
-            return ssoLogin;
-        }
-        Object userSession;
-        try
-        {
-            userSession = session.getAttribute(LoginConst.SESSION_USER_KEY);
-        }
-        catch (IllegalStateException ex)
-        {
-      /*      log.error("logout={}", ex.toString());*/
-            sessionMap.remove(sessionId);
-            initConst.setSessionMap(sessionMap);
-            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
-            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
-            ssoLogin.setTime(time);
-            return ssoLogin;
-        }
-        if (userSession == null)
-        {
-            ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
-            ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
-            ssoLogin.setTime(time);
-            return ssoLogin;
-        }
-        if (sessionMap.get(session.getId()) != null)
-        {
-          /*  log.info("logout:session.removeAttribute:sessionId={},session={}", sessionId,*/
-                    sessionMap.get(session.getId()).getAttribute(LoginConst.SESSION_USER_KEY)/*)*/;
-        }
-        session.removeAttribute(LoginConst.SESSION_USER_KEY);
+        Subject subject = SecurityUtils.getSubject();
+//        SysUser user = ShiroUtils.getSysUser();
+//        if (StringUtils.isNotNull(user)) {
+//            cacheManager.getCache(ShiroConstants.SYS_USERCACHE).remove(user.getLoginName());
+//        }
+        subject.logout();
         ssoLogin.setResult(LoginResultEnum.LOGIN_OUT_SUCCESS.getNo());
         ssoLogin.setMessage(LoginResultEnum.LOGIN_OUT_SUCCESS.getMessage());
         ssoLogin.setTime(time);
         return ssoLogin;
     }
-
     /**
      * 检查用户是否登录
      *
