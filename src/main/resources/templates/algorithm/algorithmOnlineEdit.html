@@ -216,7 +216,8 @@
         var algorithmparamsinput =  $("input[id='algorithmparamsinput']").val();
         var algorithmparamscontent =  $("input[id='algorithmparamscontent']").val();
         var algorithmparamsoutput =  $("input[id='algorithmparamsoutput']").val();
-        var algorithmmiaoshu =$("#textarea").val();
+        var text =$("#textarea").val();
+        var algorithmmiaoshu = text.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;');
         // var algorithmmiaoshu =  $("input[id='algorithmmiaoshu']").val();
 
 

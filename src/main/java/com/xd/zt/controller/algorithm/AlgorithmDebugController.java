@@ -234,8 +234,8 @@ public class AlgorithmDebugController {
     public Map<String, Object> upFile(@RequestParam(value = "filename", required = false) MultipartFile multipartFile, Algorithm algorithm) throws Exception {
         /*      String sqlPath=null;*/
 
-        String xx =algorithm.getAlgorithmmiaoshu();
-
+        String miaoshu =algorithm.getAlgorithmmiaoshu();
+        System.out.printf(miaoshu);
         String[] fileInformation = algorithmUpdateService.Upload(multipartFile);
         Map map = new HashMap();
         if (fileInformation != null) {

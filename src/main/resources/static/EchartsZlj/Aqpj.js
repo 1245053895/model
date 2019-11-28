@@ -135,20 +135,16 @@ function AqpjPingjiaEcharts(algorithmname,data){
 function AqpjXiangEcharts(algorithmname,data){
     document.getElementById("createtable").setAttribute("style","");
     document.getElementById("createtable").innerHTML = "";
-    dataJson = JSON.parse(data);
+    dataJsons = JSON.parse(data);
+    dataJson = dataJsons["prediction"];
+    var status = dataJsons["staus"];
     var Keys = [];
     var Values = [];
-    var Keys1 = [];
-    var Values1 = [];
     var i = 0;
     for (var key in dataJson) {
-        Keys1[i] = key;
-        Values1[i] = dataJson[key];
+        Keys[i] = key;
+        Values[i] = dataJson[key];
         i++;
-    }
-    for (var j = 0, k = 1 ;k < i; k++,j++) {
-        Keys[j] = Keys1[k];
-        Values[j] = Values1[k];
     }
     // alert(Keys);
     // alert(Values);
@@ -158,14 +154,10 @@ function AqpjXiangEcharts(algorithmname,data){
     option = null;
     option = {
         title: {
-            text:'安全评价变形等级预测',
+            text:'安全评价变形等级预测'+'     状态：'+status,
             // subtext:'环号：'+Ring+'    时间：'+time+'    里程：'+mileage,
             x:'center',
             y:'top',
-        },
-        title:{
-            text:Keys1[0]+":"+Values1[0],
-            left:'center'
         },
         xAxis: {
             type: 'category',

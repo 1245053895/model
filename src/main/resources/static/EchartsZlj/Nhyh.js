@@ -61,6 +61,10 @@ function NhyhLoadPredictEcharts(algorithmname,data) {
 }
 function NhyhEnergyEcharts(algorithmname,data) {
     document.getElementById("container").setAttribute("style","");
+    document.getElementById("createtable1").setAttribute("style","height: 11vh;overflow-y: auto;margin-top: 0vh");
+    document.getElementById("createtable2").setAttribute("style","height: 11vh;overflow-y: auto;margin-top: 8vh");
+    document.getElementById("createtable3").setAttribute("style","height: 11vh;overflow-y: auto;margin-top: 8vh");
+    document.getElementById("createtable4").setAttribute("style","height: 11vh;overflow-y: auto;margin-top: 8vh");
     document.getElementById("createtable1").innerHTML = "";
     document.getElementById("createtable2").innerHTML = "";
     document.getElementById("createtable3").innerHTML = "";

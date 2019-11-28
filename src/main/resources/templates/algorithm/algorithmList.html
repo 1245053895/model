@@ -174,7 +174,7 @@
 
                             <div class="modal-body">
                                 <strong style="margin-left: 5%;position: absolute ">算法说明：</strong>
-                                <textarea name="textarea" id="textarea" style="border: 1px solid #DDDDDD;margin-left: 20%;width: 46%;height: 7vh;"></textarea>
+                                <textarea name="textarea" id="textarea" style="resize:none;border: 1px solid #DDDDDD;margin-left: 20%;width: 46%;height: 7vh;"></textarea>
                                 <input type="text" placeholder="请输出算法描述" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" name="algorithmmiaoshu"  id="algorithmmiaoshu">
                             </div>
 
@@ -283,7 +283,8 @@
     $(document).ready(function(){
         $("#textarea").blur(function(){
             var text =$("#textarea").val();
-            $("#algorithmmiaoshu").attr("value",text);
+            var des = text.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;');
+            $("#algorithmmiaoshu").attr("value",des);
             // var name = $("#algorithmmiaoshu").val();
         });
     });
