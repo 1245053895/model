@@ -183,22 +183,27 @@
     var startTime =  $("input[id='startTime']").val();
     var endTime =  $("input[id='endTime']").val();
 
-    var json = {
-        "PointName":PointName,
-        "startTime":startTime,
-        "endTime":endTime
+    if (PointName == null || startTime == null || endTime == null){
+        $.Huimodalalert('输入为空，请重新输入', 2000);
     }
-    $.ajax({
-        async: false,
-        type: "post",
-        dataType: "json",
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(json),
-        url : "/openTsdb/getTsdbData",
-        success : function(data) {
-            $.Huimodalalert(data.resp_msg,5000);
+    else {
+        var json = {
+            "PointName": PointName,
+            "startTime": startTime,
+            "endTime": endTime
         }
-    });
+        $.ajax({
+            async: false,
+            type: "post",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(json),
+            url: "/openTsdb/getTsdbData",
+            success: function (data) {
+                $.Huimodalalert(data.resp_msg, 5000);
+            }
+        });
+    }
 }
     function design(value) {
         Class = value;

@@ -30,10 +30,15 @@ public class OpenTsdbController {
         String startTime = jsonObject.getString("startTime");
         String endTime = jsonObject.getString("endTime");
         List<UploadData> uploadDataList = GetOpenTsdb.getOpenTsdbDate(PointName,Integer.parseInt(startTime),Integer.parseInt(endTime));
-        for (int i = 0 ; i < uploadDataList.size(); i++){
-            openTsdbDataService.insertOpenTsdbData(uploadDataList.get(i));
+        if (uploadDataList.size() != 0) {
+            for (int i = 0; i < uploadDataList.size(); i++) {
+                openTsdbDataService.insertOpenTsdbData(uploadDataList.get(i));
+            }
+            map.put("resp_msg", "接入成功");
         }
-        map.put("resp_msg","接入成功");
+        else {
+            map.put("resp_msg", "接入失败,请检查输入是否正确");
+        }
         return map;
     }
 
