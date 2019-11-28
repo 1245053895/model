@@ -24,34 +24,59 @@
     <title>图片列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>数据块 <span class="c-gray en">&gt;</span> 数据块构建 <a
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>图数据库 <span class="c-gray en">&gt;</span> 知识图谱质量评估 <a
         class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
         href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="position: absolute;width: 97%;height: 90%;">
-    <div class="panel panel-default" style="width: 43%;height: 43vh;float: left;">
-        <div class="panel-header">参数设置</div>
-        <div class="panel-body" id="data" style="float: left; width: 92%;height: 80%;overflow-x:hidden;overflow-y:auto;">
-            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">出处权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="出处权重" id="" autocomplete='off' style='width: 20%;margin-top: -4.5vh;margin-left: 13%;'>
+    <div class="panel panel-default" style="width: 54%;height: 50vh;float: left;">
+        <div class="panel-header" style="float: left;text-align: center;width: 22%;">可信性</div>        <div class="panel-header" style="float: left;text-align: center;width: 28%;">冗余性</div>        <div class="panel-header" style="float: left;text-align: center;width: 39.8%;">实用性</div>
+        <form method="post" class="params">
+        <div class="panel-body" id="data1" style="float: left; width: 26%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">出处权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="sourceWeight" id="sourceWeight" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">出处</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="relWeight" id="relWeight" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">可信度权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="sourceRate" id="sourceRate" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">可信度</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="relRate" id="relRate" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
         </div>
+        <div class="panel-body" id="data2" style="float: left; width: 29%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">模式层权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="modelWeight" id="modelWeight" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">唯一属性数量</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="uniqueAttCount" id="uniqueAttCount" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">所有属性数量</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="allAttCount" id="allAttCount" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">数据层权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="dataWeight" id="dataWeight" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">唯一对象数量</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="uniqueObjCount" id="uniqueObjCount" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">所有对象数量</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="allObjCount" id="allObjCount" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+        </div>
+        <div class="panel-body" id="data3" style="float: left; width: 34%;height: 80%;overflow-x:hidden;overflow-y:auto;">
+
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">可查询性权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="queryWeight" id="queryWeight" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">可查询性</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="queryRate" id="queryRate" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">信息性权重</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="infoWeight" id="infoWeight" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">使用概算指标数量</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="uniqueNormCount" id="uniqueNormCount" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+            <div style="font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;">所有概算指标数量</div><input type="text" placeholder="请输入.." class='input-text ac_input' name="allNormCount" id="allNormCount" autocomplete='off' style='width: 40%;margin-top: -4.5vh;margin-left: 40%;'>
+        </div>
+        </form>
     </div>
     <div class="panel panel-default"
-         style="width: 54%;height: 91vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
-        <div class="panel-header">算法说明
-            <!--	<input class="btn btn-primary radius" type="button"
-                                                    style="position: absolute;margin-top: -0.3%;right: 5%;" value="运行"
-                                                    onclick="jumpDialogSubmit()"/>-->
+         style="width: 43%;height: 91vh;float: left;margin-left: 2%;overflow-x:hidden;overflow-y:auto">
+        <div class="panel-header" style="text-align: center">评估说明
         </div>
-
-        <div class="panel-body" id="model_content"></div>
+        <div class="panel-body" id="model_content">
+            <img src="/EchartsZlj/知识图谱1.png">
+            <img src="/EchartsZlj/知识图谱2.png">
+        </div>
     </div>
 
 
 
     <!--算法选择-->
-    <div class="panel panel-default" style="width: 43%;height: 44vh;float: left;margin-top: -25%;">
-        <div class="panel-header">运行结果</div>
+    <div class="panel panel-default" style="width: 54%;height: 39vh;float: left;margin-top: -22%;">
+        <div class="panel-header" style="text-align: center">知识图谱综合评估值</div>
+        <div class="panel-body" id="result_content">
+            <div style=" margin-left: 23%;margin-top: 4%;">知识图谱质量综合评估值从知识图谱可信性，冗余性，实用性三个方面综合计算得出，满分为1</div>
+            <div style="font-size:14px; font-weight:700;margin-left: 24%;margin-top: 6vh;">综合评估值</div><input type="text" readonly="readonly" class='input-text ac_input' name="resultRate" id="resultRate" autocomplete='off' style='width: 40%;margin-top: -16.5vh;margin-left: 40%;'>
 
-        <!--switchContent_form--> <div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;display: none">
+            <input  class="btn btn-success radius" type="button" style=" margin-left: -32%;margin-top: 13%;width: 13%;" value="运行" onclick="runNeo4J()"/>
+        </div>
     </div>
 
     </div>
@@ -69,7 +94,45 @@
 <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:inline="javascript">
+    function runNeo4J() {
+        paramsJson = $('.params').serializeObject();
 
+        $.ajax({
+            async: false,
+            type: "post",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(paramsJson),
+            url: '/dataManager/RunNeo4J',
+            success: function (data) {
+                if (data.resp_code == 0) {
+                    $.Huimodalalert(data.resp_msg, 1000);
+                    document.getElementById("resultRate").setAttribute("value",data.datas);
+                }
+                else {
+                    $.Huimodalalert(data.datas, 5000);
+                }
+            }
+        })
+    }
+    //form表单生成jSON对象
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [ o[this.name] ];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+</script>
 
 </body>
 
