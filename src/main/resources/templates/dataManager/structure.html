@@ -50,10 +50,10 @@
         </div>-->
 
 
-        <a onclick="design();design1()"><input   id="design" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="接入勘察设计数据" /></a>
-        <a onclick="engineer();engineer1()"><input   id="engineer" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="接入工程施工数据" /></a>
+       <input   id="design" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="勘察设计数据" onclick="design(this.value)" />
+       <input   id="engineer" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="工程施工数据" onclick="design(this.value)"/>
 
-            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 1%;margin-left: 1%" value="接入运营维护数据" /></a>
+            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 1%;margin-left: 1%" value="运营维护数据" /></a>
 
 
         <div class="panel-body" style="margin-top: 10%">
@@ -169,17 +169,11 @@
 
 </script>
 <script>
+    var Class;
     function dataNewPath() {
         $("#newPathmodal-demo").modal("show");
     }
-    function design() {
-        $("#newPathmodal-demo1").modal("show");
-    }
-
-    function engineer() {
-        $("#newPathmodal-demo2").modal("show");
-    }
-function newsaveSceneName() {
+    function newsaveSceneName() {
   /*  var data={};
     data["PointName"]=document.getElementById('PointName').value;
     data["startTime"]=document.getElementById('startTime').value;
@@ -189,114 +183,87 @@ function newsaveSceneName() {
     var startTime =  $("input[id='startTime']").val();
     var endTime =  $("input[id='endTime']").val();
 
+    var json = {
+        "PointName":PointName,
+        "startTime":startTime,
+        "endTime":endTime
+    }
     $.ajax({
-        async: true,
-        cache:false,
-        type : "post",
-
-
-        data:   {
-            PointName:PointName,
-            startTime:startTime,
-            endTime:endTime,
-        },
-
+        async: false,
+        type: "post",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(json),
         url : "/openTsdb/getTsdbData",
-        success : function() {
-            $.Huimodalalert('保存成功',2000);
+        success : function(data) {
+            $.Huimodalalert(data.resp_msg,5000);
         }
     });
 }
-    function design1() {
-        /*  var data={};
-          data["PointName"]=document.getElementById('PointName').value;
-          data["startTime"]=document.getElementById('startTime').value;
-          data["endTime"]=document.getElementById('endTime').value;*/
+    function design(value) {
+        Class = value;
+        var dataClass1 = value;
+        var dataClass = {
+            "dataClass":dataClass1
+        };
 
-
-        var dataClass=document.getElementById("design").value;
-
-        alert(dataClass);
-        JSON.stringify(dataClass)
         $.ajax({
-            async: true,
-            cache:false,
-            type : "post",
+            async: false,
+            type: "post",
             dataType: "json",
-
-            data: JSON.stringify({dataClass: dataClass}),
-
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(dataClass),
             url : "/mysql/getTables",
-            success : function(data) { var tables = data.resp_msg;
-                var designTables = tables.split(",");
-                $.Huimodalalert('请继续选择对应数据的表名',2000);
+            success : function(data) {
+                if (data.resp_code == 0) {
+                    var tables = data.resp_msg;
+                    var designTables = tables.split(",");
+                    $.Huimodalalert('请继续选择对应数据的表名', 2000);
+                    var Tables = new Array();
+                    for (var i = 0; i < designTables.length; i++) {
+                        Tables.push("<option value ='" + designTables[i] + "'>" + designTables[i] + "</option>");
+                    }
+                    document.getElementById("getTables").innerHTML = "";
+                    $("#getTables").append(Tables.join("\n"));
+                    $("#newPathmodal-demo1").modal("show");
+                }
+                else {
+                    $.Huimodalalert(data.resp_msg, 5000);
+                }
             }
         });
     }
+    function getMysqlData() {
+        var fileName = $("#FileName").val();
+        if (fileName == null || fileName == "") {
+            $.Huimodalalert("请输入文件名", 5000);
+        }
+        else {
+        var tableName = $('#getTables').val();
+        var dataClass = Class;
 
-    function engineer1() {
-        /*  var data={};
-          data["PointName"]=document.getElementById('PointName').value;
-          data["startTime"]=document.getElementById('startTime').value;
-          data["endTime"]=document.getElementById('endTime').value;*/
-
-
-        var dataClass=document.getElementById("engineer").value;
-
-        alert(dataClass);
-        JSON.stringify(dataClass)
-        $.ajax({
-            async: true,
-            cache:false,
-            type : "post",
-            dataType: "json",
-
-            data: JSON.stringify({dataClass: dataClass}),
-
-            url : "/mysql/getTables",
-            success : function(data) { var tables = data.resp_msg;
-                var engineerTables = tables.split(",");
-                $.Huimodalalert('请继续选择对应数据的表名',2000);
-            }
-        });
+        var json = {
+            "tableName":tableName,
+            "dataClass":dataClass,
+            "fileName":fileName
+        };
+            $.ajax({
+                async: false,
+                type: "post",
+                dataType: "json",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify(json),
+                url : "/mysql/getTableData",
+                success : function(data) {
+                    $.Huimodalalert(data.resp_msg, 5000);
+                }
+                })
+    }
     }
 
 
 
 </script>
-<div id="newPathmodal-demo2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-    <!-- 弹出对话框 -->
-    <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title" ></h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
-            </div>
-
-            <div class="modal-body">
-                <select id="getTables" class="select" size="1"     name="data"  style="color: #277de2;"  onchange="getTables()" >
-
-                    <option value ="选择接入数据">选择接入数据</option>
-        <!--            <option  th:each="engineerTables:${engineerTables}" th:text="${engineerTables}"></option>-->
-
-
-
-                </select>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName2();">确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="newPathmodal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <!-- 弹出对话框 -->
     <div class="modal-dialog">
@@ -305,23 +272,23 @@ function newsaveSceneName() {
                 <h3 class="modal-title" ></h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             </div>
-
             <div class="modal-body">
-                <select id="getTables1" class="select" size="1"     name="data"  style="color: #277de2;"  onchange="getTables()" >
-
-                    <option value ="选择接入数据">选择接入数据</option>
-
-
+                <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+                <strong style="margin-left: -53.5%;position: absolute;margin-top: 5vh;">数据表</strong><select id="getTables" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 10%" >
                 </select>
             </div>
-
+            <div class="modal-body">
+            </div>
+            <div class="modal-body">
+            </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName1();">确定</button>
+                <button class="btn btn-primary" data-dismiss="modal" onclick="getMysqlData();">确定</button>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
     </div>
 </div>
+
 <div id="newPathmodal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <!-- 弹出对话框 -->
     <div class="modal-dialog">
@@ -332,16 +299,13 @@ function newsaveSceneName() {
             </div>
 
             <div class="modal-body">
-                <input type="text" placeholder="推荐   3703-CNET0059.VICO" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect2" value="1x">
-                <strong>pointName  ：</strong><input   id="PointName"  type="text" vaule="推荐   3703-CNET0059.VICO " class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+                <strong>pointName  ：</strong><input placeholder="推荐   3703-CNET0059.VICO"  id="PointName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="推荐    1572577582 " class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect3" value="1x">
-                <strong>startTime  ：</strong><input    id="startTime"  type="text" vaule="推荐    1572577582  " class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+                <strong>startTime  ：</strong><input placeholder="推荐    1572577582 "   id="startTime"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="推荐   1572584782" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect4" value="1x">
-                <strong>endTime    ：</strong><input    id="endTime" type="text" vaule="推荐   1572584782" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+                <strong>endTime    ：</strong><input placeholder="推荐   1572584782"   id="endTime" type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName();">确定</button>

@@ -84,8 +84,17 @@ public class MysqlController {
             String url = "http://10.101.201.171:9543/mysql/tables?dataClass="+dataClass;
             String MysqlData = HttpClientGetWithHeader.restGetWithHeader(url,HeaderKey,HeaderValue);
             System.out.printf("\n\n"+MysqlData);
+            try{
+                JSONObject MysqlJson = JSON.parseObject(MysqlData);
+                Integer status = MysqlJson.getInteger("status");
+                map.put("resp_code",500);
+                map.put("resp_msg",MysqlJson.getString("message"));
+            }
+            catch (Exception e){
+                map.put("resp_code",0);
+                map.put("resp_msg",MysqlData);
+            }
 
-            map.put("resp_msg",MysqlData);
         }
         catch (Exception e){
             e.printStackTrace();
