@@ -19,16 +19,53 @@
         <div class="panel-header">接入数据列表
             <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
         </div>
-        <div class="panel-body">
+       <!-- <div style="float: left;font-size:20px; font-weight:700;margin-left: 14%;margin-top: 3vh;">接入mysql数据</div>
+
+        <div class="select-box" style="width: 20%;margin-left: 20%;margin-top: 3vh;float: left;" >
+            <select id="getTables" class="select" size="1"     name="data"  style="color: #277de2;"  onchange="getTables()" >
+
+                    <option value ="选择接入数据">选择接入数据</option>
+                    <option value ="勘察设计数据">勘察设计数据</option>
+                    <option value="工程施工数据">工程施工数据</option>
+
+
+                &lt;!&ndash; <option  th:each="data1:${dataListcon}" th:text="${data1}"></option>&ndash;&gt;
+
+            </select>
+            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 6%;margin-left: -20%" value="勘察设计数据" /></a>
+            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 6%;margin-left: -49%" value="工程施工数据" /></a>
+
+        </div>-->
+
+
+       <!-- <div class="select-box" style="width: 20%;margin-left: 10%;margin-top: 3vh;float: left;" >
+            <select id="dataFuseSelect1" class="select" size="1"  name="dataBagSelect"  style="color: #277de2;">
+
+                <option value ="选择接入数据">选择数据表</option>
+
+
+                &lt;!&ndash; <option  th:each="data1:${dataListcon}" th:text="${data1}"></option>&ndash;&gt;
+
+            </select>
+        </div>-->
+
+
+        <a onclick="design();design1()"><input   id="design" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="接入勘察设计数据" /></a>
+        <a onclick="engineer();engineer1()"><input   id="engineer" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="接入工程施工数据" /></a>
+
+            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 1%;margin-left: 1%" value="接入运营维护数据" /></a>
+
+
+        <div class="panel-body" style="margin-top: 10%">
             <div >
                 <!--实现模糊搜索-->
-                <form method="get" action="#">
+           <!--     <form method="get" action="#">
                 <input type="text" placeholder="请输入关键词" class="input-text ac_input" name="name" value=""
                        id="search_text" autocomplete="off" style="width:30%">
                 <button type="submit" class="btn btn-default" id="search_button">
                     搜索
                 </button>
-            </form>
+            </form>-->
 
             </div>
             <div style="margin-top: 1%">
@@ -37,8 +74,7 @@
                     <tr class="text-c">
                         <th >数据来源</th>
                         <th >数据名称</th>
-                        <th >场景</th>
-                        <th >问题</th>
+
                         <th >操作</th>
                     </tr>
                     </thead>
@@ -63,12 +99,8 @@
                         <tr class="text-c">
                             <td>统一平台</td>
                             <td>实时轴线偏差数据1</td>
-                             <td>轴线偏差场景1</td>
-                             <td>轴线偏差问题1</td>
+
                             <td>
-                                <a>
-                                    <input class="btn btn-success radius" type="button" value="配置" />
-                                </a>
                                 <a>
                                     <input class="btn btn-success radius" type="button"  value="删除" />
                                 </a>
@@ -77,26 +109,20 @@
                         <tr class="text-c">
                             <td>统一平台</td>
                             <td>实时轴线偏差数据2</td>
-                            <td>轴线偏差场景2</td>
-                            <td>轴线偏差问题2</td>
+
                             <td>
-                                <a>
-                                    <input class="btn btn-success radius" type="button" value="配置" />
-                                </a>
+
                                 <a>
                                     <input class="btn btn-success radius" type="button" value="删除" />
                                 </a>
                             </td>
                         </tr>
                         <tr class="text-c">
-                            <td>大数据分析平台中间过程数据</td>
+                            <td>统一平台</td>
                             <td>地面沉降数据包</td>
-                            <td>地面沉降场景</td>
-                            <td>地面沉降问题</td>
+
                             <td>
-                                <a>
-                                    <input class="btn btn-success radius" type="button" value="配置" />
-                                </a>
+
                                 <a>
                                     <input class="btn btn-success radius" type="button" value="删除" />
                                 </a>
@@ -106,17 +132,223 @@
                     </tbody>
                 </table>
             </div>
-            <div style="float: left;font-size:20px; font-weight:700;margin-left: 14%;margin-top: 8vh;">选择结构化数据</div>
-            <div class="select-box" style="width: 20%;margin-left: 41.8%;margin-top: 8vh;float: left;" >
-                <select id="dataFuseSelect" class="select" size="1"  name="dataBagSelect"  style="color: #277de2;">
-                    <option value="" selected>请选择结构化数据表</option>
-                    <!-- <option  th:each="data1:${dataListcon}" th:text="${data1}"></option>-->
 
-                </select>
-            </div>
         </div>
     </div>
 
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    //保存页面数据，封装json，用ajax传递
+  /*  document.getElementById("data").value;
+    var index=document.getElementById("data").selectedIndex;//获取当前选择项的索引.
+    document.getElementById("data").options[index].value;//获取当前选择项的值.
+
+    var obj=document.getElementById("data");
+
+    for(i=0;i<obj.length;i++) {//下拉框的长度就是它的选项数.
+
+        if(obj[i].selected==true) {
+
+            var text=obj[i].value;//获取当前选择项的值.
+
+        }
+        $.ajax({
+            async: false,
+            type : "post",
+            dataType: "json",
+            contentType : 'application/json;charset=UTF-8',
+            data:text,
+            url : '/getTables',
+            success : function() {
+                $.Huimodalalert('保存成功',2000);
+            }
+        });
+    }*/
+
+
+</script>
+<script>
+    function dataNewPath() {
+        $("#newPathmodal-demo").modal("show");
+    }
+    function design() {
+        $("#newPathmodal-demo1").modal("show");
+    }
+
+    function engineer() {
+        $("#newPathmodal-demo2").modal("show");
+    }
+function newsaveSceneName() {
+  /*  var data={};
+    data["PointName"]=document.getElementById('PointName').value;
+    data["startTime"]=document.getElementById('startTime').value;
+    data["endTime"]=document.getElementById('endTime').value;*/
+
+    var PointName =  $("input[id='PointName']").val();
+    var startTime =  $("input[id='startTime']").val();
+    var endTime =  $("input[id='endTime']").val();
+
+    $.ajax({
+        async: true,
+        cache:false,
+        type : "post",
+
+
+        data:   {
+            PointName:PointName,
+            startTime:startTime,
+            endTime:endTime,
+        },
+
+        url : "/openTsdb/getTsdbData",
+        success : function() {
+            $.Huimodalalert('保存成功',2000);
+        }
+    });
+}
+    function design1() {
+        /*  var data={};
+          data["PointName"]=document.getElementById('PointName').value;
+          data["startTime"]=document.getElementById('startTime').value;
+          data["endTime"]=document.getElementById('endTime').value;*/
+
+
+        var dataClass=document.getElementById("design").value;
+
+        alert(dataClass);
+        JSON.stringify(dataClass)
+        $.ajax({
+            async: true,
+            cache:false,
+            type : "post",
+            dataType: "json",
+
+            data: JSON.stringify({dataClass: dataClass}),
+
+            url : "/mysql/getTables",
+            success : function(data) { var tables = data.resp_msg;
+                var designTables = tables.split(",");
+                $.Huimodalalert('请继续选择对应数据的表名',2000);
+            }
+        });
+    }
+
+    function engineer1() {
+        /*  var data={};
+          data["PointName"]=document.getElementById('PointName').value;
+          data["startTime"]=document.getElementById('startTime').value;
+          data["endTime"]=document.getElementById('endTime').value;*/
+
+
+        var dataClass=document.getElementById("engineer").value;
+
+        alert(dataClass);
+        JSON.stringify(dataClass)
+        $.ajax({
+            async: true,
+            cache:false,
+            type : "post",
+            dataType: "json",
+
+            data: JSON.stringify({dataClass: dataClass}),
+
+            url : "/mysql/getTables",
+            success : function(data) { var tables = data.resp_msg;
+                var engineerTables = tables.split(",");
+                $.Huimodalalert('请继续选择对应数据的表名',2000);
+            }
+        });
+    }
+
+
+
+</script>
+<div id="newPathmodal-demo2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" ></h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+
+            <div class="modal-body">
+                <select id="getTables" class="select" size="1"     name="data"  style="color: #277de2;"  onchange="getTables()" >
+
+                    <option value ="选择接入数据">选择接入数据</option>
+        <!--            <option  th:each="engineerTables:${engineerTables}" th:text="${engineerTables}"></option>-->
+
+
+
+                </select>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName2();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="newPathmodal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" ></h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+
+            <div class="modal-body">
+                <select id="getTables1" class="select" size="1"     name="data"  style="color: #277de2;"  onchange="getTables()" >
+
+                    <option value ="选择接入数据">选择接入数据</option>
+
+
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName1();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="newPathmodal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" ></h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+
+            <div class="modal-body">
+                <input type="text" placeholder="推荐   3703-CNET0059.VICO" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect2" value="1x">
+                <strong>pointName  ：</strong><input   id="PointName"  type="text" vaule="推荐   3703-CNET0059.VICO " class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="推荐    1572577582 " class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect3" value="1x">
+                <strong>startTime  ：</strong><input    id="startTime"  type="text" vaule="推荐    1572577582  " class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="推荐   1572584782" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;display: none" id="newdataFuseSelect4" value="1x">
+                <strong>endTime    ：</strong><input    id="endTime" type="text" vaule="推荐   1572584782" class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="newsaveSceneName();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
