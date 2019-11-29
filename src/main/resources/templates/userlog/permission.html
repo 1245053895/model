@@ -462,7 +462,7 @@
         var loading = document.getElementById("loading");
         loading.style.display="none";
 
-        if ([[${SessionId}]] == null || [[${SessionId}]].length == 0 || [[${SessionId}]] == undefined) {
+        if ([[${SessionId}]] == null || [[${SessionId}]].length == 0 || [[${SessionId}]] == undefined || [[${SessionId}]].indexOf("null") != -1) {
             window.location.href = "http://10.101.201.173:80/login";
         }
         var token = {

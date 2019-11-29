@@ -51,6 +51,7 @@ public class SsoController {
     private SysUserMenuMapper sysUserMenuMapper;
 
     private SsoLoginService ssoLoginService;
+    private String sessionId;
 
     @Autowired
     public SsoController(SsoLoginService ssoLoginService) {
@@ -75,18 +76,21 @@ public class SsoController {
         ssoTicket = ssoLoginService.checkTicket(ssoTicket);
         ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
         HttpSession session = request.getSession();
-
         if (TicketResultEnum.SSO_TICKET_SUCCESS.getNo().equals(ssoTicket.getResult())) {
             ssoTicket.setSessionKey(sessionKey);
             ssoTicket = ssoLoginService.login(session, ssoTicket);
             // ssoTicket.getResult()
             //测试
-            String sessionId = request.getRequestedSessionId();
-            System.out.printf("\n\nLoginSessionId:"+sessionId);
-            session.setAttribute("SessionId",sessionId);
-            model.addAttribute("SessionId",sessionId);
+                String sessionId = request.getRequestedSessionId();
+                System.out.printf("\n\nLoginSessionId:" + sessionId);
+                session.setAttribute("SessionId", sessionId);
+                model.addAttribute("SessionId", sessionId);
         }
 
+        String sessionId = ssoTicket.getSessionId();
+        System.out.printf("\n\nLoginSessionId:" + sessionId);
+        session.setAttribute("SessionId", sessionId);
+        model.addAttribute("SessionId", sessionId);
         String UserName = new String();
         if (sysUser != null) {
             UserName = sysUser.getUsername();
@@ -106,7 +110,7 @@ public class SsoController {
 
                 String password = sysUser.getPassword();
                 Integer id = sysUser.getId();
-                String sessionId = request.getRequestedSessionId();
+//                String sessionId = request.getRequestedSessionId();
                 /*       if (sessionId==null){}*/
 //        String ssoSupServerUrl = "http://10.101.201.184:9092";
 //        ssoTicket.setSsoSupServerUrl(ssoSupServerUrl);
@@ -142,15 +146,10 @@ public class SsoController {
                 }
                 String algorithmlabel = "行业通用";
                 List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
                 String algorithmlabel1 = "行业专用";
                 List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
                 String algorithmlabe2 = "人工智能";
                 List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
                 List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
                 List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
                 model.addAttribute("programmeList", programmeList);
@@ -160,7 +159,6 @@ public class SsoController {
                 model.addAttribute("programmeList2", programmeList2);
                 List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
                 model.addAttribute("programmeList3", programmeList3);
-
                 model.addAttribute("algorithmListGeneral", algorithmListGeneral);
                 model.addAttribute("algorithmListSpecial", algorithmListSpecial);
                 model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
@@ -172,18 +170,12 @@ public class SsoController {
             } else {
                 System.out.printf("\n\n存在用户,没有权限");
                 session.setAttribute("Status", "false");
-
                 String algorithmlabel = "行业通用";
                 List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
                 String algorithmlabel1 = "行业专用";
                 List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
                 String algorithmlabe2 = "人工智能";
                 List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
                 List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
                 List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
                 model.addAttribute("programmeList", programmeList);
@@ -193,7 +185,6 @@ public class SsoController {
                 model.addAttribute("programmeList2", programmeList2);
                 List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
                 model.addAttribute("programmeList3", programmeList3);
-
                 model.addAttribute("algorithmListGeneral", algorithmListGeneral);
                 model.addAttribute("algorithmListSpecial", algorithmListSpecial);
                 model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
@@ -202,7 +193,6 @@ public class SsoController {
                 model.addAttribute("UserName", UserName);
                 model.addAttribute("Status", "false");
                 model.addAttribute("token", "null");
-
                 session.setAttribute("token", "null");
                 return new ModelAndView("userlog/permission", "Modelmodel", model);
             }
@@ -212,15 +202,10 @@ public class SsoController {
             session.setAttribute("Status", "false");
             String algorithmlabel = "行业通用";
             List<Algorithm> algorithmListGeneral = algorithmDebugService.selectAlgorithmCommon(algorithmlabel);
-
-
             String algorithmlabel1 = "行业专用";
             List<Algorithm> algorithmListSpecial = algorithmDebugService.selectAlgorithmProcess(algorithmlabel1);
-
             String algorithmlabe2 = "人工智能";
             List<Algorithm> algorithmListIntelligence = algorithmDebugService.selectAlgorithmLogical(algorithmlabe2);
-
-
             List<Algorithm> algorithmListAll = algorithmDebugService.selectAlgorithm();
             List<Programme> programmeList = modelService.selectAllModelByType("勘察设计");
             model.addAttribute("programmeList", programmeList);
@@ -230,7 +215,6 @@ public class SsoController {
             model.addAttribute("programmeList2", programmeList2);
             List<Programme> programmeList3 = modelService.selectAllModelByType("智慧城市");
             model.addAttribute("programmeList3", programmeList3);
-
             model.addAttribute("algorithmListGeneral", algorithmListGeneral);
             model.addAttribute("algorithmListSpecial", algorithmListSpecial);
             model.addAttribute("algorithmListIntelligence", algorithmListIntelligence);
@@ -239,10 +223,10 @@ public class SsoController {
             model.addAttribute("token", "null");
             model.addAttribute("UserName", UserName);
             model.addAttribute("Status", "false");
-
             session.setAttribute("token", "null");
             return new ModelAndView("userlog/permission", "Modelmodel", model);
         }
+
     }
 
     /**
@@ -257,13 +241,14 @@ public class SsoController {
     public SsoLogin logout(HttpServletRequest request)
     {
         String sessionId = request.getRequestedSessionId();
-/*        log.debug("logout:sessionId={}",sessionId);*/
         System.out.printf("\n\nLogout:"+sessionId);
 
         //测试
         HttpSession session = request.getSession();
         session.setAttribute("SessionId","Logout");//
-
+//        MySessionContext myc = MySessionContext.getInstance();
+//        HttpSession sess = myc.getSession(sessionId);
+//        String token = sess.getAttribute("token").toString();
         return ssoLoginService.logout(sessionId);
     }
 

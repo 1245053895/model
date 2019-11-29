@@ -1,9 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
    <!-- <meta http-equiv="refresh" content="3;URL=http://www.163.com" charset="UTF-8">-->
     <meta http-equiv="refresh" content="2;URL=/ZT">
     <title>ticket</title>
+
+    <script type="text/javascript" charset="utf-8" th:inline="javascript">
+        function login() {
+            var UserName=[[${UserName}]];
+            var Status=[[${Status}]];
+            var token=[[${token}]];
+            var sessionId=[[${sessionId}]];
+            var token = {
+                "token":token,
+                "UserName":UserName,
+                "Status":Status,
+                "SessionId":sessionId
+            };
+            localStorage.setItem("easyweb",JSON.stringify(token));
+            if (Status == "true") {
+                window.location.href = "http://10.101.201.173/ZT"
+            }
+            else {
+                window.location.href = "http://10.101.201.173/permission"
+            }
+
+        }
+    </script>
 </head>
 <body>
 

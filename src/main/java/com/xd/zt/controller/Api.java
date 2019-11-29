@@ -89,28 +89,6 @@ public class Api {
         return apiResult;
     }
 
-//    @RequestMapping(value = "/getInstanceById/{instanceId}", method = GET, produces = "application/json")
-//    public ApiResult getInstanceById(@PathVariable("instanceId") Integer instanceId) {
-//        ApiResult apiResult = new ApiResult();
-//        try {
-//            AnalyseInstance analyseInstance = apiService.selectInstanceById(instanceId);
-//            JSONArray parameters = JSONArray.parseArray(analyseInstance.getParameters());
-//            JSONObject modelinstance = new JSONObject();
-//            modelinstance.put("username", "name");
-//            modelinstance.put("modelInstanceId", instanceId);
-//            modelinstance.put("instantData", false);
-//            modelinstance.put("analyzmodel", parameters);
-//
-//            apiResult.setDatas(modelinstance);
-//            apiResult.setResp_code(0);
-//            apiResult.setResp_msg("返回成功");
-//        }
-//        catch (Exception e){
-//            apiResult.setResp_code(1);
-//            apiResult.setResp_msg("模型不存在");
-//            apiResult.setDatas(null);
-//        }
-//        return apiResult;
-//    }
+
 
 }
