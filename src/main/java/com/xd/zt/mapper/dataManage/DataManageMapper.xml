@@ -30,4 +30,12 @@
      SELECT * FROM analyse_csv WHERE csvname LIKE '%${res}%'
     </select>
 
+
+    <select id="selectMysqlDataList" resultType="MysqlData">
+        SELECT * FROM mysqldata;
+    </select>
+
+    <delete id="MysqlDataDelete" parameterType="Integer" >
+        delete from mysqldata where mysqldataid = #{modelid}
+    </delete>
 </mapper>

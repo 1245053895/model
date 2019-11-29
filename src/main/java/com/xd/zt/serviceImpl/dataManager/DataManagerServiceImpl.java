@@ -1,6 +1,7 @@
 package com.xd.zt.serviceImpl.dataManager;
 
 import com.xd.zt.domain.dataManage.DataManage;
+import com.xd.zt.domain.dataManage.MysqlData;
 import com.xd.zt.mapper.dataManage.DataManageMapper;
 import com.xd.zt.service.dataManager.DataManagerService;
 import org.apache.ibatis.annotations.Param;
@@ -46,5 +47,15 @@ public class DataManagerServiceImpl implements DataManagerService {
     public List<DataManage> moHuDataList2(@Param("res")String res) {
       List<DataManage>  moHuDataList3= dataManageMapper.moHuDataList2(res);
         return moHuDataList3;
+    }
+
+    @Override
+    public List<MysqlData> selectMysqlDataList() {
+        return dataManageMapper.selectMysqlDataList();
+    }
+
+    @Override
+    public void MysqlDataDelete(Integer modelid) {
+        dataManageMapper.MysqlDataDelete(modelid);
     }
 }

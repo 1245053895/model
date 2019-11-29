@@ -16,7 +16,7 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 数据集成 <span class="c-gray en">&gt;</span> 接入数据列表  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" >
     <div class="panel panel-default" style="height: 90vh">
-        <div class="panel-header">接入数据列表
+        <div class="panel-header">选择数据接入
             <!--<a th:href="@{'/analyzModelExample/'+${modelid}}"><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增"/></a>-->
         </div>
        <!-- <div style="float: left;font-size:20px; font-weight:700;margin-left: 14%;margin-top: 3vh;">接入mysql数据</div>
@@ -48,15 +48,15 @@
 
             </select>
         </div>-->
+        <div class="panel-body" style="margin-top: 1%">
 
+       <input   id="design" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 16%" value="勘察设计数据" onclick="design(this.value)" />
+       <input   id="engineer" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 25%" value="工程施工数据" onclick="design(this.value)"/>
 
-       <input   id="design" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="勘察设计数据" onclick="design(this.value)" />
-       <input   id="engineer" class="btn btn-success radius" type="button" style=";margin-top: 1%;margin-left: 1%" value="工程施工数据" onclick="design(this.value)"/>
+            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 1%;margin-left: 25%" value="运营维护数据" /></a>
+        </div>
 
-            <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 1%;margin-left: 1%" value="运营维护数据" /></a>
-
-
-        <div class="panel-body" style="margin-top: 10%">
+        <div class="panel-body" style="margin-top: 0.5%">
             <div >
                 <!--实现模糊搜索-->
            <!--     <form method="get" action="#">
@@ -72,63 +72,35 @@
                 <table class="table table-border table-bordered table-hover table-bg table-sort">
                     <thead>
                     <tr class="text-c">
-                        <th >数据来源</th>
-                        <th >数据名称</th>
-
-                        <th >操作</th>
+                        <th >文件名称</th>
+                        <th >文件路径</th>
+                        <th >创建时间</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
 
-               <!--     <tbody>
-                        <tr class="text-c" th:if="${analyticsTaskList.size()} eq 0">
-                            <td colspan="6">当前没有任务</td>
-                        </tr>
-                        <tr class="text-c"  th:each="analyticsTaskList:${analyticsTaskList}">
-                            <td th:text="${analyticsTaskList.id}"></td>
-                            <td th:text="${analyticsTaskList.modelInstanceId}"></td>
-                            <td th:text="${analyticsTaskList.timestamp}"></td>
-                            <td th:text="${analyticsTaskList.status}"></td>
-                            <td th:text="${analyticsTaskList.result}"></td>
-                            &lt;!&ndash;<td><a style="cursor:pointer" class="text-primary" th:text="${analyseFlowList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>&ndash;&gt;
-                            <td th:text="${analyticsTaskList.completeTime}"></td>
-                        </tr>
-                    </tbody>-->
+                    <tbody>
 
 
-                   <tbody>
-                        <tr class="text-c">
-                            <td>统一平台</td>
-                            <td>实时轴线偏差数据1</td>
+                    <tr class="text-c" th:each="MysqlData:${MysqlData}">
+                        <td><a style="cursor:pointer" class="text-primary" th:text="${MysqlData.mysqldataname}" ></a></td>
+                        <td th:text="${MysqlData.mysqldatapath}"></td>
+                        <td th:text="${MysqlData.mysqldatatime}"></td>
 
-                            <td>
-                                <a>
-                                    <input class="btn btn-success radius" type="button"  value="删除" />
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>统一平台</td>
-                            <td>实时轴线偏差数据2</td>
 
-                            <td>
+                        <td>
+                            <!--&lt;!&ndash;跳转modelView  实现模型打开&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a th:href="@{'/dataReview/'+ ${fileAndUpload.id}}"><input class="btn btn-primary size-MINI radius" type="button" value="打开"></a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;跳转modelModify 实现模型修改&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;--><input   th:id="${MysqlData.mysqldataid}"   onclick="configuration1()" class="btn btn-primary size-MINI radius" type="button" value="配置">
+                         <!--   <a th:id="${businessFile.dataid}" onclick="deletefile(id)">--><input     th:id="${MysqlData.mysqldataid}" onclick="confirmDelete(this)" class="btn btn-primary size-MINI radius" type="button" value="删除">
+                            <!--<a th:href="@{'/business/businessFileDown/'+ ${businessFile.dataid}}">-->
+                            <!--<input class="btn btn-primary size-MINI radius" type="button" value="下载">-->
+                            <!--</a>-->
+                        </td>
 
-                                <a>
-                                    <input class="btn btn-success radius" type="button" value="删除" />
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>统一平台</td>
-                            <td>地面沉降数据包</td>
-
-                            <td>
-
-                                <a>
-                                    <input class="btn btn-success radius" type="button" value="删除" />
-                                </a>
-                            </td>
-                        </tr>
-
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -137,6 +109,44 @@
     </div>
 
 </div>
+<script type="text/javascript" th:inline="javascript">
+    function confirmDelete(obj) {
+        var modelid=obj.id;
+        /*   alert(businessid)*/
+        if (confirm("确定删除吗？")){
+            $.ajax({
+                type:'POST',
+                url:"/dataManager/MysqlDataDelete",
+                dataType:"json",
+                traditional:true,
+                data:{
+                    'modelid':modelid,
+                },
+                async:false,
+                success:function (data) {
+                    alert("删除成功");
+                    /*    $.Huimodalalert('删除成功', 2000);*/
+                    /*   location.href="/businessManage"*/
+                    location.reload(true);
+                 /*   parent.location.reload();*/
+                }
+
+            });
+        }else {
+            location.href="/dataManager/structure"
+        }
+
+
+
+
+    }
+
+</script>
+
+
+
+
+
 
 <script type="text/javascript" th:inline="javascript">
     //保存页面数据，封装json，用ajax传递
@@ -169,6 +179,13 @@
 
 </script>
 <script>
+    function configuration() {
+        $("#configuration").modal("show");
+    }
+    function configuration1() {
+        $("#configuration1").modal("show");
+    }
+
     var Class;
     function dataNewPath() {
         $("#newPathmodal-demo").modal("show");
@@ -269,6 +286,69 @@
 
 
 </script>
+<div id="configuration1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" >将数据配置到选择的模型</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                <!-- <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
+                <input    class="btn btn-success radius" type="button" style=";margin-top: 2%;margin-left: 10%" value="勘察设计数据" onclick="design(this.value)" />
+                <input    class="btn btn-success radius" type="button" style=";margin-top: 2%;margin-left: 10%" value="工程施工数据" onclick="design(this.value)"/>
+
+                <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 2%;margin-left: 10%" value="运营维护数据" /></a>
+            </div>
+            <div class="modal-body"> </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="getMysqlData();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="configuration" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <!-- 弹出对话框 -->
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title" >将数据配置到选择的模型</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+               <!-- <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
+                <strong style="margin-left:1%;position: absolute;margin-top: 0.5vh;">数据模型</strong><select     id="1" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;" >
+                <option  >选择数据模型</option>
+                <option  th:each="dataModelList:${dataModelList}" th:text="${dataModelList.modelname}">选择数据模型</option>
+            </select>
+                <strong style="margin-left: -53.5%;position: absolute;margin-top: 7vh;">分析模型</strong><select  id="2" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:7%" >
+                <option  >选择数据模型</option>
+                <option    th:each="analyseModelList:${analyseModelList}" th:text="${analyseModelList.name}">选择分析模型</option>
+            </select>
+                <strong style="margin-left: -53.5%;position: absolute;margin-top: 11vh;">验证模型</strong><select  id="3" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:6%" >
+                <option  >选择数据模型</option>
+                <option th:each="experimentModelList:${experimentModelList}" th:text="${experimentModelList.testname}">选择验证模型</option>
+            </select>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="getMysqlData();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div id="newPathmodal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <!-- 弹出对话框 -->
     <div class="modal-dialog">

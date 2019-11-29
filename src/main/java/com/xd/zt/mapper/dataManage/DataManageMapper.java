@@ -1,6 +1,7 @@
 package com.xd.zt.mapper.dataManage;
 
 import com.xd.zt.domain.dataManage.DataManage;
+import com.xd.zt.domain.dataManage.MysqlData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +16,8 @@ public interface DataManageMapper {
     public List<DataManage> moHuDataList(@Param("res") String res);
     public List<DataManage> moHuDataList1(@Param("res") String res);
     public List<DataManage> moHuDataList2(@Param("res") String res);
+
+    List<MysqlData>  selectMysqlDataList();
+
+    void MysqlDataDelete(@Param("modelid")Integer modelid);
 }
