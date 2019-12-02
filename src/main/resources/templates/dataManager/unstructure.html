@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
 <head>
     <meta charset="UTF-8">
     <title>检索排序管理模块</title>
@@ -50,25 +51,10 @@
                         <th >数据路径</th>
 
                         <th >数据来源</th>
-                       <!-- <th >问题</th>-->
                         <th >操作</th>
                     </tr>
                     </thead>
 
-                    <!--     <tbody>
-                             <tr class="text-c" th:if="${analyticsTaskList.size()} eq 0">
-                                 <td colspan="6">当前没有任务</td>
-                             </tr>
-                             <tr class="text-c"  th:each="analyticsTaskList:${analyticsTaskList}">
-                                 <td th:text="${analyticsTaskList.id}"></td>
-                                 <td th:text="${analyticsTaskList.modelInstanceId}"></td>
-                                 <td th:text="${analyticsTaskList.timestamp}"></td>
-                                 <td th:text="${analyticsTaskList.status}"></td>
-                                 <td th:text="${analyticsTaskList.result}"></td>
-                                 &lt;!&ndash;<td><a style="cursor:pointer" class="text-primary" th:text="${analyseFlowList.examplename}" th:href="@{'/fileReview/'+ ${datamodelSource.sourceid}}"></a></td>&ndash;&gt;
-                                 <td th:text="${analyticsTaskList.completeTime}"></td>
-                             </tr>
-                         </tbody>-->
 
 
                     <tbody>

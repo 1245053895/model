@@ -77,7 +77,7 @@ public class CodemirrorController {
     //回显保存代码结果
     @ResponseBody
     @RequestMapping("/saveCodeControllerx")
-    public String saveCodeControllerx(@RequestParam("name") String name, String type, String content,String algorithmparamsoutput,String algorithmparamscontent,String algorithmparamsinput,String algorithmlabel,String algorithmdescribe,String algorithmtype,String algorithmversion,String algorithmmiaoshu){
+    public String saveCodeControllerx(@RequestParam("name") String name, String type, String content,String algorithmparamsoutput,String algorithmparamscontent,String algorithmparamsinput,String algorithmlabel,String algorithmdescribe,String algorithmtype,String algorithmversion, @RequestParam("algorithmmiaoshu")String algorithmmiaoshu){
         String path = "src/main/resources/static/algorithm/";
         String filPath = path+name+type;
         String editTime =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString();
