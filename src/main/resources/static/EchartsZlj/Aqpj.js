@@ -63,7 +63,25 @@ function AqpjShiguEcharts(algorithmname,data){
             },
             data: Values,
             type: 'bar'
-        }]
+        }],
+        toolbox: {
+            show: true,
+            itemSize: 20,
+            itemGap: 30,
+            right: 50,
+            feature: {
+                restore: { //重置
+                    show: true
+                },
+                saveAsImage: {
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                },
+                magicType: {//动态类型切换
+                    type: ['bar', 'line']
+                }
+            }
+        }
     };
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
@@ -122,7 +140,25 @@ function AqpjPingjiaEcharts(algorithmname,data){
             },
             data: [Values[0]],
             type: 'bar'
-        }]
+        }],
+        toolbox: {
+            show: true,
+            itemSize: 20,
+            itemGap: 30,
+            right: 50,
+            feature: {
+                restore: { //重置
+                    show: true
+                },
+                saveAsImage: {
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                },
+                magicType: {//动态类型切换
+                    type: ['bar', 'line']
+                }
+            }
+        }
     };
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
@@ -183,7 +219,25 @@ function AqpjXiangEcharts(algorithmname,data){
             },
             data: Values,
             type: 'bar'
-        }]
+        }],
+        toolbox: {
+            show: true,
+            itemSize: 20,
+            itemGap: 30,
+            right: 50,
+            feature: {
+                restore: { //重置
+                    show: true
+                },
+                saveAsImage: {
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                },
+                magicType: {//动态类型切换
+                    type: ['bar', 'line']
+                }
+            }
+        }
     };
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
