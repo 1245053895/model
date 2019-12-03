@@ -73,7 +73,9 @@ public class DataModelController {
         List<DatamodelName> dataModelList = dataModelService.selectdatamodel();
         model.addAttribute("dataModelList", dataModelList);
         return new ModelAndView("data/dataModelManage", "modelModel", model);
+
     }
+
 
     //数据模型数据源显示
 //    @GetMapping(value = "/dataSourceManage/{modeid}")
