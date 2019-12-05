@@ -24,9 +24,14 @@ public class JsonKeyToStringList {
         jsonString = jsonString.replace("}","");
         String[] keyAndValue = jsonString.split(",");
         for (int i = 0 ; i < keyAndValue.length; i++){
-            String[] keys = keyAndValue[i].split(":");
-            String key = keys[0].replace("\"","");
-            StringList[i] = key;
+            try {
+                String[] keys = keyAndValue[i].split(":");
+                String key = keys[0].replace("\"", "");
+                StringList[i] = key;
+            }
+            catch (Exception e){
+                continue;
+            }
         }
         return StringList;
     }

@@ -18,6 +18,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +80,11 @@ public class SsoLoginSerImpl implements SsoLoginService
         }
         sessionMap.put(session.getId(), session);
         initConst.setSessionMap(sessionMap);
+
+
         ssoTicket.setSessionId(session.getId());
+
+        System.out.printf("\n\nssoTicket的sessionId:"+session.getId());
         SsoTicket resultTicket = ssoLoginDao.receiveSessionId(ssoTicket);
         if (!TicketResultEnum.RECEIVE_ID_SUCCESS.getNo().equals(resultTicket.getResult()))
         {

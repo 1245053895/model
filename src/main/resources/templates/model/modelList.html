@@ -38,7 +38,7 @@
                         <th >模型名称</th>
                         <th >模型描述</th>
                         <th >创建时间</th>
-                        <th >用户信息</th>
+                        <!--<th >用户信息</th>-->
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -55,7 +55,7 @@
                             <td ><a th:text="${programmeList.programmename}" th:href="@{'/model/modeleditor/'+${programmeList.programmeid}}"></a></td>
                             <td  th:text="${programmeList.programmedescribe}" ></td>
                             <td  th:text="${programmeList.programmetime}" ></td>
-                            <td  th:text="${programmeList.username}" ></td>
+                            <!--<td  th:text="${programmeList.username}" ></td>-->
                             <td>
                                 <a>
                                     <input th:id="${programmeList.programmeid}" class="btn btn-primary size-MINI radius" type="button" value="运行"  >

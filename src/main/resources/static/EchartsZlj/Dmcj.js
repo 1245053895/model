@@ -40,6 +40,7 @@ function DmcjPredictEcharts(algorithmname,data) {
 
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
+    myChart.clear();
     option = {
         title: {
             text:'地面沉降预测',
@@ -85,6 +86,14 @@ function DmcjPredictEcharts(algorithmname,data) {
                 },
                 magicType: {//动态类型切换
                     type: ['bar', 'line']
+                },
+                myBing: {//自定义按钮 danielinbiti,这里增加，selfbuttons可以随便取名字
+                    show: true,//是否显示
+                    title: '切换为饼图', //鼠标移动上去显示的文字
+                    icon: 'image:///EchartsZlj/饼图.png', //图标
+                    onclick: function () {//点击事件,这里的option1是chart的option信息
+                        BingPredictEcharts(algorithmname,data); //这里可以加入自己的处理代码，切换不同的图形
+                    }
                 }
             }
         }
@@ -220,4 +229,100 @@ function CreateDmcjRulesTable(algorithmname,data) {
          }
      }
      $("#createtable").append("</table>");
+ }
+
+ function BingPredictEcharts(algorithmname,data) {
+     dataJson = eval("("+data+")");
+     var Values = [];
+     var Keys = [];
+     var Ring = dataJson["Ring"][0];
+     var time = dataJson["time"][0];
+     var mileage = dataJson["mileage"][0];
+     var i = 0;
+     for (var key in dataJson) {
+         var num = parseInt(key);
+         if (!isNaN(num))
+         {
+             Keys[i] = num;
+             i++;
+         }
+     }
+     Keys.sort(sortNumber);
+     for (var j = 0; j < Keys.length; j++ ){
+         Values[j] = dataJson[Keys[j]][0];
+     }
+     var ValuesArray = [];
+     for (var j = 0 ; j < Keys.length ;j ++) {
+         var JsonValues = {};
+         JsonValues['value'] = Values[j];
+         JsonValues['name'] = Keys[j];
+         ValuesArray.push(JsonValues);
+     }
+     var dom = document.getElementById("container");
+     var myChart = echarts.init(dom);
+     myChart.clear();
+     var app = {};
+     option = null;
+     option = {
+         tooltip: {
+             trigger: 'item',
+             formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },
+         legend: {
+             orient: 'vertical',
+             x: 'left',
+             data:Keys
+         },
+         series: [
+             {
+                 name:'访问来源',
+                 type:'pie',
+                 radius: ['50%', '70%'],
+                 avoidLabelOverlap: false,
+                 label: {
+                     normal: {
+                         show: false,
+                         position: 'center'
+                     },
+                     emphasis: {
+                         show: true,
+                         textStyle: {
+                             fontSize: '30',
+                             fontWeight: 'bold'
+                         }
+                     }
+                 },
+                 labelLine: {
+                     normal: {
+                         show: false
+                     }
+                 },
+                 data:ValuesArray
+             }
+         ],
+         toolbox: {
+             show: true,
+             itemSize: 20,
+             itemGap: 30,
+             right: 50,
+             feature: {
+                 myBack: {//自定义按钮 danielinbiti,这里增加，selfbuttons可以随便取名字
+                     show: true,//是否显示
+                     title: '还原', //鼠标移动上去显示的文字
+                     icon: 'image:///EchartsZlj/刷新.png', //图标
+                     onclick: function () {//点击事件,这里的option1是chart的option信息
+                         DmcjPredictEcharts(algorithmname,data);//这里可以加入自己的处理代码，切换不同的图形
+                     }
+                 },
+                 saveAsImage: {
+                     excludeComponents: ['toolbox'],
+                     pixelRatio: 2
+                 }
+
+             }
+         }
+     };
+     if (option && typeof option === "object") {
+         myChart.setOption(option, true);
+     }
  }

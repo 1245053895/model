@@ -94,7 +94,7 @@
                             <!--&lt;!&ndash;跳转modelModify 实现模型修改&ndash;&gt;-->
                             <!--&lt;!&ndash;<a><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>&ndash;&gt;-->
                             <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;--><input   th:id="${MysqlData.mysqldataid}" th:name="${MysqlData.mysqldataname}"  onclick="configuration1(this.id,this.name)" class="btn btn-primary size-MINI radius" type="button" value="配置">
-                         <!--   <a th:id="${businessFile.dataid}" onclick="deletefile(id)">--><input      th:id="${MysqlData.mysqldataid}+delete"   th:name="${MysqlData.mysqldatapath}" onclick="confirmDelete(this.id)" class="btn btn-primary size-MINI radius" type="button" value="删除">
+                         <!--   <a th:id="${businessFile.dataid}" onclick="deletefile(id)">--><input      th:id="${MysqlData.mysqldataid}"   th:name="${MysqlData.mysqldatapath}" onclick="confirmDelete(this.id)" class="btn btn-primary size-MINI radius" type="button" value="删除">
 
                             <!--<a th:href="@{'/business/businessFileDown/'+ ${businessFile.dataid}}">-->
                             <!--<input class="btn btn-primary size-MINI radius" type="button" value="下载">-->
@@ -111,8 +111,8 @@
 
 </div>
 <script type="text/javascript" th:inline="javascript">
-    function confirmDelete(obj) {
-        var modelid=obj.id;
+    function confirmDelete(id) {
+        var modelid=id;
         /*   alert(businessid)*/
         if (confirm("确定删除吗？")){
             $.ajax({
@@ -315,6 +315,7 @@ function insertData5() {
                 url : "/mysql/getTableData",
                 success : function(data) {
                     $.Huimodalalert(data.resp_msg, 5000);
+                    location.reload(true);
                 }
                 })
     }
