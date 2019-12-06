@@ -38,25 +38,4 @@
     <delete id="MysqlDataDelete" parameterType="Integer" >
         delete from mysqldata where mysqldataid = #{modelid}
     </delete>
-
-
-    <insert id="insertData" parameterType="DatamodelSource">
-       INSERT into datamodel_source(modeid,sourcename,sourcepath,status,sourcetime) VALUES(#{modeid},#{sourcename},#{sourcepath},0,#{sourcetime})
-    </insert>
-
-    <insert id="insertData1" parameterType="AnalyseSource">
-       INSERT into analyse_source(analysemodelid,analysesourcename,analysesourcepath,analysesourcetime) VALUES(#{modeid},#{sourcename},#{sourcepath},#{sourcetime})
-    </insert>
-
-
-    <insert id="insertData2" parameterType="ExperimentData">
-       INSERT into experiment_data(experimentid,dataname,datapath,datatime) VALUES(#{modeid},#{sourcename},#{sourcepath},#{sourcetime})
-    </insert>
-
-    <select id="mysqlData" resultType="MysqlData" parameterType ="java.lang.Integer">
-    SELECT * FROM mysqldata where mysqldataid=#{sourceid}
-    </select>
 </mapper>
-<!--
-        ,sourcename,sourcetime,sourcepath,,status-->
-        <!--,#{sourcename},#{sourcetime},#{sourcepath},,"0"-->

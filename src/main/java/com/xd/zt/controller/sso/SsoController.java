@@ -22,8 +22,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.session.Session;
-import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,17 +35,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
 import java.util.List;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 @RequestMapping("/sso")
 @Controller
 @Slf4j
 public class SsoController {
-    @Autowired
-    private SessionRepository sessionRepository;
     @Autowired
     private ModelService modelService;
     @Autowired
@@ -288,13 +281,13 @@ public class SsoController {
         //测试
         System.out.printf("\n\nsessionId:" + sessionId);
         model.addAttribute("SessionId",sessionId);
-
-//        MySessionContext myc = MySessionContext.getInstance();
-//        HttpSession sess = myc.getSession(sessionId);
-        Session session = sessionRepository.findById(sessionId);
+        //
+        MySessionContext myc = MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(sessionId);
+//        log.info("session={}:{}", sessionKey, sessionId);
         //测试
         try{
-            String SessionId = session.getAttribute("SessionId").toString();
+            String SessionId = sess.getAttribute("SessionId").toString();
         }
         catch (Exception e){
 //            return "redirect:http://10.101.201.154:8080/#/home/index";
@@ -302,11 +295,11 @@ public class SsoController {
         }
 
             System.out.printf("\n\n");
-            System.out.printf("token:" + session.getAttribute("token").toString());
+            System.out.printf("token:" + sess.getAttribute("token").toString());
 
-            String UserName = session.getAttribute("UserName").toString();
+            String UserName = sess.getAttribute("UserName").toString();
             System.out.printf("\n\nusername:" + UserName);
-            String Status = session.getAttribute("Status").toString();
+            String Status = sess.getAttribute("Status").toString();
             System.out.printf("\n\nstatus:" + Status);
 
             Cookie name = new Cookie(sessionKey, sessionId);
@@ -342,7 +335,7 @@ public class SsoController {
             model.addAttribute("algorithmListAll", algorithmListAll);
             model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
             model.addAttribute("UserName", UserName);
-            model.addAttribute("token", session.getAttribute("token").toString());
+            model.addAttribute("token", sess.getAttribute("token").toString());
             if (Status.equals("true")) {
                 model.addAttribute("Status", "true");
                 System.out.printf("\n\n" + Status);
@@ -372,14 +365,6 @@ public class SsoController {
     @ResponseBody
     public SsoLogin checkSession(HttpServletRequest request)
     {
-        Enumeration names = request.getHeaderNames();
-        System.out.println("===================================================================");
-        while(names.hasMoreElements()){
-            String name = (String) names.nextElement();
-            System.out.println(name + ":" + request.getHeader(name));
-        }
-        System.out.println("===================================================================");
-
         String ssoSupServerUrl="http://10.101.201.184:9092";
         String localUrl="http://10.101.201.173/ZT";
         /*log.debug("checkSession");*/

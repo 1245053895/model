@@ -1,7 +1,5 @@
 package com.xd.zt.controller.dataManager;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.analyse.AnalyseModel;
 import com.xd.zt.domain.data.DatamodelName;
 import com.xd.zt.domain.data.DatamodelSource;
@@ -16,7 +14,10 @@ import com.xd.zt.service.experiment.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -112,62 +113,5 @@ public class DataManager {
         return modelid;
     }
 
-    @ResponseBody
-    @RequestMapping("/insertData")
-    public String insertData(@RequestBody String json){
-        Map<String,Object> map=new HashMap<>();
-        JSONObject jsonObject = JSON.parseObject(json);
-        Integer modeid = jsonObject.getInteger("modeid");
-        Integer sourceid = jsonObject.getInteger("sourceid");
-
-
-        MysqlData mysqlData = dataManageService.mysqlData(sourceid);
-        String sourcename  = mysqlData.getMysqldataname();
-        String sourcepath=mysqlData.getMysqldatapath();
-        String sourcetime=mysqlData.getMysqldatatime();
-
-        dataManageService.insertData(modeid,sourcename,sourcepath,sourcetime);
-
-return null;
-    }
-    @ResponseBody
-    @RequestMapping("/insertData1")
-    public String insertData1(@RequestBody String json){
-
-        JSONObject jsonObject = JSON.parseObject(json);
-        Integer modeid = jsonObject.getInteger("modeid");
-        Integer sourceid = jsonObject.getInteger("sourceid");
-
-
-        MysqlData mysqlData = dataManageService.mysqlData(sourceid);
-        String sourcename  = mysqlData.getMysqldataname();
-        String sourcepath=mysqlData.getMysqldatapath();
-        String sourcetime=mysqlData.getMysqldatatime();
-
-        dataManageService.insertData1(modeid,sourcename,sourcepath,sourcetime);
-     return null;
-
-
-    }
-    @ResponseBody
-    @RequestMapping("/insertData2")
-    public String insertData2(@RequestBody String json){
-        Map<String,Object> map=new HashMap<>();
-        JSONObject jsonObject = JSON.parseObject(json);
-        Integer modeid = jsonObject.getInteger("modeid");
-        Integer sourceid = jsonObject.getInteger("sourceid");
-
-
-        MysqlData mysqlData = dataManageService.mysqlData(sourceid);
-        String sourcename  = mysqlData.getMysqldataname();
-        String sourcepath=mysqlData.getMysqldatapath();
-        String sourcetime=mysqlData.getMysqldatatime();
-
-        dataManageService.insertData2(modeid,sourcename,sourcepath,sourcetime);
-
-        return null;
-
-
-    }
 
 }

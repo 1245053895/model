@@ -2,7 +2,6 @@ package com.xd.zt.controller.dataManager;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xd.zt.domain.dataManage.MysqlData;
 import com.xd.zt.service.dataManager.OpenTsdbDataService;
@@ -50,8 +49,7 @@ public class MysqlController {
             String csv = GetMysqlData.JsonToCsv(Data);
             System.out.printf(csv);
 
-//            FileUtils.writeStringToFile(new File("/var/data/celery/input/dataManager/"+uuid+".csv"), csv);
-            FileUtils.writeStringToFile(new File("F://"+uuid+".csv"), csv);
+            FileUtils.writeStringToFile(new File("/var/data/celery/input/dataManager/"+uuid+".csv"), csv);
 
             MysqlData mysqlData = new MysqlData();
 

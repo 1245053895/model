@@ -58,25 +58,4 @@ public class DataManagerServiceImpl implements DataManagerService {
     public void MysqlDataDelete(Integer modelid) {
         dataManageMapper.MysqlDataDelete(modelid);
     }
-
-    @Override
-    public void insertData(int modeid,  String sourcename,String sourcepath,String sourcetime) {
-        dataManageMapper.insertData(modeid,sourcename,sourcepath,sourcetime);
-    }
-    @Override
-    public void insertData1(int modeid,  String sourcename,String sourcepath,String sourcetime) {
-        dataManageMapper.insertData1(modeid,sourcename,sourcepath,sourcetime);
-    }
-
-    @Override
-    public void insertData2(int modeid,  String sourcename, String sourcepath, String sourcetime) {
-        dataManageMapper.insertData2(modeid,sourcename,sourcepath,sourcetime);
-    }
-
-    @Override
-    public MysqlData mysqlData(Integer sourceid) {
-      return   dataManageMapper.mysqlData(sourceid) ;
-    }
-
-
 }

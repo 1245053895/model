@@ -2,7 +2,6 @@
 /*轴线纠偏预测模型*/
 function zxpcPredict(algorithmname,data) {
     document.getElementById("createtable").innerHTML = "";
-    document.getElementById("createtable").setAttribute("style","");
     dataJson=JSON.parse(data); //字符串转json
     //获得key为QcPredValue的value值
     var Qc=[];
@@ -36,21 +35,8 @@ function zxpcPredict(algorithmname,data) {
             containLabel: true
         },
         toolbox: {
-            show: true,
-            itemSize: 20,
-            itemGap: 30,
-            right: 50,
             feature: {
-                restore: { //重置
-                    show: true
-                },
-                saveAsImage: {
-                    excludeComponents :['toolbox'],
-                    pixelRatio: 2
-                },
-                magicType: {//动态类型切换
-                    type: ['bar', 'line']
-                }
+                saveAsImage: {}
             }
         },
         xAxis: {
@@ -86,8 +72,7 @@ function zxpcPredict(algorithmname,data) {
                 stack: '总量',
                 data: Dsvalue
             },
-        ],
-
+        ]
     };
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
@@ -97,7 +82,6 @@ function zxpcPredict(algorithmname,data) {
 /*轴线纠偏最大位移预测*/
 function zxpcClassfier(algorithmname,data) {
     document.getElementById("createtable").innerHTML = "";
-    document.getElementById("createtable").setAttribute("style","");
     dataJson=JSON.parse(data); //字符串转json
     //获得key为QcPredValue的value值
     var ring=[];
@@ -129,21 +113,8 @@ function zxpcClassfier(algorithmname,data) {
             containLabel: true
         },
         toolbox: {
-            show: true,
-            itemSize: 20,
-            itemGap: 30,
-            right: 50,
             feature: {
-                restore: { //重置
-                    show: true
-                },
-                saveAsImage: {
-                    excludeComponents :['toolbox'],
-                    pixelRatio: 2
-                },
-                magicType: {//动态类型切换
-                    type: ['bar', 'line']
-                }
+                saveAsImage: {}
             }
         },
         xAxis: {

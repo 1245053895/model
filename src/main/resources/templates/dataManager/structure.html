@@ -93,9 +93,8 @@
                             <!--&lt;!&ndash;<a th:href="@{'/dataReview/'+ ${fileAndUpload.id}}"><input class="btn btn-primary size-MINI radius" type="button" value="打开"></a>&ndash;&gt;-->
                             <!--&lt;!&ndash;跳转modelModify 实现模型修改&ndash;&gt;-->
                             <!--&lt;!&ndash;<a><input class="btn btn-primary size-MINI radius" type="button" value="修改"></a>&ndash;&gt;-->
-                            <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;--><input   th:id="${MysqlData.mysqldataid}" th:name="${MysqlData.mysqldataname}"  onclick="configuration1(this.id,this.name)" class="btn btn-primary size-MINI radius" type="button" value="配置">
-                         <!--   <a th:id="${businessFile.dataid}" onclick="deletefile(id)">--><input      th:id="${MysqlData.mysqldataid}"   th:name="${MysqlData.mysqldatapath}" onclick="confirmDelete(this.id)" class="btn btn-primary size-MINI radius" type="button" value="删除">
-
+                            <!--&lt;!&ndash;请求后台modelDelete/{id} 实现模型删除&ndash;&gt;--><input   th:id="${MysqlData.mysqldataid}"   onclick="configuration1()" class="btn btn-primary size-MINI radius" type="button" value="配置">
+                         <!--   <a th:id="${businessFile.dataid}" onclick="deletefile(id)">--><input     th:id="${MysqlData.mysqldataid}" onclick="confirmDelete(this)" class="btn btn-primary size-MINI radius" type="button" value="删除">
                             <!--<a th:href="@{'/business/businessFileDown/'+ ${businessFile.dataid}}">-->
                             <!--<input class="btn btn-primary size-MINI radius" type="button" value="下载">-->
                             <!--</a>-->
@@ -111,8 +110,8 @@
 
 </div>
 <script type="text/javascript" th:inline="javascript">
-    function confirmDelete(id) {
-        var modelid=id;
+    function confirmDelete(obj) {
+        var modelid=obj.id;
         /*   alert(businessid)*/
         if (confirm("确定删除吗？")){
             $.ajax({
@@ -180,48 +179,12 @@
 
 </script>
 <script>
-var content1;
-    var dataid;
-
-    var sourcename1;
-
-function insertData3() {
-    setTimeout($.Huimodalalert('已配置', 2000),2*1000)
-}
-function insertData4() {
-    setTimeout($.Huimodalalert('已配置', 2000),2*1000)
-}
-function insertData5() {
-    setTimeout($.Huimodalalert('已配置', 2000),2*1000)
-}
-
-
-
     function configuration() {
         $("#configuration").modal("show");
     }
-
-
-    function configuration1(id,name) {
-        dataid = id;
-        sourcename1=name;
-
+    function configuration1() {
         $("#configuration1").modal("show");
-
-
     }
-    function data() {
-        $("#data").modal("show");
-        $("#configuration1").modal("hide");
-    }
-    function analyse() {
-        $("#analyse").modal("show");
-        $("#configuration1").modal("hide");
-    }  function experiment() {
-        $("#experiment").modal("show");
-    $("#configuration1").modal("hide");
-    }
-
 
     var Class;
     function dataNewPath() {
@@ -315,117 +278,12 @@ function insertData5() {
                 url : "/mysql/getTableData",
                 success : function(data) {
                     $.Huimodalalert(data.resp_msg, 5000);
-                    location.reload(true);
                 }
                 })
     }
     }
 
 
-    function insertData() {
-
-
-
-var sourcepath=content1;
-
-        var sourcename=sourcename1;
-var sourceid=dataid;
-        var  myselect=document.getElementById("data1");
-        var index=myselect.selectedIndex;
-        var  modeid = myselect.options[index].id;
-
-
-
-            var json = {
-                "modeid":modeid,
-                "sourceid":sourceid,
-                "sourcename":sourcename,
-                "sourcepath":sourcepath,
-
-            };
-            $.ajax({
-                async: false,
-                type: "post",
-                dataType: "json",
-                contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify(json),
-                url : "/dataManager/insertData",
-                success : function() {
-
-                }
-            })
-
-    }
-
-
-function insertData1() {
-
-
-
-    var sourcepath=content1;
-
-    var sourcename=sourcename1;
-    var sourceid=dataid;
-    var  myselect=document.getElementById("data2");
-    var index=myselect.selectedIndex;
-    var  modeid = myselect.options[index].id;
-
-
-
-    var json = {
-        "modeid":modeid,
-        "sourceid":sourceid,
-        "sourcename":sourcename,
-        "sourcepath":sourcepath,
-
-    };
-    $.ajax({
-        async: false,
-        type: "post",
-        dataType: "json",
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(json),
-        url : "/dataManager/insertData1",
-        success : function() {
-
-        }
-    })
-
-}
-function insertData2() {
-
-
-
-
-
-    var sourcename=sourcename1;
-    var sourceid=dataid;
-    var  myselect=document.getElementById("data3");
-    var index=myselect.selectedIndex;
-    var  modeid = myselect.options[index].id;
-
-
-
-    var json = {
-        "modeid":modeid,
-        "sourceid":sourceid,
-        "sourcename":sourcename,
-
-
-    };
-    $.ajax({
-        async: false,
-        type: "post",
-        dataType: "json",
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(json),
-        url : "/dataManager/insertData2",
-        success : function() {
-
-        }
-    })
-
-}
 
 </script>
 <div id="configuration1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
@@ -438,14 +296,17 @@ function insertData2() {
             </div>
             <div class="modal-body">
                 <!-- <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
-                <input    class="btn btn-success radius" type="button" style=";margin-top: 2%;margin-left: 10%" value="数据模型" onclick="data(this.id)" />
-                <input    class="btn btn-success radius" type="button" style=";margin-top: 2%;margin-left: 10%" value="分析模型" onclick="analyse(this.id)"/>
+                <input    class="btn btn-success radius" type="button" style=";margin-top: 2%;margin-left: 10%" value="勘察设计数据" onclick="design(this.value)" />
+                <input    class="btn btn-success radius" type="button" style=";margin-top: 2%;margin-left: 10%" value="工程施工数据" onclick="design(this.value)"/>
 
-               <input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 2%;margin-left: 10%" value="验证模型"   onclick="experiment(this.id)"/>
+                <a onclick="dataNewPath()"><input class="btn btn-success radius" type="button" style="position: absolute;;margin-top: 2%;margin-left: 10%" value="运营维护数据" /></a>
             </div>
             <div class="modal-body"> </div>
 
-
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="getMysqlData();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
         </div>
     </div>
 </div>
@@ -480,105 +341,13 @@ function insertData2() {
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" onclick="getMysqlData();">确定</button>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-
             </div>
         </div>
     </div>
 </div>
 
-<div id="data" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-    <!-- 弹出对话框 -->
-    <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title" >将数据配置到选择的模型</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
-            </div>
-            <div class="modal-body">
-                <!-- <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
-                <strong style="margin-left:3%;position: absolute;margin-top: 4.5vh;">数据模型</strong><select  id="data1" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:7%" >
-                <option  >选择数据模型</option>
-                <option  th:each="dataModelList:${dataModelList}" th:text="${dataModelList.modelname}"   th:id="${dataModelList.modelid}">选择数据模型</option>
-            </select>
-              <!--  <strong style="margin-left: -53.5%;position: absolute;margin-top: 7vh;">分析模型</strong><select  id="2" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:7%" >
-                <option  >选择数据模型</option>
-                <option    th:each="analyseModelList:${analyseModelList}" th:text="${analyseModelList.name}">选择分析模型</option>l
-            </select>
-                <strong style="margin-left: -53.5%;position: absolute;margin-top: 11vh;">验证模型</strong><select  id="3" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:6%" >
-                <option  >选择数据模型</option>
-                <option th:each="experimentModelList:${experimentModelList}" th:text="${experimentModelList.testname}">选择验证模型</option>
-            </select>-->
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" onclick="insertData();insertData3();">确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-<div id="analyse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-    <!-- 弹出对话框 -->
-    <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title" >将数据配置到选择的模型</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
-            </div>
-            <div class="modal-body">
-                <!-- <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
-
-                  <strong style="margin-left:3%;position: absolute;margin-top: 4.5vh;">分析模型</strong><select  id="data2" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:7%" >
-                  <option  >选择分析模型</option>
-                  <option    th:each="analyseModelList:${analyseModelList}" th:text="${analyseModelList.name}"   th:id="${analyseModelList.modelid}">选择分析模型</option>
-              </select>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" onclick="insertData1();insertData4();">确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-<div id="experiment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-
-    <!-- 弹出对话框 -->
-    <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title" >将数据配置到选择的模型</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
-            </div>
-            <div class="modal-body">
-                <!-- <strong>文件名</strong><input placeholder="请输入。。。"  id="FileName"  type="text"  class="input-text radius size-S" style="margin:10px 15px 10px 15px;;width: 43%;" >-->
 
 
-                  <strong style="margin-left: 3%;position: absolute;margin-top: 4.5vh;">验证模型</strong><select  id="data3" class="select" size="1"     name="data"  style="color: #277de2;width: 43%;margin-left: 14.5%;margin-top:6%" >
-                  <option  >选择验证模型</option>
-                  <option th:each="experimentModelList:${experimentModelList}" th:text="${experimentModelList.testname}"  th:id="${experimentModelList.id}"  >选择验证模型</option>
-              </select>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" onclick="insertData2();insertData5();">确定</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="newPathmodal-demo1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <!-- 弹出对话框 -->
