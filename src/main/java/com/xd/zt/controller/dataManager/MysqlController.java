@@ -50,8 +50,8 @@ public class MysqlController {
             String csv = GetMysqlData.JsonToCsv(Data);
             System.out.printf(csv);
 
-//            FileUtils.writeStringToFile(new File("/var/data/celery/input/dataManager/"+uuid+".csv"), csv);
-            FileUtils.writeStringToFile(new File("F://"+uuid+".csv"), csv);
+            FileUtils.writeStringToFile(new File("/var/data/celery/input/dataManager/"+uuid+".csv"), csv);
+//            FileUtils.writeStringToFile(new File("F://"+uuid+".csv"), csv);
 
             MysqlData mysqlData = new MysqlData();
 
