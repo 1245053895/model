@@ -15,6 +15,9 @@ import com.ym.sso.supervisor.common.constant.TicketResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -33,6 +36,8 @@ import java.util.Map;
 @Service
 public class SsoLoginSerImpl implements SsoLoginService
 {
+    @Autowired
+    private SessionRepository sessionRepository;
     /**
      * 初始化内存加载
      */
@@ -80,6 +85,7 @@ public class SsoLoginSerImpl implements SsoLoginService
         sessionMap.put(session.getId(), session);
         initConst.setSessionMap(sessionMap);
         ssoTicket.setSessionId(session.getId());
+        System.out.printf("\n\nssoTicket的sessionId:"+session.getId());
         SsoTicket resultTicket = ssoLoginDao.receiveSessionId(ssoTicket);
         if (!TicketResultEnum.RECEIVE_ID_SUCCESS.getNo().equals(resultTicket.getResult()))
         {
@@ -164,6 +170,10 @@ public class SsoLoginSerImpl implements SsoLoginService
 
 
     public SsoLogin logout(String sessionId) {
+        Session session1 = sessionRepository.findById(sessionId);
+        session1.removeAttribute("SessionId");
+
+
 //        log.info("logout:sessionId={}", sessionId);
         Long time = new Date().getTime();
         SsoLogin ssoLogin = new SsoLogin();
@@ -192,60 +202,84 @@ public class SsoLoginSerImpl implements SsoLoginService
      * @return 用户是否登录 true 是 false 否
      */
     public SsoLogin checkSession(String sessionId)
-    {
-/*        log.debug("checkSession:sessionId={}", sessionId);*/
+    {   SsoLogin ssoLogin = new SsoLogin();
         Long time = new Date().getTime();
-        SsoLogin ssoLogin = new SsoLogin();
-        if (sessionId == null)
-        {
-            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_MISS_PARAM.getNo());
-            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_MISS_PARAM.getMessage());
+        Session session1 = sessionRepository.findById(sessionId);
+        System.out.printf("\n\n检查是否登录：session："+session1);
+        if (session1 == null){
+            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
+            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
             ssoLogin.setTime(time);
             return ssoLogin;
         }
-        Map<String, HttpSession> sessionMap = initConst.getSessionMap();
-        if (sessionMap == null)
+        String SessionId = session1.getAttribute("SessionId");
+        System.out.printf("\n\n检查是否登录：sessionid："+session1);
+        if (SessionId == null || SessionId == "" )
         {
             ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
             ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
             ssoLogin.setTime(time);
             return ssoLogin;
         }
-        HttpSession session = sessionMap.get(sessionId);
-        if (session == null)
-        {
-            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
-            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
+        else {
+            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_SUCCESS.getNo());
+            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_SUCCESS.getMessage());
             ssoLogin.setTime(time);
             return ssoLogin;
         }
-        Object userSession;
-        try
-        {
-            userSession = session.getAttribute(LoginConst.SESSION_USER_KEY);
-        }
-        catch (IllegalStateException ex)
-        {
-          /*  log.error("checkSession={}", ex.toString());*/
-            sessionMap.remove(sessionId);
-            initConst.setSessionMap(sessionMap);
-            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
-            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
-            ssoLogin.setTime(time);
-            return ssoLogin;
-        }
-        if (userSession == null)
-        {
-            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
-            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
-            ssoLogin.setTime(time);
-            return ssoLogin;
-        }
-      /*  log.info("checkSession:sessionId={},userSession={}", sessionId, userSession);*/
-        ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_SUCCESS.getNo());
-        ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_SUCCESS.getMessage());
-        ssoLogin.setTime(time);
-        return ssoLogin;
+/*        log.debug("checkSession:sessionId={}", sessionId);*/
+
+//
+//        if (sessionId == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_MISS_PARAM.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_MISS_PARAM.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        Map<String, HttpSession> sessionMap = initConst.getSessionMap();
+//        if (sessionMap == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        HttpSession session = sessionMap.get(sessionId);
+//        if (session == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        Object userSession;
+//        try
+//        {
+//            userSession = session.getAttribute(LoginConst.SESSION_USER_KEY);
+//        }
+//        catch (IllegalStateException ex)
+//        {
+//          /*  log.error("checkSession={}", ex.toString());*/
+//            sessionMap.remove(sessionId);
+//            initConst.setSessionMap(sessionMap);
+//            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//        if (userSession == null)
+//        {
+//            ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_FAIL.getNo());
+//            ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_FAIL.getMessage());
+//            ssoLogin.setTime(time);
+//            return ssoLogin;
+//        }
+//      /*  log.info("checkSession:sessionId={},userSession={}", sessionId, userSession);*/
+//        ssoLogin.setResult(LoginResultEnum.CHECK_SESSION_SUCCESS.getNo());
+//        ssoLogin.setMessage(LoginResultEnum.CHECK_SESSION_SUCCESS.getMessage());
+//        ssoLogin.setTime(time);
+//        return ssoLogin;
     }
 
     /**
@@ -257,12 +291,14 @@ public class SsoLoginSerImpl implements SsoLoginService
      */
     public SsoLogin getLogParam(String sessionId)
     {
+        Session session1 = sessionRepository.findById(sessionId);
+        session1.removeAttribute("SessionId");
       /*  log.debug("getLogParam:sessionId={}", sessionId);*/
         SsoLogin ssoLogin = checkSession(sessionId);
         if (LoginResultEnum.CHECK_SESSION_SUCCESS.getNo().equals(ssoLogin.getResult()))
         {
-            HttpSession session = initConst.getSessionMap().get(sessionId);
-            User user = (User)session.getAttribute(LoginConst.SESSION_USER_KEY);
+//            HttpSession session = initConst.getSessionMap().get(sessionId);
+            User user = (User)session1.getAttribute(LoginConst.SESSION_USER_KEY);
             ssoLogin.setIdNumber(user.getIdNumber());
             ssoLogin.setSessionId(sessionId);
         }

@@ -23,4 +23,8 @@ public interface DataManagerService {
 
 
     void MysqlDataDelete(@Param("modelid")Integer modelid);
+    void insertData(@Param("modeid") int modeid,@Param("sourcename") String sourcename,@Param("sourcepath") String sourcepath,@Param("sourcetime") String sourcetime);
+    void insertData1(@Param("modeid") int modeid, @Param("sourcename") String sourcename,@Param("sourcepath") String sourcepath,@Param("sourcetime") String sourcetime);
+    void insertData2(@Param("modeid") int modeid, @Param("sourcename") String sourcename,@Param("sourcepath") String sourcepath,@Param("sourcetime") String sourcetime);
+    MysqlData mysqlData(@Param("sourceid")   Integer sourceid);
 }

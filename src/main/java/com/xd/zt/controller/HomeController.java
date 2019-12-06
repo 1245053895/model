@@ -19,7 +19,12 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * @Author 张立军
+ * @Version 1.0
+ * @Project 智能分析平台
+ * Date on 2019/12/6  14:17
+ */
 @Controller
 public class HomeController {
     @Autowired

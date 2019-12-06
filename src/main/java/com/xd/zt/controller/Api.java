@@ -6,17 +6,22 @@ import com.xd.zt.domain.analyse.AnalyseInstance;
 import com.xd.zt.domain.model.Programme;
 import com.xd.zt.service.ApiService;
 import com.xd.zt.service.model.ModelService;
+import com.xd.zt.util.dataManager.GetHdfsFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+/**
+ * @Author 张立军
+ * @Version 1.0
+ * @Project 智能分析平台
+ * Date on 2019/12/6  14:17
+ */
 @RestController
 @RequestMapping("/restApi")
 public class Api {
@@ -89,6 +94,13 @@ public class Api {
         return apiResult;
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "/getHdfsFile", method = GET, produces = "application/json")
+    public ApiResult getHdfsFile(@RequestParam(value = "path") String path) throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        String hdfspath = path;
+        ApiResult apiResult = GetHdfsFile.getFile(hdfspath);
+        return apiResult;
+    }
 
 }

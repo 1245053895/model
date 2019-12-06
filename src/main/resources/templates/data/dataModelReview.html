@@ -58,7 +58,15 @@
                     </a>
                 </div>
             </div>
-
+            <!--<div class="panel panel-default"-->
+                 <!--style="height: 12vh;width: 9vw;float: left;margin-left: 1.5%;margin-top: 0%;">-->
+                <!--<div class="panel-header" style="text-align: center;">数据区结果</div>-->
+                <!--<div style="height: 49%;width: 37%;float: left;margin-left: 30%;margin-top: 6%;">-->
+                    <!--<a id="dataArea" th:href="@{'/data/dataArea/'+${modeid}}">-->
+                        <!--<image src="/image/question.png" style="cursor:pointer;height: 100%;width: 97%"></image>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="panel panel-default" style="height: 20vh;width: 100vw;border-bottom: none;">
@@ -84,13 +92,13 @@
 
                 <tr class="text-c" th:each="dataBlockList:${dataBlockList}">
                     <td><p style="cursor:pointer" class="text-primary" th:text="${dataBlockList.blockname}"></p></td>
-                    <td><a th:href="@{'/data/blockShow/'+ ${dataBlockList.blockid}}" style="cursor:pointer" class="text-primary" th:text="${dataBlockList.dataresultname}"></a>
+                    <td><a th:href="@{'/data/dataReview/'+ ${dataBlockList.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${dataBlockList.dataresultname}"></a>
                     </td>
                     <td><p style="cursor:pointer" class="text-primary" th:text="${dataBlockList.areaname}"></p></td>
                     <td><p style="cursor:pointer" class="text-primary" th:text="${dataBlockList.createprocess}"></p>
                     </td>
                     <td>
-                        <a th:href="@{'/data/blockShow/'+${dataBlockList.blockid}}">
+                        <a th:href="@{'/data/dataReview/'+ ${dataBlockList.dataresultid}}">
                             <input class="btn btn-primary size-MINI radius" type="button" value="打开">
                         </a>
                     </td>
