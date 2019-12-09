@@ -291,9 +291,10 @@ public class SsoController {
 //        MySessionContext myc = MySessionContext.getInstance();
 //        HttpSession sess = myc.getSession(sessionId);
         Session session = sessionRepository.findById(sessionId);
+        System.out.printf("\n\nsession的sessionId:"+sessionId);
         //测试
         try{
-            String SessionId = session.getAttribute("SessionId").toString();
+            String SessionId = session.getAttribute("SessionId");
             System.out.printf("\n\n检查sessionId："+SessionId);
             model.addAttribute("SessionId",SessionId);
         }

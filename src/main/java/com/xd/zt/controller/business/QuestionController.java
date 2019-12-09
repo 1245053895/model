@@ -166,7 +166,7 @@ public class QuestionController {
         String filename = file.getOriginalFilename();
         // 存放上传图片的文件夹
         File fileDir = UploadUtils.getImgDirFile();
-        String fileDirPath = new String("src/main/resources/static/uploadImage/"+filename);
+        String fileDirPath = new String("/var/data/celery/input/src/main/resources/static/uploadImage/"+filename);
         // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
         System.out.println(fileDir.getAbsolutePath());
         try {

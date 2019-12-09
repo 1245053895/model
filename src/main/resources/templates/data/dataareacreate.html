@@ -85,10 +85,12 @@
         <div class="panel-header">算法库</div>
         <!--<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="开始"-->
                <!--onclick="add(this.value)"/>-->
+        <div style="height: 90%;overflow-x:hidden;overflow-y:auto;">
         <input id="algorithmName" th:each="algorithmList:${algorithmList}" class="btn btn-success radius" type="button"
                style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}" th:name="${algorithmList.algorithmmiaoshu}" onmouseout="removeTitle()" onmousemove="showTitle(this.value,this.name)"
                onclick="add(this.value);switchParam_form(this.value)"/>
         <div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;display: none">	</div>
+        <div style="height: 80%;"></div>
         <!--<div id="linkTitle" class="panel-header" style=" background-color: #f5f5f5;width: 13vw;height: 20%;margin-top: -2%;margin-left: 1%;position: absolute;none: block;">-->
         <!--<input id="algorithmName" th:each="algorithmList:${algorithmList}" class="btn btn-success radius" type="button"-->
                <!--style="margin-left: 2%;margin-top: 2%;" th:value="${algorithmList.algorithmname}" th:name="${algorithmList.algorithmmiaoshu}"  onmouseout="removeTitle()" onmousemove="showTitle(this.value,this.name)"-->
@@ -96,7 +98,8 @@
 
         <!--<input class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;" value="结束"-->
                <!--onclick="add(this.value)"/>-->
-    </div>
+        </div>
+        </div>
 
     <!--算法参数输入-->
     <div class="panel panel-default" style="width: 30%;height: 43vh;float: left;margin-left: 2%;margin-top: 2%;">
@@ -272,7 +275,7 @@
             url: '/data/saveAreaExample',
             success: function (data) {
                 if (data.resp_code == 0) {
-                    $.Huimodalalert('运行成功，请返回数据包查看结果', 3000);
+                    $.Huimodalalert('运行成功，请返回数据区查看结果', 3000);
                 } else {
                     $.Huimodalalert(data.resp_msg, 5000);
                 }

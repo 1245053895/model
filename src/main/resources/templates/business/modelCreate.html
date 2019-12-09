@@ -31,7 +31,7 @@
 		<div class="panel-header">业务主线节点名称：</div>
 
 
-		<div class="panel-body">
+		<div class="panel-body" style="overflow: auto">
 
 			<input th:each="jsPlumbBlockList:${jsPlumbBlockList}" th:id="${jsPlumbBlockList.id}" th:value="${jsPlumbBlockList.blockName}" class="btn btn-success radius" type="button" style="margin-left: 2%;margin-top: 2%;width: 29vh;height: 5vh;font-weight: 700;font-size: larger;" value="业务节点"  onclick="add(this.value,this.id)"/>
 

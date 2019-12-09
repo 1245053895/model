@@ -7,6 +7,7 @@ import com.xd.zt.domain.business.BusinessQuestion;
 import com.xd.zt.domain.data.*;
 import com.xd.zt.repository.data.FileRepository;
 import com.xd.zt.service.data.DataAggregationService;
+import com.xd.zt.service.data.DataAreaService;
 import com.xd.zt.service.data.DataModelService;
 import com.xd.zt.service.data.SourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class DataModelController {
     private DataModelService dataModelService;
     @Autowired
     private FileRepository fileRepository;
-
+    @Autowired
+    private DataAreaService dataAreaService;
     @Autowired
     private SourceService sourceService;
 
@@ -133,6 +135,13 @@ public class DataModelController {
         //数据链
         List<DatamodelLink> datamodelLinkList = sourceService.dataModelLink(modeid);
         model.addAttribute("datamodelLinkList", datamodelLinkList);
+        //数据区
+        List<DatamodelArea> datamodelAreaList = sourceService.selectModelArea(modeid);
+            for (DatamodelArea datamodelArea:datamodelAreaList){
+                String linkName = dataAreaService.selectLinkName(datamodelArea.getAreaid()+"");
+                datamodelArea.setLinkname(linkName);
+            }
+        model.addAttribute("datamodelAreaList", datamodelAreaList);
         //数据模型数据块回显
         List<DatamodelBlock> dataBlockList = dataModelService.dataModelBlock(modeid);
        /* for (DatamodelBlock datamodelBlock: dataBlockList) {
@@ -147,6 +156,7 @@ public class DataModelController {
             datamodelBlock.setDataresultname(dataResultName);
             datamodelBlock.setDataaddr(dataaddr);
         }*/
+        List<String> datablockid = new ArrayList<>();
         List<String> datablockname = new ArrayList<>();
         List<String> createprocess = new ArrayList<>();
         List<String> areaname = new ArrayList<>();
@@ -154,6 +164,7 @@ public class DataModelController {
         List<Integer> dataResultid = new ArrayList<>();
         List<DatamodelBlock> result = new ArrayList<>();
         for (DatamodelBlock datamodelBlock : dataBlockList) {
+            datablockid.add(datamodelBlock.getBlockid().toString());
             datablockname.add(datamodelBlock.getBlockname());
             createprocess.add(datamodelBlock.getCreateprocess());
             areaname = (dataModelService.selectAreaName(datamodelBlock.getBlockid()));
@@ -163,35 +174,39 @@ public class DataModelController {
             System.out.println(dataResultName);
             System.out.println(createprocess);
             System.out.println(areaname);*/
-            for (String datablock : datablockname) {
-                for (String process : createprocess) {
-                    for (String dataarea : areaname) {
-                        if (dataResultName == null || dataResultName.size() == 0) {
-                            DatamodelBlock db = new DatamodelBlock();
-                            db.setBlockname(datablock);
-                            db.setCreateprocess(process);
-                            db.setAreaname(dataarea);
-                            db.setDataresultname("无数据块");
-                            result.add(db);
-                        } else {
-                            for (String datares : dataResultName) {
-                                for(Integer resultid:dataResultid){
-                                    DatamodelBlock db = new DatamodelBlock();
-                                    db.setBlockname(datablock);
-                                    db.setCreateprocess(process);
-                                    db.setAreaname(dataarea);
-                                    db.setDataresultname(datares);
-                                    db.setDataresultid(resultid);
-                                    result.add(db);
-                                }
+            for (String blockid : datablockid) {
+                for (String datablock : datablockname) {
+                    for (String process : createprocess) {
+                        for (String dataarea : areaname) {
+                            if (dataResultName == null || dataResultName.size() == 0) {
+                                DatamodelBlock db = new DatamodelBlock();
+                                db.setBlockid(Integer.parseInt(blockid));
+                                db.setBlockname(datablock);
+                                db.setCreateprocess(process);
+                                db.setAreaname(dataarea);
+                                db.setDataresultname("无数据块");
+                                result.add(db);
+                            } else {
+                                for (String datares : dataResultName) {
+                                    for (Integer resultid : dataResultid) {
+                                        DatamodelBlock db = new DatamodelBlock();
+                                        db.setBlockname(datablock);
+                                        db.setCreateprocess(process);
+                                        db.setAreaname(dataarea);
+                                        db.setDataresultname(datares);
+                                        db.setDataresultid(resultid);
+                                        result.add(db);
+                                    }
 
+                                }
                             }
                         }
+
                     }
 
                 }
-
             }
+            datablockid.clear();
             datablockname.clear();
             areaname.clear();
             createprocess.clear();

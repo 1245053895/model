@@ -48,12 +48,11 @@
     <div class="panel panel-default" style="height: 20vh;width: 100vw;border-bottom: none;">
         <div class="panel-header">数据区
         </div>
-        <div class="panel-body">
-            <div class="panel panel-default"
-                 style="height: 12vh;width: 9vw;float: left;margin-left: 1.5%;margin-top: 0%;">
-                <div class="panel-header" style="text-align: center;">数据逻辑关系图</div>
+        <div class="panel-body" >
+            <div class="panel panel-default"style="height: 12vh;width: 9vw;float: left;margin-left: 1.5%;margin-top: 0%;" th:each="datamodelAreaList:${datamodelAreaList}">
+                <div class="panel-header" style="text-align: center;" th:text="${datamodelAreaList.areaname}"></div>
                 <div style="height: 49%;width: 37%;float: left;margin-left: 30%;margin-top: 6%;">
-                    <a id="dataLogic" th:href="@{'/data/dataLogicList/'+${modeid}}">
+                    <a id="dataLogic" th:href="@{'/data/areaViewx/'+${datamodelAreaList.processid}}">
                         <image src="/image/question.png" style="cursor:pointer;height: 100%;width: 97%"></image>
                     </a>
                 </div>
@@ -78,7 +77,7 @@
                 <thead>
                 <tr class="text-c">
                     <th>数据块名称</th>
-                    <th>数据块结果名称</th>
+                    <!--<th>数据块结果名称</th>-->
                     <th>关联数据区</th>
                     <th>数据块构建流程</th>
                     <th>操作</th>
@@ -92,13 +91,13 @@
 
                 <tr class="text-c" th:each="dataBlockList:${dataBlockList}">
                     <td><p style="cursor:pointer" class="text-primary" th:text="${dataBlockList.blockname}"></p></td>
-                    <td><a th:href="@{'/data/dataReview/'+ ${dataBlockList.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${dataBlockList.dataresultname}"></a>
-                    </td>
+                    <!--<td><a th:href="@{'/data/dataReview/'+ ${dataBlockList.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${dataBlockList.dataresultname}"></a>-->
+                    <!--</td>-->
                     <td><p style="cursor:pointer" class="text-primary" th:text="${dataBlockList.areaname}"></p></td>
                     <td><p style="cursor:pointer" class="text-primary" th:text="${dataBlockList.createprocess}"></p>
                     </td>
                     <td>
-                        <a th:href="@{'/data/dataReview/'+ ${dataBlockList.dataresultid}}">
+                        <a th:href="@{'/data/blockShow/'+ ${dataBlockList.blockid}}">
                             <input class="btn btn-primary size-MINI radius" type="button" value="打开">
                         </a>
                     </td>
@@ -127,10 +126,10 @@
                 </tr>
 
                 <tr class="text-c" th:each="datamodelBao:${datamodelBaoList}">
-                    <td><a th:href="@{'/data/dataReview/'+ ${datamodelBao.dataresultid}}" style="cursor:pointer" class="text-primary" th:text="${datamodelBao.baoname}"></a></td>
+                    <td><p style="cursor:pointer" class="text-primary" th:text="${datamodelBao.baoname}"></p></td>
                     <td><p style="cursor:pointer" class="text-primary" th:text="${datamodelBao.blockname}"></p></td>
                     <td>
-                        <a th:href="@{'/data/dataReview/'+ ${datamodelBao.dataresultid}}">
+                        <a th:href="@{'/data/baoShow/'+ ${datamodelBao.baoid}}">
                             <input class="btn btn-primary size-MINI radius" type="button" value="打开">
                         </a>
                     </td>

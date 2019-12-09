@@ -62,7 +62,7 @@ public class AlgorithmUpdateService {
                 // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
                 //获取项目类加载器下的资源路径
                 /* String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/";*/
-                String path = new String("src/main/resources/" + IMG_PATH_PREFIX);
+                String path = new String("/var/data/celery/input/src/main/resources/" + IMG_PATH_PREFIX);
                 File fileDir = new File(path);
                 if (!fileDir.exists()) {
                     // 递归生成文件夹
