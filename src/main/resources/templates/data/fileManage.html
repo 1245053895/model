@@ -20,7 +20,7 @@
             <a ><input class="btn btn-success radius" type="button" style="position: absolute;right: 4%;;margin-top:  -0.3%;" value="新增" onclick="jumpDialog()"/></a>
         </div>
         <div class="panel-body">
-            <div >
+            <div style="overflow: auto;height: 81vh;" >
                 <!--实现模糊搜索-->
                 <!--<form method="get" action="#" th:action="@{/data/dataSearch}">-->
                     <!--<input type="text" placeholder="请输入关键词" class="input-text ac_input" name="search_text" value=""-->
@@ -30,9 +30,8 @@
                     <!--</button>-->
                     <!--&nbsp;&nbsp;&nbsp;【当前共&nbsp;&nbsp;<a th:text="${datamodelSourceList.size()}"></a>&nbsp;&nbsp;条数据】-->
                 <!--</form>-->
-            </div>
-            <div style="margin-top: 1%">
-                <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <div >
+                <table class="table table-border table-bordered table-hover table-bg table-sort" style="overflow-x: hidden;overflow-y: auto">
                     <thead>
                     <tr class="text-c">
                         <th >文件名称</th>
@@ -65,7 +64,7 @@
                     </tbody>
                 </table>
             </div>
-
+            </div>
         </div>
     </div>
     <div id="upfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -73,7 +72,7 @@
         <div class="modal-dialog">
             <div class="modal-content radius">
                 <div class="modal-header">
-                    <h3 class="modal-title">文档资料上传</h3>
+                    <h3 class="modal-title">数据上传</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
                 </div>
                 <div class="modal-body">

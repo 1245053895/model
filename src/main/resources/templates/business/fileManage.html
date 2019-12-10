@@ -44,7 +44,7 @@
                         </tr>
 
                         <tr class="text-c" th:each="businessFile:${businessFileList}">
-                            <td><a style="cursor:pointer" class="text-primary" th:text="${businessFile.filename}" ></a></td>
+                            <td th:text="${businessFile.filename}"></td>
                             <td th:text="${businessFile.filesize}"></td>
                             <td th:text="${businessFile.filetime}"></td>
 
