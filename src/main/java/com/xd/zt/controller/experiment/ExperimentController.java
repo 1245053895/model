@@ -5,6 +5,8 @@ import com.xd.zt.domain.analyse.AnalyseModel;
 import com.xd.zt.domain.experiment.ExperimentModel;
 import com.xd.zt.service.experiment.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +26,8 @@ import java.util.Map;
 public class ExperimentController {
     @Autowired
     private ExperimentService experimentService;
-
-
+    @Autowired
+    private SessionRepository sessionRepository;
     /*  @RequestMapping("/index")
       public ModelAndView experimentindex(Model model) {
           return new ModelAndView("experiment/index", "modelModel", model);
@@ -63,10 +66,22 @@ public class ExperimentController {
     }
 
     @RequestMapping("/index")
-    public ModelAndView selectAnalyse1(Model model) {
-        model.addAttribute("analyseModelList", experimentService.selectAnalyse());
-        model.addAttribute("TestnameModelList", experimentService.selectTestname());
-        return new ModelAndView("experiment/index", "modelModel", model);
+    public ModelAndView selectAnalyse1(Model model,@RequestParam(value = "sessionId")String sessionId) {
+        Session session = sessionRepository.findById(sessionId);
+        System.out.printf("\n\n验证建模的sessionId:"+sessionId);
+        try{
+            String SessionId = session.getAttribute("SessionId");
+            System.out.printf("\n\n检查sessionId："+SessionId);
+            model.addAttribute("SessionId",SessionId);
+            model.addAttribute("analyseModelList", experimentService.selectAnalyse());
+            model.addAttribute("TestnameModelList", experimentService.selectTestname());
+            return new ModelAndView("experiment/index", "modelModel", model);
+        }
+        catch (Exception e){
+//            return "redirect:http://10.101.201.154:8080/#/home/index";
+            System.out.printf("\n\n检查sessionId不存在");
+            return new ModelAndView(new RedirectView("http://10.101.201.173:80/login"));
+        }
     }
 
     @RequestMapping("/analyseListshow")

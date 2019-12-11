@@ -14,10 +14,13 @@ import com.xd.zt.service.data.DataModelService;
 import com.xd.zt.service.dataManager.DataManagerService;
 import com.xd.zt.service.experiment.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,11 +39,23 @@ public class DataManager {
     private AnalyseModelService analyseModelService;
     @Autowired
     private ExperimentService experimentService;
-
+    @Autowired
+    private SessionRepository sessionRepository;
     @RequestMapping("/index")
-    public String index(){
-
-        return "dataManager/index";
+    public ModelAndView index(Model model,@RequestParam(value = "sessionId")String sessionId){
+        Session session = sessionRepository.findById(sessionId);
+        System.out.printf("\n\n数据集成的sessionId:"+sessionId);
+        try{
+            String SessionId = session.getAttribute("SessionId");
+            System.out.printf("\n\n检查sessionId："+SessionId);
+            model.addAttribute("SessionId",SessionId);
+            return new ModelAndView("dataManager/index","Modelmodel",model);
+        }
+        catch (Exception e){
+//            return "redirect:http://10.101.201.154:8080/#/home/index";
+            System.out.printf("\n\n检查sessionId不存在");
+            return new ModelAndView(new RedirectView("http://10.101.201.173:80/login"));
+        }
     }
     @RequestMapping("/dataManagerWelcome")
     public String welcome(){

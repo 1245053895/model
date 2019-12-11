@@ -199,6 +199,11 @@
         }
         var outputpath = [[${outputpath}]];
         if(outputpath != null && outputpath != "{}") {
+            var outputpathObject =  eval('(' + outputpath + ')');
+            var outputpathObjectKey =[];
+            for(var key in outputpathObject) {
+                outputpathObjectKey.push(key);
+            }
         }
         var values = configflow.split(';');
         // alert(values);
@@ -251,6 +256,27 @@
                     $("#dataContent_area").append(paramsArr.join("\n"));
                 }
 
+
+                if (document.getElementById(value + "/output").getAttribute("value") != null && document.getElementById(value + "/output").getAttribute("value") != "") {
+                    var paramsArr2 = new Array();
+                    paramsArr2.push("<div id='c" + value + "' style='display: none' class='paramsdiv1'><form method='post' class='" + value + "output' >");
+                    for (var i = 0; i < outputpathObjectKey.length; i++) {
+                        var param2 = outputpathObjectKey[i];
+                        if (param2 == "modelPath") {
+                            paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='" + param2 +"_for_" + value +"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                        }
+                        else if (param2 == "modelPaths") {
+                            paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2 + "' value='"+"' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+                        }
+                        else {
+                            paramsArr2.push("<div style='font-size:14px; font-weight:700;margin-left: 2%;margin-top: 2vh;'>" + param2 + "</div>" + "<input type='text' placeholder='请输入..' class='input-text ac_input' name='" + param2+ "' value='"+param2+"_for_"+ value +".csv' id='" + param2 + "' autocomplete='off' style='width: 36%;margin-top: -5.5vh;margin-left: 38%;'>");
+
+                        }
+                    }
+                    // paramsArr.push("<input type='hidden' placeholder='请输入..' class='input-text ac_input' name='"+"output"+"' value='data/output.csv' id='"+param+"' autocomplete='off' style='width: 36%;margin-top: -3.5vh;margin-left: 38%;'>");
+                    paramsArr2.push("</form></div>");
+                    $("#output_area").append(paramsArr2.join("\n"));
+                }
             }
 
         }

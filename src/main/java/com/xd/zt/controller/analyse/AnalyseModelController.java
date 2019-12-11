@@ -15,10 +15,13 @@ import com.xd.zt.service.analyse.AnalyseService;
 import com.xd.zt.service.business.BusinessFlowService;
 import com.xd.zt.service.business.ModelCreateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.File;
 import java.util.*;
@@ -42,13 +45,24 @@ public class AnalyseModelController {
     private AlgorithmDebugService algorithmDebugService;
     @Autowired
     private AlgorithmUpdateService algorithmUpdateService;
-
+    @Autowired
+    private SessionRepository sessionRepository;
     @RequestMapping("/index")
-    public ModelAndView selectAnalyz(Model model) {
-
-
-        model.addAttribute("questionList", analyseModelService.selectqueslist());
-        return new ModelAndView("analyse/index", "modelModel", model);
+    public ModelAndView selectAnalyz(Model model,@RequestParam(value = "sessionId")String sessionId) {
+        Session session = sessionRepository.findById(sessionId);
+        System.out.printf("\n\n分析建模的sessionId:"+sessionId);
+        try{
+            String SessionId = session.getAttribute("SessionId");
+            System.out.printf("\n\n检查sessionId："+SessionId);
+            model.addAttribute("SessionId",SessionId);
+            model.addAttribute("questionList", analyseModelService.selectqueslist());
+            return new ModelAndView("analyse/index", "modelModel", model);
+        }
+        catch (Exception e){
+//            return "redirect:http://10.101.201.154:8080/#/home/index";
+            System.out.printf("\n\n检查sessionId不存在");
+            return new ModelAndView(new RedirectView("http://10.101.201.173:80/login"));
+        }
     }
     @RequestMapping("/analyseManage")
     public ModelAndView businessManage(Model model){

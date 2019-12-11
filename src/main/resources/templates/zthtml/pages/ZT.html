@@ -105,7 +105,7 @@
             <div class="effectposition acrossremindeffectout acrossremindeffectoutard">
                 <div class="acrossremindeffectin acrossremindeffectinard"></div>
             </div>
-            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/xingzhengshenpi.png"    onclick= "window.location.href='/dataManager/index';">
+            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/xingzhengshenpi.png"    onclick= "window.location.href='/dataManager/index?sessionId='+sessionId">
             <span class="stagetitle stagearoundtitle">数据集成</span>
         </div>
 
@@ -118,7 +118,7 @@
             <span class="stagetitle stagearoundtitle">服务封装</span>
         </div>
 
-        <div class="circleeffectclass aroundfunctioneffect" style="right: 405px;bottom: 53px;" onclick= "window.location.href='/algorithm/index';">
+        <div class="circleeffectclass aroundfunctioneffect" style="right: 405px;bottom: 53px;" onclick= "window.location.href='/algorithm/index?sessionId='+sessionId">
             <img class="effectposition arounddataeffect02" src="/zthtml/img/aroundeffect.png">
             <div class="effectposition acrossremindeffectout acrossremindeffectoutard">
                 <div class="acrossremindeffectin acrossremindeffectinard"></div>
@@ -132,7 +132,7 @@
             <div class="effectposition acrossremindeffectout acrossremindeffectoutard">
                 <div class="acrossremindeffectin acrossremindeffectinard"></div>
             </div>
-            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/12319rexian.png"      onclick= "window.location.href='/returnhome';">
+            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/12319rexian.png"      onclick= "window.location.href='/returnhome?sessionId='+sessionId">
             <span class="stagetitle stagearoundtitle">建模工具</span>
         </div>
 
@@ -141,7 +141,7 @@
             <div class="effectposition acrossremindeffectout acrossremindeffectoutard">
                 <div class="acrossremindeffectin acrossremindeffectinard"></div>
             </div>
-            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/zonghezhifa.png"   onclick= "window.location.href='/model/index';">
+            <img class="effectposition acrossremindeffecindex" src="/zthtml/img/zonghezhifa.png"   onclick= "window.location.href='/model/index?sessionId='+sessionId">
             <span class="stagetitle stagearoundtitle">模型库</span>
         </div>
 
@@ -455,6 +455,7 @@
 
 </body>
 <script type="text/javascript" th:inline="javascript">
+    var sessionId;
     window.onload = function(){
         var loading = document.getElementById("loading");
         loading.style.display="none";
@@ -467,6 +468,7 @@
             "Status":[[${Status}]],
             "SessionId":[[${SessionId}]]
         };
+        sessionId = [[${SessionId}]];
         localStorage.setItem("easyweb",JSON.stringify(token));
     }
     function cleanToken() {
@@ -485,10 +487,6 @@
 
     var salesMyChart = echarts.init($("#container1")[0]);
     option = {
-
-
-
-
         tooltip : {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"

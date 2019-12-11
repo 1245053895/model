@@ -5,6 +5,7 @@
     <title>写入session</title>
     <script type="text/javascript" charset="utf-8" th:inline="javascript">
         function logout() {
+            localStorage.clear();
             var idNumber=[[${idNumber}]];
             var sessionId=[[${sessionId}]];
             window.location.href="http://10.101.201.184:9092/sso/logout.html?idNumber="+idNumber+"&sessionId="+sessionId+"&ssoClientUrl=http://10.101.201.173";

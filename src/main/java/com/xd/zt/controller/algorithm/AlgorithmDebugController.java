@@ -9,11 +9,14 @@ import com.xd.zt.domain.business.BusinessFile;
 import com.xd.zt.service.algorithm.AlgorithmDebugService;
 import com.xd.zt.service.algorithm.AlgorithmUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,10 +33,23 @@ public class AlgorithmDebugController {
     private AlgorithmDebugService algorithmDebugService;
     @Autowired
     private AlgorithmUpdateService algorithmUpdateService;
-
+    @Autowired
+    private SessionRepository sessionRepository;
     @RequestMapping("/index")
-    public String index() {
-        return "algorithm/index";
+    public ModelAndView index(Model model,@RequestParam(value = "sessionId")String sessionId) {
+        Session session = sessionRepository.findById(sessionId);
+        System.out.printf("\n\n算法库的sessionId:"+sessionId);
+        try{
+            String SessionId = session.getAttribute("SessionId");
+            System.out.printf("\n\n检查sessionId："+SessionId);
+            model.addAttribute("SessionId",SessionId);
+            return new ModelAndView("algorithm/index","Modelmodel",model);
+        }
+        catch (Exception e){
+//            return "redirect:http://10.101.201.154:8080/#/home/index";
+            System.out.printf("\n\n检查sessionId不存在");
+            return new ModelAndView(new RedirectView("http://10.101.201.173:80/login"));
+        }
     }
 
 
