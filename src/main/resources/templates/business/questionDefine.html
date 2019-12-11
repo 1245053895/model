@@ -68,8 +68,14 @@
                         $('#adminpic').click();
                     }
                     function fileChange(fl) {
-                        $('#btn_upload').show();
-                        reads(fl.files[0]);
+                        if (/.*[\u4e00-\u9fa5]+.*$/.test(fl.files[0].name )) {
+                            $.Huimodalalert('请确认图片名称为英文', 2000);
+                        }
+                        else {
+                            $('#btn_upload').show();
+                            reads(fl.files[0]);
+                        }
+
                     }
                     function reads(fil){
                         var reader = new FileReader();

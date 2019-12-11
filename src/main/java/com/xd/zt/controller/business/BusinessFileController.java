@@ -53,6 +53,7 @@ public class BusinessFileController {
     @PostMapping("/saveFile/{businessid}")
     public void upFile(@RequestParam("filename") MultipartFile multipartFile, @PathVariable("businessid") Integer businessid) throws Exception {
  /*      String sqlPath=null;*/
+
         String[] fileInformation = fileService.Upload(multipartFile);
         String filename = fileInformation[0];
        String filepath = fileInformation[1];

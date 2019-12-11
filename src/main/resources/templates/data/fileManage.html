@@ -135,11 +135,17 @@
     //获取文件名，显示在上传文本框
     function getFilename(){
         var filename=document.getElementById("file").value;
-        if(filename==undefined||filename==""){
-            document.getElementById("filename").innerHTML="点击此处上传文件";
-        } else{
-            var fn=filename.substring(filename.lastIndexOf("\\")+1);
-            document.getElementById("filename").innerHTML=fn; //将截取后的文件名填充到span中
+        if(/.*[\u4e00-\u9fa5]+.*$/.test(filename)){
+            $.Huimodalalert('请确认文件名称为英文', 2000);
+            document.getElementById("file").value = null;
+        }
+        else {
+            if (filename == undefined || filename == "") {
+                document.getElementById("filename").innerHTML = "点击此处上传文件";
+            } else {
+                var fn = filename.substring(filename.lastIndexOf("\\") + 1);
+                document.getElementById("filename").innerHTML = fn; //将截取后的文件名填充到span中
+            }
         }
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 /*
  * @Description:    上传文件返回上传路径
@@ -53,11 +54,12 @@ public class BusinessFileService {
             //String path = LOCAL_UPFILE_PATH;//尝试用参数启动，改为本地路径
             System.out.println(path);
            // path = path.substring(1,path.length());
+            String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+            String Filename = uuid +"."+ filename.split("\\.")[1];
             try {
                 // 该方法是对文件写入的封装，在util类中，导入该包即可使用，后面会给出方法
-                FileUpUtil.fileupload(file.getBytes(), path, filename);
+                FileUpUtil.fileupload(file.getBytes(), path, Filename);
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
 
@@ -66,9 +68,7 @@ public class BusinessFileService {
 
             //将文件的大小进行数据格式转换，保留两位小数
             String filesize = String.format("%1.2f",(float)file.getSize()/1024 )+"KB";
-
-
-            String filepath = path + filename;
+            String filepath = path + Filename;
             fileInformation[0] = filename;
             fileInformation[1] = filepath;
             fileInformation[2] = filesize;
