@@ -93,6 +93,14 @@
             </div>
         </div>
     </div>
+    <div id="showRun" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 弹出对话框 -->
+        <div class="modal-dialog"  style="width: 20%;height: 90%">
+            <div class="modal-content radius" >
+                <div style="font-size: 19px;"><img style="margin-left: 6%;" th:src="@{/temp/running.gif}"/>正在运行，请稍后</div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
@@ -146,7 +154,14 @@
                             "instantData":instantData
                         };
                         $.ajax({
-                            async: false,
+                            cache: false,
+                            beforeSend:function () {//注册成功之前，显示该关于加载的动图
+                                $("#showRun").modal("show");
+                            },
+                            complete:function () {//注册成功之后，隐藏该关于加载的动图
+                                $("#showRun").modal("hide");
+                            },
+                            async: true,
                             type: "post",
                             dataType: "json",
                             contentType: 'application/json;charset=UTF-8',
