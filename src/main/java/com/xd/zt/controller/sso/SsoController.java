@@ -13,6 +13,7 @@ import com.xd.zt.service.business.BusinessModelService;
 import com.xd.zt.service.dataManager.OpenTsdbDataService;
 import com.xd.zt.service.model.ModelService;
 import com.xd.zt.util.analyse.HttpCientPostWithHeader;
+import com.xd.zt.util.analyse.HttpClientGet;
 import com.ym.sso.supervisor.common.bean.SsoLogin;
 import com.ym.sso.supervisor.common.bean.SsoTicket;
 import com.ym.sso.supervisor.common.constant.TicketResultEnum;
@@ -173,7 +174,20 @@ public class SsoController {
                 model.addAttribute("businessModels", businessModelService.selectbusinessmodel());
                 model.addAttribute("UserName", UserName);
                 model.addAttribute("Status", "true");
-                return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+                try {
+                    String result = HttpClientGet.restGet("http://120.24.157.214:2000/restApi/getTime","");
+                    JSONObject resultJson = JSON.parseObject(result);
+                    if (resultJson.getInteger("resp_code") == 0)
+                    {
+                        return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+                    }
+                    else {
+                        return new ModelAndView("userlog/permission", "Modelmodel", model);
+                    }
+                }
+                catch (Exception e){
+                    return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+                }
             } else {
                 System.out.printf("\n\n存在用户,没有权限");
                 session.setAttribute("Status", "false");
@@ -349,8 +363,20 @@ public class SsoController {
             if (Status.equals("true")) {
                 model.addAttribute("Status", "true");
                 System.out.printf("\n\n" + Status);
-                return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
-//                return "zthtml/pages/ZT";
+                try {
+                    String result = HttpClientGet.restGet("http://120.24.157.214:2000/restApi/getTime","");
+                    JSONObject resultJson = JSON.parseObject(result);
+                    if (resultJson.getInteger("resp_code") == 0)
+                    {
+                        return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+                    }
+                    else {
+                        return new ModelAndView("userlog/permission", "Modelmodel", model);
+                    }
+                }
+                catch (Exception e){
+                    return new ModelAndView("zthtml/pages/ZT", "Modelmodel", model);
+                }
             } else {
                 model.addAttribute("Status", "false");
                 System.out.printf("\n\n" + Status);
