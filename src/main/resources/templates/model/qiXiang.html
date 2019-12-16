@@ -75,7 +75,7 @@
         left: 0;
         width: auto;
         padding: 0;
-        background: #d9eefe;
+        background: #091764;
     }
     .custom-info {
         border: solid 1px silver;
@@ -113,6 +113,7 @@
 
     div.rainfallCell {
         padding: 5px 5px;
+        color: #9ddcf9;
     }
     .level {
         font-size: 14px;
@@ -134,7 +135,10 @@
         font-size: 12px;
         font-weight: bold;
         cursor: pointer;
-        color: #028bf8
+        color: #e3eaed
+    }
+    .btnClick {
+        color: #2196F3;
     }
     div.info-bottom {
         height: 0px;
@@ -151,7 +155,7 @@
         padding: 5px 15px;
     }
     .forecastTotalTitle{
-        color: #333;
+        color: #9ddcf9;
         margin: 0;
         padding: 5px 0;
         font-size: 16px;
@@ -163,10 +167,49 @@
         padding:0;
     }
     .forecastDetail {
-        color: #333;
+        color:#9ddcf9;
         font-size: 14px;
         margin:0;
         padding:0;
+    }
+    #titleShow {
+        padding: 5px 10px;
+        margin: 0;
+        font-size:14px;
+        font-weight:bold;
+        color:#e3eaed;
+        cursor: pointer;
+    }
+    #rangeDate{
+        padding: 0 5px;
+        margin: 0;
+        color: #9ddcf9;
+        font-size: 16px;
+    }
+
+    .dateRangeTitle {
+        font-size: 14px;
+    }
+    #accumulateDetail {
+        width: 100%;
+        display: none; 
+    }
+    #accumulateContainer {
+        width: 100%;
+        padding: 0 10px;
+        margin: 0;  
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        font-size: 14px;
+        color: #9ddcf9;
+    }
+    .accumulateCell {
+        flex:1;
+    }
+    .accumulateCell p{
+        padding: 0;
+        margin: 0;
     }
     .amap-logo,.amap-copyright{
         display: none!important;
@@ -176,6 +219,8 @@
         padding: 0,
     }
     </style>
+    <link rel="stylesheet" href="/qixiang/laydate.css" media="all">
+
     <script type="text/javascript" src='https://webapi.amap.com/maps?v=1.4.15&key=4d289853304999146110d499e499aec1'></script>  
     <!-- UI组件库 1.0 -->
     <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
@@ -195,6 +240,7 @@
             <div id="searchResults"></div>
         </div>
     </div>
+    <script src="/qixiang/laydate.js"></script>
     <!-- 调用web_server的KEY值不生效 -->
     <script type="text/javascript">
         var urlNum = "http://10.101.201.171:9543/";
@@ -226,7 +272,7 @@
                 alert('网络错误，请稍后再试！');
             }
         });
-        // console.log("valToken", valToken);
+        console.log("valToken", valToken);
 
         AMapUI.loadUI(['misc/PoiPicker', 'overlay/SimpleInfoWindow'], function(PoiPicker, SimpleInfoWindow) {
             var poiPicker = new PoiPicker({
@@ -274,15 +320,14 @@
                 }        
                 var xaMetroStationPinyin= ConvertPinyin(xaMetroStationName);
 
-                // // normal
-                // var nowDay = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "") - 1;  
+                // normal
+                var nowDay = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "") - 1;  
+                // // testData
+                // var nowDay = 20191212;
 
-                // testData
-                var nowDay = 20191204;
-
-                var SQLString = `SELECT * FROM t_c_medata WHERE station = '${xaMetroStationPinyin}' AND starttime = '${nowDay}'`;  //要查询的结果: station, forecasttime, precipitation,num20mm,accpre
-                console.log("SQLString", SQLString);
                 // 请求接口数据
+                var SQLString = `SELECT * FROM t_c_medata WHERE station = '${xaMetroStationPinyin}' AND starttime = ${nowDay}`;  //要查询的结果: station, forecasttime, precipitation,num20mm,accpre
+                console.log("SQLString", SQLString);
                 var dataListTotal = null;
                 if(valToken && valToken.length > 0){
                     $.ajax({
@@ -293,7 +338,7 @@
                         data: JSON.stringify({
                             // "sqlConfig": {
                                 "dataClass": "勘察设计数据",
-                                // "sqlQuery": "SELECT * FROM t_c_medata WHERE station='andingmen' AND starttime='20191209'"
+                                // "sqlQuery": "SELECT * FROM t_c_medata WHERE station='andingmen' AND starttime='20191212'"
                                 "sqlQuery": SQLString
                             // },
                         }),
@@ -311,8 +356,8 @@
                 }
                 // var dataListTotal = [{
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120900,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121200,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 2.4,
                 //     "humidity" : 44.2,
@@ -320,8 +365,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120903,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121203,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 6.4,
                 //     "humidity" : 34.0,
@@ -329,8 +374,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120906,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121206,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 8.8,
                 //     "humidity" : 26.2,
@@ -338,8 +383,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120909,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121209,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 7.5,
                 //     "humidity" : 31.4,
@@ -347,8 +392,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120912,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121212,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 5.4,
                 //     "humidity" : 31.3,
@@ -356,8 +401,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120915,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121215,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 4.6,
                 //     "humidity" : 30.5,
@@ -365,8 +410,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120918,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121218,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 3.8,
                 //     "humidity" : 31.9,
@@ -374,8 +419,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019120921,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121221,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 2.7,
                 //     "humidity" : 35.9,
@@ -383,8 +428,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121000,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121300,
                 //     "precipitation" : 0.1,
                 //     "temperature" : 2.2,
                 //     "humidity" : 39.0,
@@ -392,8 +437,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121003,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121303,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 6.4,
                 //     "humidity" : 32.5,
@@ -401,8 +446,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121006,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121306,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 8.6,
                 //     "humidity" : 28.6,
@@ -410,8 +455,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121009,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121309,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 7.6,
                 //     "humidity" : 31.7,
@@ -419,8 +464,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121012,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121312,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 5.1,
                 //     "humidity" : 34.3,
@@ -428,8 +473,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121015,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121315,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 3.7,
                 //     "humidity" : 36.2,
@@ -437,8 +482,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121018,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121318,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 2.5,
                 //     "humidity" : 37.9,
@@ -446,8 +491,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121021,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121321,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 1.2,
                 //     "humidity" : 42.8,
@@ -455,8 +500,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121100,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121400,
                 //     "precipitation" : 110.0,
                 //     "temperature" : 0.3,
                 //     "humidity" : 48.3,
@@ -464,8 +509,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121103,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121403,
                 //     "precipitation" : 26.0,
                 //     "temperature" : 4.6,
                 //     "humidity" : 38.4,
@@ -473,8 +518,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121106,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121406,
                 //     "precipitation" : 10.0,
                 //     "temperature" : 7.6,
                 //     "humidity" : 35.1,
@@ -482,8 +527,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121109,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121409,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 7.0,
                 //     "humidity" : 41.3,
@@ -491,8 +536,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121112,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121412,
                 //     "precipitation" : 20.0,
                 //     "temperature" : 4.6,
                 //     "humidity" : 49.3,
@@ -500,8 +545,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121115,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121415,
                 //     "precipitation" : 50.05,
                 //     "temperature" : 3.4,
                 //     "humidity" : 51.7,
@@ -509,8 +554,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121118,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121418,
                 //     "precipitation" : 100.1,
                 //     "temperature" : 2.3,
                 //     "humidity" : 56.1,
@@ -518,8 +563,8 @@
                 //     "accpre" : 0.0
                 // }, {
                 //     "station" : "xiannanzhan",
-                //     "starttime" : 20191209,
-                //     "forecasttime" : 2019121121,
+                //     "starttime" : 20191212,
+                //     "forecasttime" : 2019121421,
                 //     "precipitation" : 0.0,
                 //     "temperature" : 1.7,
                 //     "humidity" : 59.1,
@@ -534,7 +579,7 @@
                 infoWindow.setMap(map);
                 marker.setPosition(poi.location);
                 infoWindow.setPosition(poi.location);
-                createInfoWindow(poi.name, "", dataListTotal).then(infoContent => {
+                createInfoWindow(poi.name, "", dataListTotal, xaMetroStationPinyin).then(infoContent => {
                     // console.log("infoContent", infoContent);
                     // infoWindow.setContent(infoContent);
                     infoWindow.setInfoBody(infoContent);
@@ -567,23 +612,20 @@
         });
 
         // 构建自定义信息窗体
-        async function createInfoWindow(titleName, dateTime, dataListTotal) {
-            console.log("createInfoWindow", titleName, dateTime, dataListTotal);
-
-            // // // 获取20191126格式   normnal
-            // var currentDate = new Date();
-            // var nowDay = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
-            // var nextDay = new Date(currentDate.getTime() + 24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
-            // var thirdDay = new Date(currentDate.getTime() + 2*24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
-            // var daytime = [nowDay, nextDay, thirdDay];
-
-            // test
-            var nowDay = 20191204;
-            var daytime = [20191204, 20191205, 20191206];
-
+        async function createInfoWindow(titleName, dateTime, dataListTotal, xaMetroStationPinyinInfo) {
+            console.log("createInfoWindow", titleName, dateTime, dataListTotal, xaMetroStationPinyinInfo);
+            // // 获取20191126格式   normnal
+            var currentDate = new Date();
+            var nowDay = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
+            var nextDay = new Date(currentDate.getTime() + 24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
+            var thirdDay = new Date(currentDate.getTime() + 2*24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
+            var daytime = [nowDay, nextDay, thirdDay];
+            // // test
+            // var nowDay = 20191212;
+            // var daytime = [20191212, 20191213, 20191214];
             if(dataListTotal && dataListTotal.length > 1){
                 var nowDayDataList = dataListTotal.filter((ajaxItem) => {
-                        console.log("ajaxItem", ajaxItem, ajaxItem.forecasttime.toString().indexOf(nowDay));
+                        // console.log("ajaxItem", ajaxItem, ajaxItem.forecasttime.toString().indexOf(nowDay));
                         return ajaxItem.forecasttime.toString().indexOf(nowDay) > -1                    
                     });
                 var accumulativeDay = nowDayDataList[nowDayDataList.length - 1].num20mm;
@@ -592,10 +634,31 @@
                 var info = document.createElement("div");
                 info.className = "custom-info input-card content-window-card";
                 // '<div class="rainfallCell"><p>过去30天累计降水天数：8</p><p>过去30天累计降水量：35mm</p></div>'
-                var titleInfo = document.createElement("div");
-                var rainfallHTML ='<div class="rainfallCell" style="padding: 0 10px;margin: 0;font-size:14px;font-weight:bold">累计降水天数：<span style="font-size: 14px">'+accumulativeDay+'</span></br>累计降水量：<span>'+accumulativeAccpre+'mm<span><div class="btn" onclick="getTotalDetail(&quot;'+titleName+'&quot;, &quot;'+daytime+'&quot;, '+JSON.stringify(dataListTotal).replace(/"/g, '&quot;')+')">点击获取降雨分布情况</div></div>';
-                titleInfo.innerHTML = rainfallHTML;
-                info.appendChild(titleInfo);
+                // var titleInfo = document.createElement("div");
+                // var rainfallHTML ='<div class="rainfallCell" style="padding: 0 10px;margin: 0;font-size:14px;font-weight:bold">累计降水天数：<span style="font-size: 14px">'+accumulativeDay+'</span></br>累计降水量：<span>'+accumulativeAccpre+'mm<span><div class="btn" onclick="getTotalDetail(&quot;'+titleName+'&quot;, &quot;'+daytime+'&quot;, '+JSON.stringify(dataListTotal).replace(/"/g, '&quot;')+')">点击获取降雨分布情况</div></div>';
+                // titleInfo.innerHTML = rainfallHTML;
+                // info.appendChild(titleInfo);
+                var selectRangeContent = document.createElement("div");
+                // var selectRangeTitle = document.createElement("div");
+                // selectRangeTitle.id = "titleShow";
+                // selectRangeTitle.innerHTML = "点击获取降水统计";
+                // selectRangeTitle.onclick = (xaMetroStationPinyinInfo) => showContent(xaMetroStationPinyinInfo);   // 函数写法
+                // // selectRangeTitle.onclick = showContent(xaMetroStationPinyinInfo);   // 函数写法 传的参数为点击对象
+                // selectRangeContent.appendChild(selectRangeTitle);
+                var selectRangeTitleHTML = '<div id="titleShow" onclick="showContent(&quot;'+xaMetroStationPinyinInfo+'&quot;)">点击获取降水统计</div>'
+                selectRangeContent.innerHTML = selectRangeTitleHTML;
+                // 点击展开折叠下面的统计结果， 此方法修改display的属性  none or block
+                var selectRangeDetail = document.createElement("div");
+                selectRangeDetail.id = "accumulateDetail";
+                var dateRange= '<div id="rangeDate"><span class="dateRangeTitle">选择时间范围：<span><input type="text" id="dateContent" ></div>';
+                // 选定时间范围后，触发事件更新显示内容;   
+                selectRangeDetail.innerHTML = dateRange;
+                var accumulateContent = document.createElement("div");
+                accumulateContent.id = "accumulateContainer";
+                accumulateContent.innerHTML = '<div class="accumulateCell"><p class="cellName">平均降雨量</p><p id="averageCellName"></p></div><div class="accumulateCell"><p class="cellName">累计降雨量</p><p id="addCellName"></p></div><div class="accumulateCell"><p class="cellName">降水预警天数</p><p id="warnCellName"></p></div><div class="accumulateCell"><p class="cellName">红色预警天数</p><p id="seriousCellName"></p></div>'
+                selectRangeDetail.appendChild(accumulateContent);
+                selectRangeContent.appendChild(selectRangeDetail);
+                info.appendChild(selectRangeContent);
                 var chartTotalContent = document.createElement("div");
                 chartTotalContent.id = "lineTotalChart";
                 info.appendChild(chartTotalContent);
@@ -636,7 +699,7 @@
                         rainfallHTML += '<div class="rainfallCell">' + 
                             '<label class="level">'+ rainfallForecast[j].date +'</label>' +
                             '<div class="forcastContent">' + '天气：' + rainfallForecast[j].dayWeather + '，'+ rainfallForecast[j].nightTemp + '~' + rainfallForecast[j].dayTemp + '℃，'+ rainfallForecast[j].dayWindDir + '风：'+ rainfallForecast[j].dayWindPower + 
-                            '</div>' + '<div class="btn" onclick="getDetail(&quot;'+titleName+'&quot;, &quot;'+daytime[j]+'&quot;, '+JSON.stringify(dataListTotal).replace(/"/g, '&quot;')+');">点击获取当天降雨分布情况</div>' +
+                            '</div>' + '<div class="btn" id="btn" onclick="getDetail( &quot;'+j+'&quot;, &quot;'+titleName+'&quot;, &quot;'+daytime[j]+'&quot;, '+JSON.stringify(dataListTotal).replace(/"/g, '&quot;')+');">点击获取当天降雨分布情况</div>' +
                         '</div>';
                     }
                 };
@@ -647,7 +710,7 @@
                 // var eventContent = document.createElement("div");
                 // eventContent.id = "getDetailChart";
                 // eventContent.innerHTML = "点击获取各时刻降雨分布情况";
-                // eventContent.onclick = (titleName) => getDetail(titleName);   /// 函数写法
+                // eventContent.onclick = (titleName) => getDetail(titleName);   // 函数写法
                 // info.appendChild(eventContent);
                 var chartContent = document.createElement("div");
                 chartContent.id = "chartContent";
@@ -683,7 +746,94 @@
         //关闭信息窗体
         function closeInfoWindow() {
             map.clearInfoWindow();
-        }
+        };
+        // 是否展示累计的统计结果
+        function showContent(xaMetroStationPinyin){
+            var accumulateDetail = document.querySelector("#accumulateDetail");
+            var averageCellName = document.querySelector("#averageCellName");
+            var addCellName = document.querySelector("#addCellName");
+            var warnCellName = document.querySelector("#warnCellName");
+            var seriousCellName = document.querySelector("#seriousCellName");
+            console.log("titleShow",accumulateDetail, xaMetroStationPinyin, xaMetroStationPinyin.toString());
+            if(accumulateDetail.style.display === "block"){
+                accumulateDetail.style.display = "none"; 
+            }else{
+                accumulateDetail.style.display = "block"; 
+            };
+            var deadDate = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "-").toString();
+            laydate.render({
+                elem: '#dateContent',
+                min: '2019-12-12',
+                max: deadDate,
+                type: 'date',
+                range: '到',
+                format: 'yyyy-MM-dd',
+                change: function(value, date){ //监听日期被切换
+                    console.log("change", value, valToken);
+                    lay('#dateContent').html(value);
+                    var dateRange = value.split(" ");
+                    var startDate = dateRange[0].replace(/\-/g, "");
+                    var endDate = dateRange[2].replace(/\-/g, "");
+                    if(valToken && valToken.length > 0){
+                        var SQLString = `SELECT * FROM t_c_medata WHERE station = '${xaMetroStationPinyin}' AND (starttime between ${startDate} and ${endDate})`;  //要查询的结果: station, forecasttime, precipitation,num20mm,accpre
+                        $.ajax({
+                            url: urlNum +"/mysql/executeSQL",//url地址
+                            dataType:"json",//返回的数据类型
+                            contentType: 'application/json',
+                            type:"POST",//发起请求的方式
+                            data: JSON.stringify({
+                                // "sqlConfig": {
+                                    "dataClass": "勘察设计数据",
+                                    "sqlQuery": SQLString
+                                // },
+                            }),
+                            async: false,   // 是否异步执行
+                            headers:{'Authorization':valToken},
+                            success:function(data) { 
+                                dataListTotal = data;  
+                                console.log("success", data, data.length);
+                                if(data && data.length){                     
+                                    var usefullData = data.filter((item) =>{
+                                        return item.forecasttime.toString() === item.starttime.toString() + "23";
+                                    })
+                                    var accpreList = usefullData.map((dataCell) => {
+                                        return dataCell.accpre
+                                    });
+                                    var numwarnList = usefullData.map((dataCell) => {
+                                        return dataCell.numwarn
+                                    });
+                                    var numredList = usefullData.map((dataCell) => {
+                                        return dataCell.numred
+                                    });
+                                    var averageCellNameData = (accpreList.reduce((prev,cur) => {
+                                        return prev + cur
+                                    })) / accpreList.length;
+                                    var addCellNameData = accpreList.reduce((prev,cur) => {
+                                        return prev + cur
+                                    });
+                                    var warnCellNameNameData = numwarnList.reduce((prev,cur) => {
+                                        return prev + cur
+                                    });
+                                    var seriousCellNameData = numredList.reduce((prev,cur) => {
+                                        return prev + cur
+                                    });
+                                    console.log("usefullData", usefullData,averageCellNameData, addCellNameData, warnCellNameNameData, seriousCellNameData);
+                                    // 计算结果进行赋值
+                                    averageCellName.innerHTML = averageCellNameData;
+                                    addCellName.innerHTML = addCellNameData;
+                                    warnCellName.innerHTML = warnCellNameNameData;
+                                    seriousCellName.innerHTML = seriousCellNameData;
+                                }
+                            },
+                            error:function(err){
+                                console.log("err", err);
+                                alert('网络错误，请稍后再试！');
+                            }
+                        });
+                    }
+                }
+            }); 
+        };
         // 获取图表详情
         function getTotalDetail(titleName, dayTemp, dataListTotal){
             console.log("getTotalDetail", titleName, dayTemp, dataListTotal, dataListTotal.length);
@@ -748,6 +898,7 @@
                 series: [{
                     name: "降雨量",
                     data: totalPrecipitation,          // 接口请求数据
+
                     type: 'line',
                     smooth: true
                 }]
@@ -756,10 +907,15 @@
             myTotalChart.setOption(option);
         }
 
-        function getDetail(titleName, dayTemp, dataListTotal){
+        function getDetail(indexNum, titleName, dayTemp, dataListTotal){
             // console.log("getDetail", titleName, dayTemp, dataListTotal, dataListTotal.length);
             // var lnglatInput = document.getElementById('lnglat');
             // lnglatInput.setAttribute('value', lnglat.toString());
+            var btnList = document.querySelectorAll("#btn");
+            for(let i = 0; i < btnList.length; i++ ){
+                btnList[i].classList.remove("btnClick");
+            };
+            btnList[indexNum].classList.add("btnClick");
             var lineChart = document.querySelector('#lineChart');
             // console.log("lineChart", lineChart, document.querySelector('#lineChart'))
             lineChart.style.width = '500px';
@@ -769,20 +925,19 @@
             var ajaxData = dataListTotal;
             console.log("ajaxData",dataListTotal, ajaxData, ajaxData.length);
 
-            // // 获取20191126格式    normal
-            // var currentDate = new Date();
-            // var nowDay = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
-            // var nextDay = new Date(currentDate.getTime() + 24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
-            // var thirdDay = new Date(currentDate.getTime() + 2*24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
-            // var daytime = [nowDay, nextDay, thirdDay];
+            // 获取20191126格式    // normal
+            var currentDate = new Date();
+            var nowDay = currentDate.toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
+            var nextDay = new Date(currentDate.getTime() + 24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
+            var thirdDay = new Date(currentDate.getTime() + 2*24*60*60*1000).toJSON().match(/(\S*)T/)[1].replace(/\-/g, "");
+            var daytime = [nowDay, nextDay, thirdDay];
 
             // //  testdata
-            var nowDay = 20191204;
-            var daytime = [20191204, 20191205, 20191206];
-
+            // var nowDay = 20191212;
+            // var daytime = [20191212, 20191213, 20191214];
             // 传时间拿参数值的数组；
             var chooseList = ajaxData.filter((ajaxItem) => {
-                    console.log("ajaxItem", ajaxItem, ajaxItem.forecasttime.toString().indexOf(dayTemp));
+                    // console.log("ajaxItem", ajaxItem, ajaxItem.forecasttime.toString().indexOf(dayTemp));
                     return ajaxItem.forecasttime.toString().indexOf(dayTemp) > -1                    
                 });
             var dataList = chooseList.map((item) => {
@@ -825,7 +980,7 @@
                 title: {
                     text: '降雨分布情况(单位：毫米)',
                     textStyle: {
-                        color: "#000",
+                        color: "#9ddcf9",
                         fontSize: 14,
                         fontWeight: "bold",
                         lineHeight: 18,
@@ -837,10 +992,32 @@
                 },
                 xAxis: {
                     type: 'category',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#9ddcf9'
+                        }
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:'#9ddcf9',
+                            // width:8,//这里是为了突出显示加上的
+                        }
+                    },
                     data: momentList
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#9ddcf9'
+                        }
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:'#9ddcf9',
+                            // width:8,//这里是为了突出显示加上的
+                        }
+                    },
                 },
                 series: [{
                     name: "降雨量",
@@ -898,7 +1075,7 @@
                     var forecasttimeList = blueList.map((item) => {
                         return item.forecasttime.toString().substring(item.forecasttime.toString().length - 2)
                     });
-                    forecastContent += '<p class="forecastTitle" style="color: blue;">暴雨蓝色预警</p><p class="forecastDetail">预计本站点在'+forecasttimeList.toString()+'点降雨量将达到暴雨蓝色预警等级，请注意防范；</p>';
+                    forecastContent += '<p class="forecastTitle" style="color: #03A9F4;">暴雨蓝色预警</p><p class="forecastDetail">预计本站点在'+forecasttimeList.toString()+'点降雨量将达到暴雨蓝色预警等级，请注意防范；</p>';
                 };
                 if(yellowList && yellowList.length > 0){
                     var forecasttimeList = yellowList.map((item) => {
@@ -925,10 +1102,6 @@
                 }
                 forecastContent += '</div>';
                 forecast.innerHTML = forecastContent;
-            // var blueContent = '<div style="font-size: 14px;color: blue"><p style="font-size: 14px;color: blue">暴雨蓝色预警</p><p>预计本站点在'+time+'点降雨量将达到暴雨蓝色预警等级，请注意防范</p><div>';
-            // var yellowContent = '<div style="font-size: 14px;color: yellow"><p style="font-size: 14px;color: yellow">暴雨黄色预警</p><p>预计本站点在'+time+'点降雨量将达到暴雨黄色预警等级，请注意防范</p><div>';
-            // var orangeContent = '<div style="font-size: 14px;color: orange"><p style="font-size: 14px;color: orange">暴雨橙色预警</p><p>预计本站点在'+time+'点降雨量将达到暴雨橙色预警等级，请注意防范</p><div>';
-            // var redContent = '<div style="font-size: 14px;color: red"><p style="font-size: 14px;color: red">暴雨红色预警</p><p>预计本站点在'+time+'点降雨量将达到暴雨红色预警等级，请注意防范</p><div>';
             }
 
     </script>

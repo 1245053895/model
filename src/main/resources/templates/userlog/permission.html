@@ -56,7 +56,7 @@
         .container::-webkit-scrollbar {display:none}
     </style>
 
-    <title>“城市地下空间工程大数据分析平台”---西安市中铁一局大数据分析平台子平台</title>
+    <title>大数据智能分析平台</title>
 </head>
 <body>
 <div id="loading">
@@ -73,7 +73,7 @@
 </div>
 <!--标题栏-->
 <div class="Hometitlebox">
-    <a style=" color: #00e4ff;" href="/sso/permission">城市地下空间工程大数据智能分析平台</a>
+    <a style=" color: #00e4ff;" href="/sso/permission">大数据智能分析平台</a>
 </div>
 <div style="color: white; margin-top: -2%;margin-left: 78%;" th:if="${UserName} != ''" th:text="'欢迎您：'+${UserName}+'    请联系管理员分配功能权限'"></div>
 <div style="color: white; margin-top: -2%; margin-left: 83%;" th:if="${UserName} == ''" th:text="'子系统还未同步当前用户'"></div>
@@ -100,7 +100,7 @@
             </div>
             <img class="effectposition maindataspecialeffect" src="/zthtml/img/maindataspecialeffect.png">
             <img class="effectposition acrossremindeffecindex" src="/zthtml/img/maindataicon.png" >
-            <span class="stagetitle">大数据分析平台</span>
+            <span class="stagetitle">大数据智能分析平台</span>
 
         </div>
         <!--卫星动效-->
@@ -222,9 +222,9 @@
         <br/><br/>
         （4）验证建模工具通过构建验证模型、对分析模型进行验证，为模型修正、优化提供参考。
         <br/><br/>
-        2、算法库管理对行业通用算法、行业专用算法、人工智能算法进行封装与分类管理，形成算法库，进一步提升算法的规范性、通用性、独立性和平台无关性。
+        2、算法库管理工具对行业通用算法、行业专用算法、人工智能算法进行封装与分类管理，形成算法库管理工具。
         <br/><br/>
-        3、模型库管理对模型实现分类管理，通过模型库管理工具，实现模型的发布，编辑等功能。
+        3、模型库管理工具对模型实现分类管理，通过模型库管理工具，实现模型的发布，编辑等功能。
         <br/><br/>
         4、大数据分析服务封装与发布服务封装将模型、数据与计算过程拆分为相互独立又相互联系的松耦合个体，将复杂业务模块化，降低应用复杂度，有利于快速实现大数据分析应用，降低维护成本。
         <br/><br/>
@@ -507,7 +507,7 @@
             {
                 name:'内存占比',
                 type:'pie',
-                radius : '55%',
+                radius : '45%',
                 center: ['50%', '50%'],
                 data:[
                     {value:21.56, name:'算法库'},
